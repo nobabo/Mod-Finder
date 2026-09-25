@@ -1,0 +1,19 @@
+{
+  "$schema": "../gen/schemas/desktop-schema.json",
+  "identifier": "default",
+  "description": "Local state and allowlisted source links only. No filesystem or shell access.",
+  "windows": ["main"],
+  "permissions": [
+    "core:default", "sql:default", "sql:allow-execute",
+    { "identifier": "opener:allow-open-url", "allow": [
+      { "url": "https://modrinth.com/*" },
+      { "url": "https://www.curseforge.com/*" },
+      { "url": "https://curseforge.com/*" },
+      { "url": "https://thunderstore.io/*" },
+      { "url": "https://www.nexusmods.com/*" },
+      { "url": "https://nexusmods.com/*" },
+      { "url": "https://next.nexusmods.com/*" },
+      { "url": "https://steamcommunity.com/*" }
+    ] }
+  ]
+}

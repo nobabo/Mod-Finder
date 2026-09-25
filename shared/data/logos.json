@@ -1,0 +1,86 @@
+{
+  "stardew-valley": {
+    "src": "/logos/stardew-valley.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/413150/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "skyrim-se": {
+    "src": "/logos/skyrim-se.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/489830/logo.png",
+    "width": 604,
+    "height": 257
+  },
+  "lethal-company": {
+    "src": "/logos/lethal-company.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1966720/logo.png",
+    "width": 577,
+    "height": 242
+  },
+  "rimworld": {
+    "src": "/logos/rimworld.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/294100/logo.png",
+    "width": 591,
+    "height": 84
+  },
+  "valheim": {
+    "src": "/logos/valheim.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/892970/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "terraria": {
+    "src": "/logos/terraria.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/105600/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "project-zomboid": {
+    "src": "/logos/project-zomboid.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/108600/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "cyberpunk-2077": {
+    "src": "/logos/cyberpunk-2077.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1091500/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "baldurs-gate-3": {
+    "src": "/logos/baldurs-gate-3.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/1086940/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "fallout-4": {
+    "src": "/logos/fallout-4.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/377160/logo.png",
+    "width": 640,
+    "height": 230
+  },
+  "risk-of-rain-2": {
+    "src": "/logos/risk-of-rain-2.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/632360/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "cities-skylines": {
+    "src": "/logos/cities-skylines.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/255710/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "dont-starve-together": {
+    "src": "/logos/dont-starve-together.png",
+    "sourceUrl": "https://cdn.akamai.steamstatic.com/steam/apps/322330/logo.png",
+    "width": 640,
+    "height": 360
+  },
+  "minecraft-java": {
+    "src": "/logos/minecraft-java.svg",
+    "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/logos/Global-Header_MCCB-Logo_300x51.svg",
+    "width": 300,
+    "height": 51
+  }
+}

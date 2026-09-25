@@ -1,0 +1,18 @@
+{
+  "modrinth:minecraft:AANobbMI": {
+    "title": "소듐 (Sodium)",
+    "summary": "마인크래프트의 렌더링 엔진을 개선해 프레임 속도를 높이고 화면 끊김을 줄이는 성능 최적화 모드입니다.",
+    "searchTerm": "Sodium",
+    "aliases": ["소듐", "소디움"],
+    "sourceUrl": "https://modrinth.com/mod/sodium",
+    "reviewedAt": "2026-09-25"
+  },
+  "curseforge:432:394468": {
+    "title": "소듐 (Sodium)",
+    "summary": "마인크래프트의 렌더링 엔진을 개선해 프레임 속도를 높이고 화면 끊김을 줄이는 성능 최적화 모드입니다.",
+    "searchTerm": "Sodium",
+    "aliases": ["소듐", "소디움"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/sodium",
+    "reviewedAt": "2026-09-25"
+  }
+}

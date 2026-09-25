@@ -1,0 +1,9 @@
+[
+  {
+    "projectId": "minecraft-sodium",
+    "listingKeys": ["modrinth:minecraft:AANobbMI", "curseforge:432:394468"],
+    "evidenceUrl": "https://github.com/CaffeineMC/sodium",
+    "sourceUrls": ["https://modrinth.com/mod/sodium", "https://www.curseforge.com/minecraft/mc-mods/sodium"],
+    "verifiedAt": "2026-09-25"
+  }
+]

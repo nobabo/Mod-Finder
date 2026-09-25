@@ -1,0 +1,590 @@
+{
+  "minecraft-java": {
+    "sourcePage": "https://www.minecraft.net/en-us/store/minecraft-java-bedrock-edition-pc",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/minecraft-java/01.webp",
+        "width": 1200,
+        "height": 675,
+        "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/PDP-Gallery_OV_2_16x9.jpg"
+      },
+      {
+        "src": "/backgrounds/minecraft-java/02.webp",
+        "width": 1200,
+        "height": 675,
+        "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/PDP-Gallery_OV_6_16x9.jpg"
+      },
+      {
+        "src": "/backgrounds/minecraft-java/03.webp",
+        "width": 1200,
+        "height": 675,
+        "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/PDP-Gallery_OV_1_16x9.jpg"
+      },
+      {
+        "src": "/backgrounds/minecraft-java/04.webp",
+        "width": 1200,
+        "height": 674,
+        "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/PDP-Gallery_OV_5_16x9.jpg"
+      },
+      {
+        "src": "/backgrounds/minecraft-java/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png"
+      },
+      {
+        "src": "/backgrounds/minecraft-java/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/EXPLORE_PDPScreenshotRefresh2024_multipleBiomes_01.png"
+      }
+    ]
+  },
+  "stardew-valley": {
+    "sourcePage": "https://store.steampowered.com/app/413150/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/stardew-valley/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_b887651a93b0525739049eb4194f633de2df75be.1920x1080.jpg?t=1786554168"
+      },
+      {
+        "src": "/backgrounds/stardew-valley/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_9ac899fe2cda15d48b0549bba77ef8c4a090a71c.1920x1080.jpg?t=1786554168"
+      },
+      {
+        "src": "/backgrounds/stardew-valley/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_4fa0866709ede3753fdf2745349b528d5e8c4054.1920x1080.jpg?t=1786554168"
+      },
+      {
+        "src": "/backgrounds/stardew-valley/04.webp",
+        "width": 1600,
+        "height": 945,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_d836f0a5b0447fb6a2bdb0a6ac5f954949d3c41e.1920x1080.jpg?t=1786554168"
+      },
+      {
+        "src": "/backgrounds/stardew-valley/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_10628b4a811c0a925a1433d4323f78c7017dbbe4.1920x1080.jpg?t=1786554168"
+      },
+      {
+        "src": "/backgrounds/stardew-valley/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/413150/ss_6422d297347258086b389e3d5d9c0e0c698312e4.1920x1080.jpg?t=1786554168"
+      }
+    ]
+  },
+  "skyrim-se": {
+    "sourcePage": "https://store.steampowered.com/app/489830/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/skyrim-se/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/ss_73c1a0bb7e1720c8a1847186c3ddd837d3ca7a8d.1920x1080.jpg?t=1786648247"
+      },
+      {
+        "src": "/backgrounds/skyrim-se/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/ss_d64b646612ab1402bdda8e400672aa0dbcb352ea.1920x1080.jpg?t=1786648247"
+      },
+      {
+        "src": "/backgrounds/skyrim-se/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/ss_b6bb6f79278505b3f48567f08c21f7a0eb171c68.1920x1080.jpg?t=1786648247"
+      },
+      {
+        "src": "/backgrounds/skyrim-se/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/ss_921ccea650df936a0b14ebd5dd4ecc73c1d2a12d.1920x1080.jpg?t=1786648247"
+      },
+      {
+        "src": "/backgrounds/skyrim-se/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/ss_8c7ecd394afb581b9b2137a3de04433f78fdf4ea.1920x1080.jpg?t=1786648247"
+      },
+      {
+        "src": "/backgrounds/skyrim-se/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/489830/ss_50c3da9e29e9b0368889379cdd03a71aba8d614c.1920x1080.jpg?t=1786648247"
+      }
+    ]
+  },
+  "lethal-company": {
+    "sourcePage": "https://store.steampowered.com/app/1966720/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/lethal-company/01.webp",
+        "width": 1600,
+        "height": 896,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/ss_78075e9a94675823024f12fce9d69b243cca94f8.1920x1080.jpg?t=1775380053"
+      },
+      {
+        "src": "/backgrounds/lethal-company/02.webp",
+        "width": 1600,
+        "height": 895,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/ss_51860be59845771c01a3a4d9ab1ebf773f16fef5.1920x1080.jpg?t=1775380053"
+      },
+      {
+        "src": "/backgrounds/lethal-company/03.webp",
+        "width": 1600,
+        "height": 897,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/ss_08fa3ef83b6eb70313119096f82285fa411f02e5.1920x1080.jpg?t=1775380053"
+      },
+      {
+        "src": "/backgrounds/lethal-company/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/ss_568d97dfa9d8d3128157d84c9437030ccc1011b0.1920x1080.jpg?t=1775380053"
+      },
+      {
+        "src": "/backgrounds/lethal-company/05.webp",
+        "width": 1600,
+        "height": 893,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/ss_e07f1d6ee90e3669118096dab1fe52c20ec6ce10.1920x1080.jpg?t=1775380053"
+      },
+      {
+        "src": "/backgrounds/lethal-company/06.webp",
+        "width": 800,
+        "height": 450,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1966720/ss_0499d96a2b9ca0fc8966d77e6d5c95ae94c38492.1920x1080.jpg?t=1775380053"
+      }
+    ]
+  },
+  "rimworld": {
+    "sourcePage": "https://store.steampowered.com/app/294100/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/rimworld/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/80e383ef19353058791efe17a6485849246c9c17/ss_80e383ef19353058791efe17a6485849246c9c17.1920x1080.jpg?t=1782756789"
+      },
+      {
+        "src": "/backgrounds/rimworld/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/a6158c5cef23ac8157b37dd3eb17f3c2d2649e93/ss_a6158c5cef23ac8157b37dd3eb17f3c2d2649e93.1920x1080.jpg?t=1782756789"
+      },
+      {
+        "src": "/backgrounds/rimworld/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/cccfece4c643fd32d438642fbea1b980bc519a48/ss_cccfece4c643fd32d438642fbea1b980bc519a48.1920x1080.jpg?t=1782756789"
+      },
+      {
+        "src": "/backgrounds/rimworld/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/57c3e8d556d47bb5ad048699643528aefc652aa6/ss_57c3e8d556d47bb5ad048699643528aefc652aa6.1920x1080.jpg?t=1782756789"
+      },
+      {
+        "src": "/backgrounds/rimworld/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/59a1400eff99e2b620d623d3d76a02c1592a72e7/ss_59a1400eff99e2b620d623d3d76a02c1592a72e7.1920x1080.jpg?t=1782756789"
+      },
+      {
+        "src": "/backgrounds/rimworld/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/294100/1e3a2734b23daaa4eb60ea33dd87806aa65e0c8f/ss_1e3a2734b23daaa4eb60ea33dd87806aa65e0c8f.1920x1080.jpg?t=1782756789"
+      }
+    ]
+  },
+  "valheim": {
+    "sourcePage": "https://store.steampowered.com/app/892970/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/valheim/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/5a31353178f635b67f0c8720ebb8a1a95b637276/ss_5a31353178f635b67f0c8720ebb8a1a95b637276.1920x1080.jpg?t=1790220314"
+      },
+      {
+        "src": "/backgrounds/valheim/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/bc7c361dab1780543a3ceca50c8fba831e5bc8db/ss_bc7c361dab1780543a3ceca50c8fba831e5bc8db.1920x1080.jpg?t=1790220314"
+      },
+      {
+        "src": "/backgrounds/valheim/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/ss_a600a7d4ca954543e22f571a9629521a13f82143.1920x1080.jpg?t=1790220314"
+      },
+      {
+        "src": "/backgrounds/valheim/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/f7a47b4bd150ce1a2c6ec88f7d79fd57e7c538c8/ss_f7a47b4bd150ce1a2c6ec88f7d79fd57e7c538c8.1920x1080.jpg?t=1790220314"
+      },
+      {
+        "src": "/backgrounds/valheim/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/ss_cd0262c5abf8a90ee5e1059acafc5a92b6be0e73.1920x1080.jpg?t=1790220314"
+      },
+      {
+        "src": "/backgrounds/valheim/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/892970/ss_3db385fc1223914dadb199ac8682683a8c59454e.1920x1080.jpg?t=1790220314"
+      }
+    ]
+  },
+  "terraria": {
+    "sourcePage": "https://store.steampowered.com/app/105600/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/terraria/01.webp",
+        "width": 1280,
+        "height": 720,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/ss_8c03886f214d2108cafca13845533eaa3d87d83f.1920x1080.jpg?t=1769844435"
+      },
+      {
+        "src": "/backgrounds/terraria/02.webp",
+        "width": 1280,
+        "height": 720,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/ss_ae168a00ab08104ba266dc30232654d4b3c919e5.1920x1080.jpg?t=1769844435"
+      },
+      {
+        "src": "/backgrounds/terraria/03.webp",
+        "width": 1280,
+        "height": 720,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/ss_9edd98caaf9357c2f40758f354475a56e356e8b0.1920x1080.jpg?t=1769844435"
+      },
+      {
+        "src": "/backgrounds/terraria/04.webp",
+        "width": 1280,
+        "height": 720,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/ss_75ea9a7e39eb34b40efa1e6dfd2536098dc4734b.1920x1080.jpg?t=1769844435"
+      },
+      {
+        "src": "/backgrounds/terraria/05.webp",
+        "width": 1280,
+        "height": 720,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/ss_782374517c1792debd74d24856203b876eba3a5d.1920x1080.jpg?t=1769844435"
+      },
+      {
+        "src": "/backgrounds/terraria/06.webp",
+        "width": 1280,
+        "height": 720,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/105600/ss_04dd9f0a5773b686a452ba480b951f83b3ed5061.1920x1080.jpg?t=1769844435"
+      }
+    ]
+  },
+  "project-zomboid": {
+    "sourcePage": "https://store.steampowered.com/app/108600/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/project-zomboid/01.webp",
+        "width": 1600,
+        "height": 856,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/e0dd37d69051f7da85896d11027ab018d23893fa/ss_e0dd37d69051f7da85896d11027ab018d23893fa.1920x1080.jpg?t=1787740093"
+      },
+      {
+        "src": "/backgrounds/project-zomboid/02.webp",
+        "width": 1600,
+        "height": 856,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/d9df2102dd12526700b15660bc5ec8f039dc8742/ss_d9df2102dd12526700b15660bc5ec8f039dc8742.1920x1080.jpg?t=1787740093"
+      },
+      {
+        "src": "/backgrounds/project-zomboid/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/4c8860818ac52c685bbe0988aa137d52bad4aac5/ss_4c8860818ac52c685bbe0988aa137d52bad4aac5.1920x1080.jpg?t=1787740093"
+      },
+      {
+        "src": "/backgrounds/project-zomboid/04.webp",
+        "width": 1600,
+        "height": 848,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_eb1862af5109e4658e2538d897cbd16b87ad1818.1920x1080.jpg?t=1787740093"
+      },
+      {
+        "src": "/backgrounds/project-zomboid/05.webp",
+        "width": 1600,
+        "height": 848,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_507e952789822b69868d768e1e4476946f37b1fb.1920x1080.jpg?t=1787740093"
+      },
+      {
+        "src": "/backgrounds/project-zomboid/06.webp",
+        "width": 1477,
+        "height": 830,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/108600/ss_eca8be032b3f5508bf5bea74cfbc823a4df047ce.1920x1080.jpg?t=1787740093"
+      }
+    ]
+  },
+  "cyberpunk-2077": {
+    "sourcePage": "https://store.steampowered.com/app/1091500/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/cyberpunk-2077/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_2f649b68d579bf87011487d29bc4ccbfdd97d34f.1920x1080.jpg?t=1784714077"
+      },
+      {
+        "src": "/backgrounds/cyberpunk-2077/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_0e64170751e1ae20ff8fdb7001a8892fd48260e7.1920x1080.jpg?t=1784714077"
+      },
+      {
+        "src": "/backgrounds/cyberpunk-2077/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_af2804aa4bf35d4251043744412ce3b359a125ef.1920x1080.jpg?t=1784714077"
+      },
+      {
+        "src": "/backgrounds/cyberpunk-2077/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_7924f64b6e5d586a80418c9896a1c92881a7905b.1920x1080.jpg?t=1784714077"
+      },
+      {
+        "src": "/backgrounds/cyberpunk-2077/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_4eb068b1cf52c91b57157b84bed18a186ed7714b.1920x1080.jpg?t=1784714077"
+      },
+      {
+        "src": "/backgrounds/cyberpunk-2077/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1091500/ss_b529b0abc43f55fc23fe8058eddb6e37c9629a6a.1920x1080.jpg?t=1784714077"
+      }
+    ]
+  },
+  "baldurs-gate-3": {
+    "sourcePage": "https://store.steampowered.com/app/1086940/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/baldurs-gate-3/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/ss_c73bc54415178c07fef85f54ee26621728c77504.1920x1080.jpg?t=1777363040"
+      },
+      {
+        "src": "/backgrounds/baldurs-gate-3/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/ss_73d93bea842b93914d966622104dcb8c0f42972b.1920x1080.jpg?t=1777363040"
+      },
+      {
+        "src": "/backgrounds/baldurs-gate-3/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/ss_cf936d31061b58e98e0c646aee00e6030c410cda.1920x1080.jpg?t=1777363040"
+      },
+      {
+        "src": "/backgrounds/baldurs-gate-3/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/ss_b6a6ee6e046426d08ceea7a4506a1b5f44181543.1920x1080.jpg?t=1777363040"
+      },
+      {
+        "src": "/backgrounds/baldurs-gate-3/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/ss_6b8faba0f6831a406ce015648958da9612d14dbb.1920x1080.jpg?t=1777363040"
+      },
+      {
+        "src": "/backgrounds/baldurs-gate-3/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/1086940/ss_8fc5eba770b4a1639b31666908bdd2bbc1aa2ae4.1920x1080.jpg?t=1777363040"
+      }
+    ]
+  },
+  "fallout-4": {
+    "sourcePage": "https://store.steampowered.com/app/377160/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/fallout-4/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_f7861bd71e6c0c218d8ff69fb1c626aec0d187cf.1920x1080.jpg?t=1786648137"
+      },
+      {
+        "src": "/backgrounds/fallout-4/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_910437ac708aed7c028f6e43a6224c633d086b0a.1920x1080.jpg?t=1786648137"
+      },
+      {
+        "src": "/backgrounds/fallout-4/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_f649b8e57749f380cca225db5074edbb1e06d7f5.1920x1080.jpg?t=1786648137"
+      },
+      {
+        "src": "/backgrounds/fallout-4/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_c310f858e6a7b02ffa21db984afb0dd1b24c1423.1920x1080.jpg?t=1786648137"
+      },
+      {
+        "src": "/backgrounds/fallout-4/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_5e2d136759e0ff4e0d74940fffc9c64e8cdcd833.1920x1080.jpg?t=1786648137"
+      },
+      {
+        "src": "/backgrounds/fallout-4/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/377160/ss_c6b798424a93617b4b825aea3bcd9547c0b0a5ce.1920x1080.jpg?t=1786648137"
+      }
+    ]
+  },
+  "risk-of-rain-2": {
+    "sourcePage": "https://store.steampowered.com/app/632360/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/risk-of-rain-2/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/ss_2bb49071317f7b241a527cf6e7aabd2cb6af055b.1920x1080.jpg?t=1783621122"
+      },
+      {
+        "src": "/backgrounds/risk-of-rain-2/02.webp",
+        "width": 1600,
+        "height": 908,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/ss_a3f57f281813cb51cb5d919701470acb962ff297.1920x1080.jpg?t=1783621122"
+      },
+      {
+        "src": "/backgrounds/risk-of-rain-2/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/ss_328d6fcb223f848c2a1047bb86702c4175d92317.1920x1080.jpg?t=1783621122"
+      },
+      {
+        "src": "/backgrounds/risk-of-rain-2/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/ss_dc777b5c583794c99440b196cd1d26884fb1720b.1920x1080.jpg?t=1783621122"
+      },
+      {
+        "src": "/backgrounds/risk-of-rain-2/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/ss_0377ff24b4d60db6a38ddc0824b7f308890b9231.1920x1080.jpg?t=1783621122"
+      },
+      {
+        "src": "/backgrounds/risk-of-rain-2/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/632360/ss_85548e86c50ff654c6a49235ea686a956f8ee9ec.1920x1080.jpg?t=1783621122"
+      }
+    ]
+  },
+  "cities-skylines": {
+    "sourcePage": "https://store.steampowered.com/app/255710/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/cities-skylines/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/ss_0754001c88ad4dbfff92faf9a97e8d87cf3f8840.1920x1080.jpg?t=1789394186"
+      },
+      {
+        "src": "/backgrounds/cities-skylines/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/ss_e0f842c9327df9defabf120b6c59e1ba42f54a75.1920x1080.jpg?t=1789394186"
+      },
+      {
+        "src": "/backgrounds/cities-skylines/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/ss_b5a4b72062b8c4ad677b242963e88c2e624cb1f9.1920x1080.jpg?t=1789394186"
+      },
+      {
+        "src": "/backgrounds/cities-skylines/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/ss_39f74526167020dfae4156945f24e7e49d5eedf8.1920x1080.jpg?t=1789394186"
+      },
+      {
+        "src": "/backgrounds/cities-skylines/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/ss_a4ebf2b3ad46e620d99fa471708d68b28ea4d7d1.1920x1080.jpg?t=1789394186"
+      },
+      {
+        "src": "/backgrounds/cities-skylines/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/255710/ss_013b26f27484941d4edbd406f8df5b5238f120df.1920x1080.jpg?t=1789394186"
+      }
+    ]
+  },
+  "dont-starve-together": {
+    "sourcePage": "https://store.steampowered.com/app/322330/",
+    "retrievedAt": "2026-09-25",
+    "screenshots": [
+      {
+        "src": "/backgrounds/dont-starve-together/01.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322330/ss_d053a7220a03ab689da9312c6d15fe8211401f55.1920x1080.jpg?t=1790287771"
+      },
+      {
+        "src": "/backgrounds/dont-starve-together/02.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322330/ss_37e30c4cf8c945f1958890c8fa7346af6bea547d.1920x1080.jpg?t=1790287771"
+      },
+      {
+        "src": "/backgrounds/dont-starve-together/03.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322330/ss_f863729856b94b3485ee80e6fd11289595f6634c.1920x1080.jpg?t=1790287771"
+      },
+      {
+        "src": "/backgrounds/dont-starve-together/04.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322330/ss_92f4145bd510f66d63028e1cdf27eb30bd44cea1.1920x1080.jpg?t=1790287771"
+      },
+      {
+        "src": "/backgrounds/dont-starve-together/05.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322330/ss_9a7730946f2e060457b5c19ac2d870a78ab0f20b.1920x1080.jpg?t=1790287771"
+      },
+      {
+        "src": "/backgrounds/dont-starve-together/06.webp",
+        "width": 1600,
+        "height": 900,
+        "sourceUrl": "https://shared.akamai.steamstatic.com/store_item_assets/steam/apps/322330/ss_7f2ad9be835040a8995cd3653cd521553ef776cf.1920x1080.jpg?t=1790287771"
+      }
+    ]
+  }
+}

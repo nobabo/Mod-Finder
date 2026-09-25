@@ -1,0 +1,10 @@
+[
+  { "id": "sandbox", "ko": "샌드박스", "en": "Sandbox" },
+  { "id": "rpg", "ko": "RPG", "en": "RPG" },
+  { "id": "survival", "ko": "생존", "en": "Survival" },
+  { "id": "simulation", "ko": "시뮬레이션", "en": "Simulation" },
+  { "id": "strategy", "ko": "전략", "en": "Strategy" },
+  { "id": "action", "ko": "액션", "en": "Action" },
+  { "id": "roguelike", "ko": "로그라이크", "en": "Roguelike" },
+  { "id": "horror", "ko": "공포", "en": "Horror" }
+]

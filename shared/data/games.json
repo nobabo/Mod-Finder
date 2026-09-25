@@ -1,0 +1,299 @@
+[
+  {
+    "id": "minecraft-java",
+    "name": "Minecraft",
+    "koreanName": "마인크래프트",
+    "edition": "JAVA EDITION",
+    "aliases": [
+      "마크",
+      "minecraft java",
+      "마인크래프트 자바"
+    ],
+    "short": "MC",
+    "color": "#89bc69",
+    "sources": {
+      "modrinth": {
+        "scope": "minecraft"
+      },
+      "curseforge": {
+        "scope": "432",
+        "slug": "minecraft"
+      }
+    },
+    "genres": [
+      "sandbox",
+      "survival"
+    ],
+    "image": "/games/minecraft-java.png"
+  },
+  {
+    "id": "stardew-valley",
+    "name": "Stardew Valley",
+    "koreanName": "스타듀 밸리",
+    "edition": "PC",
+    "aliases": [
+      "스타듀",
+      "스듀",
+      "stardew"
+    ],
+    "short": "SV",
+    "color": "#dfb861",
+    "sources": {
+      "nexus": {
+        "scope": "stardewvalley"
+      }
+    },
+    "genres": [
+      "simulation",
+      "rpg"
+    ],
+    "image": "/games/stardew-valley.png"
+  },
+  {
+    "id": "skyrim-se",
+    "name": "Skyrim",
+    "koreanName": "스카이림",
+    "edition": "SPECIAL EDITION",
+    "aliases": [
+      "스카이림 se",
+      "skyrim special edition",
+      "스카이림 스페셜 에디션"
+    ],
+    "short": "SK",
+    "color": "#a6b5cd",
+    "sources": {
+      "nexus": {
+        "scope": "skyrimspecialedition"
+      }
+    },
+    "genres": [
+      "rpg",
+      "action"
+    ],
+    "image": "/games/skyrim-se.png"
+  },
+  {
+    "id": "lethal-company",
+    "name": "Lethal Company",
+    "koreanName": "리썰 컴퍼니",
+    "edition": "PC",
+    "aliases": [
+      "리썰",
+      "리설 컴퍼니",
+      "lethal"
+    ],
+    "short": "LC",
+    "color": "#d5866d",
+    "sources": {
+      "thunderstore": {
+        "scope": "lethal-company"
+      },
+      "nexus": {
+        "scope": "lethalcompany"
+      }
+    },
+    "genres": [
+      "horror",
+      "survival"
+    ],
+    "image": "/games/lethal-company.png"
+  },
+  {
+    "id": "rimworld",
+    "name": "RimWorld",
+    "koreanName": "림월드",
+    "edition": "PC",
+    "aliases": [
+      "림월드",
+      "rim world"
+    ],
+    "short": "RW",
+    "color": "#9ca1d4",
+    "sources": {
+      "steam": {
+        "scope": "294100"
+      },
+      "nexus": {
+        "scope": "rimworld"
+      }
+    },
+    "genres": [
+      "simulation",
+      "strategy"
+    ],
+    "image": "/games/rimworld.png"
+  },
+  {
+    "id": "valheim",
+    "name": "Valheim",
+    "koreanName": "발헤임",
+    "short": "VH",
+    "color": "#75bca8",
+    "genres": [
+      "survival",
+      "sandbox"
+    ],
+    "sources": {
+      "thunderstore": {
+        "scope": "valheim"
+      }
+    },
+    "edition": "PC",
+    "aliases": []
+  },
+  {
+    "id": "terraria",
+    "name": "Terraria",
+    "koreanName": "테라리아",
+    "short": "TR",
+    "color": "#72ce89",
+    "genres": [
+      "sandbox",
+      "survival",
+      "action"
+    ],
+    "sources": {
+      "steam": {
+        "scope": "1281930"
+      }
+    },
+    "edition": "tModLoader",
+    "aliases": []
+  },
+  {
+    "id": "project-zomboid",
+    "name": "Project Zomboid",
+    "koreanName": "프로젝트 좀보이드",
+    "short": "PZ",
+    "color": "#b4b780",
+    "genres": [
+      "survival",
+      "horror"
+    ],
+    "sources": {
+      "steam": {
+        "scope": "108600"
+      }
+    },
+    "edition": "PC",
+    "aliases": [
+      "좀보이드",
+      "프로좀"
+    ]
+  },
+  {
+    "id": "cyberpunk-2077",
+    "name": "Cyberpunk 2077",
+    "koreanName": "사이버펑크 2077",
+    "short": "CP",
+    "color": "#f4d95e",
+    "genres": [
+      "rpg",
+      "action"
+    ],
+    "sources": {
+      "nexus": {
+        "scope": "cyberpunk2077"
+      }
+    },
+    "edition": "PC",
+    "aliases": []
+  },
+  {
+    "id": "baldurs-gate-3",
+    "name": "Baldur's Gate 3",
+    "koreanName": "발더스 게이트 3",
+    "short": "BG",
+    "color": "#d7a76c",
+    "genres": [
+      "rpg",
+      "strategy"
+    ],
+    "sources": {
+      "nexus": {
+        "scope": "baldursgate3"
+      }
+    },
+    "edition": "PC",
+    "aliases": [
+      "발더스",
+      "발게이3",
+      "bg3"
+    ]
+  },
+  {
+    "id": "fallout-4",
+    "name": "Fallout 4",
+    "koreanName": "폴아웃 4",
+    "short": "FO",
+    "color": "#7ba6d6",
+    "genres": [
+      "rpg",
+      "action"
+    ],
+    "sources": {
+      "nexus": {
+        "scope": "fallout4"
+      }
+    },
+    "edition": "PC",
+    "aliases": []
+  },
+  {
+    "id": "risk-of-rain-2",
+    "name": "Risk of Rain 2",
+    "koreanName": "리스크 오브 레인 2",
+    "short": "RR",
+    "color": "#91c7db",
+    "genres": [
+      "roguelike",
+      "action"
+    ],
+    "sources": {
+      "thunderstore": {
+        "scope": "riskofrain2"
+      }
+    },
+    "edition": "PC",
+    "aliases": []
+  },
+  {
+    "id": "cities-skylines",
+    "name": "Cities: Skylines",
+    "koreanName": "시티즈: 스카이라인",
+    "short": "CS",
+    "color": "#5fcac7",
+    "genres": [
+      "simulation",
+      "strategy"
+    ],
+    "sources": {
+      "steam": {
+        "scope": "255710"
+      }
+    },
+    "edition": "PC",
+    "aliases": []
+  },
+  {
+    "id": "dont-starve-together",
+    "name": "Don't Starve Together",
+    "koreanName": "돈 스타브 투게더",
+    "short": "DS",
+    "color": "#d3ae81",
+    "genres": [
+      "survival",
+      "sandbox"
+    ],
+    "sources": {
+      "steam": {
+        "scope": "322330"
+      }
+    },
+    "edition": "PC",
+    "aliases": [
+      "굶지마",
+      "굶지마 투게더"
+    ]
+  }
+]
