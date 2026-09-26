@@ -1,6 +1,7 @@
 import { getGame } from '../shared/games';
 import logos from '../shared/data/logos.json';
 import { BrandLogo } from './BrandLogo';
+import { ModDescription } from './ModDescription';
 import { listingText, tagText } from '../shared/content';
 import { t, locale } from './lib/i18n';
 import { useEffect, useRef, useState } from 'react';
@@ -16,7 +17,7 @@ export const dateLabel = (date: string | null) => date ? new Date(date).toLocale
 
 export function ModCard({ item, saved, toggleSave, open, detail }: { item: Listing; saved: boolean; toggleSave: () => void; open: () => void; detail: () => void }) {
   const text = listingText(item, locale);
-  return <article className="mod-card">
+  return <ModDescription summary={listingText(item, 'ko').summary}>
     <div className="card-cover"><button type="button" className="mod-logo-link" onClick={open} aria-label={`${text.title} ${t('원본 사이트에서 보기')}`}><ModIcon item={item} /></button><button className={`icon-button save-button ${saved ? 'is-saved' : ''}`} onClick={toggleSave} aria-label={`${item.title} ${saved ? t("즐겨찾기 해제") : t("즐겨찾기")}`}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button></div>
     <div className="card-body">
       <button className="title-button" onClick={detail}>{text.title}</button>
@@ -24,7 +25,7 @@ export function ModCard({ item, saved, toggleSave, open, detail }: { item: Listi
       <div className="card-meta">{item.metrics[0] ? <span title={t(item.metrics[0].label)} aria-label={number(item.metrics[0].value) + ' ' + t(item.metrics[0].label)}>{item.metrics[0].label === '다운로드' ? <Download size={13}/> : <Users size={13}/>} {number(item.metrics[0].value)}</span> : <span>{t("통계 정보 없음")}</span>}</div>
       <div className="tags">{(item.loaders?.length ? item.loaders : item.tags).slice(0, 3).map(tag => <span key={tag}>{tagText(tag, locale)}</span>)}{!item.tags.length && !item.loaders?.length && <span>{item.kind ? tagText(item.kind, locale) : t("모드")}</span>}</div>
     </div>
-  </article>;
+  </ModDescription>;
 }
 
 function useDialog(close: () => void) {

@@ -82,7 +82,6 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
  .deck-rail { gap:20px;padding-left:30px;padding-right:30px;min-height:420px; }
 }
 @media(max-width:650px) {
- .settings-fab-wrap { display:block;position:fixed;top:auto;bottom:80px;right:16px;transform:none; }
  .settings-fab { display:none; }
  .settings-menu { position:fixed;right:0;bottom:0;top:auto;transform:none;width:calc(100vw - 32px);padding:18px;max-height:calc(100dvh - 110px);overflow:auto; }
  .settings-menu nav button { min-height:102px;font-size:10px; }
@@ -298,7 +297,7 @@ html[data-glass="webgl"] .search-box { background:linear-gradient(125deg,rgba(va
 
 /* Reserve the fixed settings button (18px inset + 66px button + 20px gap)
    on both sides so the search row stays centered without overlapping it. */
-@media(min-width:651px) {
+@media(min-width:1401px) {
   .search-dock { width:min(100%,calc(100vw - 208px)); }
 }
 

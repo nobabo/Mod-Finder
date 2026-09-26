@@ -4,6 +4,7 @@ import { getGame } from '../../shared/games';
 import { externalSearch } from '../../shared/links';
 import { appendStable, groupResults, orderSearchPage, sortResultGroups } from '../../shared/ranking';
 import { bucketKey, searchPlan, runSearchQueue, type SearchSpec } from '../../shared/search-plan';
+import { runSearchWithCorrections } from '../../shared/search-corrections';
 import verifiedProjects from '../../shared/data/verified-projects.json';
 import type { Listing, SearchRequest, SearchResult, VerifiedProjectLink } from '../../shared/types';
 import { searchSource } from './api';
@@ -14,6 +15,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
   const [links, setLinks] = useState<VerifiedProjectLink[]>(verifiedProjects);
   const [buckets, setBuckets] = useState<Record<string, Bucket>>({});
   const [refresh, setRefresh] = useState(0);
+  const [searching, setSearching] = useState(false);
   const generation = useRef(0);
   const controller = useRef<AbortController | null>(null);
   const busy = useRef(false);
@@ -24,9 +26,11 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       const seen = new Set<string>();
       let nextRequest = request;
       let received = 0;
+      let empty = false;
       for (let page = 0; page < 5; page++) {
       const result = await searchSource(nextRequest, signal);
       received += result.items.length;
+      empty = (result.status === 'empty' || result.status === 'success') && !result.nextCursor && received === 0;
       const more = !!result.nextCursor && !seen.has(result.nextCursor) && result.status === 'success' && received < 100 && page < 4;
       if (generation.current !== gen || signal.aborted) return;
       setItems(previous => appendStable(previous, orderSearchPage(result.items, request.query, request.sort)));
@@ -36,6 +40,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       seen.add(result.nextCursor!);
       nextRequest = { ...request, cursor:result.nextCursor! };
       }
+      return { hasItems: received > 0, empty };
     } catch {
       if (generation.current !== gen || signal.aborted) return;
       const link = externalSearch(getGame(request.gameId)!, request.source, request.query, request.filters);
@@ -48,11 +53,19 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
     const gen = ++generation.current;
     const requests = enabled ? searchPlan(spec) : [];
     busy.current = requests.length > 0;
+    setSearching(requests.length > 0);
     setItems([]); setLinks(verifiedProjects);
     setBuckets(Object.fromEntries(requests.map(request => [bucketKey(request), { request, loading: true }])));
     const timer = setTimeout(() => {
-      void runSearchQueue(requests, request => run(request, gen, current.signal), current.signal)
-        .finally(() => { if (generation.current === gen) busy.current = false; });
+      if (!enabled) return;
+      void runSearchWithCorrections(spec, request => run(request, gen, current.signal), current.signal, round => {
+        if (generation.current !== gen || current.signal.aborted) return;
+        setBuckets(previous => {
+          const next = { ...previous };
+          for (const request of round) next[bucketKey(request)] = { request, loading: true };
+          return next;
+        });
+      }).finally(() => { if (generation.current === gen) { busy.current = false; setSearching(false); } });
     }, 250);
     return () => { clearTimeout(timer); current.abort(); };
     // The serialized key contains the complete search specification.
@@ -68,11 +81,11 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       for (const request of requests) next[bucketKey(request)] = { ...next[bucketKey(request)], loading: true };
       return next;
     });
-    void runSearchQueue(requests, request => run(request, gen, signal), signal)
+    void runSearchQueue(requests, async request => { await run(request, gen, signal); }, signal)
       .finally(() => { if (generation.current === gen) busy.current = false; });
   };
   const groups = useMemo(() => {
     return sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst);
   }, [items, spec.query, spec.selectedSource, spec.sort, modpacksFirst, links]);
-  return { items, groups, buckets, loading: Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => setRefresh(n => n + 1) };
+  return { items, groups, buckets, loading: searching || Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => setRefresh(n => n + 1) };
 }

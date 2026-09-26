@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight, Search, X, Boxes, Swords, Trees, Building2, Flag, Zap, Dices, Ghost, Layers, Check, Download, TrendingUp, ArrowDownWideNarrow, Package } from 'lucide-react';
 import type { Sort } from '../shared/types';
+import { categoryIcon } from './category-icons';
 import { BrandLogo } from './BrandLogo';
 import { findGames, GENRES } from '../shared/games';
 import logos from '../shared/data/logos.json';
@@ -10,17 +11,6 @@ import { locale, t } from './lib/i18n';
 import { useRailDrag } from './lib/use-rail-drag';
 
 const logoCatalog: Record<string, { src: string }> = logos;
-const categoryIcon = (name: string) => {
-  if (/weapon|armou?r|equipment|gear|combat/i.test(name)) return Swords;
-  if (/world|crop|farm|environment|tree|fishing/i.test(name)) return Trees;
-  if (/build|settlement|interior|furniture|home|location|apartment/i.test(name)) return Building2;
-  if (/quest|adventure|scenario|map|moon/i.test(name)) return Flag;
-  if (/optim|performance|skill|magic|tech|perk/i.test(name)) return Zap;
-  if (/dice|gameplay|mechanic|gamemode|tweak/i.test(name)) return Dices;
-  if (/monster|enem|creature|hazard/i.test(name)) return Ghost;
-  if (/item|storage|craft|prop|food/i.test(name)) return Boxes;
-  return Layers;
-};
 export function GameDeck({ gameId, select, close, genreMode = false, children, sort = 'downloads', setSort, modpacksFirst = false, setModpacksFirst, categories }: { categories?: { id: string; ko: string; en: string }[]; sort?:Sort; setSort?:(sort:Sort) => void; modpacksFirst?: boolean; setModpacksFirst?: (value: boolean) => void; genreMode?:boolean; children?:ReactNode; gameId: string; select: (id: string, genre: string) => void; close: () => void }) {
   const [view,setView] = useState<'menu'|'genre'|'sort'>(genreMode ? 'menu' : 'genre');
   const title = genreMode ? view === 'menu' ? '검색 필터' : view === 'sort' ? '정렬 방법' : '장르' : '게임 선택';

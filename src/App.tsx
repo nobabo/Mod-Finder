@@ -58,7 +58,7 @@ export default function App() {
   const game = getGame(gameId);
   const gameName = (id: string) => { const g = getGame(id); return g ? (locale === 'ko' ? g.koreanName : g.name) : t('전체 게임'); };
   const scopeGames = gamesInScope(gameId, genre);
-  useModSummaries([...scopeGames.map(game => game.id), ...local.favorites.map(item => item.gameId), ...compared.map(item => item.gameId)], locale === 'ko');
+  useModSummaries([...scopeGames.map(game => game.id), ...local.favorites.map(item => item.gameId), ...compared.map(item => item.gameId)], true);
   const themeControls = <div className="theme-options">{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={accent === theme.id} onClick={() => setAccent(theme.id)}><i style={{ background: theme.grad }} />{theme.name}{accent === theme.id && <Check size={14} />}</button>)}</div>;
   const hasSearch = submitted || !!filters.category;
   const search = useSearch({ gameId, genre, query, filters, selectedSource: 'all', sort }, modpacksFirst, hasSearch);
