@@ -101,13 +101,13 @@ export default function App() {
     </div>
     <main className="main">
       <div className="content">
+      {page === 'discover' && hasSearch && <div className="results-brand" role="img" aria-label="Mod Finder"><BrandLogo size={96} /></div>}
       <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
       <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row"><form className="search-box" onSubmit={e => { e.preventDefault(); submit(); }}>{heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160} /></div>}<button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit">{t("모드 검색")} <ArrowRight size={18} /></button></form><button type="button" className={`filter-orb ${filterOpen || activeFilters ? 'active' : ''}`} aria-label={t("검색 필터")} aria-expanded={filterOpen} onClick={() => setFilterOpen(value => !value)}><SlidersHorizontal size={18}/></button></div>
 
       </div>
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
-
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}
         {search.loading && !search.items.length && <div className="shelf" aria-label={t("검색 중")}>{[1, 2, 3].map(n => <div key={n} className="skeleton-card"><div /><span /><span /><span /></div>)}</div>}
