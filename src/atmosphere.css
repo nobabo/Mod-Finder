@@ -36,7 +36,7 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
 .settings-menu nav button svg { stroke-width:1.3;filter:drop-shadow(0 3px 8px rgba(var(--tint-rgb),.45)); }
 .settings-menu nav button:hover { transform:translateY(-4px);background:rgba(var(--tint-rgb),0.086);border-color:rgba(var(--tint-rgb),0.333); }
 .settings-menu nav button { background:linear-gradient(145deg,#06132233,rgba(var(--tint-rgb),0.031)); }
-.mobile-nav { background:#07101e88; }
+.mobile-nav { background:linear-gradient(115deg,rgba(var(--tint-rgb),.10),rgba(255,255,255,.025) 48%,rgba(var(--secondary-rgb),.08));box-shadow:inset 0 1px 0 rgba(var(--tint-rgb),.32),inset 0 2px 5px rgba(255,255,255,.04); }
 .modal,.sheet { background:linear-gradient(135deg,#1c293477,#08122399) padding-box,linear-gradient(135deg,rgba(var(--tint-rgb),0.333),rgba(var(--tint-rgb),0.082)) border-box; }
 .modal-backdrop,.sheet-backdrop { background:#03071066;backdrop-filter:blur(3px); }
 

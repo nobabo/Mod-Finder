@@ -269,7 +269,7 @@ select option{background:#1a1433;color:#eae6ff}
   .settings-fab-wrap{display:none}
   .main{padding-bottom:calc(65px + env(safe-area-inset-bottom))}
   .mobile-nav{display:flex;position:fixed;bottom:0;left:0;right:0;height:calc(65px + env(safe-area-inset-bottom));z-index:40;padding-bottom:env(safe-area-inset-bottom);
-    background:rgba(10,8,22,.92);backdrop-filter:blur(20px);border:0}
+    background:transparent;backdrop-filter:blur(18px) saturate(1.45);-webkit-backdrop-filter:blur(18px) saturate(1.45);border:0}
   .mobile-nav>button{flex:1;display:flex;flex-direction:column;gap:5px;align-items:center;justify-content:center;font-family:var(--kr);font-size:8.5px;color:var(--muted)}
   .mobile-nav>button.active{color:#fff}
   .mobile-nav>button.active svg{filter:drop-shadow(0 0 9px rgba(var(--tint-rgb),.9))}
@@ -402,7 +402,8 @@ body { background:var(--canvas); }
 .app-shell { background:radial-gradient(ellipse at 50% 28%,var(--glow),transparent 65%); }
 .search-box { background:linear-gradient(var(--surface-deep),var(--surface-deep)) padding-box,linear-gradient(100deg,var(--accent),var(--cyan) 40%,var(--accent) 80%) border-box; background-size:auto,320% 320%; }
 .search-box .search-submit { background-image:var(--grad); }
-.settings-fab,.mobile-nav { background:var(--surface-deep); color:var(--accent); }
+.settings-fab { background:var(--surface-deep); color:var(--accent); }
+.mobile-nav { color:var(--accent); }
 .settings-menu,.sheet,.modal,.toast,.compare-tray { background:var(--glass) padding-box,var(--hairline) border-box; }
 .mod-card { background:var(--glass) padding-box,var(--hairline) border-box; }
 .card-cover,.detail-cover { background:radial-gradient(ellipse at 20% 0%,rgba(var(--tint-rgb),.25),transparent),var(--surface-deep); }
