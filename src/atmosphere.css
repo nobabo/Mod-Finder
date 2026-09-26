@@ -36,7 +36,7 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
 .settings-menu nav button svg { stroke-width:1.3;filter:drop-shadow(0 3px 8px rgba(var(--tint-rgb),.45)); }
 .settings-menu nav button:hover { transform:translateY(-4px);background:rgba(var(--tint-rgb),0.086);border-color:rgba(var(--tint-rgb),0.333); }
 .settings-menu nav button { background:linear-gradient(145deg,#06132233,rgba(var(--tint-rgb),0.031)); }
-.mobile-nav { background:linear-gradient(115deg,rgba(var(--tint-rgb),.10),rgba(255,255,255,.025) 48%,rgba(var(--secondary-rgb),.08));box-shadow:inset 0 1px 0 rgba(var(--tint-rgb),.32),inset 0 2px 5px rgba(255,255,255,.04); }
+.mobile-nav { background:linear-gradient(115deg,rgba(var(--tint-rgb),.10),rgba(255,255,255,.025) 48%,rgba(var(--secondary-rgb),.08));box-shadow:none; }
 .modal,.sheet { background:linear-gradient(135deg,#1c293477,#08122399) padding-box,linear-gradient(135deg,rgba(var(--tint-rgb),0.333),rgba(var(--tint-rgb),0.082)) border-box; }
 .modal-backdrop,.sheet-backdrop { background:#03071066;backdrop-filter:blur(3px); }
 
@@ -312,3 +312,41 @@ html[data-glass="webgl"] .search-box { background:linear-gradient(125deg,rgba(va
 /* Overscan keeps the photo edges outside the viewport during the small camera move. */
 .atmosphere-fallback { inset:-48px;transform:translate3d(var(--background-x,0px),var(--background-y,0px),0); }
 @media(prefers-reduced-motion:reduce) { .atmosphere-fallback { transform:none; } }
+
+/* Keep all picker cards in one horizontal row, with shared size steps. */
+@media(max-width:850px) {
+ .game-deck,.settings-menu { --picker-width:180px;--picker-height:232px;--picker-icon:96px;--picker-gap:18px;--picker-padding:20px;--picker-label:15px; }
+ .deck-card,.settings-menu nav button { width:var(--picker-width);flex-basis:var(--picker-width);height:var(--picker-height);min-height:var(--picker-height);padding:var(--picker-padding) 12px;gap:var(--picker-gap);border-radius:20px; }
+ .deck-card::after,.settings-menu nav button::after { border-radius:16px; }
+ .deck-card img,.deck-card>svg:not(.sort-selection),.settings-menu nav button svg { width:var(--picker-icon);height:var(--picker-icon);flex-shrink:0; }
+ .deck-card>span,.settings-menu nav button { font-size:var(--picker-label); }
+ .deck-rail { gap:var(--picker-gap);padding:40px 20px 32px;min-height:calc(var(--picker-height) + 72px); }
+ .settings-menu nav { gap:var(--picker-gap); }
+ .settings-rail { padding:32px 20px; }
+ .deck-card .sort-selection { top:12px;right:12px;width:20px;height:20px; }
+ .preference-panel .theme-options { grid-template-columns:repeat(4,minmax(0,1fr));gap:12px; }
+ .preference-panel .theme-options button { min-height:104px;padding:12px 6px;gap:10px; }
+ .preference-panel .theme-options i { width:40px;height:40px; }
+ .language-options button { min-height:88px;padding:12px 6px;font-size:15px; }
+}
+@media(max-width:650px) {
+ .game-deck,.settings-menu { --picker-width:152px;--picker-height:200px;--picker-icon:80px;--picker-gap:14px;--picker-padding:16px;--picker-label:14px; }
+ .preference-panel .theme-options { grid-template-columns:repeat(3,minmax(0,1fr));gap:10px; }
+ .preference-panel .theme-options button { min-height:88px;padding:10px 5px;gap:8px; }
+ .preference-panel .theme-options i { width:32px;height:32px; }
+ .language-options button { min-height:76px;font-size:14px; }
+}
+@media(max-width:400px) {
+ .game-deck,.settings-menu { --picker-width:132px;--picker-height:176px;--picker-icon:64px;--picker-gap:12px;--picker-padding:12px;--picker-label:13px; }
+ .deck-rail { padding-left:16px;padding-right:16px; }
+ .settings-rail { padding-left:16px;padding-right:16px; }
+ .preference-panel .theme-options button { min-height:76px;font-size:11px; }
+ .preference-panel .theme-options i { width:28px;height:28px; }
+ .language-options { gap:10px; }
+ .language-options button { min-height:64px;font-size:13px; }
+}
+@media(max-height:500px) and (max-width:850px) {
+ .game-deck,.settings-menu { --picker-height:148px;--picker-icon:52px;--picker-gap:10px;--picker-padding:10px;--picker-label:13px; }
+ .deck-rail { padding-top:20px;padding-bottom:20px;min-height:188px; }
+ .settings-rail { padding-top:20px;padding-bottom:20px; }
+}
