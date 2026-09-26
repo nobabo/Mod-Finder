@@ -153,8 +153,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (context) { context.filter = 'blur(2.5px)'; context.drawImage(image,-6,-6,softened.width + 12,softened.height + 12); }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, context ? softened : image);
   };
-  // Search controls use their CSS outlines; a second lens rim makes them look doubled.
-  const selector = '.results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)), .settings-fab, .modal, .sheet';
+  const selector = '.search-box, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)), .settings-fab, .modal, .sheet';
   const observer = new MutationObserver(() => { panelDirty = true; needsDraw = true; });
   observer.observe(document.getElementById('root')!, { childList: true, subtree: true });
   const resize = () => { panelDirty = true; needsDraw = true; };
