@@ -33,6 +33,16 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
       const parsed = gamesQuerySchema.safeParse(Object.fromEntries(url.searchParams));
       return parsed.success ? jsonResponse({ games: findGames(parsed.data.query) }) : jsonResponse({ error: 'invalid_query' }, 400);
     }
+    if (url.pathname === '/v1/minecraft/versions') {
+      try {
+        const data = z.array(z.object({ version: z.string().max(40), version_type: z.string(), date: z.string() })).max(4000)
+          .parse(await http.json('https://api.modrinth.com/v2/tag/game_version'));
+        const versions = data.filter(item => item.version_type === 'release' && /^\d+\.\d+(?:\.\d+)?$/.test(item.version))
+          .sort((a, b) => Date.parse(b.date) - Date.parse(a.date))
+          .map(item => item.version);
+        return jsonResponse({ versions: [...new Set(versions)].slice(0, 200) });
+      } catch { return jsonResponse({ error: 'versions_unavailable' }, 502); }
+    }
     const sourcePath = url.pathname.match(/^\/v1\/games\/([^/]+)\/sources$/);
     if (sourcePath) {
       const game = getGame(sourcePath[1]);

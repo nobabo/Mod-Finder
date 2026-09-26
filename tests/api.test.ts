@@ -11,6 +11,20 @@ function fakeHttp(body: unknown, status = 200, headers: Record<string, string> =
 }
 const path = '/v1/search?gameId=minecraft-java&source=modrinth&query=Sodium';
 describe('search API', () => {
+  it('offers release version cards from the upstream catalog in date order', async () => {
+    const { http, fetcher } = fakeHttp([
+      { version: '1.20.1', version_type: 'release', date: '2023-06-12T00:00:00Z' },
+      { version: '24w20a', version_type: 'snapshot', date: '2024-05-15T00:00:00Z' },
+      { version: '1.21.1', version_type: 'release', date: '2024-08-08T00:00:00Z' },
+    ]);
+    app = await createApp({ config: readConfig({}), http });
+    expect((await app.inject('/v1/minecraft/versions')).json()).toEqual({ versions: ['1.21.1', '1.20.1'] });
+    expect(fetcher).toHaveBeenCalledWith('https://api.modrinth.com/v2/tag/game_version', expect.anything());
+  });
+  it('rejects malformed game version catalogs', async () => {
+    app = await createApp({ config: readConfig({}), ...fakeHttp({ versions: ['1.21.1'] }) });
+    expect((await app.inject('/v1/minecraft/versions')).statusCode).toBe(502);
+  });
   it('browses without a keyword and continues the same ordered listing on the next page', async () => {
     const fetcher = vi.fn(async (input: string | URL | Request) => {
       const url = new URL(String(input));
