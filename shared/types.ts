@@ -1,7 +1,7 @@
-export const SOURCES = ['modrinth', 'curseforge', 'atlauncher', 'thunderstore', 'nexus', 'steam'] as const;
+export const SOURCES = ['modrinth', 'curseforge', 'thunderstore', 'nexus', 'steam'] as const;
 export type Source = typeof SOURCES[number];
 export const SOURCE_NAMES: Record<Source, string> = {
-  modrinth: 'Modrinth', curseforge: 'CurseForge', atlauncher: 'ATLauncher', thunderstore: 'Thunderstore', nexus: 'Nexus Mods', steam: 'Steam Workshop',
+  modrinth: 'Modrinth', curseforge: 'CurseForge', thunderstore: 'Thunderstore', nexus: 'Nexus Mods', steam: 'Steam Workshop',
 };
 export type SourceStatus = 'ready' | 'success' | 'empty' | 'external' | 'auth_required' | 'unsupported' | 'error' | 'rate_limited' | 'disabled';
 export type Filters = { version?: string; loader?: string; kind?: string; category?: string };

@@ -37,7 +37,7 @@ describe('imported Korean summaries', () => {
       for (const [title, original, korean, key] of rows) {
         expect(title.trim()).toBeTruthy(); expect(original.trim()).toBeTruthy();
         expect(korean).toMatch(/[가-힣]/); expect(korean).not.toMatch(/<<<#\d+#>>>|\[object Object\]|\uFFFD/);
-        if (key) expect(key).toMatch(/^(modrinth|curseforge|atlauncher|thunderstore|nexus|steam):[^:]+:.+$/);
+        if (key) expect(key).toMatch(/^(modrinth|curseforge|thunderstore|nexus|steam):[^:]+:.+$/);
       }
       count += rows.length;
     }

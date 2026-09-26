@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { GAMES, findGames, getGame } from '../shared/games';
 import { externalSearch, safeExternalUrl } from '../shared/links';
 import { appendStable, groupResults, matchPriority, sortResultGroups } from '../shared/ranking';
-import { mapAtlauncher, mapModrinth, mapSteam, mapThunderstore, cursorFor, readCursor } from '../server/adapters';
+import { mapModrinth, mapSteam, mapThunderstore, cursorFor, readCursor } from '../server/adapters';
 import type { SearchRequest } from '../shared/types';
 const request: SearchRequest = { gameId: 'minecraft-java', source: 'modrinth', query: 'Sodium', filters: {}, sort: 'relevance' };
 const mod = (id: string, rank = 1) => mapModrinth({ project_id: id, title: 'Sodium', description: 'Renderer', categories: ['fabric'], versions: ['1.21.1'] }, GAMES[0], rank);
@@ -74,7 +74,7 @@ it('sorts merged pages by downloads, keeping missing metrics after zero', () => 
 
 it('promotes known modpacks across Minecraft and other game genres', () => {
   const minecraftMod = { ...mod('popular-mod'), metrics: [{ label: '다운로드', value: 1000 }] };
-  const minecraftPack = mapAtlauncher({ id: '581', name: 'SkyFactory One', safeName: 'SkyFactoryOne', latestVersion: null }, getGame('minecraft-java')!, 1);
+  const minecraftPack = mapModrinth({ project_id: '581', title: 'SkyFactory One', project_type: 'modpack' }, getGame('minecraft-java')!, 1);
   const lethal = getGame('lethal-company')!;
   const thunderstoreHit = (name: string, category: string, downloads: number) => ({
     namespace: 'Maker', name, community_identifier: 'lethal-company', description: 'Pack search result',

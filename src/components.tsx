@@ -7,7 +7,7 @@ import { t, locale } from './lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import { Download, Users, Bookmark, Package, X } from 'lucide-react';
 import type { Listing, Source } from '../shared/types';
-export function SourceMark({ source }: { source: Source }) { return <span className={`source-mark ${source}`} aria-hidden="true">{{ modrinth: 'M', curseforge: 'C', atlauncher: 'A', thunderstore: 'T', nexus: 'N', steam: 'S' }[source]}</span>; }
+export function SourceMark({ source }: { source: Source }) { return <span className={`source-mark ${source}`} aria-hidden="true">{{ modrinth: 'M', curseforge: 'C', thunderstore: 'T', nexus: 'N', steam: 'S' }[source]}</span>; }
 export function ModIcon({ item }: { item: Listing }) {
   return <div className="mod-icon">{item.iconUrl ? <img src={item.iconUrl} alt="" loading="lazy" referrerPolicy="no-referrer" onError={event => { event.currentTarget.style.display = 'none'; }} /> : <Package size={30} />}</div>;
 }

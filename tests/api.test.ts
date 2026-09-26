@@ -30,40 +30,14 @@ describe('search API', () => {
       expect(url.searchParams.get('index')).toBe('downloads');
     }
   });
-  it('uses the ATLauncher default pack listing when no keyword is supplied', async () => {
-    const { http, fetcher } = fakeHttp({ data: { searchPacks: [{ id: '581', name: 'SkyFactory One', safeName: 'SkyFactoryOne' }] } });
+  it('rejects the retired source without contacting an upstream and omits it from capabilities', async () => {
+    const { http, fetcher } = fakeHttp({});
     app = await createApp({ config: readConfig({}), http });
-    expect((await app.inject('/v1/search?gameId=minecraft-java&source=atlauncher&query=')).json()).toMatchObject({ status: 'success', items: [{ id: '581' }] });
-    const [, options] = fetcher.mock.calls[0] as unknown as [string, RequestInit];
-    const body = JSON.parse(options.body as string);
-    expect(body.query).toContain('searchPacks: packs(first: 20)');
-    expect(body.variables).toBeUndefined();
-  });
-  it('searches ATLauncher packs without a key and preserves unknown metadata', async () => {
-    const { http, fetcher } = fakeHttp({ data: { searchPacks: [
-      { id: '581', name: 'SkyFactory One', safeName: 'SkyFactoryOne', description: '<p>A factory pack</p>', latestVersion: { minecraftVersion: '1.16.5', updatedAt: '2025-01-02T00:00:00Z' } },
-      { id: '599', name: 'Example Pack', safeName: 'ExamplePack', description: null, latestVersion: null },
-    ] } });
-    app = await createApp({ config: readConfig({}), http });
-    const res = await app.inject('/v1/search?gameId=minecraft-java&source=atlauncher&query=sky&kind=modpack');
-    expect(res.statusCode).toBe(200);
-    expect(res.json()).toMatchObject({ status: 'success', total: null, nextCursor: null, appliedFilters: { kind: 'modpack' }, items: [
-      { key: 'atlauncher:minecraft:581', id: '581', source: 'atlauncher', kind: 'modpack', title: 'SkyFactory One', summary: 'A factory pack', versions: ['1.16.5'], url: 'https://atlauncher.com/pack/SkyFactoryOne', metrics: [], iconUrl: null },
-      { key: 'atlauncher:minecraft:599', id: '599', author: null, versions: null, updatedAt: null, metrics: [] },
-    ] });
-    const [url, options] = fetcher.mock.calls[0] as unknown as [string, RequestInit];
-    expect(url).toBe('https://api.atlauncher.com/v2/graphql');
-    expect(options.method).toBe('POST');
-    expect((options.headers as Record<string, string>)['User-Agent']).toBe('Test');
-    expect(JSON.parse(options.body as string).variables).toEqual({ query: 'sky' });
-    expect(res.json().queryForwarded).toBe(false);
-  });
-  it('keeps non-pack Minecraft searches out of ATLauncher', async () => {
-    const { http, fetcher } = fakeHttp({ data: { searchPacks: [] } });
-    app = await createApp({ config: readConfig({}), http });
-    expect((await app.inject('/v1/search?gameId=minecraft-java&source=atlauncher&query=sky&kind=mod')).json()).toMatchObject({ status: 'empty', items: [] });
+    expect((await app.inject('/v1/search?gameId=minecraft-java&source=atlauncher&query=sky')).statusCode).toBe(400);
+    expect((await app.inject('/v1/listings/atlauncher/minecraft/581')).statusCode).toBe(400);
+    const sources = (await app.inject('/v1/games/minecraft-java/sources')).json().sources;
+    expect(sources.map((entry: { source: string }) => entry.source)).toEqual(['modrinth', 'curseforge', 'thunderstore', 'nexus', 'steam']);
     expect(fetcher).not.toHaveBeenCalled();
-    expect((await app.inject('/v1/search?gameId=minecraft-java&source=atlauncher&query=sky&cursor=invalid')).statusCode).toBe(400);
   });
   it('rejects unexpectedly large result arrays', async () => {
     app = await createApp({ config: readConfig({}), ...fakeHttp({ hits: Array.from({ length: 21 }, (_, i) => ({ project_id: String(i), title: 'Too many' })), total_hits: 21 }) });
@@ -116,7 +90,7 @@ describe('search API', () => {
     const { http, fetcher } = fakeHttp({ hits: [], total_hits: 0 }); app = await createApp({ config: readConfig({}), http });
     await app.inject(path); await app.inject(path); expect(fetcher).toHaveBeenCalledTimes(2);
   });
-  it('only returns safe health state', async () => { app = await createApp({ config: readConfig({ STEAM_API_KEY: 'secret-value' }) }); const res = await app.inject('/v1/service-status'); expect(res.body).not.toContain('secret-value'); expect(res.json().sources).toHaveLength(6); });
+  it('only returns safe health state', async () => { app = await createApp({ config: readConfig({ STEAM_API_KEY: 'secret-value' }) }); const res = await app.inject('/v1/service-status'); expect(res.body).not.toContain('secret-value'); expect(res.json().sources).toHaveLength(5); });
 });
 describe('upstream resource boundaries', () => {
   it.each([302, 401, 429, 500])('cancels the unused body for status %s', async status => {

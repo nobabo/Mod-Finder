@@ -27,7 +27,7 @@ for (const game of games) {
     if (typeof original !== 'string' || !original.trim() || typeof korean !== 'string' || !/[가-힣]/u.test(korean) || korean === original) continue;
     if (excluded.has(key)) { withheld++; continue; }
     // Duplicate titles in the export carry their source-scoped identity explicitly.
-    const identity = key.match(/^(.*) \[((?:modrinth|curseforge|atlauncher|thunderstore|nexus|steam):[^\]]+)\]$/s);
+    const identity = key.match(/^(.*) \[((?:modrinth|curseforge|thunderstore|nexus|steam):[^\]]+)\]$/s);
     rows.push([identity?.[1] ?? key, original.trim(), korean.trim(), identity?.[2] ?? null]);
   }
   await writeFile(join(destination, `${game.id}.json`), JSON.stringify(rows) + '\n');

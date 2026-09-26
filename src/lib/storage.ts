@@ -7,6 +7,7 @@ export interface LocalData { favorites: Listing[]; compared: Listing[]; favorite
 export const emptyLocalData = (): LocalData => ({ favorites: [], compared: [], favoriteGames: ['minecraft-java'], history: [] });
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
+const fromRetiredSource = (value: unknown) => !!value && typeof value === 'object' && (value as { source?: unknown }).source === 'atlauncher';
 function validListing(value: unknown): value is Listing {
   if (!value || typeof value !== 'object') return false;
   const item = value as Listing;
@@ -24,11 +25,14 @@ export function parseLocalData(raw: string): LocalData {
   const value: unknown = JSON.parse(raw);
   if (!value || typeof value !== 'object') throw new Error('invalid_local_data');
   const data = value as LocalData;
-  if (!Array.isArray(data.favorites) || !data.favorites.every(validListing)
+  if (!Array.isArray(data.favorites)
     || !strings(data.favoriteGames) || !data.favoriteGames.every(id => !!getGame(id))
     || !Array.isArray(data.history) || !data.history.every(item => item && typeof item.gameId === 'string' && (item.gameId === 'all' || !!getGame(item.gameId)) && typeof item.query === 'string' && (item.category === undefined || (typeof item.category === 'string' && !!getCategory(item.gameId, item.category))) && (item.genre === undefined || item.genre === 'all' || GENRES.some(g => g.id === item.genre)))
-    || (data.compared !== undefined && (!Array.isArray(data.compared) || !data.compared.every(validListing)))) throw new Error('invalid_local_data');
-  return { favorites: data.favorites, favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: (data.compared ?? []).slice(0, 3) };
+    || (data.compared !== undefined && !Array.isArray(data.compared))) throw new Error('invalid_local_data');
+  const favorites = data.favorites.filter(item => !fromRetiredSource(item));
+  const compared = (data.compared ?? []).filter(item => !fromRetiredSource(item));
+  if (!favorites.every(validListing) || !compared.every(validListing)) throw new Error('invalid_local_data');
+  return { favorites, favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.slice(0, 3) };
 }
 let database: Promise<import('@tauri-apps/plugin-sql').default> | undefined;
 async function db() {

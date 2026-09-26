@@ -13,6 +13,11 @@ describe('persisted data boundary', () => {
     const data = { ...emptyLocalData(), favorites: [item], compared: undefined };
     expect(parseLocalData(JSON.stringify(data))).toEqual({ ...data, compared: [] });
   });
+  it('removes saved listings from the retired source while preserving other local data', () => {
+    const retired = { ...item, key: 'atlauncher:minecraft:581', source: 'atlauncher', scope: 'minecraft', id: '581', url: 'https://atlauncher.com/pack/SkyFactoryOne' };
+    const data = { ...emptyLocalData(), favorites: [retired, item], compared: [retired, item], history: [{ gameId: 'minecraft-java', query: 'sky' }] };
+    expect(parseLocalData(JSON.stringify(data))).toEqual({ ...data, favorites: [item], compared: [item] });
+  });
   it.each([
     null,
     { ...emptyLocalData(), favorites: [null] },

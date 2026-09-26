@@ -18,7 +18,7 @@ npm run worker:types
 npm run worker:dev
 ```
 
-`http://localhost:8787`에서 사용합니다. `.env`의 키는 비워 두어도 Modrinth·ATLauncher·Thunderstore·Nexus 검색이 됩니다. CurseForge·Steam의 승인된 키가 있다면 `.env`에 설정할 수 있습니다. `.env`는 공유하거나 커밋하지 마세요. 타입 생성은 로컬 변수의 이름과 설정을 읽으므로 재생성할 때 `.env.example`에 있는 두 API 키 이름을 `.env`에 유지하세요.
+`http://localhost:8787`에서 사용합니다. `.env`의 키는 비워 두어도 Modrinth·Thunderstore·Nexus 검색이 됩니다. CurseForge·Steam의 승인된 키가 있다면 `.env`에 설정할 수 있습니다. `.env`는 공유하거나 커밋하지 마세요. 타입 생성은 로컬 변수의 이름과 설정을 읽으므로 재생성할 때 `.env.example`에 있는 두 API 키 이름을 `.env`에 유지하세요.
 
 `npm run worker:verify`는 Workers용 화면 빌드, 배포 dry-run, 실제 Workers 런타임을 사용한 지역·언어·CORS·정적 파일·API 라우팅·요청 제한 검증을 수행합니다. Cloudflare 계정이나 실제 배포 없이 실행됩니다. API 정규화와 외부 응답 처리는 `npm test`로 확인합니다.
 

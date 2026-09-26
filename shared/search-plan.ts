@@ -10,7 +10,6 @@ export function searchPlan(spec: SearchSpec): SearchRequest[] {
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES
     .filter(source => game.sources[source] && (spec.selectedSource === 'all' || source === spec.selectedSource))
     .filter(source => !category || category.source === source)
-    .filter(source => source !== 'atlauncher' || !spec.filters.kind || spec.filters.kind === 'modpack')
     .map(source => ({ gameId: game.id, source,
       query: providerQuery(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id),
       filters: spec.gameId === 'all' ? {} : spec.filters,

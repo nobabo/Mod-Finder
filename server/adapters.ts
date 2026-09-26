@@ -19,14 +19,6 @@ const record = z.record(z.string(), z.unknown());
 const cursorSchema = z.object({ binding: z.string(), value: z.union([z.string().max(500), z.number().int().min(0).max(100000)]) });
 const modrinthSearchSchema = z.object({ hits: z.array(record).max(20), total_hits: z.number().nonnegative() });
 const curseforgeSearchSchema = z.object({ data: z.array(record).max(20), pagination: z.object({ totalCount: z.number().nonnegative() }) });
-const atlauncherPackSchema = z.object({
-  id: z.string().regex(/^\d+$/), name: z.string().min(1).max(300), safeName: z.string().min(1).max(128).regex(/^[A-Za-z0-9._-]+$/),
-  description: z.string().nullable().optional(),
-  latestVersion: z.object({ minecraftVersion: z.string().nullable().optional(), updatedAt: z.string().nullable().optional() }).nullable().optional(),
-});
-const atlauncherSearchSchema = z.object({ data: z.object({ searchPacks: z.array(atlauncherPackSchema).max(20) }) });
-const atlauncherSearchQuery = 'query SearchPacks($query: String!) { searchPacks(first: 20, query: $query, field: NAME) { id name safeName description latestVersion { minecraftVersion updatedAt } } }';
-const atlauncherBrowseQuery = 'query BrowsePacks { searchPacks: packs(first: 20) { id name safeName description latestVersion { minecraftVersion updatedAt } } }';
 const steamSearchSchema = z.object({ response: z.object({ total: z.number().optional(), next_cursor: z.string().optional(), publishedfiledetails: z.array(record).max(20).optional(), result: z.number().optional() }) });
 const thunderstorePackageSchema = z.object({
   // Older namespaces such as Valheim's LVH-IT contain a hyphen.
@@ -41,7 +33,6 @@ const fingerprint = (req: SearchRequest) => createHash('sha256').update(JSON.str
 export function cursorFor(req: SearchRequest, value: string | number) { return Buffer.from(JSON.stringify({ binding: fingerprint(req), value })).toString('base64url'); }
 export function readCursor(req: SearchRequest): string | number | undefined {
   if (!req.cursor) return undefined;
-  if (req.source === 'atlauncher') throw new Error('invalid_cursor');
   try {
     const payload = cursorSchema.parse(JSON.parse(Buffer.from(req.cursor, 'base64url').toString()));
     if (payload.binding !== fingerprint(req)) throw new Error();
@@ -88,13 +79,6 @@ export function mapCurseforge(raw: Record<string, unknown>, game: Game, rank: nu
     kind: classes[Number(raw.classId)] ?? null, metrics: typeof raw.downloadCount === 'number' ? [{ label: '다운로드', value: raw.downloadCount }] : [],
     tags: Array.isArray(raw.categories) ? raw.categories.map(c => text((c as Record<string, unknown>).name)).filter(Boolean) : [], rank };
 }
-export function mapAtlauncher(raw: z.infer<typeof atlauncherPackSchema>, game: Game, rank: number): Listing {
-  const version = raw.latestVersion?.minecraftVersion;
-  return { ...base('atlauncher', game, raw.id), title: raw.name, author: null, summary: plain(raw.description),
-    url: `https://atlauncher.com/pack/${encodeURIComponent(raw.safeName)}`, iconUrl: null,
-    updatedAt: date(raw.latestVersion?.updatedAt), versions: version ? [version] : null, loaders: null, kind: 'modpack',
-    metrics: [], tags: [], rank };
-}
 export function mapSteam(raw: Record<string, unknown>, game: Game, rank: number, authors: ReadonlyMap<string, string> = new Map()): Listing {
   // Published file IDs are required to be strings to avoid lossy uint64 conversions.
   const id = text(raw.publishedfileid); if (!/^\d+$/.test(id) || !text(raw.title)) throw new UpstreamError('invalid');
@@ -137,7 +121,6 @@ export class Adapter implements SourceAdapter {
     if (!game.sources[this.source]) return { ...caps, status: 'unsupported', message: '이 게임을 지원하지 않는 출처예요' };
     if (this.config.disabledSources.has(this.source)) return { ...caps, status: 'disabled', message: '이 출처의 검색이 잠시 쉬고 있어요' };
     if (this.source === 'modrinth' || this.source === 'curseforge') caps.filters = ['version', 'loader', 'kind'];
-    if (this.source === 'atlauncher') { caps.filters = ['kind']; caps.sorts = ['relevance']; }
     if (categoriesForGame(game.id).some(category => category.source === this.source)) caps.filters.push('category');
     if (this.source === 'curseforge' && !this.config.CURSEFORGE_API_KEY) return { ...caps, status: 'external', message: '검색 연동 준비 중 · 원본 사이트에서 볼 수 있어요' };
     if (this.source === 'steam' && !this.config.STEAM_API_KEY) return { ...caps, status: 'external', message: '검색 연동 준비 중 · 창작마당에서 볼 수 있어요' };
@@ -150,7 +133,6 @@ export class Adapter implements SourceAdapter {
     const caps = this.getCapabilities(game);
     const result = emptyResult(game, req, caps);
     if (caps.status !== 'ready') return result;
-    if (this.source === 'atlauncher' && req.filters.kind && req.filters.kind !== 'modpack') return { ...result, status: 'empty', message: '검색 결과가 없어요' };
     const rawCursor = readCursor(req);
     const offset = typeof rawCursor === 'number' ? rawCursor : 0;
     try {
@@ -175,12 +157,6 @@ export class Adapter implements SourceAdapter {
         const data = curseforgeSearchSchema.parse(await this.http.json(`https://api.curseforge.com/v1/mods/search?${params}`, { headers: { 'x-api-key': this.config.CURSEFORGE_API_KEY } }));
         result.items = data.data.map((hit, i) => mapCurseforge(hit, game, offset + i + 1)); result.total = data.pagination.totalCount;
         result.nextCursor = data.data.length && offset + data.data.length < Math.min(data.pagination.totalCount, 10000) ? cursorFor(req, offset + data.data.length) : null;
-      } else if (this.source === 'atlauncher') {
-        const payload = req.query.trim() ? { query: atlauncherSearchQuery, variables: { query: req.query } } : { query: atlauncherBrowseQuery };
-        const data = atlauncherSearchSchema.parse(await this.http.json('https://api.atlauncher.com/v2/graphql', {
-          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
-        }));
-        result.items = data.data.searchPacks.map((pack, i) => mapAtlauncher(pack, game, i + 1));
       } else if (this.source === 'nexus') {
         const data = await searchNexusPage(game, req, offset, this.http);
         result.items = data.items; result.total = data.total;
