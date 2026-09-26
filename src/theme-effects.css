@@ -1,0 +1,60 @@
+.theme-effects { position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:layout paint; }
+.theme-particle { position:absolute;left:var(--x);pointer-events:none; }
+.theme-effects[data-paused="true"] .theme-particle { animation-play-state:paused; }
+
+/* Translucent, notched petals tumble at different depths. */
+.petal { top:-32px;width:calc(13px * var(--size));height:calc(17px * var(--size));color:color-mix(in srgb,var(--accent) 32%,#ffe1ee);animation:petal-fall calc(22s * var(--speed)) linear infinite;animation-delay:calc(var(--phase) * 1s); }
+.petal svg { width:100%;height:100%; }
+@keyframes petal-fall {
+  0% { opacity:0;transform:translate3d(-35px,-25px,0) rotate(var(--turn)) rotateY(0deg); }
+  12% { opacity:.3; }
+  38% { transform:translate3d(35px,38vh,0) rotate(calc(var(--turn) + 100deg)) rotateY(130deg); }
+  70% { opacity:.25;transform:translate3d(var(--drift),73vh,0) rotate(calc(var(--turn) + 230deg)) rotateY(240deg); }
+  100% { opacity:0;transform:translate3d(65px,calc(100vh + 50px),0) rotate(calc(var(--turn) + 330deg)) rotateY(360deg); }
+}
+
+/* Fine trails and rounded highlights read as water without a heavy rain curtain. */
+.raindrop { top:-60px;width:calc(1.4px * var(--size));height:calc(31px * var(--size));border-radius:60% 60% 45% 45%;background:linear-gradient(180deg,transparent,rgba(203,229,255,.1) 55%,rgba(220,240,255,.65));animation:rain-fall calc(2.8s * var(--speed)) linear infinite;animation-delay:calc(var(--phase) * 1s); }
+@keyframes rain-fall {
+  0% { opacity:0;transform:translate3d(16px,-50px,0) rotate(7deg); }
+  14% { opacity:.32; }
+  80% { opacity:.25; }
+  100% { opacity:0;transform:translate3d(-95px,calc(100vh + 90px),0) rotate(7deg); }
+}
+
+/* Low flames stay at the edge; a few embers drift into the scene. */
+.flame { bottom:-65px;width:calc(100px * var(--size));height:calc(210px * var(--size));border-radius:70% 30% 65% 35%;transform-origin:50% 100%;background:radial-gradient(ellipse at 50% 95%,rgba(255,213,141,.25),rgba(var(--tint-rgb),.18) 32%,rgba(255,120,53,.06) 55%,transparent 72%);animation:flame-sway calc(5s * var(--speed)) ease-in-out infinite;animation-delay:calc(var(--phase) * 1s); }
+.ember { bottom:-12px;width:calc(2px * var(--size));height:calc(4px * var(--size));border-radius:50%;background:#ffd59c;box-shadow:0 0 7px #ff8d4266;animation:ember-rise calc(10s * var(--speed)) linear infinite;animation-delay:calc(var(--phase) * 1s); }
+@keyframes flame-sway {
+  0%,100% { opacity:.4;transform:translateX(-30%) scale(.85,.75) skewX(-9deg); }
+  35% { opacity:.8;transform:translateX(-45%) scale(1.05,1.1) skewX(7deg); }
+  70% { opacity:.5;transform:translateX(-35%) scale(.9,.9) skewX(-4deg); }
+}
+@keyframes ember-rise {
+  0% { opacity:0;transform:translate3d(0,0,0); }
+  18% { opacity:.4; }
+  65% { opacity:.18; }
+  100% { opacity:0;transform:translate3d(var(--drift),-62vh,0); }
+}
+
+/* Feathered shafts and sparse dust, with no visible moon or additional UI. */
+.moonbeam { top:-25%;width:calc(90px * var(--size));height:120%;transform-origin:50% 0;background:linear-gradient(180deg,rgba(218,233,255,.12),rgba(218,233,255,.025) 65%,transparent);mask-image:linear-gradient(90deg,transparent,#000 45%,transparent);animation:moonbeam-sway calc(19s * var(--speed)) ease-in-out infinite;animation-delay:calc(var(--phase) * 1s); }
+.moondust { top:-10px;width:calc(2px * var(--size));height:calc(2px * var(--size));border-radius:50%;background:#dceaff;box-shadow:0 0 6px #dceaff44;animation:moon-drift calc(30s * var(--speed)) linear infinite;animation-delay:calc(var(--phase) * 1s); }
+@keyframes moonbeam-sway {
+  0%,100% { opacity:.28;transform:rotate(22deg) scaleX(.85); }
+  50% { opacity:.65;transform:rotate(26deg) scaleX(1.15); }
+}
+@keyframes moon-drift {
+  0% { opacity:0;transform:translate3d(50px,0,0); }
+  20% { opacity:.23; }
+  75% { opacity:.15; }
+  100% { opacity:0;transform:translate3d(var(--drift),102vh,0); }
+}
+@media(max-width:650px) {
+  .theme-particle:nth-child(even) { display:none; }
+  .flame { height:calc(155px * var(--size)); }
+}
+@media(prefers-reduced-motion:reduce) {
+  .theme-effects { display:none; }
+  .theme-particle { animation:none; }
+}

@@ -1,6 +1,7 @@
 import { useEffect, useMemo, useRef, useState } from 'react';
 import { backgroundPlaylist } from '../shared/backgrounds';
 import { createGlassRenderer } from './lib/glass-renderer';
+import { ThemeEffects } from './ThemeEffects';
 
 export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParallax = false }: { gameIds: string[]; theme: string; motionEnabled?: boolean; scrollParallax?: boolean }) {
   const scope = gameIds.join('|');
@@ -125,6 +126,7 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     <div key={current?.src} className={`atmosphere-fallback ${fading ? 'is-crossfading' : ''}`} onAnimationEnd={() => { setPrevious(undefined); setFading(false); }} style={{ backgroundImage: current ? `url("${current.src}")` : undefined }} />
     <div className="aurora-fallback" />
     <canvas ref={canvas} className="atmosphere-canvas" />
+    <ThemeEffects theme={theme} enabled={!reduced && motionEnabled} />
     <div className="atmosphere-grain" />
   </div>;
 }
