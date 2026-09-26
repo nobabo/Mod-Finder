@@ -17,11 +17,11 @@ const palette = [
   ['midnight','미드나이트','Midnight','#526bb8','#bb7d9b'],
 ] as const;
 const rgb = (hex: string) => [1,3,5].map(offset => parseInt(hex.slice(offset,offset + 2),16));
-type ThemeEffect = 'none' | 'petals' | 'rain' | 'fire' | 'moonlight';
+type ThemeEffect = 'none' | 'petals' | 'rain' | 'fire' | 'bamboo';
 const effects: Record<typeof palette[number][0], ThemeEffect> = {
-  violet:'rain', cyan:'none', magenta:'petals', cobalt:'rain', emerald:'none',
-  lime:'moonlight', amber:'fire', coral:'fire', crimson:'fire', rose:'petals',
-  lavender:'petals', ice:'rain', silver:'rain', midnight:'moonlight',
+  violet:'rain', cyan:'none', magenta:'petals', cobalt:'rain', emerald:'bamboo',
+  lime:'bamboo', amber:'fire', coral:'fire', crimson:'fire', rose:'petals',
+  lavender:'petals', ice:'rain', silver:'rain', midnight:'bamboo',
 };
 export const THEMES = palette.map(([id,ko,en,primary,secondary]) => ({ id,ko,en,primary,secondary,effect:effects[id],rgb:rgb(primary),secondaryRgb:rgb(secondary),grad:`linear-gradient(135deg,${primary},${secondary})` }));
 export const themeById = (id: string) => THEMES.find(theme => theme.id === id) ?? THEMES[0];
