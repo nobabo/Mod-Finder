@@ -1,5 +1,5 @@
 import { describe, expect, it, vi } from 'vitest';
-import { release } from '../scripts/release';
+import { release, waitForDeployment } from '../scripts/release';
 
 function harness(fail = '', dirty = true) {
   const calls: string[] = [];
@@ -24,6 +24,15 @@ function harness(fail = '', dirty = true) {
 }
 
 describe('release workflow', () => {
+  it('waits for new assets to propagate but still fails persistent mismatches', async () => {
+    const pause = vi.fn(async () => {});
+    const eventuallyReady = vi.fn().mockRejectedValueOnce(new Error('old assets')).mockResolvedValue(undefined);
+    await waitForDeployment(eventuallyReady, pause);
+    expect(eventuallyReady).toHaveBeenCalledTimes(2);
+    const stale = vi.fn().mockRejectedValue(new Error('old assets'));
+    await expect(waitForDeployment(stale, pause)).rejects.toThrow('old assets');
+    expect(stale).toHaveBeenCalledTimes(6);
+  });
   it('checks without staging, committing, deploying or pushing', async () => {
     const { tools, calls } = harness();
     await release(true, '', tools);

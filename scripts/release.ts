@@ -106,7 +106,16 @@ function fingerprint() {
   return hash.digest('hex');
 }
 
-async function verifyAssets() {
+export async function waitForDeployment(check: () => Promise<void>, pause = () => new Promise(resolve => setTimeout(resolve, 5000))) {
+  for (let attempt = 0; ; attempt++) {
+    try { await check(); return; }
+    catch (error) { if (attempt >= 5) throw error; await pause(); }
+  }
+}
+
+async function verifyAssets() { await waitForDeployment(verifyAssetsOnce); }
+
+async function verifyAssetsOnce() {
   const localHtml = readFileSync(resolve(root, 'dist/index.html'), 'utf8');
   const assets = [...localHtml.matchAll(/(?:src|href)="(\/assets\/[^\"]+\.(?:js|css))"/g)].map(match => match[1]);
   if (!assets.length) throw new Error('빌드 결과에서 검증할 자산을 찾지 못했습니다.');
