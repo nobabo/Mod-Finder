@@ -2,6 +2,8 @@ import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties
 import { createPortal } from 'react-dom';
 
 type Side = 'left' | 'right' | 'top' | 'bottom';
+const LONG_PRESS_MS = 500;
+const FADE_MS = 220;
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 function bubblePath(width: number, height: number, side: Side, arrow: number) {
   const l = 12, t = 12, r = width - 12, b = height - 12, radius = 18;
@@ -20,21 +22,60 @@ export function ModDescription({ summary, children }: { summary: string; childre
   const id = useId();
   const card = useRef<HTMLElement>(null);
   const tooltip = useRef<HTMLDivElement>(null);
-  const timer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const hideTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const exitTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
+  const touchPress = useRef<{ id: number; x: number; y: number; shown: boolean } | null>(null);
+  const touchInput = useRef(false);
+  const suppressClickUntil = useRef(0);
+  const openWanted = useRef(false);
+  const [rendered, setRendered] = useState(false);
   const [visible, setVisible] = useState(false);
   const [position, setPosition] = useState({ left: 0, top: 0, width: 344, path: '' });
-  const cancelHide = () => clearTimeout(timer.current);
-  const show = () => { cancelHide(); setVisible(true); };
+  const cancelHide = () => clearTimeout(hideTimer.current);
+  const show = () => {
+    if (!summary.trim()) return;
+    cancelHide();
+    clearTimeout(exitTimer.current);
+    openWanted.current = true;
+    if (!rendered) {
+      setPosition(previous => ({ ...previous, path: '' }));
+      setRendered(true);
+    } else {
+      setVisible(true);
+    }
+  };
+  const close = () => {
+    cancelHide();
+    clearTimeout(exitTimer.current);
+    openWanted.current = false;
+    setVisible(false);
+    exitTimer.current = setTimeout(() => setRendered(false), FADE_MS);
+  };
   const hide = () => {
     cancelHide();
-    timer.current = setTimeout(() => {
-      if (!card.current?.contains(document.activeElement)) setVisible(false);
+    hideTimer.current = setTimeout(() => {
+      if (!card.current?.contains(document.activeElement)) close();
     }, 120);
   };
-  useEffect(() => () => clearTimeout(timer.current), []);
+  const endPress = (pointerId: number) => {
+    if (touchPress.current?.id !== pointerId) return;
+    clearTimeout(pressTimer.current);
+    if (touchPress.current.shown) {
+      suppressClickUntil.current = Date.now() + 700;
+      close();
+    }
+    touchPress.current = null;
+  };
+  useEffect(() => () => {
+    clearTimeout(hideTimer.current);
+    clearTimeout(exitTimer.current);
+    clearTimeout(pressTimer.current);
+  }, []);
   useLayoutEffect(() => {
-    if (!visible || !summary.trim()) return;
+    if (!rendered || !summary.trim()) return;
     let frame = 0;
+    const revealFrame = requestAnimationFrame(() => { if (openWanted.current) setVisible(true); });
     const update = () => {
       if (!card.current || !tooltip.current) return;
       const anchor = (card.current.querySelector('.mod-logo-link') ?? card.current).getBoundingClientRect();
@@ -55,23 +96,55 @@ export function ModDescription({ summary, children }: { summary: string; childre
       setPosition(previous => previous.left === left && previous.top === top && previous.width === width && previous.path === path ? previous : { left, top, width, path });
       frame = requestAnimationFrame(update);
     };
-    const dismiss = (event: KeyboardEvent) => { if (event.key === 'Escape') setVisible(false); };
+    const dismiss = (event: KeyboardEvent) => { if (event.key === 'Escape') close(); };
     update();
     window.addEventListener('keydown', dismiss);
     return () => {
       cancelAnimationFrame(frame);
+      cancelAnimationFrame(revealFrame);
       window.removeEventListener('keydown', dismiss);
     };
-  }, [visible, summary]);
+  }, [rendered, summary]);
   return <>
     <article ref={card} className="mod-card" aria-describedby={visible && summary.trim() ? id : undefined}
-      onMouseEnter={show} onMouseLeave={hide} onFocus={show}
+      onPointerEnter={event => { if (event.pointerType !== 'touch') show(); }}
+      onPointerLeave={event => { if (event.pointerType !== 'touch') hide(); }}
+      onPointerDown={event => {
+        if (event.pointerType !== 'touch') { touchInput.current = false; return; }
+        touchInput.current = true;
+        if (!(event.target as Element).closest('.mod-logo-link')) return;
+        suppressClickUntil.current = 0;
+        clearTimeout(pressTimer.current);
+        touchPress.current = { id: event.pointerId, x: event.clientX, y: event.clientY, shown: false };
+        const pointerId = event.pointerId;
+        pressTimer.current = setTimeout(() => {
+          if (touchPress.current?.id !== pointerId) return;
+          touchPress.current.shown = true;
+          show();
+        }, LONG_PRESS_MS);
+      }}
+      onPointerMove={event => {
+        const press = touchPress.current;
+        if (press?.id !== event.pointerId || Math.hypot(event.clientX - press.x, event.clientY - press.y) <= 12) return;
+        endPress(event.pointerId);
+      }}
+      onPointerUp={event => endPress(event.pointerId)}
+      onPointerCancel={event => endPress(event.pointerId)}
+      onContextMenu={event => { if (touchInput.current && (event.target as Element).closest('.mod-logo-link')) event.preventDefault(); }}
+      onClickCapture={event => {
+        if (Date.now() < suppressClickUntil.current && (event.target as Element).closest('.mod-logo-link')) {
+          event.preventDefault();
+          event.stopPropagation();
+          suppressClickUntil.current = 0;
+        }
+      }}
+      onFocus={event => { if ((event.target as HTMLElement).matches(':focus-visible')) show(); }}
       onBlur={event => { if (!event.currentTarget.contains(event.relatedTarget)) hide(); }}
-      onClick={() => setVisible(false)}>
+      onClick={close}>
       {children}
     </article>
-    {visible && summary.trim() && createPortal(<div ref={tooltip} id={id} role="tooltip"
-      className="mod-description-tooltip" style={{ left: position.left, top: position.top, width: position.width, '--bubble-shape': `path('${position.path.replace(/\s+/g, ' ')}')`, visibility: position.path ? 'visible' : 'hidden' } as CSSProperties} onMouseEnter={cancelHide} onMouseLeave={hide}>
+    {rendered && summary.trim() && createPortal(<div ref={tooltip} id={id} role="tooltip" aria-hidden={!visible}
+      className={`mod-description-tooltip${visible && position.path ? ' is-visible' : ''}`} style={{ left: position.left, top: position.top, width: position.width, '--bubble-shape': `path('${position.path.replace(/\s+/g, ' ')}')`, visibility: position.path ? 'visible' : 'hidden' } as CSSProperties} onPointerEnter={cancelHide} onPointerLeave={event => { if (event.pointerType !== 'touch') hide(); }}>
       <svg className="mod-description-outline" aria-hidden="true"><path d={position.path} /></svg>
       <div className="mod-description-copy">{summary}</div>
     </div>, document.body)}
