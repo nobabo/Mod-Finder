@@ -102,6 +102,7 @@
   "닫기": "Schließen",
   "다운로드": "Downloads",
   "구독자": "Abonnenten",
+  "누적 구독자": "Abonnenten insgesamt",
   "검색할 준비가 되었어요": "Bereit zur Suche",
   "자동 선택": "Automatisch",
   "언어 변경": "Sprache ändern",
@@ -194,5 +195,7 @@
   "장르": "Genre",
   "정렬 방법": "Sortierung",
   "다운로드순": "Downloads",
+  "누적 구독순": "Abonnements insgesamt",
+  "다운로드·구독순": "Downloads und Abonnements",
   "인기도순": "Beliebtheit"
 }

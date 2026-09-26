@@ -50,7 +50,7 @@ export function appendStable(current: Listing[], incoming: Listing[]): Listing[]
 }
 
 export function sortResultGroups(groups: ResultGroup[], sort: Sort, modpacksFirst = false): ResultGroup[] {
-  const downloads = (item: Listing) => item.metrics.find(metric => metric.label === '다운로드')?.value ?? -1;
+  const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
   const compare = (a: Listing, b: Listing) => sort === 'downloads'
     ? downloads(b) - downloads(a)
     : sort === 'popular' ? a.rank - b.rank

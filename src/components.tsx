@@ -17,7 +17,7 @@ export const dateLabel = (date: string | null) => date ? new Date(date).toLocale
 
 export function ModCard({ item, saved, toggleSave, open, detail }: { item: Listing; saved: boolean; toggleSave: () => void; open: () => void; detail: () => void }) {
   const text = listingText(item, locale);
-  return <ModDescription summary={listingText(item, 'ko').summary}>
+  return <ModDescription summary={text.summary}>
     <div className="card-cover"><button type="button" className="mod-logo-link" onClick={open} aria-label={`${text.title} ${t('원본 사이트에서 보기')}`}><ModIcon item={item} /></button><button className={`icon-button save-button ${saved ? 'is-saved' : ''}`} onClick={toggleSave} aria-label={`${item.title} ${saved ? t("즐겨찾기 해제") : t("즐겨찾기")}`}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button></div>
     <div className="card-body">
       <button className="title-button" onClick={detail}>{text.title}</button>

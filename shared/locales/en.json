@@ -139,6 +139,7 @@
   "검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.": "Could not connect to search. Please try again shortly.",
   "다운로드": "Downloads",
   "구독자": "Subscribers",
+  "누적 구독자": "Lifetime subscribers",
   "검색할 준비가 되었어요": "Ready to search",
   "이 게임을 지원하지 않는 출처예요": "This source does not support the selected game",
   "이 출처의 검색이 잠시 쉬고 있어요": "Search for this source is paused",
@@ -194,5 +195,7 @@
   "장르": "Genre",
   "정렬 방법": "Sort by",
   "다운로드순": "Downloads",
+  "누적 구독순": "Lifetime subscriptions",
+  "다운로드·구독순": "Downloads & subscriptions",
   "인기도순": "Popularity"
 }

@@ -84,7 +84,7 @@ export function mapSteam(raw: Record<string, unknown>, game: Game, rank: number,
   const id = text(raw.publishedfileid); if (!/^\d+$/.test(id) || !text(raw.title)) throw new UpstreamError('invalid');
   return { ...base('steam', game, id), title: text(raw.title), author: authors.get(text(raw.creator)) ?? null, summary: plain(raw.short_description ?? raw.description),
     url: `https://steamcommunity.com/sharedfiles/filedetails/?id=${id}`, iconUrl: icon(raw.preview_url), updatedAt: date(raw.time_updated), versions: null, loaders: null, kind: 'workshop-item',
-    metrics: typeof raw.subscriptions === 'number' ? [{ label: '구독자', value: raw.subscriptions }] : [],
+    metrics: typeof raw.lifetime_subscriptions === 'number' ? [{ label: '누적 구독자', value: raw.lifetime_subscriptions }] : [],
     tags: Array.isArray(raw.tags) ? raw.tags.map(t => text((t as Record<string, unknown>).tag)).filter(Boolean) : [], rank };
 }
 export function mapThunderstore(raw: Record<string, unknown>, game: Game, rank: number): Listing {

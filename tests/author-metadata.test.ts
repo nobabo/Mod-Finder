@@ -19,6 +19,13 @@ function setup(items: Record<string, unknown>[], profiles: unknown, status = 200
 const search = (adapter: Adapter) => adapter.search({ gameId: game.id, source: 'steam', query: 'test', sort: 'relevance', filters: {} });
 
 describe('Steam creator enrichment', () => {
+  it('asks Steam to order downloads by lifetime unique subscriptions', async () => {
+    const { adapter, fetcher } = setup([{ ...workshop('1'), lifetime_subscriptions: 12, subscriptions: 9 }], {});
+    const result = await adapter.search({ gameId: game.id, source: 'steam', query: '', sort: 'downloads', filters: {} });
+    const url = new URL(String(fetcher.mock.calls[0][0]));
+    expect(JSON.parse(url.searchParams.get('input_json')!).query_type).toBe(9);
+    expect(result.items[0].metrics).toEqual([{ label: '누적 구독자', value: 12 }]);
+  });
   it('batches unique string IDs and matches profiles by ID, not response order', async () => {
     const { adapter, fetcher } = setup([workshop('1'), workshop('2', other), workshop('3')], { response: { players: [
       { steamid: other, personaname: 'Second' }, { steamid: creator, personaname: '첫 제작자' },

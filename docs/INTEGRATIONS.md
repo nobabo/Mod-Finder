@@ -28,6 +28,8 @@ The executable mapping is `shared/games.ts`:
 - Lethal Company: Thunderstore `lethal-company`; Nexus `lethalcompany` external link.
 - RimWorld: Steam App ID `294100`; Nexus `rimworld` external link.
 
+Steam Workshop does not supply a download-count metric in this search response. Its `query_type=9` ranks by lifetime unique subscriptions. The app displays `lifetime_subscriptions` as "누적 구독자" and orders loaded results by that same value. Steam-only games label the sort "누적 구독순"; mixed Steam/Nexus results label it "다운로드·구독순" because the two sources report different metrics. Missing counts remain unknown.
+
 Unsupported combinations have no search requests or misleading fallback URLs. Add new games only after verifying source IDs, game editions, and actual Workshop availability.
 
 ## Thunderstore direct search (2026-09-25)

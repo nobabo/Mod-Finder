@@ -102,6 +102,7 @@
   "닫기": "Cerrar",
   "다운로드": "Descargas",
   "구독자": "Suscriptores",
+  "누적 구독자": "Suscriptores acumulados",
   "검색할 준비가 되었어요": "Listo para buscar",
   "자동 선택": "Automático",
   "언어 변경": "Cambiar idioma",
@@ -194,5 +195,7 @@
   "장르": "Género",
   "정렬 방법": "Ordenar por",
   "다운로드순": "Descargas",
+  "누적 구독순": "Suscripciones acumuladas",
+  "다운로드·구독순": "Descargas y suscripciones",
   "인기도순": "Popularidad"
 }

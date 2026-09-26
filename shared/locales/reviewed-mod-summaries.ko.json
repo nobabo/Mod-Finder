@@ -1,0 +1,17 @@
+{
+  "lethal-company": [
+    ["MoreCompany", "A stable lobby player count expansion mod. With cosmetics!", "로비의 최대 참가 인원을 안정적으로 늘려 줍니다. 꾸미기 아이템도 포함되어 있습니다.", null],
+    ["ModelReplacementAPI", "API to simplify model replacement", "모델 교체를 간편하게 해 주는 API입니다.", null]
+  ],
+  "stardew-valley": [
+    ["Skull Cavern Elevator", "Adds an elevator to the Skull Cavern", "해골 동굴에 엘리베이터를 추가합니다.", null],
+    ["Wear More Rings", "Configure the amount of ring slots in your inventory. By default adds 4 additional ring slots.", "인벤토리의 반지 슬롯 수를 설정할 수 있습니다. 기본 설정에서는 반지 슬롯 4개가 추가됩니다.", null],
+    ["Bigger Backpack", "Buy a bigger backpack at Pierre's for only 50,000g!", "피에르의 상점에서 50,000골드에 더 큰 배낭을 구매할 수 있습니다!", null],
+    ["Gift Taste Helper", "THIS VERSION IS VERSION IS OUT OF DATE AND NOT MAINTAINED. PLEASE USE CONTINUED V2 https://www.nexusmods.com/stardewvalley/mods/21001/Displays a helpful tooltip that shows an NPC's favourite gifts when hovering over their birthday on the", "이 버전은 오래되어 더 이상 유지보수되지 않습니다. Continued V2를 사용해 주세요: https://www.nexusmods.com/stardewvalley/mods/21001/ NPC의 생일에 마우스를 올리면 좋아하는 선물을 툴팁으로 보여줍니다.", null]
+  ],
+  "skyrim-se": [
+    ["Unofficial Skyrim Special Edition Patch - USSEP", "A comprehensive bugfixing mod for The Elder Scrolls V: Skyrim - Special Edition. The goal of the Unofficial Skyrim Special Edition Patch (aka USSEP) is to eventually fix every bug with Skyrim Special Edition not officially resolved by the", "엘더스크롤 V: 스카이림 스페셜 에디션의 버그를 폭넓게 수정하는 모드입니다. USSEP는 공식적으로 해결되지 않은 버그를 모두 수정하는 것을 목표로 합니다.", null],
+    ["Skyrim 202X by Pfuscher", "High Res Textures for cities, dungeons, clutter, armors, landscapes and much more. Going towards 2200 files, way more to come !Thousands of hours of work into this. Please consider supporting me at Patreon and Kofi", "도시, 던전, 각종 사물, 방어구, 풍경 등에 고해상도 텍스처를 적용합니다. 파일 약 2,200개를 목표로 계속 추가하고 있으며, 수천 시간 동안 작업한 프로젝트입니다. Patreon과 Ko-fi에서 제작자를 후원할 수 있습니다.", null],
+    ["KS Hairdos SSE", "KS Hairdos is a hair pack that contains 1.058 hairstyles. 951 hairstyles are for females, 107 are for males.", "총 1,058개의 헤어스타일을 담은 모드입니다. 여성용 951개, 남성용 107개입니다.", null]
+  ]
+}

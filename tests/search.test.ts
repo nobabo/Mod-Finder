@@ -72,6 +72,16 @@ it('sorts merged pages by downloads, keeping missing metrics after zero', () => 
   expect(sortResultGroups(groups,'popular').map(g => g.listings[0].id)).toEqual(['unknown','zero','high']);
 });
 
+it('sorts Steam Workshop results by the displayed lifetime subscriptions', () => {
+  const game = getGame('rimworld')!;
+  const steam = (id: string, lifetime?: number) => mapSteam({ publishedfileid: id, title: `Mod ${id}`, subscriptions: 999999,
+    ...(lifetime === undefined ? {} : { lifetime_subscriptions: lifetime }) }, game, Number(id));
+  const groups = groupResults([steam('3', 30), steam('1'), steam('2', 100), steam('4', 0)], '');
+  expect(sortResultGroups(groups, 'downloads').map(group => group.listings[0].id)).toEqual(['2', '3', '4', '1']);
+  expect(sortResultGroups(groups, 'downloads')[0].listings[0].metrics).toEqual([{ label: '누적 구독자', value: 100 }]);
+  expect(sortResultGroups(groups, 'downloads').at(-1)?.listings[0].metrics).toEqual([]);
+});
+
 it('promotes known modpacks across Minecraft and other game genres', () => {
   const minecraftMod = { ...mod('popular-mod'), metrics: [{ label: '다운로드', value: 1000 }] };
   const minecraftPack = mapModrinth({ project_id: '581', title: 'SkyFactory One', project_type: 'modpack' }, getGame('minecraft-java')!, 1);

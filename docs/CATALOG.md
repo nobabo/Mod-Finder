@@ -22,6 +22,7 @@
 - `shared/locales/en.json`: 동일한 키에 대응하는 영어 문구.
 - `shared/locales/mods.ko.json`: 출처별 모드 제목·설명의 한국어 번역.
 - `shared/locales/mod-summaries/*.json`: 기존 번역 작업에서 가져온 게임별 설명 번역. 한국어 화면에서 필요한 게임만 불러옵니다.
+- `shared/locales/reviewed-mod-summaries.ko.json`: 첨부 화면에서 직접 검수한 설명 9개의 번역. 게임·제목·원문 설명이 일치할 때만 표시합니다.
 - `shared/locales/tags.ko.json`: 검색 결과 카드에 표시하는 출처 태그의 한국어 번역. 등록되지 않은 태그와 고유 명칭은 원문으로 표시합니다.
 - `shared/locales/search.ko.json`: 뜻이 분명한 한글 검색어를 검색 사이트에 보낼 영어 검색어로 치환하는 사전.
 - `shared/locales/search.games.ko.json`: 게임별로 다른 영어 검색어를 사용하는 한글 용어 사전. 게임 ID별로 등록합니다.

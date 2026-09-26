@@ -43,4 +43,18 @@ describe('imported Korean summaries', () => {
     }
     expect(count).toBe(11126);
   });
+  it('shows the nine reviewed descriptions only for their matching game and original text', () => {
+    const reviewed = JSON.parse(readFileSync('shared/locales/reviewed-mod-summaries.ko.json', 'utf8')) as Record<string, SummaryTranslation[]>;
+    expect(Object.values(reviewed).flat()).toHaveLength(9);
+    for (const [gameId, additions] of Object.entries(reviewed)) {
+      const rows = JSON.parse(readFileSync(`shared/locales/mod-summaries/${gameId}.json`, 'utf8')) as SummaryTranslation[];
+      registerModSummaries(gameId, [...rows, ...additions]);
+      for (const [title, summary, korean, key] of additions) {
+        const item = { gameId, title, summary, key: key ?? `nexus:${gameId}:sample` };
+        expect(translatedModSummary(item)).toBe(korean);
+        expect(translatedModSummary({ ...item, summary: `${summary} changed` })).toBeUndefined();
+      }
+    }
+    expect(reviewed['stardew-valley'].find(row => row[0] === 'Gift Taste Helper')?.[2]).toMatch(/더 이상 유지보수되지 않습니다/);
+  });
 });
