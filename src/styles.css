@@ -138,9 +138,7 @@ select option{background:#1a1433;color:#eae6ff}
 .text-button:hover{color:#d7c8ff}
 .filter-warning{font-family:var(--kr);font-size:10.5px;color:#f0c674;margin:0 0 16px;line-height:1.7}
 
-/* ---------- cover shelf + grid ---------- */
-.shelf{display:flex;gap:16px;overflow-x:auto;padding:6px 4px 20px;scroll-snap-type:x proximity}
-.shelf>*{flex:0 0 306px;scroll-snap-align:start}
+/* ---------- results grid ---------- */
 .mod-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:18px}
 .mod-card{position:relative;display:flex;flex-direction:column;border:1px solid transparent;border-radius:18px;min-width:0;overflow:hidden;
   background:linear-gradient(180deg,rgba(26,21,52,.9),rgba(15,12,33,.9)) padding-box,var(--hairline) border-box;
@@ -171,18 +169,15 @@ select option{background:#1a1433;color:#eae6ff}
 .card-meta{display:flex;justify-content:space-between;color:#8b85b5;font-family:var(--display);font-size:10px;gap:8px;margin:13px 0}
 .source-label{display:inline-flex;align-items:center;gap:6px;font-family:var(--display);font-size:10px;color:var(--muted);white-space:nowrap}
 
-/* ---------- external / empty / skeleton ---------- */
+/* ---------- external / empty / loading ---------- */
 .external-link{display:inline-flex;align-items:center;gap:5px;font-family:var(--display);font-size:10.5px;color:var(--accent);white-space:nowrap;padding:6px 0}
 .external-link:hover{color:#d7c8ff}
 .load-more{display:flex;justify-content:center;margin-top:26px}
 .secondary-button{border:1px solid var(--line-strong);border-radius:11px;display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:11px 17px;
   font-family:var(--display);font-size:11px;color:var(--text-soft);white-space:nowrap;background:rgba(var(--tint-rgb),.08)}
 .secondary-button:hover{background:rgba(var(--tint-rgb),.18);border-color:rgba(var(--tint-rgb),.5);color:#fff}
-.skeleton-card{border:1px solid var(--line);border-radius:18px;overflow:hidden;background:#12102a}
-.skeleton-card>div{height:120px;background:linear-gradient(90deg,#191332,#241c48,#191332);background-size:200% 100%;animation:shimmer 1.6s linear infinite}
-.skeleton-card span{display:block;height:9px;border-radius:5px;margin:14px 17px 0;background:linear-gradient(90deg,#1d1640,#291f57,#1d1640);
-  background-size:200% 100%;animation:shimmer 1.6s linear infinite}
-.skeleton-card span:last-child{width:50%;margin-bottom:18px}
+.results-loading{min-height:210px;display:grid;place-items:center}
+.results-spinner{width:42px;height:42px;border:3px solid rgba(var(--tint-rgb),.22);border-top-color:var(--accent);border-radius:50%;animation:spin .8s linear infinite}
 .empty-state{padding:44px 20px;display:flex;align-items:center;flex-direction:column;text-align:center;border:1px dashed rgba(var(--tint-rgb),.3);border-radius:18px;
   background:radial-gradient(circle at 50% 0%,rgba(var(--tint-rgb),.12),transparent 72%);color:var(--muted)}
 .empty-state>svg{color:var(--accent);margin-bottom:7px;filter:drop-shadow(0 0 14px rgba(var(--tint-rgb),.55))}
@@ -270,7 +265,6 @@ select option{background:#1a1433;color:#eae6ff}
 .sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
 .spin{animation:spin 1.2s linear infinite}
 @keyframes spin{to{transform:rotate(360deg)}}
-@keyframes shimmer{to{background-position:-200% 0}}
 @keyframes grad-shift{50%{background-position:100% 0}}
 @keyframes results-in{from{opacity:0;transform:translateY(22px)}}
 @keyframes sheet-in{from{transform:translateX(40px);opacity:.4}}
@@ -280,7 +274,6 @@ select option{background:#1a1433;color:#eae6ff}
   .content{padding:26px 52px 0}
   .search-dock.hero{max-width:700px}
   .mod-grid{grid-template-columns:repeat(3,minmax(0,1fr))}
-  .shelf>*{flex:0 0 330px}
   .title-button{font-size:16px}
 }
 
@@ -317,8 +310,7 @@ select option{background:#1a1433;color:#eae6ff}
   .search-dock.hero .search-box input{font-size:13px}
   .search-box .search-submit{padding:11px 14px;font-size:11px;gap:6px}
   .search-box .search-submit svg{width:15px}
-  .shelf{margin-right:-16px;padding-right:16px}
-  .shelf>*{flex:0 0 262px}
+  .results-loading{min-height:180px}
   .mod-grid{grid-template-columns:1fr;gap:12px}
   .card-body{padding:14px 15px 0}
   .title-button{font-size:14.5px}

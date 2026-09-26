@@ -110,7 +110,7 @@ export default function App() {
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}
-        {search.loading && !search.items.length && <div className="shelf" aria-label={t("검색 중")}>{[1, 2, 3].map(n => <div key={n} className="skeleton-card"><div /><span /><span /><span /></div>)}</div>}
+        {search.loading && !search.items.length && <div className="results-loading" role="status" aria-label={t("검색 중")}><span className="results-spinner" aria-hidden="true" /></div>}
         {!search.loading && !search.items.length && <div className="empty-state"><Search size={30} /><h3>{sourceErrors ? t("잠시 검색에 연결하지 못했어요") : unavailable.length && !completed ? t("원본 사이트에서 탐색을 이어가세요") : t("검색 결과가 없어요")}</h3><p>{sourceErrors ? t("다시 검색하거나 아래 원본 사이트에서 탐색을 이어갈 수 있어요.") : unavailable.length && !completed ? t("이 게임의 검색 연동을 준비하고 있어요. 아래 출처에서 모드를 찾아보세요.") : t("모드의 원래 이름으로 검색하거나 필터를 조금 줄여 보세요.")}</p>{completed > 0 && activeFilters > 0 && <button className="secondary-button" onClick={resetFilters}>{t("필터 초기화")}</button>}</div>}
 
         {search.hasMore && <div className="load-more"><button className="secondary-button" onClick={search.loadMore} disabled={search.loading}>{search.loading ? <LoaderCircle size={17} className="spin" /> : <ChevronDown size={17} />} {t("모드 더 보기")}</button></div>}
