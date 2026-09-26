@@ -83,7 +83,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, children, s
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }
   };
-  return <section ref={root} className={`game-deck ${picking ? 'is-selecting' : ''}`} role="dialog" aria-modal="true" aria-label={t(title)} onKeyDown={keyboard}>
+  return <section ref={root} className={`game-deck ${picking ? 'is-selecting' : ''}`} role="dialog" aria-modal="true" aria-label={t(title)} onKeyDown={keyboard} onClick={event => { if (event.target === event.currentTarget) close(); }}>
     <header className="deck-header">{genreMode && view !== 'menu' && <button className="deck-close filter-back" aria-label={t('뒤로')} onClick={() => { setQuery(''); setView('menu'); }}><ArrowLeft size={24}/></button>}<h2>{t(title)}</h2><button className="deck-close" aria-label={t('닫기')} onClick={close}><X size={24} /></button></header>
     {view === 'genre' && <><div className="deck-tools"><label className="deck-search"><Search size={17} /><input aria-label={t(genreMode ? '장르' : '게임 찾기')} placeholder={t(genreMode ? '장르' : '게임 이름으로 찾기')} value={query} onChange={event => setQuery(event.target.value)} /></label></div>
     {children && <div className="genre-extra-controls">{children}</div>}

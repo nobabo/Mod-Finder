@@ -20,7 +20,6 @@ coverage/
 .wrangler/
 .dev.vars
 .dev.vars.*
-!.dev.vars.example
 
 # Local reports and generated native files
 /제출용/

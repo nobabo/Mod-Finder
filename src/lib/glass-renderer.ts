@@ -20,6 +20,7 @@ uniform float uMotion;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
 uniform vec2 uPointer;
+uniform vec2 uBackgroundOffset;
 uniform vec4 uPanels[8];
 uniform float uRadii[8];
 uniform int uCount;
@@ -29,8 +30,9 @@ vec2 cover(vec2 uv, vec2 image) {
   float imageRatio = image.x / image.y;
   vec2 scale = screenRatio > imageRatio ? vec2(1.0, imageRatio / screenRatio) : vec2(screenRatio / imageRatio, 1.0);
   // Slow, sub-pixel camera drift, independent of the glass geometry.
-  float zoom = 1.035 + 0.015 * sin(uTime * 0.055) * uMotion;
-  return (uv - 0.5) * scale / zoom + 0.5 + vec2(sin(uTime * 0.024), cos(uTime * 0.02)) * 0.006 * uMotion;
+  float zoom = 1.10 + 0.015 * sin(uTime * 0.055) * uMotion;
+  vec2 camera = vec2(-uBackgroundOffset.x, uBackgroundOffset.y) / uSize * uMotion;
+  return (uv - 0.5 + camera) * scale / zoom + 0.5 + vec2(sin(uTime * 0.024), cos(uTime * 0.02)) * 0.006 * uMotion;
 }
 vec3 scene(vec2 uv) {
   vec3 photo = mix(texture2D(uPhotoA, cover(uv, uImageA)).rgb, texture2D(uPhotoB, cover(uv, uImageB)).rgb, uMix);
@@ -120,7 +122,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const position = gl.getAttribLocation(program, 'aPosition');
   gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const uniform = (name: string) => gl.getUniformLocation(program, name);
-  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uSize','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
+  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uSize','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
   const texture = () => {
     const tex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -139,6 +141,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let lastFrame = 0; let elapsed = 0; let needsDraw = true;
   let panelElements: HTMLElement[] = []; let panelDirty = true;
   let pointer = [0,0];
+  let backgroundOffset = [0,0];
   const media = matchMedia('(prefers-reduced-motion: reduce)');
   let reduced = media.matches;
   const upload = (tex: WebGLTexture, image: HTMLImageElement) => {
@@ -201,6 +204,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform1f(uniforms.uTime,elapsed / 1000); gl!.uniform1f(uniforms.uMotion,reduced ? 0 : 1);
     gl!.uniform3fv(uniforms.uColorA,theme.rgb.map(value => value / 255)); gl!.uniform3fv(uniforms.uColorB,theme.secondaryRgb.map(value => value / 255));
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);
+    gl!.uniform2fv(uniforms.uBackgroundOffset,reduced ? [0,0] : backgroundOffset);
     gl!.uniform4fv(uniforms.uPanels,rects); gl!.uniform1fv(uniforms.uRadii,radii); gl!.uniform1i(uniforms.uCount,count);
     gl!.drawArrays(gl!.TRIANGLES,0,6);
     needsDraw = false;
@@ -209,6 +213,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   schedule();
   return {
     setTheme(value: string) { theme = themeById(value); needsDraw = true; schedule(); },
+    setBackgroundOffset(x: number, y: number) { backgroundOffset = [x,y]; needsDraw = true; },
     setPhoto(image: HTMLImageElement, immediate = false) {
       if (disposed || gl.isContextLost()) return false;
       if (!hasPhoto || reduced || immediate) { upload(front,image); frontSize = [image.naturalWidth,image.naturalHeight]; hasPhoto = true; blending = false; pendingPhoto = null; }
@@ -227,4 +232,3 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     },
   };
 }
-

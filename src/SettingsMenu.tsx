@@ -23,7 +23,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
     root.current?.querySelector<HTMLButtonElement>('button')?.focus();
     return () => { document.body.style.overflow = overflow; previous?.focus(); };
   }, []);
-  return createPortal(<div ref={root} className="settings-menu" role="dialog" aria-modal="true" aria-label={t('설정 메뉴')} onKeyDown={event => {
+  return createPortal(<div ref={root} className="settings-menu" role="dialog" aria-modal="true" aria-label={t('설정 메뉴')} onClick={event => { if (event.target === event.currentTarget) close(); }} onKeyDown={event => {
     if (event.key === 'Escape') { event.stopPropagation(); view === 'menu' ? close() : setView('menu'); }
     if (event.key !== 'Tab') return;
     const items = [...root.current!.querySelectorAll<HTMLElement>('button,select')];

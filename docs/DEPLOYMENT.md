@@ -11,8 +11,8 @@ Windows·Android는 별도 패키지이며 운영 HTTPS API를 지정해 다시 
 ## 현재 배포 — 2026-09-26 KST
 
 - 주소: https://mod-finder.yjh802637.workers.dev
-- 버전: `a441980e-221c-46a3-a990-80342a5392c9`, 트래픽 100%.
-- 레거시 정리 및 게임별 한글 검색어 치환을 포함한 로컬 소스 반영. 테마 파비콘을 위해 이미지 CSP에 `data:`를 허용하고 스크립트 정책은 유지.
-- 타입 검사, 86개 테스트, 일반/Workers 빌드, Workers 런타임 검사 통과. 공개 API·페이지 이동·언어·보안 헤더·비공개 경로 검사 통과.
-- 공개 브라우저에서 `소듐` 입력 → `Sodium` 요청 → `소듐 (Sodium)` 결과 표시 확인. 입력은 한글로 유지되며 해당 검증 중 콘솔 오류 없음.
-- 기록: `output/deployment/verification.json`, `output/playwright/deployed-korean-search.png`. 네이티브 패키지는 재빌드하지 않음.
+- 버전: `ff74324b-dd4d-414e-82c4-cf3aaf3a8d8a`, 트래픽 100%.
+- Steam 제작자 조회, Modrinth 상세 제작자·추가 태그, 인트로·배경 효과 등 로컬 최신 소스를 반영. 사용하지 않는 로컬 변수 예제를 제거하고 개발 설정 안내를 `.env`로 통일.
+- 타입 검사, 111개 테스트, 일반/Workers 빌드, Workers 런타임 검사 통과. 공개 API·페이지 이동·언어·보안 헤더·비공개 경로 검사 통과.
+- 운영 Steam API에서 RimWorld `Harmony` 검색 결과 20개 모두 제작자 이름 확인. 공개 브라우저에서도 검색 결과와 제작자 표시 확인, 해당 검증 중 콘솔 오류·경고 없음.
+- 기록: `output/deployment/verification.json`, `output/playwright/deployed-steam-authors.png`. 네이티브 패키지는 재빌드하지 않음.

@@ -65,7 +65,7 @@ export function mapModrinth(raw: Record<string, unknown>, game: Game, rank: numb
   const id = text(raw.project_id ?? raw.id); if (!id || !text(raw.title)) throw new UpstreamError('invalid');
   const kind = text(raw.project_type) || 'mod';
   const route = ['mod', 'modpack', 'resourcepack', 'shader', 'plugin', 'datapack'].includes(kind) ? kind : 'project';
-  const categories = arr(raw.categories);
+  const categories = [...new Set([...arr(raw.categories), ...arr(raw.additional_categories)])];
   return { ...base('modrinth', game, id), title: text(raw.title), author: text(raw.author) || null, summary: plain(raw.description),
     url: `https://modrinth.com/${route}/${encodeURIComponent(text(raw.slug) || id)}`, iconUrl: icon(raw.icon_url), updatedAt: date(raw.date_modified ?? raw.updated),
     versions: Array.isArray(raw.versions) ? arr(raw.versions) : Array.isArray(raw.game_versions) ? arr(raw.game_versions) : null,
@@ -94,10 +94,10 @@ export function mapAtlauncher(raw: z.infer<typeof atlauncherPackSchema>, game: G
     updatedAt: date(raw.latestVersion?.updatedAt), versions: version ? [version] : null, loaders: null, kind: 'modpack',
     metrics: [], tags: [], rank };
 }
-export function mapSteam(raw: Record<string, unknown>, game: Game, rank: number): Listing {
+export function mapSteam(raw: Record<string, unknown>, game: Game, rank: number, authors: ReadonlyMap<string, string> = new Map()): Listing {
   // Published file IDs are required to be strings to avoid lossy uint64 conversions.
   const id = text(raw.publishedfileid); if (!/^\d+$/.test(id) || !text(raw.title)) throw new UpstreamError('invalid');
-  return { ...base('steam', game, id), title: text(raw.title), author: null, summary: plain(raw.short_description ?? raw.description),
+  return { ...base('steam', game, id), title: text(raw.title), author: authors.get(text(raw.creator)) ?? null, summary: plain(raw.short_description ?? raw.description),
     url: `https://steamcommunity.com/sharedfiles/filedetails/?id=${id}`, iconUrl: icon(raw.preview_url), updatedAt: date(raw.time_updated), versions: null, loaders: null, kind: 'workshop-item',
     metrics: typeof raw.subscriptions === 'number' ? [{ label: '구독자', value: raw.subscriptions }] : [],
     tags: Array.isArray(raw.tags) ? raw.tags.map(t => text((t as Record<string, unknown>).tag)).filter(Boolean) : [], rank };
@@ -115,6 +115,21 @@ export function mapThunderstore(raw: Record<string, unknown>, game: Game, rank: 
 }
 export class Adapter implements SourceAdapter {
   constructor(public source: Source, private config: Config, private http: UpstreamClient) {}
+  private async steamAuthors(items: Record<string, unknown>[]): Promise<Map<string, string>> {
+    const ids = [...new Set(items.map(item => text(item.creator)).filter(id => /^[1-9]\d{0,19}$/.test(id)))];
+    const authors = new Map<string, string>();
+    if (!ids.length) return authors;
+    try {
+      const params = new URLSearchParams({ steamids: ids.join(',') });
+      const data = z.object({ response: z.object({ players: z.array(record).max(100) }) }).parse(
+        await this.http.json(`https://api.steampowered.com/ISteamUser/GetPlayerSummaries/v2/?${params}`, { headers: { 'x-webapi-key': this.config.STEAM_API_KEY } }));
+      for (const player of data.response.players) {
+        const id = text(player.steamid), name = text(player.personaname).trim();
+        if (ids.includes(id) && name) authors.set(id, name);
+      }
+    } catch { /* Optional profile enrichment must not discard valid workshop results. */ }
+    return authors;
+  }
   getCapabilities(game: Game): Capability {
     const link = externalSearch(game, this.source, '');
     const caps: Capability = { source: this.source, status: 'ready', filters: [], sorts: ['relevance', 'downloads', 'popular', 'updated'], message: '검색할 준비가 되었어요', externalUrl: link.url, queryForwarded: link.queryForwarded };
@@ -184,7 +199,9 @@ export class Adapter implements SourceAdapter {
           query_type: (req.sort === 'popular' || req.sort === 'downloads') ? 9 : req.sort === 'updated' ? 21 : req.query ? 12 : 9, return_tags: true, return_short_description: true, return_vote_data: true, filetype: 0 };
         const data = steamSearchSchema.parse(await this.http.json(`https://api.steampowered.com/IPublishedFileService/QueryFiles/v1/?input_json=${encodeURIComponent(JSON.stringify(input))}`, { headers: { 'x-webapi-key': this.config.STEAM_API_KEY } }));
         if (data.response.result && data.response.result !== 1) throw new UpstreamError('unavailable');
-        result.items = (data.response.publishedfiledetails ?? []).filter(item => item.result === undefined || item.result === 1).map((hit, i) => mapSteam(hit, game, i + 1));
+        const hits = (data.response.publishedfiledetails ?? []).filter(item => item.result === undefined || item.result === 1);
+        const authors = await this.steamAuthors(hits);
+        result.items = hits.map((hit, i) => mapSteam(hit, game, i + 1, authors));
         result.total = data.response.total ?? null;
         const next = data.response.next_cursor;
         result.nextCursor = result.items.length && next && next !== rawCursor && next !== '*' ? cursorFor(req, next) : null;
@@ -202,7 +219,15 @@ export class Adapter implements SourceAdapter {
     if (this.getCapabilities(game).status !== 'ready') return null;
     if (this.source === 'modrinth') {
       const raw = record.parse(await this.http.json(`https://api.modrinth.com/v2/project/${encodeURIComponent(id)}`));
-      return mapModrinth({ ...raw, versions: raw.game_versions }, game, 1);
+      const listing = mapModrinth({ ...raw, versions: raw.game_versions }, game, 1);
+      try {
+        const members = z.array(z.object({ user: z.object({ username: z.string() }), accepted: z.boolean(), role: z.string() })).parse(
+          await this.http.json(`https://api.modrinth.com/v2/project/${encodeURIComponent(id)}/members`));
+        const accepted = members.filter(member => member.accepted);
+        const owners = accepted.filter(member => member.role.toLowerCase() === 'owner');
+        listing.author = [...new Set((owners.length ? owners : accepted).map(member => member.user.username.trim()).filter(Boolean))].join(', ') || null;
+      } catch { /* Keep project details available when the team endpoint fails. */ }
+      return listing;
     }
     if (this.source === 'curseforge' && /^\d+$/.test(id)) {
       const result = z.object({ data: record }).parse(await this.http.json(`https://api.curseforge.com/v1/mods/${id}`, { headers: { 'x-api-key': this.config.CURSEFORGE_API_KEY } }));
@@ -213,7 +238,7 @@ export class Adapter implements SourceAdapter {
       const raw = z.object({ response: z.object({ publishedfiledetails: z.array(record) }) }).parse(await this.http.json('https://api.steampowered.com/ISteamRemoteStorage/GetPublishedFileDetails/v1/', { method: 'POST', headers: { 'Content-Type': 'application/x-www-form-urlencoded' }, body: new URLSearchParams({ itemcount: '1', 'publishedfileids[0]': id }) }));
       const item = raw.response.publishedfiledetails[0];
       if (!item || item.result !== 1 || String(item.consumer_app_id) !== game.sources.steam!.scope) return null;
-      return mapSteam(item, game, 1);
+      return mapSteam(item, game, 1, await this.steamAuthors([item]));
     }
     return null;
   }

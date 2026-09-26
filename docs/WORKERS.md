@@ -12,13 +12,13 @@ Node.js 22.12 이상을 사용하세요. 검증 환경은 Node.js 24입니다.
 
 ```powershell
 npm ci
-# .dev.vars가 없을 때만 실행
-Copy-Item .dev.vars.example .dev.vars
+# .env가 없을 때만 실행
+Copy-Item .env.example .env
 npm run worker:types
 npm run worker:dev
 ```
 
-`http://localhost:8787`에서 사용합니다. `.dev.vars`의 키는 비워 두어도 Modrinth·Thunderstore 검색이 됩니다. CurseForge·Steam의 승인된 운영 키가 있다면 로컬 파일에 설정할 수 있습니다. `.dev.vars`와 `.env`는 공유하거나 커밋하지 마세요. 타입 생성은 로컬 변수의 이름과 설정을 읽으므로 재생성할 때 두 키 이름이 들어 있는 `.dev.vars`를 준비하세요.
+`http://localhost:8787`에서 사용합니다. `.env`의 키는 비워 두어도 Modrinth·ATLauncher·Thunderstore·Nexus 검색이 됩니다. CurseForge·Steam의 승인된 키가 있다면 `.env`에 설정할 수 있습니다. `.env`는 공유하거나 커밋하지 마세요. 타입 생성은 로컬 변수의 이름과 설정을 읽으므로 재생성할 때 `.env.example`에 있는 두 API 키 이름을 `.env`에 유지하세요.
 
 `npm run worker:verify`는 Workers용 화면 빌드, 배포 dry-run, 실제 Workers 런타임을 사용한 지역·언어·CORS·정적 파일·API 라우팅·요청 제한 검증을 수행합니다. Cloudflare 계정이나 실제 배포 없이 실행됩니다. API 정규화와 외부 응답 처리는 `npm test`로 확인합니다.
 
@@ -27,7 +27,7 @@ npm run worker:dev
 1. Cloudflare 계정을 만들고 `npx wrangler login`으로 브라우저에서 로그인합니다.
 2. `wrangler.jsonc`의 Worker 이름을 확인합니다. 요청 제한 namespace ID가 같은 계정의 다른 서비스와 겹치지 않게 유지하세요.
 3. `npm run worker:deploy`를 실행합니다. 출력되는 HTTPS `workers.dev` 주소에서 사이트를 사용할 수 있습니다. 별도 도메인은 선택 사항입니다.
-4. 승인된 API 키가 준비된 경우 아래 명령의 안전한 입력 창에서 등록합니다. `.dev.vars`는 자동으로 업로드되지 않습니다.
+4. 승인된 API 키가 준비된 경우 아래 명령의 안전한 입력 창에서 등록합니다. 로컬 `.env`는 자동으로 업로드되지 않습니다.
 
 ```powershell
 npx wrangler secret put CURSEFORGE_API_KEY

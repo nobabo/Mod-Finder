@@ -28,7 +28,7 @@ Workers 환경에서 로컬 실행하려면 `npm run worker:dev`를 사용하세
 
 ## 설정과 빌드
 
-필요한 경우 `.env.example` → `.env`, Workers 로컬 실행은 `.dev.vars.example` → `.dev.vars`로 복사합니다. 기존 설정은 덮어쓰지 마세요.
+필요한 경우 `.env.example`을 `.env`로 복사합니다. 로컬 API와 Workers 개발에서 같은 파일을 사용하며, 기존 설정은 덮어쓰지 마세요.
 
 - Modrinth·ATLauncher·Thunderstore·Nexus 검색은 키 없이 동작합니다. Steam·CurseForge는 서버 API 키가 필요합니다.
 - API 키에 `VITE_` 접두사를 붙이지 마세요. 미연동 출처의 링크는 실제 검색 결과로 계산하지 않습니다.

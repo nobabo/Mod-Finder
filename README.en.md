@@ -28,7 +28,7 @@ To run locally in the Workers runtime, use `npm run worker:dev`. It serves both 
 
 ## Configuration and builds
 
-If needed, copy `.env.example` to `.env`, or `.dev.vars.example` to `.dev.vars` for local Workers development. Keep existing settings intact.
+If needed, copy `.env.example` to `.env`. Local API and Workers development use the same file. Keep existing settings intact.
 
 - Modrinth, ATLauncher, Thunderstore, and Nexus searches need no key. Steam and CurseForge require server API keys.
 - Never prefix API keys with `VITE_`. Links to unconnected sources are not counted as search results.

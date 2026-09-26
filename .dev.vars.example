@@ -1,3 +1,0 @@
-# Optional server-only secrets for wrangler dev. Copy to .dev.vars.
-CURSEFORGE_API_KEY=
-STEAM_API_KEY=
