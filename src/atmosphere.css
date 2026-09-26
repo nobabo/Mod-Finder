@@ -183,7 +183,7 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
 
 @keyframes aurora-sway { 0% { transform:translate(-4%,3%) rotate(-4deg) skewY(-3deg); } 50% { transform:translate(5%,-5%) rotate(3deg) skewY(2deg); } 100% { transform:translate(10%,-9%) rotate(8deg) skewY(4deg); } }
 
-.search-row { display:flex;align-items:center;gap:14px; }
+.search-row { position:relative;display:flex;align-items:center;gap:14px; }
 .search-row .search-box { flex:1;min-width:0; }
 .filter-orb { flex:none;width:58px;height:58px;border-radius:50%;display:grid;place-items:center;color:var(--accent);border:1px solid var(--accent);background:rgba(var(--tint-rgb),.09);backdrop-filter:blur(12px);box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),0.396),0 0 20px rgba(var(--tint-rgb),.2); }
 .filter-orb:hover { background:rgba(var(--tint-rgb),.2); }
