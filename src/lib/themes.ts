@@ -19,7 +19,7 @@ const palette = [
 const rgb = (hex: string) => [1,3,5].map(offset => parseInt(hex.slice(offset,offset + 2),16));
 type ThemeEffect = 'none' | 'petals' | 'rain' | 'fire' | 'bamboo';
 const effects: Record<typeof palette[number][0], ThemeEffect> = {
-  violet:'rain', cyan:'none', magenta:'petals', cobalt:'rain', emerald:'bamboo',
+  violet:'rain', cyan:'rain', magenta:'petals', cobalt:'rain', emerald:'bamboo',
   lime:'bamboo', amber:'fire', coral:'fire', crimson:'fire', rose:'petals',
   lavender:'petals', ice:'rain', silver:'rain', midnight:'bamboo',
 };
