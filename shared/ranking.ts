@@ -49,13 +49,15 @@ export function appendStable(current: Listing[], incoming: Listing[]): Listing[]
   return [...current, ...incoming.filter(i => !seen.has(i.key) && !!seen.add(i.key))];
 }
 
-export function sortResultGroups(groups: ResultGroup[], sort: Sort): ResultGroup[] {
-  if (sort === 'relevance') return groups;
+export function sortResultGroups(groups: ResultGroup[], sort: Sort, modpacksFirst = false): ResultGroup[] {
   const downloads = (item: Listing) => item.metrics.find(metric => metric.label === '다운로드')?.value ?? -1;
   const compare = (a: Listing, b: Listing) => sort === 'downloads'
     ? downloads(b) - downloads(a)
     : sort === 'popular' ? a.rank - b.rank
     : (Date.parse(b.updatedAt ?? '') || 0) - (Date.parse(a.updatedAt ?? '') || 0);
-  return groups.map(group => ({ ...group, listings:[...group.listings].sort(compare) }))
-    .sort((a,b) => compare(a.listings[0],b.listings[0]) || a.id.localeCompare(b.id));
+  const packPriority = (item: Listing) => modpacksFirst && item.kind === 'modpack' ? 0 : 1;
+  return groups.map(group => ({ ...group, listings: [...group.listings].sort((a, b) =>
+    packPriority(a) - packPriority(b) || (sort === 'relevance' ? 0 : compare(a, b))) }))
+    .sort((a, b) => packPriority(a.listings[0]) - packPriority(b.listings[0]) ||
+      (sort === 'relevance' ? 0 : compare(a.listings[0], b.listings[0]) || a.id.localeCompare(b.id)));
 }

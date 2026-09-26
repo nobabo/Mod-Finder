@@ -9,7 +9,7 @@ import type { Listing, SearchRequest, SearchResult, VerifiedProjectLink } from '
 import { searchSource } from './api';
 export type { SearchSpec } from '../../shared/search-plan';
 export type Bucket = { request: SearchRequest; loading: boolean; result?: SearchResult };
-export function useSearch(spec: SearchSpec) {
+export function useSearch(spec: SearchSpec, modpacksFirst = false) {
   const [items, setItems] = useState<Listing[]>([]);
   const [links, setLinks] = useState<VerifiedProjectLink[]>(verifiedProjects);
   const [buckets, setBuckets] = useState<Record<string, Bucket>>({});
@@ -38,7 +38,7 @@ export function useSearch(spec: SearchSpec) {
       }
     } catch {
       if (generation.current !== gen || signal.aborted) return;
-      const link = externalSearch(getGame(request.gameId)!, request.source, request.query);
+      const link = externalSearch(getGame(request.gameId)!, request.source, request.query, request.filters);
       setBuckets(previous => ({ ...previous, [id]: { request, loading: false, result: { source: request.source, status: 'error', message: t('검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.'), items: [], nextCursor: request.cursor ?? null, total: null, fetchedAt: new Date().toISOString(), cached: false, appliedFilters: {}, unsupportedFilters: [], externalUrl: link.url, queryForwarded: link.queryForwarded } } }));
     }
   }, []);
@@ -72,7 +72,7 @@ export function useSearch(spec: SearchSpec) {
       .finally(() => { if (generation.current === gen) busy.current = false; });
   };
   const groups = useMemo(() => {
-    return sortResultGroups(groupResults(items, spec.query, links), spec.sort);
-  }, [items, spec.query, spec.selectedSource, spec.sort, links]);
+    return sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst);
+  }, [items, spec.query, spec.selectedSource, spec.sort, modpacksFirst, links]);
   return { items, groups, buckets, loading: Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => setRefresh(n => n + 1) };
 }

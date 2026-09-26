@@ -1,15 +1,27 @@
 import { useEffect, useRef, useState, type ReactNode } from 'react';
-import { ArrowLeft, ArrowRight, Search, X, Boxes, Swords, Trees, Building2, Flag, Zap, Dices, Ghost, Layers, Check, Download, TrendingUp, ArrowDownWideNarrow } from 'lucide-react';
+import { ArrowLeft, ArrowRight, Search, X, Boxes, Swords, Trees, Building2, Flag, Zap, Dices, Ghost, Layers, Check, Download, TrendingUp, ArrowDownWideNarrow, Package } from 'lucide-react';
 import type { Sort } from '../shared/types';
 import { BrandLogo } from './BrandLogo';
 import { findGames, GENRES } from '../shared/games';
 import logos from '../shared/data/logos.json';
 import { useRailAutoScroll } from './lib/use-rail-auto-scroll';
+import { GAME_RAIL_MOTION } from './lib/deck-motion';
 import { locale, t } from './lib/i18n';
 import { useRailDrag } from './lib/use-rail-drag';
 
 const logoCatalog: Record<string, { src: string }> = logos;
-export function GameDeck({ gameId, select, close, genreMode = false, children, sort = 'downloads', setSort }: { sort?:Sort; setSort?:(sort:Sort) => void; genreMode?:boolean; children?:ReactNode; gameId: string; select: (id: string, genre: string) => void; close: () => void }) {
+const categoryIcon = (name: string) => {
+  if (/weapon|armou?r|equipment|gear|combat/i.test(name)) return Swords;
+  if (/world|crop|farm|environment|tree|fishing/i.test(name)) return Trees;
+  if (/build|settlement|interior|furniture|home|location|apartment/i.test(name)) return Building2;
+  if (/quest|adventure|scenario|map|moon/i.test(name)) return Flag;
+  if (/optim|performance|skill|magic|tech|perk/i.test(name)) return Zap;
+  if (/dice|gameplay|mechanic|gamemode|tweak/i.test(name)) return Dices;
+  if (/monster|enem|creature|hazard/i.test(name)) return Ghost;
+  if (/item|storage|craft|prop|food/i.test(name)) return Boxes;
+  return Layers;
+};
+export function GameDeck({ gameId, select, close, genreMode = false, children, sort = 'downloads', setSort, modpacksFirst = false, setModpacksFirst, categories }: { categories?: { id: string; ko: string; en: string }[]; sort?:Sort; setSort?:(sort:Sort) => void; modpacksFirst?: boolean; setModpacksFirst?: (value: boolean) => void; genreMode?:boolean; children?:ReactNode; gameId: string; select: (id: string, genre: string) => void; close: () => void }) {
   const [view,setView] = useState<'menu'|'genre'|'sort'>(genreMode ? 'menu' : 'genre');
   const title = genreMode ? view === 'menu' ? '검색 필터' : view === 'sort' ? '정렬 방법' : '장르' : '게임 선택';
   const [query, setQuery] = useState('');
@@ -17,13 +29,13 @@ export function GameDeck({ gameId, select, close, genreMode = false, children, s
   const drag = useRailDrag();
   const [picking, setPicking] = useState<string | null>(null);
   const genreIcons = [Boxes,Swords,Trees,Building2,Flag,Zap,Dices,Ghost];
-  const games = genreMode ? GENRES.filter(g => [g.ko,g.en].some(name => name.toLowerCase().includes(query.toLowerCase()))).map(g => ({ id:g.id, name:g.en, koreanName:g.ko, color:'var(--accent)' })) : findGames(query, genre);
+  const games = genreMode ? (categories ?? GENRES).filter(g => [g.ko,g.en].some(name => name.toLowerCase().includes(query.toLowerCase()))).map(g => ({ id:g.id, name:g.en, koreanName:g.ko, color:'var(--accent)' })) : findGames(query, genre);
   const root = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const reduced = useRef(matchMedia('(prefers-reduced-motion: reduce)').matches);
   const busy = useRef(false);
-  const autoSpeed = useRailAutoScroll(rail,drag.gesture,true,busy);
+  const autoSpeed = useRailAutoScroll(rail,drag.gesture,true,busy,genreMode ? undefined : GAME_RAIL_MOTION);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;
     const overflow = document.body.style.overflow;
@@ -78,11 +90,14 @@ export function GameDeck({ gameId, select, close, genreMode = false, children, s
     </>}
     <div className="deck-stage">
       <div ref={rail} className={`deck-rail ${view !== 'genre' ? 'filter-menu-rail' : ''} ${drag.dragging ? 'is-dragging' : ''}`} {...drag.handlers} onWheel={event => { if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) rail.current!.scrollLeft += event.deltaY; }}>
-        {view === 'menu' && [{ id:'genre' as const, label:'장르', Icon:Layers }, { id:'sort' as const, label:'정렬 방법', Icon:ArrowDownWideNarrow }].map(({ id,label,Icon }) => <button key={id} className="deck-card" style={{ '--game-color':'var(--accent)' } as React.CSSProperties} onClick={() => setView(id)}><Icon size={100}/><span>{t(label)}</span></button>)}
+        {view === 'menu' && <>
+          {[{ id:'genre' as const, label:'장르', Icon:Layers }, { id:'sort' as const, label:'정렬 방법', Icon:ArrowDownWideNarrow }].map(({ id,label,Icon }) => <button key={id} className="deck-card" style={{ '--game-color':'var(--accent)' } as React.CSSProperties} onClick={() => setView(id)}><Icon size={100}/><span>{t(label)}</span></button>)}
+          <button type="button" className={modpacksFirst ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={modpacksFirst} onClick={() => setModpacksFirst?.(!modpacksFirst)}>{modpacksFirst && <Check className="sort-selection" size={24}/>}<Package size={100}/><span>{t('모드팩')}</span></button>
+        </>}
         {view === 'sort' && [{ id:'downloads' as const, label:'다운로드순', Icon:Download }, { id:'popular' as const, label:'인기도순', Icon:TrendingUp }].map(({ id,label,Icon }) => <button key={id} className={sort === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={sort === id} onClick={() => setSort?.(id)}>{sort === id && <Check className="sort-selection" size={24}/>}<Icon size={100}/><span>{t(label)}</span></button>)}
         {view === 'genre' && <>{!query && <button type="button" className={`deck-card ${gameId === 'all' ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={gameId === 'all'} disabled={!!picking} onClick={() => choose('all')}>{genreMode ? <Layers size={100}/> : <BrandLogo size={100}/>}<span>{t(genreMode ? '전체 장르' : '전체 게임')}</span></button>}
         {games.map(game => <button type="button" key={game.id} className={`deck-card ${gameId === game.id ? 'is-current' : ''} ${picking === game.id ? 'is-picking' : ''}`} style={{ '--game-color': game.color } as React.CSSProperties} aria-label={locale === 'ko' ? game.koreanName : game.name} aria-pressed={gameId === game.id} disabled={!!picking} onClick={() => choose(game.id)} onFocus={event => { if (!busy.current && !drag.gesture.current) event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced.current ? 'instant' : 'smooth' }); }}>
-          {genreMode ? (() => { const Icon = genreIcons[GENRES.findIndex(g => g.id === game.id)]; return <Icon size={100}/>; })() : <img className={`logo-${game.id}`} src={logoCatalog[game.id]?.src} alt="" draggable={false} />}<span>{locale === 'ko' ? game.koreanName : game.name}</span>
+          {genreMode ? (() => { const Icon = categories ? categoryIcon(game.name) : genreIcons[GENRES.findIndex(g => g.id === game.id)] ?? Layers; return <Icon size={100}/>; })() : <img className={`logo-${game.id}`} src={logoCatalog[game.id]?.src} alt="" draggable={false} />}<span>{locale === 'ko' ? game.koreanName : game.name}</span>
         </button>)}</>}
       </div>
       {view === 'genre' && !games.length && <p className="deck-empty">{t('일치하는 게임이 없어요')}</p>}

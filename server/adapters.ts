@@ -1,6 +1,7 @@
 import { createHash } from 'node:crypto';
 import { z } from 'zod';
 import { getGame } from '../shared/games';
+import { categoriesForGame, getCategory } from '../shared/categories';
 import { externalSearch, safeExternalUrl } from '../shared/links';
 import { listingKey, SOURCES, type Capability, type Filters, type Game, type Listing, type SearchRequest, type SearchResult, type Source, type SourceAdapter } from '../shared/types';
 import type { Config } from './config';
@@ -18,9 +19,17 @@ const record = z.record(z.string(), z.unknown());
 const cursorSchema = z.object({ binding: z.string(), value: z.union([z.string().max(500), z.number().int().min(0).max(100000)]) });
 const modrinthSearchSchema = z.object({ hits: z.array(record).max(20), total_hits: z.number().nonnegative() });
 const curseforgeSearchSchema = z.object({ data: z.array(record).max(20), pagination: z.object({ totalCount: z.number().nonnegative() }) });
+const atlauncherPackSchema = z.object({
+  id: z.string().regex(/^\d+$/), name: z.string().min(1).max(300), safeName: z.string().min(1).max(128).regex(/^[A-Za-z0-9._-]+$/),
+  description: z.string().nullable().optional(),
+  latestVersion: z.object({ minecraftVersion: z.string().nullable().optional(), updatedAt: z.string().nullable().optional() }).nullable().optional(),
+});
+const atlauncherSearchSchema = z.object({ data: z.object({ searchPacks: z.array(atlauncherPackSchema).max(20) }) });
+const atlauncherSearchQuery = 'query SearchPacks($query: String!) { searchPacks(first: 20, query: $query, field: NAME) { id name safeName description latestVersion { minecraftVersion updatedAt } } }';
 const steamSearchSchema = z.object({ response: z.object({ total: z.number().optional(), next_cursor: z.string().optional(), publishedfiledetails: z.array(record).max(20).optional(), result: z.number().optional() }) });
 const thunderstorePackageSchema = z.object({
-  namespace: z.string().min(1).max(128).regex(/^[A-Za-z0-9_]+$/), name: z.string().min(1).max(128).regex(/^[A-Za-z0-9_]+$/),
+  // Older namespaces such as Valheim's LVH-IT contain a hyphen.
+  namespace: z.string().min(1).max(128).regex(/^[A-Za-z0-9_-]+$/), name: z.string().min(1).max(128).regex(/^[A-Za-z0-9_]+$/),
   community_identifier: z.string(), description: z.string(),
   categories: z.array(z.object({ name: z.string(), slug: z.string() })).max(100),
   icon_url: z.string().nullable().optional(), last_updated: z.string().nullable().optional(),
@@ -31,6 +40,7 @@ const fingerprint = (req: SearchRequest) => createHash('sha256').update(JSON.str
 export function cursorFor(req: SearchRequest, value: string | number) { return Buffer.from(JSON.stringify({ binding: fingerprint(req), value })).toString('base64url'); }
 export function readCursor(req: SearchRequest): string | number | undefined {
   if (!req.cursor) return undefined;
+  if (req.source === 'atlauncher') throw new Error('invalid_cursor');
   try {
     const payload = cursorSchema.parse(JSON.parse(Buffer.from(req.cursor, 'base64url').toString()));
     if (payload.binding !== fingerprint(req)) throw new Error();
@@ -41,7 +51,7 @@ export function readCursor(req: SearchRequest): string | number | undefined {
   } catch { throw new Error('invalid_cursor'); }
 }
 export function emptyResult(game: Game, req: SearchRequest, capability: Capability): SearchResult {
-  const link = externalSearch(game, req.source, req.query);
+  const link = externalSearch(game, req.source, req.query, req.filters);
   return { source: req.source, status: capability.status, items: [], nextCursor: null, total: null, fetchedAt: new Date().toISOString(), cached: false,
     appliedFilters: Object.fromEntries(Object.entries(req.filters).filter(([key, value]) => value && capability.filters.includes(key as keyof Filters))),
     unsupportedFilters: Object.entries(req.filters).filter(([key, value]) => value && !capability.filters.includes(key as keyof Filters)).map(([key]) => key),
@@ -77,6 +87,13 @@ export function mapCurseforge(raw: Record<string, unknown>, game: Game, rank: nu
     kind: classes[Number(raw.classId)] ?? null, metrics: typeof raw.downloadCount === 'number' ? [{ label: '다운로드', value: raw.downloadCount }] : [],
     tags: Array.isArray(raw.categories) ? raw.categories.map(c => text((c as Record<string, unknown>).name)).filter(Boolean) : [], rank };
 }
+export function mapAtlauncher(raw: z.infer<typeof atlauncherPackSchema>, game: Game, rank: number): Listing {
+  const version = raw.latestVersion?.minecraftVersion;
+  return { ...base('atlauncher', game, raw.id), title: raw.name, author: null, summary: plain(raw.description),
+    url: `https://atlauncher.com/pack/${encodeURIComponent(raw.safeName)}`, iconUrl: null,
+    updatedAt: date(raw.latestVersion?.updatedAt), versions: version ? [version] : null, loaders: null, kind: 'modpack',
+    metrics: [], tags: [], rank };
+}
 export function mapSteam(raw: Record<string, unknown>, game: Game, rank: number): Listing {
   // Published file IDs are required to be strings to avoid lossy uint64 conversions.
   const id = text(raw.publishedfileid); if (!/^\d+$/.test(id) || !text(raw.title)) throw new UpstreamError('invalid');
@@ -104,6 +121,8 @@ export class Adapter implements SourceAdapter {
     if (!game.sources[this.source]) return { ...caps, status: 'unsupported', message: '이 게임을 지원하지 않는 출처예요' };
     if (this.config.disabledSources.has(this.source)) return { ...caps, status: 'disabled', message: '이 출처의 검색이 잠시 쉬고 있어요' };
     if (this.source === 'modrinth' || this.source === 'curseforge') caps.filters = ['version', 'loader', 'kind'];
+    if (this.source === 'atlauncher') { caps.filters = ['kind']; caps.sorts = ['relevance']; }
+    if (categoriesForGame(game.id).some(category => category.source === this.source)) caps.filters.push('category');
     if (this.source === 'curseforge' && !this.config.CURSEFORGE_API_KEY) return { ...caps, status: 'external', message: '검색 연동 준비 중 · 원본 사이트에서 볼 수 있어요' };
     if (this.source === 'steam' && !this.config.STEAM_API_KEY) return { ...caps, status: 'external', message: '검색 연동 준비 중 · 창작마당에서 볼 수 있어요' };
     if (this.source === 'thunderstore') caps.sorts = ['downloads', 'popular', 'updated'];
@@ -111,9 +130,11 @@ export class Adapter implements SourceAdapter {
   }
   async search(req: SearchRequest): Promise<SearchResult> {
     const game = getGame(req.gameId)!;
+    const category = getCategory(req.gameId, req.filters.category);
     const caps = this.getCapabilities(game);
     const result = emptyResult(game, req, caps);
     if (caps.status !== 'ready') return result;
+    if (this.source === 'atlauncher' && req.filters.kind && req.filters.kind !== 'modpack') return { ...result, status: 'empty', message: '검색 결과가 없어요' };
     const rawCursor = readCursor(req);
     const offset = typeof rawCursor === 'number' ? rawCursor : 0;
     try {
@@ -122,6 +143,7 @@ export class Adapter implements SourceAdapter {
         const facets: string[][] = [];
         if (req.filters.version) facets.push([`versions:${req.filters.version}`]);
         if (req.filters.loader) facets.push([`categories:${req.filters.loader}`]);
+        if (category) facets.push([`categories:${category.value}`]);
         if (req.filters.kind) facets.push([`project_type:${req.filters.kind}`]);
         url.search = new URLSearchParams({ query: req.query, facets: JSON.stringify(facets), offset: String(offset), limit: '20', index: (req.sort === 'popular' || req.sort === 'downloads') ? 'downloads' : req.sort === 'updated' ? 'updated' : 'relevance' }).toString();
         const data = modrinthSearchSchema.parse(await this.http.json(url.href));
@@ -137,6 +159,12 @@ export class Adapter implements SourceAdapter {
         const data = curseforgeSearchSchema.parse(await this.http.json(`https://api.curseforge.com/v1/mods/search?${params}`, { headers: { 'x-api-key': this.config.CURSEFORGE_API_KEY } }));
         result.items = data.data.map((hit, i) => mapCurseforge(hit, game, offset + i + 1)); result.total = data.pagination.totalCount;
         result.nextCursor = data.data.length && offset + data.data.length < Math.min(data.pagination.totalCount, 10000) ? cursorFor(req, offset + data.data.length) : null;
+      } else if (this.source === 'atlauncher') {
+        const payload = { query: atlauncherSearchQuery, variables: { query: req.query } };
+        const data = atlauncherSearchSchema.parse(await this.http.json('https://api.atlauncher.com/v2/graphql', {
+          method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
+        }));
+        result.items = data.data.searchPacks.map((pack, i) => mapAtlauncher(pack, game, i + 1));
       } else if (this.source === 'nexus') {
         const data = await searchNexusPage(game, req, offset, this.http);
         result.items = data.items; result.total = data.total;
@@ -145,12 +173,14 @@ export class Adapter implements SourceAdapter {
       } else if (this.source === 'thunderstore') {
         const page = typeof rawCursor === 'number' ? rawCursor : 1;
         const params = new URLSearchParams({ q: req.query, page: String(page), ordering: (req.sort === 'popular' || req.sort === 'downloads') ? 'most-downloaded' : 'last-updated', deprecated: 'false', nsfw: 'false' });
+        if (category) params.set('included_categories', category.value);
         const data = thunderstoreSearchSchema.parse(await this.http.json(`https://thunderstore.io/api/cyberstorm/listing/${encodeURIComponent(game.sources.thunderstore!.scope)}/?${params}`));
         result.items = data.results.map((hit, i) => mapThunderstore(hit, game, (page - 1) * 20 + i + 1)); result.total = data.count;
         // Never follow provider-supplied URLs; reconstruct the next request on our fixed host.
         result.nextCursor = data.next && data.results.length === 20 && page * 20 < data.count && page < 5000 ? cursorFor(req, page + 1) : null;
       } else if (this.source === 'steam') {
         const input = { appid: Number(game.sources.steam!.scope), search_text: req.query, cursor: typeof rawCursor === 'string' ? rawCursor : '*', numperpage: 20,
+          ...(category ? { requiredtags: [category.value] } : {}),
           query_type: (req.sort === 'popular' || req.sort === 'downloads') ? 9 : req.sort === 'updated' ? 21 : req.query ? 12 : 9, return_tags: true, return_short_description: true, return_vote_data: true, filetype: 0 };
         const data = steamSearchSchema.parse(await this.http.json(`https://api.steampowered.com/IPublishedFileService/QueryFiles/v1/?input_json=${encodeURIComponent(JSON.stringify(input))}`, { headers: { 'x-webapi-key': this.config.STEAM_API_KEY } }));
         if (data.response.result && data.response.result !== 1) throw new UpstreamError('unavailable');

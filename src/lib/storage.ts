@@ -1,8 +1,9 @@
 import { listingKey, SOURCES, type Listing } from '../../shared/types';
+import { getCategory } from '../../shared/categories';
 import { GENRES, getGame } from '../../shared/games';
 import { safeExternalUrl } from '../../shared/links';
 import { isNative } from './platform';
-export interface LocalData { favorites: Listing[]; compared: Listing[]; favoriteGames: string[]; history: { gameId: string; query: string; genre?: string }[] }
+export interface LocalData { favorites: Listing[]; compared: Listing[]; favoriteGames: string[]; history: { gameId: string; query: string; genre?: string; category?: string }[] }
 export const emptyLocalData = (): LocalData => ({ favorites: [], compared: [], favoriteGames: ['minecraft-java'], history: [] });
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
@@ -25,7 +26,7 @@ export function parseLocalData(raw: string): LocalData {
   const data = value as LocalData;
   if (!Array.isArray(data.favorites) || !data.favorites.every(validListing)
     || !strings(data.favoriteGames) || !data.favoriteGames.every(id => !!getGame(id))
-    || !Array.isArray(data.history) || !data.history.every(item => item && typeof item.gameId === 'string' && (item.gameId === 'all' || !!getGame(item.gameId)) && typeof item.query === 'string' && (item.genre === undefined || item.genre === 'all' || GENRES.some(g => g.id === item.genre)))
+    || !Array.isArray(data.history) || !data.history.every(item => item && typeof item.gameId === 'string' && (item.gameId === 'all' || !!getGame(item.gameId)) && typeof item.query === 'string' && (item.category === undefined || (typeof item.category === 'string' && !!getCategory(item.gameId, item.category))) && (item.genre === undefined || item.genre === 'all' || GENRES.some(g => g.id === item.genre)))
     || (data.compared !== undefined && (!Array.isArray(data.compared) || !data.compared.every(validListing)))) throw new Error('invalid_local_data');
   return { favorites: data.favorites, favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: (data.compared ?? []).slice(0, 3) };
 }

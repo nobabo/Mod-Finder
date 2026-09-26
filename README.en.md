@@ -6,8 +6,8 @@ Find game mods on the web, Windows, and Android, then open their original pages.
 
 ## Features
 
-- 14 games and 8 genres, with Modrinth, Thunderstore, Nexus Mods, Steam Workshop, and CurseForge integrations
-- Game, genre, version, and loader filters, sorting, and pagination — availability varies by source
+- 14 games and 8 genres, with Modrinth, CurseForge, ATLauncher, Thunderstore, Nexus Mods, and Steam Workshop integrations
+- Game, genre, version, and loader filters, modpacks-first display, sorting, and pagination — availability varies by source
 - Dictionary-based Korean-to-English search terms, 7 UI languages, and 14 themes
 - Favorites and search history stored locally: localStorage on the web, SQLite in native apps
 
@@ -30,7 +30,7 @@ To run locally in the Workers runtime, use `npm run worker:dev`. It serves both 
 
 If needed, copy `.env.example` to `.env`, or `.dev.vars.example` to `.dev.vars` for local Workers development. Keep existing settings intact.
 
-- Modrinth, Thunderstore, and Nexus searches need no key. Steam and CurseForge require server API keys.
+- Modrinth, ATLauncher, Thunderstore, and Nexus searches need no key. Steam and CurseForge require server API keys.
 - Never prefix API keys with `VITE_`. Links to unconnected sources are not counted as search results.
 - Native releases require a production HTTPS API in `VITE_API_BASE_URL`. The API server is not bundled with the app.
 

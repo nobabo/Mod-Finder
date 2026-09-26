@@ -18,6 +18,12 @@ function setup(body: unknown, status = 200, disabled = '') {
   return { fetcher, api };
 }
 describe('Thunderstore live-search contract', () => {
+  it('preserves legacy hyphenated namespaces in Valheim category results', async () => {
+    const item = mapThunderstore({ ...hit('UseEquipmentInWater'), namespace: 'LVH-IT', community_identifier: 'valheim' }, getGame('valheim')!, 1);
+    expect(item.key).toBe('thunderstore:valheim:LVH-IT-UseEquipmentInWater');
+    expect(item.url).toBe('https://thunderstore.io/c/valheim/p/LVH-IT/UseEquipmentInWater/');
+    expect(() => mapThunderstore({ ...hit(), namespace: '../unsafe' }, game, 1)).toThrow();
+  });
   it('normalizes anonymous results, preserves identity and reports unsupported filters', async () => {
     const { api, fetcher } = setup({ count: 1, next: null, results: [hit()] });
     const response = await api(path({ ...request, filters: { version: '1.2', loader: 'forge' } }));

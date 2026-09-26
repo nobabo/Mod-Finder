@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { getCategory } from '../shared/categories';
 import { findGames, GAMES, getGame } from '../shared/games';
 import { SOURCES, type SearchRequest, type Source } from '../shared/types';
 import { translate } from '../shared/translations';
@@ -8,6 +9,7 @@ import { createAdapters, readCursor } from './adapters';
 import { UpstreamClient } from './http';
 
 const querySchema = z.object({
+  category: z.string().min(1).max(160).optional(),
   gameId: z.string().max(80), source: z.enum(SOURCES), query: z.string().trim().max(200).default(''),
   version: z.string().max(40).regex(/^[\w. +\-]*$/).optional(), loader: z.enum(['fabric', 'forge', 'neoforge', 'quilt']).optional(),
   kind: z.enum(['mod', 'modpack', 'resourcepack', 'shader']).optional(), sort: z.enum(['relevance', 'downloads', 'popular', 'updated']).default('relevance'), cursor: z.string().max(1500).optional(),
@@ -42,9 +44,10 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
     if (url.pathname === '/v1/search') {
       const parsed = querySchema.safeParse(Object.fromEntries(url.searchParams));
       if (!parsed.success) return jsonResponse({ error: 'invalid_search' }, 400);
-      const { gameId, source, query, sort, cursor, version, loader, kind } = parsed.data;
+      const { gameId, source, query, sort, cursor, version, loader, kind, category } = parsed.data;
       if (!getGame(gameId)) return jsonResponse({ error: 'game_not_found' }, 404);
-      const search: SearchRequest = { gameId, source, query, sort, cursor, filters: { ...(version ? { version } : {}), ...(loader ? { loader } : {}), ...(kind ? { kind } : {}) } };
+      if (category && getCategory(gameId, category)?.source !== source) return jsonResponse({ error: 'invalid_category' }, 400);
+      const search: SearchRequest = { gameId, source, query, sort, cursor, filters: { ...(version ? { version } : {}), ...(loader ? { loader } : {}), ...(kind ? { kind } : {}), ...(category ? { category } : {}) } };
       try { readCursor(search); } catch { return jsonResponse({ error: 'invalid_cursor' }, 400); }
       const result = await adapters[source].search(search);
       return jsonResponse({ ...result, message: translate(locale, result.message), verifiedLinks: [] });

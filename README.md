@@ -6,8 +6,8 @@
 
 ## 주요 기능
 
-- 14개 게임·8개 장르, Modrinth·Thunderstore·Nexus Mods·Steam Workshop·CurseForge 연동
-- 게임·장르·버전·로더 필터, 정렬, 추가 결과 조회 — 지원 범위는 출처별로 다릅니다.
+- 14개 게임·8개 장르, Modrinth·CurseForge·ATLauncher·Thunderstore·Nexus Mods·Steam Workshop 연동
+- 게임·장르·버전·로더 필터, 모드팩 우선 표시, 정렬, 추가 결과 조회 — 지원 범위는 출처별로 다릅니다.
 - 등록된 한글 검색어의 영어 치환, 7개 UI 언어, 14개 테마
 - 즐겨찾기·최근 검색 저장: 웹은 localStorage, 네이티브 앱은 SQLite
 
@@ -30,7 +30,7 @@ Workers 환경에서 로컬 실행하려면 `npm run worker:dev`를 사용하세
 
 필요한 경우 `.env.example` → `.env`, Workers 로컬 실행은 `.dev.vars.example` → `.dev.vars`로 복사합니다. 기존 설정은 덮어쓰지 마세요.
 
-- Modrinth·Thunderstore·Nexus 검색은 키 없이 동작합니다. Steam·CurseForge는 서버 API 키가 필요합니다.
+- Modrinth·ATLauncher·Thunderstore·Nexus 검색은 키 없이 동작합니다. Steam·CurseForge는 서버 API 키가 필요합니다.
 - API 키에 `VITE_` 접두사를 붙이지 마세요. 미연동 출처의 링크는 실제 검색 결과로 계산하지 않습니다.
 - 네이티브 배포본은 `VITE_API_BASE_URL`에 운영 HTTPS API를 지정해야 합니다. 검색 서버는 앱에 포함되지 않습니다.
 

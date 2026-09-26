@@ -1,7 +1,7 @@
 import { useEffect, useRef, type RefObject } from 'react';
-import { advanceVelocity, edgeIntent } from './deck-motion';
+import { advanceVelocity, edgeIntent, type RailMotion } from './deck-motion';
 
-export function useRailAutoScroll(rail:RefObject<HTMLDivElement | null>, gesture:RefObject<unknown>, enabled = true, blocked?:RefObject<boolean>) {
+export function useRailAutoScroll(rail:RefObject<HTMLDivElement | null>, gesture:RefObject<unknown>, enabled = true, blocked?:RefObject<boolean>, motion?:RailMotion) {
   const speed = useRef(0);
   useEffect(() => {
     if (!enabled) return;
@@ -19,7 +19,7 @@ export function useRailAutoScroll(rail:RefObject<HTMLDivElement | null>, gesture
         const nextDirection=Math.sign(intent);
         held=nextDirection && nextDirection===direction ? held+dt : 0;direction=nextDirection;
         if(gesture.current || blocked?.current){speed.current=0;remainder=0;}
-        else speed.current=advanceVelocity(speed.current,reduced.matches?intent*.3:intent,dt,held);
+        else speed.current=advanceVelocity(speed.current,reduced.matches?intent*.3:intent,dt,held,motion);
         const max=Math.max(0,el.scrollWidth-el.clientWidth);
         // Browser scroll offsets can round each tiny frame to zero. Preserve the
         // fraction so a gentle start still moves, including near an edge zone.
@@ -37,6 +37,6 @@ export function useRailAutoScroll(rail:RefObject<HTMLDivElement | null>, gesture
     document.addEventListener('visibilitychange',visibility);
     frame=requestAnimationFrame(animate);
     return()=>{cancelAnimationFrame(frame);speed.current=0;window.removeEventListener('pointermove',move,true);window.removeEventListener('pointerup',move,true);window.removeEventListener('blur',stop);document.removeEventListener('pointerout',leave);document.removeEventListener('visibilitychange',visibility);};
-  },[enabled,rail,gesture,blocked]);
+  },[enabled,rail,gesture,blocked,motion]);
   return speed;
 }

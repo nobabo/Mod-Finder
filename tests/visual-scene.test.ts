@@ -3,7 +3,7 @@ import { existsSync } from 'node:fs';
 import { GAMES } from '../shared/games';
 import { BACKGROUNDS, backgroundPlaylist } from '../shared/backgrounds';
 import logos from '../shared/data/logos.json';
-import { advanceVelocity, edgeIntent, edgeRamp } from '../src/lib/deck-motion';
+import { advanceVelocity, edgeIntent, edgeRamp, GAME_RAIL_MOTION } from '../src/lib/deck-motion';
 
 describe('game imagery', () => {
   it('ships six distinct local screenshots and a real logo for every game', () => {
@@ -52,5 +52,16 @@ describe('game deck movement', () => {
     for(let i=0;i<60;i++) speed = advanceVelocity(speed,0,1/60);
     expect(speed).toBeLessThan(1);
     expect(advanceVelocity(0,1,10)).toBeLessThan(35);
+  });
+  it('reaches cruising speed sooner with the game picker motion', () => {
+    let defaultSpeed = 0;
+    let gameSpeed = 0;
+    for (let frame = 0; frame < 60; frame++) {
+      defaultSpeed = advanceVelocity(defaultSpeed, 1, 1 / 60, frame / 60);
+      gameSpeed = advanceVelocity(gameSpeed, 1, 1 / 60, frame / 60, GAME_RAIL_MOTION);
+    }
+    expect(gameSpeed).toBeGreaterThan(defaultSpeed * 1.5);
+    expect(gameSpeed).toBeLessThan(620);
+    expect(advanceVelocity(gameSpeed, 0, 1 / 60, 0, GAME_RAIL_MOTION)).toBeLessThan(gameSpeed);
   });
 });

@@ -1,4 +1,5 @@
 import { z } from 'zod';
+import { getCategory } from '../shared/categories';
 import { listingKey, type Game, type Listing, type SearchRequest } from '../shared/types';
 import { UpstreamClient, UpstreamError } from './http';
 const query = `query ModFinderSearch($filter: ModsFilter, $sort: [ModsSort!], $offset: Int, $count: Int) {
@@ -22,12 +23,14 @@ const httpsImage = (value: string | null) => {
 // Anonymous public search shared by web and native clients. Personal keys are never sent.
 export async function searchNexusPage(game: Game, req: SearchRequest, offset: number, http: UpstreamClient) {
   const scope = game.sources.nexus!.scope;
+  const category = getCategory(game.id, req.filters.category);
   const raw = await http.json('https://api.nexusmods.com/v2/graphql', {
     method: 'POST', credentials: 'omit', headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': '0.1.0' },
     body: JSON.stringify({ query, variables: {
       filter: { op: 'AND', filter: [
         { gameDomainName: [{ value: scope, op: 'EQUALS' }] },
-        { op: 'OR', filter: [{ nameStemmed: [{ value: req.query.trim(), op: 'MATCHES' }] }, { description: [{ value: req.query.trim(), op: 'MATCHES' }] }] },
+        ...(req.query.trim() ? [{ op: 'OR', filter: [{ nameStemmed: [{ value: req.query.trim(), op: 'MATCHES' }] }, { description: [{ value: req.query.trim(), op: 'MATCHES' }] }] }] : []),
+        ...(category ? [{ categoryName: [{ value: category.value, op: 'EQUALS' }] }] : []),
       ] },
       // Resolve equal scores consistently so adjacent offset pages do not reshuffle ties.
       sort: [{ [(req.sort === 'popular' || req.sort === 'downloads') ? 'downloads' : req.sort === 'updated' ? 'updatedAt' : 'relevance']: { direction: 'DESC' } }, { name: { direction: 'ASC' } }, { createdAt: { direction: 'ASC' } }], offset, count: 20,

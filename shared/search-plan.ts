@@ -1,12 +1,17 @@
 import { gamesInScope } from './games';
+import { getCategory } from './categories';
 import { providerQuery } from './content';
 import { SOURCES, type Filters, type SearchRequest, type Sort, type Source } from './types';
 export interface SearchSpec { gameId: string; genre?: string; query: string; filters: Filters; sort: Sort; selectedSource: Source | 'all' }
 export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'>) => `${request.gameId}:${request.source}`;
 export function searchPlan(spec: SearchSpec): SearchRequest[] {
-  if (!spec.query.trim()) return [];
+  const category = getCategory(spec.gameId, spec.filters.category);
+  if (!spec.query.trim() && !category) return [];
+  if (spec.gameId !== 'all' && spec.filters.category && !category) return [];
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES
     .filter(source => game.sources[source] && (spec.selectedSource === 'all' || source === spec.selectedSource))
+    .filter(source => !category || category.source === source)
+    .filter(source => source !== 'atlauncher' || !spec.filters.kind || spec.filters.kind === 'modpack')
     .map(source => ({ gameId: game.id, source,
       query: providerQuery(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id),
       filters: spec.gameId === 'all' ? {} : spec.filters,

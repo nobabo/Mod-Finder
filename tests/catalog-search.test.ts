@@ -63,6 +63,13 @@ describe('localized content and verified duplicates', () => {
     expect(providerQuery('소듐', ['modrinth:minecraft:'], 'minecraft-java')).toBe('Sodium');
     expect(providerQuery('소듐', ['nexus:stardewvalley:'], 'stardew-valley')).toBe('소듐');
   });
+  it('includes ATLauncher for Minecraft packs and excludes it for other project kinds', () => {
+    const minecraft = { ...spec, gameId: 'minecraft-java' };
+    expect(searchPlan(minecraft).map(request => request.source)).toContain('atlauncher');
+    expect(searchPlan({ ...minecraft, filters: { kind: 'modpack' } }).some(request => request.source === 'atlauncher')).toBe(true);
+    expect(searchPlan({ ...minecraft, filters: { kind: 'mod' } }).some(request => request.source === 'atlauncher')).toBe(false);
+    expect(searchPlan({ ...spec, gameId: 'lethal-company' }).some(request => request.source === 'atlauncher')).toBe(false);
+  });
   it('translates known result tags only in Korean and preserves unknown names', () => {
     expect(tagText('Gameplay', 'ko')).toBe('게임플레이');
     expect(tagText('quality of life', 'ko')).toBe('편의성');
@@ -71,7 +78,7 @@ describe('localized content and verified duplicates', () => {
   });
   it('forwards exact Korean search terms in English while leaving other queries untouched', () => {
     const koreanSpec = { ...spec, gameId: 'minecraft-java', query: '  편의성  ' };
-    expect(searchPlan(koreanSpec).map(request => request.query)).toEqual(['quality of life', 'quality of life']);
+    expect(searchPlan(koreanSpec).map(request => request.query)).toEqual(['quality of life', 'quality of life', 'quality of life']);
     expect(koreanSpec.query).toBe('  편의성  ');
     expect(providerQuery('셰이더', ['modrinth:minecraft:'], 'minecraft-java')).toBe('shader');
     expect(providerQuery('쉐이더', ['modrinth:minecraft:'], 'minecraft-java')).toBe('shader');

@@ -129,6 +129,7 @@ select option{background:#1a1433;color:#eae6ff}
   flex-shrink:0;line-height:1;border:1px solid rgba(255,255,255,.08)}
 .source-mark.modrinth{background:rgba(38,72,52,.6);color:#7ee2a8;border-color:rgba(126,226,168,.3)}
 .source-mark.curseforge{background:rgba(82,50,36,.55);color:#f0a878;border-color:rgba(240,168,120,.3)}
+.source-mark.atlauncher{background:rgba(35,63,80,.6);color:#8dd9f0;border-color:rgba(141,217,240,.3)}
 .source-mark.nexus{background:rgba(76,62,38,.55);color:#e8c172;border-color:rgba(232,193,114,.3)}
 .source-mark.thunderstore{background:rgba(58,44,74,.6);color:#c3a0ee;border-color:rgba(195,160,238,.3)}
 .source-mark.steam{background:rgba(38,64,74,.6);color:#8fd0ef;border-color:rgba(143,208,239,.3)}
