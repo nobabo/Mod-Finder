@@ -11,8 +11,8 @@ Windows·Android는 별도 패키지이며 운영 HTTPS API를 지정해 다시 
 ## 현재 배포 — 2026-09-26 KST
 
 - 주소: https://mod-finder.yjh802637.workers.dev
-- 버전: `ff74324b-dd4d-414e-82c4-cf3aaf3a8d8a`, 트래픽 100%.
-- Steam 제작자 조회, Modrinth 상세 제작자·추가 태그, 인트로·배경 효과 등 로컬 최신 소스를 반영. 사용하지 않는 로컬 변수 예제를 제거하고 개발 설정 안내를 `.env`로 통일.
-- 타입 검사, 111개 테스트, 일반/Workers 빌드, Workers 런타임 검사 통과. 공개 API·페이지 이동·언어·보안 헤더·비공개 경로 검사 통과.
-- 운영 Steam API에서 RimWorld `Harmony` 검색 결과 20개 모두 제작자 이름 확인. 공개 브라우저에서도 검색 결과와 제작자 표시 확인, 해당 검증 중 콘솔 오류·경고 없음.
-- 기록: `output/deployment/verification.json`, `output/playwright/deployed-steam-authors.png`. 네이티브 패키지는 재빌드하지 않음.
+- 버전: `1e040d1f-dc5f-41bd-8f31-0f5384273c7a`, 트래픽 100%.
+- 검색어 없는 목록 탐색·추가 결과 조회, 한국어 설명 초안 11,126개, 발헤임 이후 9개 게임의 검색창 로고 연결을 반영. 번역 검토 대상 850개는 원문 유지.
+- 타입 검사, 118개 테스트, 일반/Workers 빌드, Workers 런타임 검사 통과. 공개 API·페이지 이동·언어·보안 헤더·비공개 경로 검사 통과.
+- 브라우저에서 빈 검색, 추가 로딩(120→220개), 9개 게임의 로고 이미지 로드, 한국어 설명·원문 보기를 확인. 운영 API의 Modrinth·ATLauncher·Steam·Nexus·Thunderstore 빈 검색도 확인.
+- 기록: `output/deployment/verification.json`, `output/playwright/deployed-empty-search-valheim.png`, `output/playwright/deployed-korean-summary.png`. 네이티브 패키지는 재빌드하지 않음.

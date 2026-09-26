@@ -1,8 +1,9 @@
 import { getGame } from '../shared/games';
+import logos from '../shared/data/logos.json';
 import { BrandLogo } from './BrandLogo';
 import { listingText, tagText } from '../shared/content';
 import { t, locale } from './lib/i18n';
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { Download, Users, Bookmark, Package, X } from 'lucide-react';
 import type { Listing, Source } from '../shared/types';
 export function SourceMark({ source }: { source: Source }) { return <span className={`source-mark ${source}`} aria-hidden="true">{{ modrinth: 'M', curseforge: 'C', atlauncher: 'A', thunderstore: 'T', nexus: 'N', steam: 'S' }[source]}</span>; }
@@ -55,6 +56,11 @@ const MARKS: Record<string, React.ReactNode> = {
   rimworld: <g><circle cx="20" cy="19" r="9" fill="#7e57c2" /><ellipse cx="20" cy="20" rx="15" ry="4.6" fill="none" stroke="#b39ddb" strokeWidth="2.4" transform="rotate(-18 20 20)" /><circle cx="31" cy="8" r="1.4" fill="#e3f2fd" /></g>,
 };
 export function GameLogo({ gameId }: { gameId: string }) {
+  const [failedSource, setFailedSource] = useState('');
   if (gameId === 'all') return <span className="game-logo"><BrandLogo /></span>;
-  return <span className="game-logo"><svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#151230" />{MARKS[gameId] ?? <circle cx="20" cy="20" r="8" fill="#7e57c2" />}</svg>{getGame(gameId)?.image && <img src={getGame(gameId)?.image} alt="" referrerPolicy="no-referrer" onError={event => { event.currentTarget.style.display = 'none'; }} />}</span>;
+  const game = getGame(gameId);
+  const source = game?.image ?? (logos as Record<string, { src: string }>)[gameId]?.src;
+  return <span className={`game-logo${game?.image ? '' : ' game-logo-wordmark'}`}>{source && failedSource !== source
+    ? <img key={source} src={source} alt="" referrerPolicy="no-referrer" onError={() => setFailedSource(source)} />
+    : <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#151230" />{MARKS[gameId] ?? <text x="20" y="25" textAnchor="middle" fontSize="14" fill="currentColor">{game?.short ?? '?'}</text>}</svg>}</span>;
 }

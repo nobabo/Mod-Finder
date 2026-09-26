@@ -9,7 +9,7 @@ import type { Listing, SearchRequest, SearchResult, VerifiedProjectLink } from '
 import { searchSource } from './api';
 export type { SearchSpec } from '../../shared/search-plan';
 export type Bucket = { request: SearchRequest; loading: boolean; result?: SearchResult };
-export function useSearch(spec: SearchSpec, modpacksFirst = false) {
+export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = true) {
   const [items, setItems] = useState<Listing[]>([]);
   const [links, setLinks] = useState<VerifiedProjectLink[]>(verifiedProjects);
   const [buckets, setBuckets] = useState<Record<string, Bucket>>({});
@@ -46,7 +46,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false) {
     controller.current?.abort();
     const current = new AbortController(); controller.current = current;
     const gen = ++generation.current;
-    const requests = searchPlan(spec);
+    const requests = enabled ? searchPlan(spec) : [];
     busy.current = requests.length > 0;
     setItems([]); setLinks(verifiedProjects);
     setBuckets(Object.fromEntries(requests.map(request => [bucketKey(request), { request, loading: true }])));
@@ -56,7 +56,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false) {
     }, 250);
     return () => { clearTimeout(timer); current.abort(); };
     // The serialized key contains the complete search specification.
-  }, [key, refresh, run]);
+  }, [key, refresh, run, enabled]);
   const loadMore = () => {
     if (busy.current || !controller.current || controller.current.signal.aborted) return;
     const requests = Object.values(buckets).filter(b => !b.loading && b.result?.nextCursor)

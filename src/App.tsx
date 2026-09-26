@@ -16,6 +16,7 @@ import { THEMES as PALETTES, applyTheme } from './lib/themes';
 import { SettingsMenu } from './SettingsMenu';
 import { LANGUAGES } from '../shared/locale';
 import { listingText } from '../shared/content';
+import { useModSummaries } from './lib/mod-summaries';
 
 type Page = 'discover' | 'favorites' | 'recent';
 const FILTER_NAMES: Record<string, string> = { version: t("게임 버전"), loader: t("로더"), kind: t("종류"), category: t("장르") };
@@ -25,6 +26,7 @@ export default function App() {
   const [gameId, setGameId] = useState('minecraft-java');
   const [genre, setGenre] = useState('all');
   const [input, setInput] = useState(''); const [query, setQuery] = useState('');
+  const [submitted, setSubmitted] = useState(false);
   const [filters, setFilters] = useState<Filters>({}); const [filterOpen, setFilterOpen] = useState(false);
   const [sort, setSort] = useState<Sort>('downloads');
   const [modpacksFirst, setModpacksFirst] = useState(false);
@@ -56,8 +58,10 @@ export default function App() {
   const game = getGame(gameId);
   const gameName = (id: string) => { const g = getGame(id); return g ? (locale === 'ko' ? g.koreanName : g.name) : t('전체 게임'); };
   const scopeGames = gamesInScope(gameId, genre);
+  useModSummaries([...scopeGames.map(game => game.id), ...local.favorites.map(item => item.gameId), ...compared.map(item => item.gameId)], locale === 'ko');
   const themeControls = <div className="theme-options">{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={accent === theme.id} onClick={() => setAccent(theme.id)}><i style={{ background: theme.grad }} />{theme.name}{accent === theme.id && <Check size={14} />}</button>)}</div>;
-  const search = useSearch({ gameId, genre, query, filters, selectedSource: 'all', sort }, modpacksFirst);
+  const hasSearch = submitted || !!filters.category;
+  const search = useSearch({ gameId, genre, query, filters, selectedSource: 'all', sort }, modpacksFirst, hasSearch);
   useEffect(() => { let current = true; loadLocalData().then(data => { if (current) { setLocal(data); setHydrated(true); } }).catch(() => { if (current) setToast(t("저장된 정보를 읽지 못했어요. 저장 공간을 확인해 주세요.")); }); return () => { current = false; }; }, []);
   useEffect(() => { if (hydrated) void saveLocalData(local).catch(() => setToast(t("변경사항을 저장하지 못했어요. 저장 공간을 확인해 주세요."))); }, [local, hydrated]);
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(''), 4000); return () => clearTimeout(timer); }, [toast]);
@@ -65,7 +69,7 @@ export default function App() {
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); setPage('discover'); inputRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, []);
   const chooseGame = (id: string, nextGenre = 'all') => { setGenre(nextGenre); setGameId(id); setFilters({}); setPage('discover'); setGamePicker(false); requestAnimationFrame(() => inputRef.current?.focus()); };
   const submit = (value = input, id = gameId, selectedGenre = genre, selectedCategory = id === gameId ? filters.category ?? '' : '') => {
-    const next = value.trim().slice(0, 200); setInput(next); setQuery(next); setPage('discover'); setMenuOpen(false);
+    const next = value.trim().slice(0, 200); setInput(next); setQuery(next); setSubmitted(true); setPage('discover'); setMenuOpen(false);
     if (id !== gameId || selectedGenre !== genre) { setGenre(selectedGenre); setGameId(id); setFilters(selectedCategory ? { category: selectedCategory } : {}); }
     else if (selectedCategory !== (filters.category ?? '')) changeFilter('category', selectedCategory);
     if (next) setLocal(prev => ({ ...prev, history: [{ gameId: id, genre: selectedGenre, query: next, ...(selectedCategory ? { category: selectedCategory } : {}) }, ...prev.history.filter(item => item.query !== next || item.gameId !== id || (item.genre ?? 'all') !== selectedGenre || (item.category ?? '') !== selectedCategory)].slice(0, 20) }));
@@ -76,7 +80,7 @@ export default function App() {
   const changeFilter = (key: keyof Filters, value: string) => setFilters(prev => { const next = { ...prev }; if (value) next[key] = value; else delete next[key]; return next; });
   const resetFilters = () => { setFilters({}); setModpacksFirst(false); };
   const go = (target: Page) => { setPage(target); setMenuOpen(false); };
-  const hasQuery = query.trim().length > 0 || !!filters.category; const heroSearch = page === 'discover' && !hasQuery;
+  const heroSearch = page === 'discover' && !hasSearch;
   const visible = page === 'favorites' ? local.favorites : search.items;
   const groups = page === 'favorites' ? local.favorites.map(item => ({ id: item.key, listings: [item] })) : search.groups;
 
@@ -86,7 +90,7 @@ export default function App() {
   const activeFilters = Object.values(filters).filter(Boolean).length + Number(modpacksFirst);
   const card = (item: Listing) => <ModCard key={item.key} item={item} saved={local.favorites.some(f => f.key === item.key)} toggleSave={() => save(item)} open={() => void visit(item.url)} detail={() => setDetail(item)} />;
   const renderGroup = (group: { id: string; listings: Listing[] }) => card(group.listings[0]);
-  return <div className={`app-shell ${page === 'discover' && hasQuery ? 'has-results' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg><Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasQuery} />
+  return <div className={`app-shell ${page === 'discover' && hasSearch ? 'has-results' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg><Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} />
     <div className="settings-fab-wrap">
       <button type="button" className="settings-fab" aria-label={t("설정 메뉴")} aria-expanded={menuOpen} title={t("설정 메뉴")} onClick={() => setMenuOpen(value => !value)}><Settings2 size={25} /></button>
       {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</div>}>
@@ -97,12 +101,12 @@ export default function App() {
     </div>
     <main className="main">
       <div className="content">
-      <div className={page === 'discover' && hasQuery ? 'results-section search-results-panel' : 'search-results-wrapper'}>
-      {page === 'discover' && hasQuery && <ResultPanelOutline/>}
+      <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
+      {page === 'discover' && hasSearch && <ResultPanelOutline/>}
       <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row"><form className="search-box" onSubmit={e => { e.preventDefault(); submit(); }}>{heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160} /></div>}<button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit">{t("모드 검색")} <ArrowRight size={18} /></button></form><button type="button" className={`filter-orb ${filterOpen || activeFilters ? 'active' : ''}`} aria-label={t("검색 필터")} aria-expanded={filterOpen} onClick={() => setFilterOpen(value => !value)}><SlidersHorizontal size={18}/></button></div>
 
       </div>
-      {page === 'discover' && hasQuery && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
+      {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
 
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}

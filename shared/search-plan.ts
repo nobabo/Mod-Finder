@@ -6,7 +6,6 @@ export interface SearchSpec { gameId: string; genre?: string; query: string; fil
 export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'>) => `${request.gameId}:${request.source}`;
 export function searchPlan(spec: SearchSpec): SearchRequest[] {
   const category = getCategory(spec.gameId, spec.filters.category);
-  if (!spec.query.trim() && !category) return [];
   if (spec.gameId !== 'all' && spec.filters.category && !category) return [];
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES
     .filter(source => game.sources[source] && (spec.selectedSource === 'all' || source === spec.selectedSource))

@@ -11,6 +11,34 @@ function fakeHttp(body: unknown, status = 200, headers: Record<string, string> =
 }
 const path = '/v1/search?gameId=minecraft-java&source=modrinth&query=Sodium';
 describe('search API', () => {
+  it('browses without a keyword and continues the same ordered listing on the next page', async () => {
+    const fetcher = vi.fn(async (input: string | URL | Request) => {
+      const url = new URL(String(input));
+      const offset = Number(url.searchParams.get('offset'));
+      return new Response(JSON.stringify({ hits: [{ project_id: `item-${offset}`, title: 'Listed mod', downloads: 100 - offset }], total_hits: 2 }));
+    });
+    app = await createApp({ config: readConfig({}), http: new UpstreamClient('Test', fetcher as typeof fetch) });
+    const browse = '/v1/search?gameId=minecraft-java&source=modrinth&query=&sort=downloads';
+    const first = (await app.inject(browse)).json();
+    expect(first).toMatchObject({ status: 'success', items: [{ id: 'item-0' }] });
+    expect(first.nextCursor).toBeTruthy();
+    const second = (await app.inject(browse + '&cursor=' + encodeURIComponent(first.nextCursor))).json();
+    expect(second).toMatchObject({ status: 'success', items: [{ id: 'item-1' }], nextCursor: null });
+    for (const [input] of fetcher.mock.calls) {
+      const url = new URL(String(input));
+      expect(url.searchParams.get('query')).toBe('');
+      expect(url.searchParams.get('index')).toBe('downloads');
+    }
+  });
+  it('uses the ATLauncher default pack listing when no keyword is supplied', async () => {
+    const { http, fetcher } = fakeHttp({ data: { searchPacks: [{ id: '581', name: 'SkyFactory One', safeName: 'SkyFactoryOne' }] } });
+    app = await createApp({ config: readConfig({}), http });
+    expect((await app.inject('/v1/search?gameId=minecraft-java&source=atlauncher&query=')).json()).toMatchObject({ status: 'success', items: [{ id: '581' }] });
+    const [, options] = fetcher.mock.calls[0] as unknown as [string, RequestInit];
+    const body = JSON.parse(options.body as string);
+    expect(body.query).toContain('searchPacks: packs(first: 20)');
+    expect(body.variables).toBeUndefined();
+  });
   it('searches ATLauncher packs without a key and preserves unknown metadata', async () => {
     const { http, fetcher } = fakeHttp({ data: { searchPacks: [
       { id: '581', name: 'SkyFactory One', safeName: 'SkyFactoryOne', description: '<p>A factory pack</p>', latestVersion: { minecraftVersion: '1.16.5', updatedAt: '2025-01-02T00:00:00Z' } },

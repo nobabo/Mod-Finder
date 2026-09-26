@@ -8,6 +8,7 @@
 
 - 14개 게임·8개 장르, Modrinth·CurseForge·ATLauncher·Thunderstore·Nexus Mods·Steam Workshop 연동
 - 게임·장르·버전·로더 필터, 모드팩 우선 표시, 정렬, 추가 결과 조회 — 지원 범위는 출처별로 다릅니다.
+- 검색어 없이 검색하면 선택한 범위의 모드를 기본 다운로드순으로 둘러볼 수 있습니다. 정렬·필터 변경과 추가 결과 조회도 지원합니다.
 - 등록된 한글 검색어의 영어 치환, 7개 UI 언어, 14개 테마
 - 즐겨찾기·최근 검색 저장: 웹은 localStorage, 네이티브 앱은 SQLite
 

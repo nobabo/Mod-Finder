@@ -4,6 +4,7 @@ import searchKo from './locales/search.ko.json';
 import gameSearchKo from './locales/search.games.ko.json';
 import type { Locale } from './locale';
 import type { Listing } from './types';
+import { translatedModSummary } from './mod-summaries';
 export interface ModTranslation { title?: string; summary?: string; searchTerm: string; aliases: string[]; sourceUrl: string; reviewedAt: string }
 export const modTranslations: Record<string, ModTranslation> = ko;
 const tagTranslations: Record<string, string> = tagsKo;
@@ -16,7 +17,8 @@ export function tagText(tag: string, locale: Locale) {
 // Presentation overlay only: raw provider data remains unchanged in saved listings.
 export function listingText(item: Listing, locale: Locale) {
   const entry = locale === 'ko' ? modTranslations[item.key] : undefined;
-  return { title: entry?.title || item.title, summary: entry?.summary || item.summary, translated: !!entry };
+  const summary = entry?.summary || (locale === 'ko' ? translatedModSummary(item) : undefined);
+  return { title: entry?.title || item.title, summary: summary || item.summary, translated: !!entry || !!summary };
 }
 export function providerQuery(query: string, prefixes: string[], gameId: string) {
   const q = normalizedQuery(query);

@@ -11,6 +11,13 @@ import gameSearchKo from '../shared/locales/search.games.ko.json';
 const spec: SearchSpec = { gameId: 'all', genre: 'all', query: 'Sodium', selectedSource: 'all', filters: {}, sort: 'relevance' };
 const sodium = () => mapModrinth({ project_id: 'AANobbMI', title: 'Sodium', description: 'Original summary' }, GAMES[0], 1);
 describe('catalog and global search', () => {
+  it('plans keyword-free browsing with the selected scope, filters and sort', () => {
+    const requests = searchPlan({ ...spec, gameId: 'minecraft-java', query: '', selectedSource: 'modrinth', sort: 'downloads', filters: { loader: 'fabric', version: '1.21.1' } });
+    expect(requests).toEqual([{ gameId: 'minecraft-java', source: 'modrinth', query: '', sort: 'downloads', filters: { loader: 'fabric', version: '1.21.1' } }]);
+    const global = searchPlan({ ...spec, genre: 'survival', query: '', selectedSource: 'steam', sort: 'popular' });
+    expect(global.length).toBeGreaterThan(1);
+    expect(global.every(request => request.query === '' && request.sort === 'popular' && request.source === 'steam' && findGames('', 'survival').some(game => game.id === request.gameId))).toBe(true);
+  });
   it('searches every configured game/source pair exactly once', () => {
     const plan = searchPlan(spec);
     expect(plan).toHaveLength(GAMES.reduce((n, g) => n + Object.keys(g.sources).length, 0));
@@ -27,7 +34,7 @@ describe('catalog and global search', () => {
     expect(plan.length).toBeGreaterThan(1);
     expect(plan.every(p => p.source === 'steam' && findGames('', 'survival').some(g => g.id === p.gameId) && !Object.keys(p.filters).length)).toBe(true);
     expect(searchPlan({ ...spec, gameId: 'minecraft-java', filters: { loader: 'fabric' } }).every(p => p.filters.loader === 'fabric')).toBe(true);
-    expect(searchPlan({ ...spec, query: ' ' })).toEqual([]);
+    expect(searchPlan({ ...spec, query: ' ' }).map(bucketKey)).toEqual(searchPlan(spec).map(bucketKey));
     expect(findGames('좀보이드')[0].id).toBe('project-zomboid');
     expect(GAMES.find(g => g.id === 'terraria')?.sources.steam?.scope).toBe('1281930');
   });

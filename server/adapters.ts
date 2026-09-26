@@ -26,6 +26,7 @@ const atlauncherPackSchema = z.object({
 });
 const atlauncherSearchSchema = z.object({ data: z.object({ searchPacks: z.array(atlauncherPackSchema).max(20) }) });
 const atlauncherSearchQuery = 'query SearchPacks($query: String!) { searchPacks(first: 20, query: $query, field: NAME) { id name safeName description latestVersion { minecraftVersion updatedAt } } }';
+const atlauncherBrowseQuery = 'query BrowsePacks { searchPacks: packs(first: 20) { id name safeName description latestVersion { minecraftVersion updatedAt } } }';
 const steamSearchSchema = z.object({ response: z.object({ total: z.number().optional(), next_cursor: z.string().optional(), publishedfiledetails: z.array(record).max(20).optional(), result: z.number().optional() }) });
 const thunderstorePackageSchema = z.object({
   // Older namespaces such as Valheim's LVH-IT contain a hyphen.
@@ -175,7 +176,7 @@ export class Adapter implements SourceAdapter {
         result.items = data.data.map((hit, i) => mapCurseforge(hit, game, offset + i + 1)); result.total = data.pagination.totalCount;
         result.nextCursor = data.data.length && offset + data.data.length < Math.min(data.pagination.totalCount, 10000) ? cursorFor(req, offset + data.data.length) : null;
       } else if (this.source === 'atlauncher') {
-        const payload = { query: atlauncherSearchQuery, variables: { query: req.query } };
+        const payload = req.query.trim() ? { query: atlauncherSearchQuery, variables: { query: req.query } } : { query: atlauncherBrowseQuery };
         const data = atlauncherSearchSchema.parse(await this.http.json('https://api.atlauncher.com/v2/graphql', {
           method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload),
         }));

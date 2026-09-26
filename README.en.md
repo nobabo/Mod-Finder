@@ -15,6 +15,8 @@ React + TypeScript · Tauri · Cloudflare Workers. No separate server database o
 
 ## Quick start
 
+To browse without a keyword, leave the search box empty and submit. Results use the default download order; filters, sorting, and loading more results remain available.
+
 Requires Node.js 22.12+ and an internet connection.
 
 ```sh
