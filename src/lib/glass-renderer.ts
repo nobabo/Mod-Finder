@@ -142,7 +142,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let theme = themeById('violet'); let disposed = false; let raf = 0;
   let lastFrame = 0; let elapsed = 0; let needsDraw = true;
   let panelElements: HTMLElement[] = []; let panelDirty = true;
-  const searchLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D }>();
+  const controlLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D }>();
   let pointer = [0,0];
   let backgroundOffset = [0,0];
   const media = matchMedia('(prefers-reduced-motion: reduce)');
@@ -156,7 +156,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (context) { context.filter = 'blur(2.5px)'; context.drawImage(image,-6,-6,softened.width + 12,softened.height + 12); }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, context ? softened : image);
   };
-  const selector = '.search-box, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)), .settings-fab, .modal, .sheet';
+  const selector = '.search-box, .filter-orb, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)), .settings-fab, .modal, .sheet';
   const observer = new MutationObserver(() => { panelDirty = true; needsDraw = true; });
   observer.observe(document.getElementById('root')!, { childList: true, subtree: true });
   const resize = () => { panelDirty = true; needsDraw = true; schedule(); };
@@ -184,22 +184,22 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
     gl!.viewport(0,0,width,height);
     if (panelDirty) { panelElements = document.querySelector('.game-deck') ? [] : [...document.querySelectorAll<HTMLElement>(selector)].filter(el => getComputedStyle(el).visibility !== 'hidden'); panelDirty = false; }
-    for (const [element, lens] of searchLenses) {
-      if (!panelElements.includes(element)) { lens.canvas.remove(); searchLenses.delete(element); }
+    for (const [element, lens] of controlLenses) {
+      if (!panelElements.includes(element)) { lens.canvas.remove(); controlLenses.delete(element); }
     }
-    for (const element of panelElements.filter(element => element.matches('.search-box'))) {
-      if (searchLenses.has(element)) continue;
+    for (const element of panelElements.filter(element => element.matches('.search-box, .filter-orb'))) {
+      if (controlLenses.has(element)) continue;
       const surface = document.createElement('canvas');
       const context = surface.getContext('2d');
       if (!context) continue;
-      surface.className = 'search-glass-surface';
+      surface.className = 'glass-control-surface';
       surface.setAttribute('aria-hidden', 'true');
       element.insertBefore(surface, element.firstChild);
-      searchLenses.set(element, { canvas: surface, context });
+      controlLenses.set(element, { canvas: surface, context });
     }
     const rects = new Float32Array(32); const radii = new Float32Array(8); let count = 0;
     // Dialogs are listed last in DOM order and therefore cover underlying lenses.
-    const visible = panelElements.filter(el => { if (!el.isConnected || searchLenses.has(el) || el.matches('.search-results-panel')) return false; const r = el.getBoundingClientRect(); return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
+    const visible = panelElements.filter(el => { if (!el.isConnected || controlLenses.has(el) || el.matches('.search-results-panel')) return false; const r = el.getBoundingClientRect(); return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
     for (const element of visible) {
       const rect = element.getBoundingClientRect();
       rects.set([rect.left,rect.top,rect.width,rect.height], count * 4);
@@ -222,8 +222,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);
     gl!.uniform2fv(uniforms.uBackgroundOffset,reduced ? [0,0] : backgroundOffset);
     // Copy each lens onto its own DOM surface. The browser then scrolls its
-    // pixels and the form's border together, even between WebGL frames.
-    for (const [element, lens] of searchLenses) {
+    // pixels and the control's border together, even between WebGL frames.
+    for (const [element, lens] of controlLenses) {
       const rect = element.getBoundingClientRect();
       if (!rect.width || !rect.height || rect.bottom <= 0 || rect.top >= innerHeight) continue;
       const lensWidth = Math.min(width, Math.max(1, Math.round(rect.width * ratio)));
@@ -261,8 +261,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     },
     dispose() {
       disposed = true; cancelAnimationFrame(raf); clearInterval(redraw); observer.disconnect();
-      for (const lens of searchLenses.values()) lens.canvas.remove();
-      searchLenses.clear();
+      for (const lens of controlLenses.values()) lens.canvas.remove();
+      controlLenses.clear();
       window.removeEventListener('resize',resize); window.removeEventListener('scroll',resize,true); window.removeEventListener('pointermove',move);
       document.removeEventListener('visibilitychange',visibility); media.removeEventListener('change',motion); canvas.removeEventListener('webglcontextlost',lost);
       // A lost context has already released these objects; after restoration

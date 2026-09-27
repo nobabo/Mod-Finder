@@ -12,9 +12,9 @@
 /* Material overlays add shadows and a clear coat; refraction is rendered in WebGL. */
 .search-box { border:1px solid rgba(var(--tint-rgb),0.251);background:linear-gradient(145deg,rgba(var(--tint-rgb),0.094),#e5efff05 40%,rgba(var(--tint-rgb),0.055));animation:none;backdrop-filter:blur(12px) saturate(1.2);box-shadow:0 25px 65px #02040b55,inset 0 1px 1px rgba(var(--tint-rgb),0.314),inset 0 -1px 1px rgba(var(--tint-rgb),0.145); }
 html[data-glass="webgl"] .search-box { backdrop-filter:none;background:linear-gradient(135deg,rgba(var(--tint-rgb),0.039),rgba(var(--tint-rgb),0.008) 65%,rgba(var(--tint-rgb),0.031)); }
-.search-box { isolation:isolate; }
-.search-glass-surface { position:absolute;left:-1px;top:-1px;width:calc(100% + 2px);height:calc(100% + 2px);border-radius:inherit;z-index:-1;pointer-events:none;visibility:hidden; }
-html[data-glass="webgl"] .search-glass-surface { visibility:visible; }
+.search-box,.filter-orb { isolation:isolate; }
+.glass-control-surface { position:absolute;left:-1px;top:-1px;width:calc(100% + 2px);height:calc(100% + 2px);border-radius:inherit;z-index:-1;pointer-events:none;visibility:hidden; }
+html[data-glass="webgl"] .glass-control-surface { visibility:visible; }
 .search-box:hover { box-shadow:0 26px 75px #03071566,inset 0 1px 1px rgba(var(--tint-rgb),0.396),inset 0 -1px 1px rgba(var(--tint-rgb),0.188); }
 .search-box:focus-within { box-shadow:0 28px 85px #03071566,0 0 30px rgba(var(--tint-rgb),.12),inset 0 1px 1px rgba(var(--tint-rgb),0.459),inset 0 -1px 1px rgba(var(--tint-rgb),0.208); }
 .search-dock.hero { margin:auto;max-width:760px; }
@@ -210,7 +210,8 @@ button svg.brand-logo { fill:url(#theme-icon-gradient); }
  mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;
 }
 .search-box,.settings-fab,.filter-orb,.game-orb { background:linear-gradient(125deg,rgba(var(--tint-rgb),.10),rgba(var(--secondary-rgb),.07)); }
-html[data-glass="webgl"] .search-box { background:linear-gradient(125deg,rgba(var(--tint-rgb),.03),rgba(var(--secondary-rgb),.03)); }
+html[data-glass="webgl"] .search-box,html[data-glass="webgl"] .filter-orb { background:linear-gradient(125deg,rgba(var(--tint-rgb),.03),rgba(var(--secondary-rgb),.03));backdrop-filter:none; }
+html[data-glass="webgl"] .filter-orb:hover { background:linear-gradient(125deg,rgba(var(--tint-rgb),.14),rgba(var(--secondary-rgb),.09)); }
 
 .genre-extra-controls { display:flex;justify-content:center;gap:14px;flex-wrap:wrap;position:relative;z-index:2;padding:0 24px; }
 .genre-extra-controls label { display:flex;flex-direction:column;gap:6px;font-size:12px; }
