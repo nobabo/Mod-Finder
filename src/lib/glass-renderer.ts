@@ -12,6 +12,7 @@ varying vec2 vUv;
 uniform sampler2D uPhotoA;
 uniform sampler2D uPhotoB;
 uniform vec2 uSize;
+uniform vec4 uView;
 uniform vec2 uImageA;
 uniform vec2 uImageB;
 uniform float uTime;
@@ -52,8 +53,9 @@ float roundedBox(vec2 p, vec2 halfSize, float radius) {
   return min(max(q.x, q.y), 0.0) + length(max(q, 0.0)) - radius;
 }
 void main() {
-  vec2 pixel = vec2(vUv.x * uSize.x, (1.0 - vUv.y) * uSize.y);
-  vec3 color = scene(vUv);
+  vec2 pixel = uView.xy + vec2(vUv.x, 1.0 - vUv.y) * uView.zw;
+  vec2 sceneUv = vec2(pixel.x / uSize.x, 1.0 - pixel.y / uSize.y);
+  vec3 color = scene(sceneUv);
   for (int i = 0; i < 8; i++) {
     if (i >= uCount) break;
     vec4 rect = uPanels[i];
@@ -71,7 +73,7 @@ void main() {
       vec2 face = p / max(halfSize, vec2(1.0));
       vec2 offset = (normal * pow(bevel, 1.7) * 19.0 + face * 2.8) / uSize;
       offset.y *= -1.0;
-      vec2 refracted = vUv - offset;
+      vec2 refracted = sceneUv - offset;
       // RGB separation follows the curvature; the center remains clear.
       vec3 glass = vec3(scene(refracted - offset * 0.075).r, scene(refracted).g, scene(refracted + offset * 0.075).b);
       vec2 soft = vec2(1.2) / uSize;
@@ -122,7 +124,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const position = gl.getAttribLocation(program, 'aPosition');
   gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const uniform = (name: string) => gl.getUniformLocation(program, name);
-  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uSize','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
+  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
   const texture = () => {
     const tex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -140,6 +142,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let theme = themeById('violet'); let disposed = false; let raf = 0;
   let lastFrame = 0; let elapsed = 0; let needsDraw = true;
   let panelElements: HTMLElement[] = []; let panelDirty = true;
+  const searchLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D }>();
   let pointer = [0,0];
   let backgroundOffset = [0,0];
   const media = matchMedia('(prefers-reduced-motion: reduce)');
@@ -156,7 +159,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const selector = '.search-box, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)), .settings-fab, .modal, .sheet';
   const observer = new MutationObserver(() => { panelDirty = true; needsDraw = true; });
   observer.observe(document.getElementById('root')!, { childList: true, subtree: true });
-  const resize = () => { panelDirty = true; needsDraw = true; };
+  const resize = () => { panelDirty = true; needsDraw = true; schedule(); };
   const move = (event: PointerEvent) => { pointer = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1]; if (!reduced) needsDraw = true; };
   const motion = () => { reduced = media.matches; needsDraw = true; schedule(); };
   const visibility = () => { lastFrame = 0; if (document.hidden) cancelAnimationFrame(raf); else { needsDraw = true; schedule(); } };
@@ -181,9 +184,22 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
     gl!.viewport(0,0,width,height);
     if (panelDirty) { panelElements = document.querySelector('.game-deck') ? [] : [...document.querySelectorAll<HTMLElement>(selector)].filter(el => getComputedStyle(el).visibility !== 'hidden'); panelDirty = false; }
+    for (const [element, lens] of searchLenses) {
+      if (!panelElements.includes(element)) { lens.canvas.remove(); searchLenses.delete(element); }
+    }
+    for (const element of panelElements.filter(element => element.matches('.search-box'))) {
+      if (searchLenses.has(element)) continue;
+      const surface = document.createElement('canvas');
+      const context = surface.getContext('2d');
+      if (!context) continue;
+      surface.className = 'search-glass-surface';
+      surface.setAttribute('aria-hidden', 'true');
+      element.insertBefore(surface, element.firstChild);
+      searchLenses.set(element, { canvas: surface, context });
+    }
     const rects = new Float32Array(32); const radii = new Float32Array(8); let count = 0;
     // Dialogs are listed last in DOM order and therefore cover underlying lenses.
-    const visible = panelElements.filter(el => { if (!el.isConnected || el.matches('.search-results-panel')) return false; const r = el.getBoundingClientRect(); return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
+    const visible = panelElements.filter(el => { if (!el.isConnected || searchLenses.has(el) || el.matches('.search-results-panel')) return false; const r = el.getBoundingClientRect(); return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
     for (const element of visible) {
       const rect = element.getBoundingClientRect();
       rects.set([rect.left,rect.top,rect.width,rect.height], count * 4);
@@ -205,6 +221,27 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform3fv(uniforms.uColorA,theme.rgb.map(value => value / 255)); gl!.uniform3fv(uniforms.uColorB,theme.secondaryRgb.map(value => value / 255));
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);
     gl!.uniform2fv(uniforms.uBackgroundOffset,reduced ? [0,0] : backgroundOffset);
+    // Copy each lens onto its own DOM surface. The browser then scrolls its
+    // pixels and the form's border together, even between WebGL frames.
+    for (const [element, lens] of searchLenses) {
+      const rect = element.getBoundingClientRect();
+      if (!rect.width || !rect.height || rect.bottom <= 0 || rect.top >= innerHeight) continue;
+      const lensWidth = Math.min(width, Math.max(1, Math.round(rect.width * ratio)));
+      const lensHeight = Math.min(height, Math.max(1, Math.round(rect.height * ratio)));
+      if (lens.canvas.width !== lensWidth || lens.canvas.height !== lensHeight) {
+        lens.canvas.width = lensWidth; lens.canvas.height = lensHeight;
+      }
+      gl!.viewport(0,0,lensWidth,lensHeight);
+      gl!.uniform4f(uniforms.uView,rect.left,rect.top,rect.width,rect.height);
+      gl!.uniform4fv(uniforms.uPanels,new Float32Array([rect.left,rect.top,rect.width,rect.height]));
+      gl!.uniform1fv(uniforms.uRadii,new Float32Array([parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0]));
+      gl!.uniform1i(uniforms.uCount,1);
+      gl!.drawArrays(gl!.TRIANGLES,0,6);
+      lens.context.drawImage(canvas,0,height - lensHeight,lensWidth,lensHeight,0,0,lensWidth,lensHeight);
+    }
+    // Replace the temporary lens renders with the full background scene.
+    gl!.viewport(0,0,width,height);
+    gl!.uniform4f(uniforms.uView,0,0,innerWidth,innerHeight);
     gl!.uniform4fv(uniforms.uPanels,rects); gl!.uniform1fv(uniforms.uRadii,radii); gl!.uniform1i(uniforms.uCount,count);
     gl!.drawArrays(gl!.TRIANGLES,0,6);
     needsDraw = false;
@@ -224,6 +261,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     },
     dispose() {
       disposed = true; cancelAnimationFrame(raf); clearInterval(redraw); observer.disconnect();
+      for (const lens of searchLenses.values()) lens.canvas.remove();
+      searchLenses.clear();
       window.removeEventListener('resize',resize); window.removeEventListener('scroll',resize,true); window.removeEventListener('pointermove',move);
       document.removeEventListener('visibilitychange',visibility); media.removeEventListener('change',motion); canvas.removeEventListener('webglcontextlost',lost);
       // A lost context has already released these objects; after restoration
