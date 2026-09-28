@@ -1,11 +1,11 @@
 # Integration ledger
 
-Baseline review: 2026-09-23. Technical access is not proof of permission to redistribute data. Real credentialed requests cannot be validated without the project's own keys.
+Baseline review: 2026-09-23; CurseForge review updated 2026-09-28. Technical access is not proof of permission to redistribute data.
 
 | Source | Implementation | Default | Remaining external requirement |
 | --- | --- | --- | --- |
 | Modrinth | Search/details, facets, paging, timeouts | Enabled, no search cache | Production application/contact User-Agent |
-| CurseForge | Search/details and version/loader/class mappings | External link | Approved developer key and service display terms |
+| CurseForge | Live search/details, mods/modpacks/resourcepacks/shaders, version/loader/class mappings | Enabled with server secret; no saved API data | Use must remain within the application scope approved by CurseForge |
 | Thunderstore | Anonymous Cyberstorm community search, 20/page, sorting, timeout/backoff | Enabled, no server cache or index | Undocumented SLA/rate ceiling; persistence/shared caches remain separate opt-in gates |
 | Steam Workshop | QueryFiles and ID detail lookup, safe string IDs | Enabled on deployed Worker with server secret | RimWorld Harmony and paging verified; other mapped games need individual live checks |
 | Nexus Mods | Anonymous GraphQL search through shared Node/Workers API, game scope, sorting and pagination | Enabled for web/native clients, no key or search cache | GraphQL schema is still evolving; account authentication is separate from public search |
@@ -51,5 +51,19 @@ Search is scoped to the catalog's Nexus game domain, matches mod names, requests
 Verification uses tests/nexus.test.ts, scripts/verify-nexus.mjs and the normal production/Workers checks. The public service includes Nexus results in combined search. Account-specific authentication remains outside this search integration.
 
 ## Data handling
+
+### CurseForge (2026-09-28)
+
+Reviewed the [Studios introduction](https://docs.curseforge.com/docs/curseforge-for-studios/intro/), [REST reference](https://docs.curseforge.com/rest-api/) and [third-party API terms](https://support.curseforge.com/support/solutions/articles/9000207405-curseforge-3rd-party-api-terms-and-conditions). Mod Finder uses the third-party search API, not Studios game publishing or user authentication. The project key returned HTTP 200 for Minecraft Java (432), including class 4471 modpacks.
+
+The key is sent only from the server in `x-api-key`, stored locally in ignored `.env` and in the deployed Worker's secret binding. It is never a `VITE_*` value. The service identifies itself as ModFinder in User-Agent; it does not rotate proxies or bypass access controls. No archives or alternate download URLs are fetched, including for projects that restrict third-party distribution. Original project links and author names are displayed.
+
+The terms prohibit saving/caching API data: search and details use `no-store`, no server index/cache is built, and CurseForge listings are excluded from browser/SQLite favorites and comparison persistence. Save buttons are omitted for this source; storage boundaries also discard any legacy saved CurseForge listings. Request-scoped results are used for display only. Verification reports retain check status rather than project payloads or IDs. User-entered search history is not API content.
+
+Requests return at most 20 entries and enforce `index + pageSize <= 10000`, including cursors. Popularity uses sort 2, downloads 6, updated 3; relevance leaves sorting to the API default. Loader filtering is sent only with a game version as required by the reference; otherwise it is listed in `unsupportedFilters`. Unknown compatibility remains null. The existing timeout, response size bound, rate-limit handling and `DISABLED_SOURCES=curseforge` apply.
+
+The API terms also restrict competing services and require an approved application/key. Successful authentication verifies technical access, not the scope of the developer's agreement; any application-specific permission remains governed by CurseForge's approval. No general compliance guarantee is implied.
+
+`tests/curseforge.test.ts` covers request mappings, limits, errors and metadata. The normal release script verifies live mods, modpacks, pagination and details after deployment. Native installers must be rebuilt to receive the client-side storage policy before enabling this integration in an older native distribution.
 
 No mod archives are fetched or hosted. Icons load from original HTTPS URLs. External navigation has a hostname allowlist in both shared code and native capabilities. Only normal text descriptions are rendered. Search strings are not in application logs, but production reverse proxies must also omit/redact query strings. No server database, search cache, or background index is used.

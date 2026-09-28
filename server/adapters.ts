@@ -39,6 +39,7 @@ export function readCursor(req: SearchRequest): string | number | undefined {
     if (typeof payload.value !== (req.source === 'steam' ? 'string' : 'number')) throw new Error();
     if (req.source === 'thunderstore' && (Number(payload.value) < 1 || Number(payload.value) > 5000)) throw new Error();
     if (req.source === 'nexus' && Number(payload.value) > 10000) throw new Error();
+    if (req.source === 'curseforge' && Number(payload.value) >= 10000) throw new Error();
     return payload.value;
   } catch { throw new Error('invalid_cursor'); }
 }
@@ -65,17 +66,21 @@ export function mapModrinth(raw: Record<string, unknown>, game: Game, rank: numb
     metrics: typeof raw.downloads === 'number' ? [{ label: '다운로드', value: raw.downloads }] : [], tags: categories.filter(c => !knownLoaders.includes(c)), rank };
 }
 export function mapCurseforge(raw: Record<string, unknown>, game: Game, rank: number): Listing {
-  const id = String(raw.id ?? ''); if (!id || !text(raw.name)) throw new UpstreamError('invalid');
+  const id = String(raw.id ?? ''); if (!/^[1-9]\d*$/.test(id) || !text(raw.name)) throw new UpstreamError('invalid');
+  if (raw.gameId !== undefined && String(raw.gameId) !== game.sources.curseforge?.scope) throw new UpstreamError('invalid');
   const links = (raw.links ?? {}) as Record<string, unknown>;
   const authors = Array.isArray(raw.authors) ? raw.authors as Record<string, unknown>[] : [];
   const indexes = Array.isArray(raw.latestFilesIndexes) ? raw.latestFilesIndexes as Record<string, unknown>[] : [];
-  const loaderNames: Record<number, string> = { 1: 'forge', 4: 'fabric', 5: 'quilt', 6: 'neoforge' };
+  const loaderNames: Record<number, string> = { 1: 'forge', 3: 'liteloader', 4: 'fabric', 5: 'quilt', 6: 'neoforge' };
   const classes: Record<number, string> = { 6: 'mod', 4471: 'modpack', 12: 'resourcepack', 6552: 'shader' };
   const url = safeExternalUrl(text(links.websiteUrl)); if (!url) throw new UpstreamError('invalid');
+  if (!['curseforge.com', 'www.curseforge.com'].includes(new URL(url).hostname)) throw new UpstreamError('invalid');
+  const versions = [...new Set(indexes.map(i => text(i.gameVersion)).filter(Boolean))];
+  const loaders = [...new Set(indexes.map(i => loaderNames[Number(i.modLoader)]).filter(Boolean))];
   return { ...base('curseforge', game, id), title: text(raw.name), author: authors.map(a => text(a.name)).filter(Boolean).join(', ') || null, summary: plain(raw.summary), url,
     iconUrl: icon((raw.logo as Record<string, unknown> | null)?.thumbnailUrl), updatedAt: date(raw.dateModified),
-    versions: indexes.length ? [...new Set(indexes.map(i => text(i.gameVersion)).filter(Boolean))] : null,
-    loaders: indexes.length ? [...new Set(indexes.map(i => loaderNames[Number(i.modLoader)]).filter(Boolean))] : null,
+    versions: versions.length ? versions : null,
+    loaders: loaders.length ? loaders : null,
     kind: classes[Number(raw.classId)] ?? null, metrics: typeof raw.downloadCount === 'number' ? [{ label: '다운로드', value: raw.downloadCount }] : [],
     tags: Array.isArray(raw.categories) ? raw.categories.map(c => text((c as Record<string, unknown>).name)).filter(Boolean) : [], rank };
 }
@@ -150,9 +155,19 @@ export class Adapter implements SourceAdapter {
       } else if (this.source === 'curseforge') {
         const loaderIds: Record<string, string> = { forge: '1', fabric: '4', quilt: '5', neoforge: '6' };
         const classIds: Record<string, string> = { mod: '6', modpack: '4471', resourcepack: '12', shader: '6552' };
-        const params = new URLSearchParams({ gameId: game.sources.curseforge!.scope, searchFilter: req.query, index: String(offset), pageSize: '20', sortField: (req.sort === 'popular' || req.sort === 'downloads') ? '6' : req.sort === 'updated' ? '3' : '1', sortOrder: 'desc' });
+        // The API requires index + pageSize <= 10,000. Omit sortField for its default search order.
+        const params = new URLSearchParams({ gameId: game.sources.curseforge!.scope, searchFilter: req.query, index: String(offset), pageSize: String(Math.min(20, 10000 - offset)) });
+        if (req.sort !== 'relevance') {
+          params.set('sortField', req.sort === 'popular' ? '2' : req.sort === 'updated' ? '3' : '6');
+          params.set('sortOrder', 'desc');
+        }
         if (req.filters.version) params.set('gameVersion', req.filters.version);
-        if (req.filters.loader) params.set('modLoaderType', loaderIds[req.filters.loader]);
+        // Documented loader filtering requires a game version. Do not claim it was applied otherwise.
+        if (req.filters.loader && req.filters.version) params.set('modLoaderType', loaderIds[req.filters.loader]);
+        else if (req.filters.loader) {
+          delete result.appliedFilters.loader;
+          result.unsupportedFilters.push('loader');
+        }
         if (req.filters.kind) params.set('classId', classIds[req.filters.kind]);
         const data = curseforgeSearchSchema.parse(await this.http.json(`https://api.curseforge.com/v1/mods/search?${params}`, { headers: { 'x-api-key': this.config.CURSEFORGE_API_KEY } }));
         result.items = data.data.map((hit, i) => mapCurseforge(hit, game, offset + i + 1)); result.total = data.pagination.totalCount;

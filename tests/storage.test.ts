@@ -1,9 +1,22 @@
-import { describe, expect, it } from 'vitest';
-import { emptyLocalData, parseLocalData } from '../src/lib/storage';
+import { describe, expect, it, vi } from 'vitest';
+import { emptyLocalData, parseLocalData, saveLocalData } from '../src/lib/storage';
 import { mapModrinth } from '../server/adapters';
 import { GAMES } from '../shared/games';
 const item = mapModrinth({ project_id: 'saved', title: 'Saved', categories: [] }, GAMES[0], 1);
 describe('persisted data boundary', () => {
+  it('excludes CurseForge API data from both restored and newly saved collections', async () => {
+    const cf = { ...item, source: 'curseforge' as const, scope: '432', id: '123', key: 'curseforge:432:123', url: 'https://www.curseforge.com/minecraft/mc-mods/example' };
+    const data = { ...emptyLocalData(), favorites: [cf, item], compared: [cf, item] };
+    expect(parseLocalData(JSON.stringify(data))).toMatchObject({ favorites: [item], compared: [item] });
+    const setItem = vi.fn();
+    vi.stubGlobal('window', {});
+    vi.stubGlobal('localStorage', { setItem });
+    try {
+      await saveLocalData(data);
+      expect(JSON.parse(setItem.mock.calls[0][1])).toMatchObject({ favorites: [item], compared: [item] });
+      expect(setItem.mock.calls[0][1]).not.toContain('curseforge');
+    } finally { vi.unstubAllGlobals(); }
+  });
   it('retains game-specific category history alongside older history', () => {
     const data = { ...emptyLocalData(), history: [{ gameId: 'minecraft-java', query: 'sodium', category: 'modrinth:optimization' }, { gameId: 'stardew-valley', query: 'farm' }] };
     expect(parseLocalData(JSON.stringify(data)).history).toEqual(data.history);

@@ -7,7 +7,7 @@ const checks = [];
 async function request(path, options = {}) {
   const started = performance.now();
   const response = await fetch(new URL(path, base), { ...options, signal: AbortSignal.timeout(15000) });
-  checks.push({ path: path.split('?')[0], status: response.status, milliseconds: Math.round(performance.now() - started) });
+  checks.push({ path: path.startsWith('/v1/listings/') ? '/v1/listings/:source/:scope/:id' : path.split('?')[0], status: response.status, milliseconds: Math.round(performance.now() - started) });
   return response;
 }
 const health = await request('/health');
@@ -56,7 +56,27 @@ assert.equal(sources.find(source => source.source === 'modrinth').status, 'ready
 assert.equal(sources.find(item => item.source === 'thunderstore').status, 'ready');
 assert.equal(sources.find(item => item.source === 'steam').status, 'ready');
 assert.equal(sources.find(item => item.source === 'nexus').status, 'ready');
-assert.equal(sources.find(item => item.source === 'curseforge').status, 'external');
+assert.equal(sources.find(item => item.source === 'curseforge').status, 'ready');
+// Keep only pass/fail/count evidence; never persist CurseForge response data.
+for (const kind of ['mod', 'modpack']) {
+  const path = `/v1/search?gameId=minecraft-java&source=curseforge&kind=${kind}&sort=downloads`;
+  const response = await request(path);
+  assert.equal(response.status, 200);
+  assert.equal(response.headers.get('cache-control'), 'no-store');
+  const data = await response.json();
+  assert.equal(data.status, 'success');
+  assert.ok(data.items.length > 0);
+  assert.ok(data.items.every(item => item.source === 'curseforge' && typeof item.id === 'string' && item.kind === kind));
+  assert.ok(data.nextCursor);
+  const nextResponse = await request(`${path}&cursor=${encodeURIComponent(data.nextCursor)}`);
+  const nextData = await nextResponse.json();
+  assert.equal(nextData.status, 'success');
+  const keys = new Set(data.items.map(item => item.key));
+  assert.ok(nextData.items.every(item => item.kind === kind && !keys.has(item.key)));
+  const detail = await request(`/v1/listings/curseforge/432/${data.items[0].id}`);
+  assert.equal(detail.status, 200);
+  assert.equal((await detail.json()).listing.key, data.items[0].key);
+}
 const denied = await request('/v1/service-status', { headers: { Origin: 'https://untrusted.example' } });
 assert.equal(denied.status, 403); await denied.text();
 const invalid = await request(`${searchPath}&url=https://untrusted.example`);

@@ -8,6 +8,8 @@ export const emptyLocalData = (): LocalData => ({ favorites: [], compared: [], f
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
 const fromRetiredSource = (value: unknown) => !!value && typeof value === 'object' && (value as { source?: unknown }).source === 'atlauncher';
+// CurseForge's third-party API terms prohibit saving or caching API data.
+export const canPersistListing = (item: Pick<Listing, 'source'>) => item.source !== 'curseforge';
 function validListing(value: unknown): value is Listing {
   if (!value || typeof value !== 'object') return false;
   const item = value as Listing;
@@ -32,7 +34,7 @@ export function parseLocalData(raw: string): LocalData {
   const favorites = data.favorites.filter(item => !fromRetiredSource(item));
   const compared = (data.compared ?? []).filter(item => !fromRetiredSource(item));
   if (!favorites.every(validListing) || !compared.every(validListing)) throw new Error('invalid_local_data');
-  return { favorites, favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.slice(0, 3) };
+  return { favorites: favorites.filter(canPersistListing), favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.filter(canPersistListing).slice(0, 3) };
 }
 let database: Promise<import('@tauri-apps/plugin-sql').default> | undefined;
 async function db() {
@@ -50,7 +52,7 @@ export async function loadLocalData(): Promise<LocalData> {
 }
 let pendingWrite: Promise<unknown> = Promise.resolve();
 export function saveLocalData(data: LocalData): Promise<void> {
-  const serialized = JSON.stringify(data);
+  const serialized = JSON.stringify({ ...data, favorites: data.favorites.filter(canPersistListing), compared: data.compared.filter(canPersistListing) });
   const next = pendingWrite.catch(() => {}).then(async () => {
     if (isNative()) await (await db()).execute('INSERT INTO local_state(id,data) VALUES(1,$1) ON CONFLICT(id) DO UPDATE SET data=$1', [serialized]);
     else localStorage.setItem('modfinder:local:v1', serialized);
