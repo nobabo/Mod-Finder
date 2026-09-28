@@ -2,11 +2,11 @@
 
 ## 게임·장르
 
-`shared/data/games.json`에서 게임을 추가합니다. 현재 14개 게임과 8개 장르를 지원하며, 기본 검색 범위는 마인크래프트·전체 장르·전체 출처입니다. 이 범위는 등록된 목록을 의미하며 모든 사이트의 모든 게임을 자동 수집하지 않습니다.
+`src/shared/data/games.json`에서 게임을 추가합니다. 현재 14개 게임과 8개 장르를 지원하며, 기본 검색 범위는 마인크래프트·전체 장르·전체 출처입니다. 이 범위는 등록된 목록을 의미하며 모든 사이트의 모든 게임을 자동 수집하지 않습니다.
 
 - `id`: 바뀌지 않는 앱 내부 ID. 기존 즐겨찾기·검색 기록과 연결됩니다.
 - `name`, `koreanName`, `aliases`: 영문명, 한국어명, 검색용 별칭.
-- `genres`: `shared/data/genres.json`의 장르 ID 배열.
+- `genres`: `src/shared/data/genres.json`의 장르 ID 배열.
 - `sources`: 확인된 출처와 해당 게임의 scope. 숫자 ID도 문자열로 작성합니다.
 - `image`: 선택 사항인 로컬 이미지 주소. 없으면 이니셜을 표시합니다.
 
@@ -18,14 +18,14 @@
 
 ## 번역
 
-- `shared/locales/ko.json`: 한국어 화면 문구.
-- `shared/locales/en.json`: 동일한 키에 대응하는 영어 문구.
-- `shared/locales/mods.ko.json`: 출처별 모드 제목·설명의 한국어 번역.
-- `shared/locales/mod-summaries/*.json`: 기존 번역 작업에서 가져온 게임별 설명 번역. 한국어 화면에서 필요한 게임만 불러옵니다.
-- `shared/locales/reviewed-mod-summaries.ko.json`: 첨부 화면에서 직접 검수한 설명 9개의 번역. 게임·제목·원문 설명이 일치할 때만 표시합니다.
-- `shared/locales/tags.ko.json`: 검색 결과 카드에 표시하는 출처 태그의 한국어 번역. 등록되지 않은 태그와 고유 명칭은 원문으로 표시합니다.
-- `shared/locales/search.ko.json`: 뜻이 분명한 한글 검색어를 검색 사이트에 보낼 영어 검색어로 치환하는 사전.
-- `shared/locales/search.games.ko.json`: 게임별로 다른 영어 검색어를 사용하는 한글 용어 사전. 게임 ID별로 등록합니다.
+- `src/shared/locales/ko.json`: 한국어 화면 문구.
+- `src/shared/locales/en.json`: 동일한 키에 대응하는 영어 문구.
+- `src/shared/locales/mods.ko.json`: 출처별 모드 제목·설명의 한국어 번역.
+- `src/shared/locales/mod-summaries/*.json`: 기존 번역 작업에서 가져온 게임별 설명 번역. 한국어 화면에서 필요한 게임만 불러옵니다.
+- `src/shared/locales/reviewed-mod-summaries.ko.json`: 첨부 화면에서 직접 검수한 설명 9개의 번역. 게임·제목·원문 설명이 일치할 때만 표시합니다.
+- `src/shared/locales/tags.ko.json`: 검색 결과 카드에 표시하는 출처 태그의 한국어 번역. 등록되지 않은 태그와 고유 명칭은 원문으로 표시합니다.
+- `src/shared/locales/search.ko.json`: 뜻이 분명한 한글 검색어를 검색 사이트에 보낼 영어 검색어로 치환하는 사전.
+- `src/shared/locales/search.games.ko.json`: 게임별로 다른 영어 검색어를 사용하는 한글 용어 사전. 게임 ID별로 등록합니다.
 
 모드 번역의 키는 `출처:scope:모드ID`입니다. `title`, `summary`, `searchTerm`, `aliases`, `sourceUrl`, `reviewedAt`을 기록합니다. 현재 Sodium 두 출처의 번역을 등록했습니다. 검색은 해당 출처의 모드 `aliases`에 정확히 일치하면 `searchTerm`을 우선 사용합니다. 한 별칭이 서로 다른 검색어를 가리키면 원래 검색어를 유지합니다. 모드 별칭이 없으면 게임별 사전, 공통 사전 순으로 전체 검색어가 정확히 일치할 때만 영어로 바꿉니다. 전체 게임 검색도 각 게임에 맞는 용어로 따로 요청합니다. 예를 들어 `패브릭`은 마인크래프트에서만 `fabric`으로, `동료`는 스카이림에서 `follower`로 검색합니다. 사용자가 입력한 한글과 검색 기록은 그대로 유지합니다. 단어 일부나 임의 문장은 자동 번역하지 않습니다.
 
@@ -33,10 +33,10 @@ JSON은 번역을 표시하는 용도로만 사용합니다. 검색하지 않은
 
 2026-09-26에 기존 작업 파일에서 설명 11,126개를 반영했습니다. 게임·제목·원문 설명이 모두 일치해야 적용하며, 내보낸 이름에 출처별 ID가 포함된 경우 ID도 확인합니다. 모드 식별이나 중복 제거에는 이 설명 매칭을 사용하지 않습니다. 원문이 바뀌거나 번역이 없으면 원문을 표시합니다. 기존 ID 기반 번역이 우선합니다.
 
-번역은 초안이며 전체 검수가 끝난 상태는 아닙니다. 숫자 추가·지원 중단 안내 누락·임시 설명 확장 등이 자동 검사에서 탐지된 850개는 보류했습니다. 원본 작업 폴더 `output/mod-translation-source`를 갱신한 뒤 `node scripts/audit-mod-translations.mjs`, `node scripts/import-mod-summaries.mjs` 순서로 다시 가져올 수 있습니다. 미번역·빈 설명은 생성하지 않습니다.
+번역은 초안이며 전체 검수가 끝난 상태는 아닙니다. 숫자 추가·지원 중단 안내 누락·임시 설명 확장 등이 자동 검사에서 탐지된 850개는 보류했습니다. 원본 작업 폴더 `output/mod-translation-source`를 갱신한 뒤 `node tooling/scripts/audit-mod-translations.mjs`, `node tooling/scripts/import-mod-summaries.mjs` 순서로 다시 가져올 수 있습니다. 미번역·빈 설명은 생성하지 않습니다.
 
 ## 중복 제거
 
-같은 출처·게임 범위·ID의 항목은 여러 페이지에 있어도 한 번만 표시합니다. 서로 다른 사이트의 모드는 `shared/data/verified-projects.json`에 확인된 동일 프로젝트 매핑이 있을 때 한 카드로 묶습니다. 카드는 묶음의 대표 항목을 표시합니다.
+같은 출처·게임 범위·ID의 항목은 여러 페이지에 있어도 한 번만 표시합니다. 서로 다른 사이트의 모드는 `src/shared/data/verified-projects.json`에 확인된 동일 프로젝트 매핑이 있을 때 한 카드로 묶습니다. 카드는 묶음의 대표 항목을 표시합니다.
 
 각 매핑에는 `projectId`, `listingKeys`, `evidenceUrl`을 기록하고 원본 주소와 확인 날짜를 함께 남깁니다. 제목이 같은 모드, 포크, 다른 게임의 모드는 자동으로 합치지 않습니다. 현재 Sodium의 [Modrinth](https://modrinth.com/mod/sodium)와 [CurseForge](https://www.curseforge.com/minecraft/mc-mods/sodium) 페이지가 같은 소스 프로젝트를 가리키는 것을 확인해 등록했습니다.

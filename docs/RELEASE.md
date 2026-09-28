@@ -8,7 +8,7 @@ For the web service, follow [Workers deployment](WORKERS.md). No separate Node h
 
 For native apps or the optional standalone Node backend, before a public release:
 
-1. Use the deployed Workers HTTPS API, or deploy `server/main.ts` on Node 22.12+ behind HTTPS. Use `HOST=0.0.0.0` only inside the intended service network; expose only through the gateway.
+1. Use the deployed Workers HTTPS API, or deploy `src/server/main.ts` on Node 22.12+ behind HTTPS. Use `HOST=0.0.0.0` only inside the intended service network; expose only through the gateway.
 2. No server database or cache service is required. Thunderstore and Nexus search anonymously on demand.
 3. Store operator keys as server secrets. Connect providers only after the integration ledger requirements are fulfilled.
 4. Set allowed CORS origins to the app's actual origin and any intended browser deployment. Public proxies must block `/internal/*`, redact query strings and apply request/rate limits.
@@ -21,7 +21,7 @@ No scripts publish binaries, send platform registration requests, or launch Dock
 
 ## Android signing
 
-The generated Android project is in `src-tauri/gen/android`. Keep keystores and `local.properties` out of source control. Gradle reads `MODFINDER_KEYSTORE_PATH`, `MODFINDER_KEYSTORE_PASSWORD`, `MODFINDER_KEY_ALIAS`, and `MODFINDER_KEY_PASSWORD` from the build environment. Supply all four together; a partial configuration fails without printing the values. With all unset, release output is unsigned and cannot be published. Debug builds use only the standard development identity. Release cleartext network traffic remains disabled.
+The generated Android project is in `src/native/gen/android`. Keep keystores and `local.properties` out of source control. Gradle reads `MODFINDER_KEYSTORE_PATH`, `MODFINDER_KEYSTORE_PASSWORD`, `MODFINDER_KEY_ALIAS`, and `MODFINDER_KEY_PASSWORD` from the build environment. Supply all four together; a partial configuration fails without printing the values. With all unset, release output is unsigned and cannot be published. Debug builds use only the standard development identity. Release cleartext network traffic remains disabled.
 
 For a locally served API on an attached device:
 

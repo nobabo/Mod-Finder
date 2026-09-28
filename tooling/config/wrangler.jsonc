@@ -1,0 +1,47 @@
+{
+  "$schema": "../../node_modules/wrangler/config-schema.json",
+  "name": "mod-finder",
+  "account_id": "d84573112788e20952a64344370f1f6f",
+  "workers_dev": true,
+  "preview_urls": false,
+  "main": "../../src/worker/index.ts",
+  "compatibility_date": "2026-09-25",
+  "compatibility_flags": [
+    "nodejs_compat"
+  ],
+  "assets": {
+    "directory": "../../output/web",
+    "binding": "ASSETS",
+    "run_worker_first": [
+      "/",
+      "/index.html",
+      "/health",
+      "/v1",
+      "/v1/*",
+      "/internal",
+      "/internal/*"
+    ]
+  },
+  "vars": {
+    "DISABLED_SOURCES": "",
+    "CORS_ORIGINS": "http://tauri.localhost,https://tauri.localhost,tauri://localhost"
+  },
+  "ratelimits": [
+    {
+      "name": "API_RATE_LIMITER",
+      "namespace_id": "2609254318",
+      "simple": {
+        "limit": 120,
+        "period": 60
+      }
+    }
+  ],
+  "observability": {
+    "enabled": true,
+    "head_sampling_rate": 0.1,
+    "logs": {
+      "enabled": true,
+      "invocation_logs": false
+    }
+  }
+}

@@ -7,9 +7,9 @@ target/
 *.log
 output/
 .playwright-cli/
-src-tauri/gen/android/.gradle/
-src-tauri/gen/android/**/build/
-src-tauri/gen/android/local.properties
+src/native/gen/android/.gradle/
+src/native/gen/android/**/build/
+src/native/gen/android/local.properties
 *.keystore
 *.jks
 coverage/
@@ -22,9 +22,9 @@ coverage/
 .dev.vars.*
 
 # Local reports and generated native files
-/제출용/
-src-tauri/gen/schemas/
-src-tauri/gen/android/.kotlin/
-src-tauri/gen/android/**/.gradle/
-src-tauri/gen/android/app/src/main/assets/tauri.conf.json
-src-tauri/gen/android/app/src/main/jniLibs/
+/docs/제출용/
+src/native/gen/schemas/
+src/native/gen/android/.kotlin/
+src/native/gen/android/**/.gradle/
+src/native/gen/android/app/src/main/assets/tauri.conf.json
+src/native/gen/android/app/src/main/jniLibs/

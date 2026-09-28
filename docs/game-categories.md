@@ -1,6 +1,6 @@
 # Game-specific mod categories
 
-Checked on 2026-09-26. `shared/categories.ts` contains a curated set of native mod categories for each supported game. The Korean labels are translations; provider values remain unchanged. The game catalog's genres still apply only to the all-games view.
+Checked on 2026-09-26. `src/shared/categories.ts` contains a curated set of native mod categories for each supported game. The Korean labels are translations; provider values remain unchanged. The game catalog's genres still apply only to the all-games view.
 
 | Game | Reference |
 | --- | --- |
@@ -28,4 +28,4 @@ Checked on 2026-09-26. `shared/categories.ts` contains a curated set of native m
 - Steam external links retain the selected tag when an API key is unavailable; those links do not become retrieved results. Terraria uses the configured vanilla Workshop's resource-pack/world categories, not tModLoader's separate catalog.
 - The list is curated, not a live exhaustive mirror. Refresh source values against these pages before adding categories.
 
-Verification: `npm run typecheck`, `npm test`, `npm run build`. Browser checks use Playwright CLI with `scripts/verify-game-categories.js`; captures go to `output/playwright/`.
+Verification: `npm run typecheck`, `npm test`, `npm run build`. Browser checks use Playwright CLI with `tooling/scripts/verify-game-categories.js`; captures go to `output/playwright/`.

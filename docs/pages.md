@@ -7,12 +7,12 @@ binding to the existing `mod-finder` Worker. The Worker continues to own assets,
 API secrets, locale selection, security headers and rate limiting. Updating that
 Worker updates the app served at both addresses. No browser redirect is used.
 
-The Pages entry point is `pages/public/_worker.js`; configuration is
-`pages/wrangler.jsonc`. To redeploy the entry point with a credential that has
+The Pages entry point is `src/pages/public/_worker.js`; configuration is
+`tooling/config/wrangler.pages.jsonc`. To redeploy the entry point with a credential that has
 Cloudflare Pages Edit permission, run from the repository root:
 
 ```sh
-npx wrangler pages deploy --cwd pages --project-name modfinder --branch main
+npx wrangler pages deploy --config tooling/config/wrangler.pages.jsonc --project-name modfinder --branch main
 ```
 
 The initial deployment used the Cloudflare API because the local Wrangler OAuth

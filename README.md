@@ -1,6 +1,6 @@
 # Mod Finder
 
-**한국어** · [English](README.en.md) · [웹에서 사용하기](https://mod-finder.yjh802637.workers.dev)
+**한국어** · [English](docs/README.en.md) · [웹에서 사용하기](https://mod-finder.yjh802637.workers.dev)
 
 웹·Windows·Android에서 게임 모드를 검색하고 원본 사이트로 이동하는 앱입니다. 모드 파일을 다운로드하거나 설치하지 않습니다.
 
@@ -45,6 +45,17 @@ Workers 환경에서 로컬 실행하려면 `npm run worker:dev`를 사용하세
 | Workers 검증 | `npm run worker:verify` |
 
 Windows 개발에는 Rust·C++ Build Tools·WebView2, Android에는 Android Studio·JDK 17+·SDK 36·NDK가 필요합니다.
+
+## 폴더 구조
+
+```text
+src/       웹 화면·API·공통 데이터·Worker·네이티브 앱
+tooling/   scripts/ · tests/ · config/ · launchers/
+docs/      개발·배포 문서와 발표·제출 자료
+output/    웹·네이티브 빌드와 검증 결과 (Git 제외)
+```
+
+웹 빌드 결과는 `output/web/`에 생성됩니다. Windows 실행 바로가기는 `tooling/launchers/`에 있습니다. 자세한 경로와 작업 기준은 [구조 안내](docs/STRUCTURE.md)를 참고하세요.
 
 ## 문서
 

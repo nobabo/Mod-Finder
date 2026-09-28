@@ -1,6 +1,6 @@
 # 배포 구성
 
-웹은 Cloudflare Workers에서 정적 화면과 검색 API를 함께 제공합니다. Node 서버와 Workers는 `server/api.ts` 및 출처 어댑터를 공유합니다. 별도 데이터베이스·검색 캐시·OCI 서버는 필요하지 않습니다.
+웹은 Cloudflare Workers에서 정적 화면과 검색 API를 함께 제공합니다. Node 서버와 Workers는 `src/server/api.ts` 및 출처 어댑터를 공유합니다. 별도 데이터베이스·검색 캐시·OCI 서버는 필요하지 않습니다.
 
 Modrinth·Thunderstore·Nexus는 개인 키 없이 조회하며, Steam Workshop·CurseForge는 서버 환경변수의 키를 사용합니다. 출처가 비활성화되었거나 키가 없으면 검색 결과와 구분된 외부 링크 상태를 반환합니다.
 

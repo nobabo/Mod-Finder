@@ -36,7 +36,7 @@ DB/공유 캐시는 추가하지 않았다. PostgreSQL/Redis 의존성이 없음
 
 ## 남아 있는 네이티브 의존성 경고
 
-`cargo audit --file src-tauri/Cargo.lock --json`은 552개 잠금 의존성에서 취약점 1건과 경고 7건을 보고했다. 이를 성공 검사로 숨기거나 ignore 처리하지 않았다.
+`cargo audit --file src/native/Cargo.lock --json`은 552개 잠금 의존성에서 취약점 1건과 경고 7건을 보고했다. 이를 성공 검사로 숨기거나 ignore 처리하지 않았다.
 
 | 항목 | 확인한 범위 | 후속 조치 |
 | --- | --- | --- |

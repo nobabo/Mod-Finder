@@ -16,8 +16,8 @@ npm run build
 `npm run dev:ui`로 화면을 실행한 뒤 별도 Playwright CLI 세션에서 확인합니다.
 
 ```powershell
-npx --package @playwright/cli playwright-cli -s=mod-finder-check open http://localhost:1420
-npx --package @playwright/cli playwright-cli -s=mod-finder-check run-code --filename=scripts/verify-ui.js
+npx --package @playwright/cli playwright-cli -s=mod-finder-check open http://localhost:1420 --config tooling/config/playwright.json
+npx --package @playwright/cli playwright-cli -s=mod-finder-check run-code --filename=tooling/scripts/verify-ui.js
 npx --package @playwright/cli playwright-cli -s=mod-finder-check close
 ```
 
@@ -27,8 +27,8 @@ npx --package @playwright/cli playwright-cli -s=mod-finder-check close
 
 - `npm run smoke`: 실행 중인 로컬 API를 통한 Modrinth 실제 검색.
 - `npm run worker:verify`: Workers 빌드와 배포 사전 검사, 로컬 Workers 실행 환경 검증. 실제 배포하지 않습니다.
-- `node scripts/verify-deployment.mjs <HTTPS 주소>`: 배포된 API·보안 헤더·언어·비공개 경로 검사.
-- `node scripts/verify-nexus.mjs <HTTPS 주소>`, `node scripts/verify-thunderstore.mjs <HTTPS 주소>`: 출처별 실제 검색 검사.
+- `node tooling/scripts/verify-deployment.mjs <HTTPS 주소>`: 배포된 API·보안 헤더·언어·비공개 경로 검사.
+- `node tooling/scripts/verify-nexus.mjs <HTTPS 주소>`, `node tooling/scripts/verify-thunderstore.mjs <HTTPS 주소>`: 출처별 실제 검색 검사.
 
 외부 API 검사는 네트워크와 해당 출처의 서비스 상태에 영향을 받습니다. 브라우저와 단위 테스트는 Windows·Android 설치 및 SQLite 실기기 검증을 대신하지 않습니다. 네이티브 릴리스 점검은 [배포 절차](RELEASE.md)와 [네이티브 의존성 경고](PREDEPLOY-AUDIT.md)를 참고하세요.
 

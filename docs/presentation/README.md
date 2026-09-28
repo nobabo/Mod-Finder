@@ -39,13 +39,13 @@
 
 | 영역 | 실제 구성 | 확인 파일 |
 | --- | --- | --- |
-| UI | React 19, TypeScript 5.9, Vite 7, CSS, Lucide React | `package.json`, `src/App.tsx`, `src/styles.css` |
-| 기존 앱 시각 효과 | WebGL 셰이더 기반 유리 굴절 렌더러 | `src/lib/glass-renderer.ts` |
-| 운영 웹/API | Cloudflare Workers, 정적 자산, 공유 Fetch API | `wrangler.jsonc`, `worker/index.ts`, `server/api.ts` |
-| 로컬 API | Node.js, Fastify 5, CORS, 요청 제한 | `server/app.ts`, `server/main.ts` |
-| 데이터 검증 | Zod 4 | `package.json`, `server/adapters.ts` |
-| 네이티브 | Tauri 2, Rust, SQL·opener 플러그인 | `src-tauri/Cargo.toml` |
-| 개인 저장소 | 웹 localStorage / 네이티브 SQLite | `src/lib/storage.ts` |
+| UI | React 19, TypeScript 5.9, Vite 7, CSS, Lucide React | `package.json`, `src/web/App.tsx`, `src/web/styles.css` |
+| 기존 앱 시각 효과 | WebGL 셰이더 기반 유리 굴절 렌더러 | `src/web/lib/glass-renderer.ts` |
+| 운영 웹/API | Cloudflare Workers, 정적 자산, 공유 Fetch API | `tooling/config/wrangler.jsonc`, `src/worker/index.ts`, `src/server/api.ts` |
+| 로컬 API | Node.js, Fastify 5, CORS, 요청 제한 | `src/server/app.ts`, `src/server/main.ts` |
+| 데이터 검증 | Zod 4 | `package.json`, `src/server/adapters.ts` |
+| 네이티브 | Tauri 2, Rust, SQL·opener 플러그인 | `src/native/Cargo.toml` |
+| 개인 저장소 | 웹 localStorage / 네이티브 SQLite | `src/web/lib/storage.ts` |
 | 테스트·배포 도구 | Vitest 4, TypeScript, Wrangler | `package.json` |
 
 Workers는 Fastify 서버를 구동하지 않고 공유 API 로직을 사용합니다. 검색 서버용 DB는 현재 구성에 없습니다. Steam·CurseForge는 서버 API 키가 필요하며, 외부 링크를 검색 결과로 표현하지 않습니다. 확인되지 않은 호환성을 보장하는 문구도 넣지 않았습니다.
@@ -60,9 +60,9 @@ HTML·CSS·JavaScript·이미지를 분리했습니다. GLSL 코드는 `steve.js
 
 두 번째부터 여덟 번째 화면은 기존 게임 스크린샷과 본문만 표시합니다. 배경 WebGL 렌더러와 게임별 HUD 코드는 제거했습니다. 첫 화면에서 벗어나면 캐릭터 렌더 루프도 멈추며, 돌아오면 이어집니다. 동작 줄이기 설정에서는 정지 자세를 표시합니다. 화면이 숨겨지면 루프를 멈추고 해상도 상한을 유지합니다.
 
-프로젝트 로고의 경로는 `public/logos/mod-finder.svg`, 인트로는 `src/EntryIntro.tsx`와 `src/entry-intro.css`에서 가져왔습니다. 배경은 저장소의 게임별 `public/backgrounds/<game>/01.webp`를 사용합니다. 공식 이미지 출처와 원본 URL은 `shared/data/backgrounds.json`에 기록되어 있습니다. 게임 이미지의 권리는 각 권리자에게 있습니다. 스티브의 WebGL 윤곽은 프레젠테이션용 연출이며 실제 게임 플레이 화면이 아닙니다.
+프로젝트 로고의 경로는 `src/web/public/logos/mod-finder.svg`, 인트로는 `src/web/EntryIntro.tsx`와 `src/web/entry-intro.css`에서 가져왔습니다. 배경은 저장소의 게임별 `src/web/public/backgrounds/<game>/01.webp`를 사용합니다. 공식 이미지 출처와 원본 URL은 `src/shared/data/backgrounds.json`에 기록되어 있습니다. 게임 이미지의 권리는 각 권리자에게 있습니다. 스티브의 WebGL 윤곽은 프레젠테이션용 연출이며 실제 게임 플레이 화면이 아닙니다.
 
-이 파일은 독립 문서로 제공됩니다. 앱의 `public/` 빌드 경로에는 포함하지 않았습니다. 기존 앱에 배포하려면 정적 파일 경로와 iframe 보안 정책 등 별도 통합 확인이 필요합니다.
+이 파일은 독립 문서로 제공됩니다. 앱의 `src/web/public/` 빌드 경로에는 포함하지 않았습니다. 기존 앱에 배포하려면 정적 파일 경로와 iframe 보안 정책 등 별도 통합 확인이 필요합니다.
 
 ## 검증
 

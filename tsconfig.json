@@ -22,14 +22,10 @@
     "noUnusedParameters": true
   },
   "include": [
-    "src",
-    "shared",
-    "server",
-    "tests",
-    "scripts",
-    "vite.config.ts",
-    "vitest.config.ts",
-    "worker",
-    "worker-configuration.d.ts"
+    "src/web",
+    "src/shared",
+    "src/server",
+    "src/worker",
+    "tooling"
   ]
 }

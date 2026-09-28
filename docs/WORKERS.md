@@ -24,17 +24,17 @@ npm run worker:dev
 
 ## 실제 배포
 
-1. Cloudflare 계정을 만들고 `npx wrangler login`으로 브라우저에서 로그인합니다.
-2. `wrangler.jsonc`의 Worker 이름을 확인합니다. 요청 제한 namespace ID가 같은 계정의 다른 서비스와 겹치지 않게 유지하세요.
+1. Cloudflare 계정을 만들고 `npm run worker -- login`으로 브라우저에서 로그인합니다.
+2. `tooling/config/wrangler.jsonc`의 Worker 이름을 확인합니다. 요청 제한 namespace ID가 같은 계정의 다른 서비스와 겹치지 않게 유지하세요.
 3. `npm run worker:deploy`를 실행합니다. 출력되는 HTTPS `workers.dev` 주소에서 사이트를 사용할 수 있습니다. 별도 도메인은 선택 사항입니다.
 4. 승인된 API 키가 준비된 경우 아래 명령의 안전한 입력 창에서 등록합니다. 로컬 `.env`는 자동으로 업로드되지 않습니다.
 
 ```powershell
-npx wrangler secret put CURSEFORGE_API_KEY
-npx wrangler secret put STEAM_API_KEY
+npm run worker -- secret put CURSEFORGE_API_KEY
+npm run worker -- secret put STEAM_API_KEY
 ```
 
-키 값을 명령 인수, `VITE_*`, `wrangler.jsonc`, 브라우저 저장소에 넣지 마세요. 키가 없는 출처는 원본 링크를 제공합니다. Thunderstore·Nexus는 키 없이 직접 검색합니다.
+키 값을 명령 인수, `VITE_*`, `tooling/config/wrangler.jsonc`, 브라우저 저장소에 넣지 마세요. 키가 없는 출처는 원본 링크를 제공합니다. Thunderstore·Nexus는 키 없이 직접 검색합니다.
 
 Workers 전용 빌드는 기존 `.env`의 `VITE_API_BASE_URL`을 사용하지 않습니다. 화면은 같은 사이트의 `/v1/*`를 호출합니다. 일반 `npm run build`는 기존 앱 빌드용 설정을 유지하므로 Workers 배포에는 반드시 `worker:deploy`를 사용하세요.
 

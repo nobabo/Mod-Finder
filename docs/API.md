@@ -51,7 +51,7 @@ Cursors are bound to the game, source, query, filters, and sort. They must not b
 
 The shape example omits listing objects; actual success responses contain listings. `total` is a provider's reported count, not a deduplicated global count.
 
-Listing fields are defined in `shared/types.ts`. Key identity is `source:scope:id`; uint64 values remain strings. `versions` means game versions, never package versions. Missing author/version/loader/date is null. `metrics` retains provider labels such as downloads or subscriptions. HTML is not rendered.
+Listing fields are defined in `src/shared/types.ts`. Key identity is `source:scope:id`; uint64 values remain strings. `versions` means game versions, never package versions. Missing author/version/loader/date is null. `metrics` retains provider labels such as downloads or subscriptions. HTML is not rendered.
 
 States: `success`, `empty`, `external`, `auth_required`, `unsupported`, `error`, `rate_limited`, `disabled`. Current Nexus mode is `external`; `auth_required` is reserved for the approved native implementation. A source failure is a successful HTTP response with its explicit source state, so other providers can still render. Malformed client inputs return 400, unknown games 404, API-level throttling 429.
 
