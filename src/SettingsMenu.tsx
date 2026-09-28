@@ -11,6 +11,30 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
   const [view,setView] = useState<'menu'|'theme'|'language'>('menu');
   const rail = useRef<HTMLDivElement>(null);
   useRailAutoScroll(rail,drag.gesture,view === 'menu');
+  useEffect(() => {
+    const element = rail.current;
+    if (view !== 'menu' || !element) return;
+    const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
+    const update = () => {
+      const box = element.getBoundingClientRect();
+      for (const card of element.querySelectorAll<HTMLButtonElement>('nav button')) {
+        const rect = card.getBoundingClientRect();
+        const offset = Math.max(-1, Math.min(1, (rect.left + rect.width / 2 - box.left - box.width / 2) / (box.width / 2)));
+        card.style.setProperty('--card-drop', (motion.matches ? 0 : Math.abs(offset) * 18) + 'px');
+        card.style.setProperty('--card-turn', (motion.matches ? 0 : offset * -15) + 'deg');
+      }
+    };
+    const observer = new ResizeObserver(update);
+    observer.observe(element);
+    element.addEventListener('scroll', update, { passive: true });
+    motion.addEventListener('change', update);
+    update();
+    return () => {
+      observer.disconnect();
+      element.removeEventListener('scroll', update);
+      motion.removeEventListener('change', update);
+    };
+  }, [view]);
   const lastView = useRef<'theme'|'language'>('theme');
   const open = (next:'theme'|'language') => { lastView.current = next; setView(next); };
   useEffect(() => {
