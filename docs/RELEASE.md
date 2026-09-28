@@ -35,6 +35,12 @@ The Android launcher disables persistent Gradle daemons for its build so that ge
 
 Use `Build-Windows.bat --check` or `Build-Android.bat --check` to check paths and configuration without building. Use `Start-Web.bat --verify` to start and check local services, then stop only services it started. Set `CI=true` when invoking a build launcher from automation to omit the final pause.
 
+## Website downloads
+
+The web settings cards download through `/downloads/windows` and `/downloads/android` on the Worker. The Worker streams fixed, public GitHub release files and supplies attachment filenames; it supports HEAD and resumed downloads. It never forwards browser cookies or authorization headers to GitHub. File metadata and SHA-256 values are in `src/shared/app-downloads.ts`.
+
+To publish rebuilt installers, upload the generated files and `SHA256SUMS.txt` to the intended GitHub release, update that metadata to match, then run the standard project release. Verify the full downloaded files against the generated checksums. GitHub stores the originals because the APK exceeds the [25 MiB Workers static asset limit](https://developers.cloudflare.com/workers/platform/limits/#static-assets).
+
 ## Local Android API
 
 For a locally served API on an attached device:

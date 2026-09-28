@@ -3,6 +3,7 @@ import { readConfig } from '../server/config';
 import { isLocale, resolveLocale } from '../shared/locale';
 import { translate } from '../shared/translations';
 import { SECURITY_HEADERS } from './security';
+import { downloadInstaller } from './downloads';
 
 export default {
   async fetch(request, env): Promise<Response> {
@@ -25,6 +26,7 @@ export default {
       return new Response(request.method === 'HEAD' ? null : response.body, { status: response.status, headers });
     };
     try {
+      if (url.pathname.startsWith('/downloads/')) return finish(await downloadInstaller(request));
       if (isApi) {
         if (request.method === 'OPTIONS') {
           if (!allowedOrigin) return finish(jsonResponse({ error: 'origin_not_allowed' }, 403));

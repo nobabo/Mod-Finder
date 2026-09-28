@@ -13,6 +13,20 @@ async function request(path, options = {}) {
 const health = await request('/health');
 assert.equal(health.status, 200);
 assert.equal((await health.json()).ok, true);
+for (const [platform, signature] of [['windows', 'MZ'], ['android', 'PK']]) {
+  const path = `/downloads/${platform}`;
+  const head = await request(path, { method: 'HEAD' });
+  assert.equal(head.status, 200, `${platform} download HEAD`);
+  assert.match(head.headers.get('content-disposition'), /^attachment; filename="ModFinder-/);
+  assert.match(head.headers.get('x-checksum-sha256'), /^[a-f0-9]{64}$/);
+  assert.ok(Number(head.headers.get('content-length')) > 0);
+  const partial = await request(path, { headers: { Range: 'bytes=0-3' } });
+  assert.equal(partial.status, 206, `${platform} resumed download`);
+  assert.match(partial.headers.get('content-range'), /^bytes 0-3\/\d+$/);
+  const bytes = Buffer.from(await partial.arrayBuffer());
+  assert.equal(bytes.length, 4);
+  assert.equal(bytes.subarray(0, 2).toString(), signature);
+}
 for (const language of ['ko', 'en']) {
   const response = await request('/', { headers: { Cookie: `mf-language=${language}` } });
   assert.equal(response.status, 200);

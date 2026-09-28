@@ -45,8 +45,8 @@ async (page) => {
     assert(await page.locator('#mod-query').getAttribute('placeholder') === '검색할 모드를 입력하세요.', 'Settings placeholder');
     assert(await page.locator('.game-orb').innerHTML() === icon, 'Settings game icon');
     await page.getByRole('button', { name: '웹 / 앱 다운로드', exact: true }).click();
-    assert((await page.getByRole('link', { name: 'Windows', exact: true }).getAttribute('href')).endsWith('/ModFinder-0.1.0-Windows-x64-setup.exe'), 'Windows download');
-    assert((await page.getByRole('link', { name: 'Android', exact: true }).getAttribute('href')).endsWith('/ModFinder-0.1.0-Android-arm64.apk'), 'Android download');
+    assert(await page.getByRole('link', { name: 'Windows', exact: true }).getAttribute('href') === 'https://modfinder.pages.dev/downloads/windows', 'Windows download');
+    assert(await page.getByRole('link', { name: 'Android', exact: true }).getAttribute('href') === 'https://modfinder.pages.dev/downloads/android', 'Android download');
     assert(await page.getByRole('link', { name: '웹에서 열기', exact: true }).getAttribute('href') === 'https://modfinder.pages.dev', 'Web address');
     await page.screenshot({ path: 'output/playwright/downloads-desktop.png' });
     await page.getByRole('button', { name: '뒤로', exact: true }).click();

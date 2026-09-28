@@ -45,6 +45,13 @@ try {
   assert.deepEqual(await external.json().then(({ status, items, total, message }) => ({ status, items, total, message })), {
     status: 'external', items: [], total: null, message: 'Search integration pending · visit the original site',
   });
+  const downloadPost = await mf.dispatchFetch('http://localhost/downloads/windows', { method: 'POST' });
+  assert.equal(downloadPost.status, 405);
+  assert.equal(downloadPost.headers.get('allow'), 'GET, HEAD');
+  await downloadPost.text();
+  const missingDownload = await mf.dispatchFetch('http://localhost/downloads/missing');
+  assert.equal(missingDownload.status, 404);
+  await missingDownload.text();
   for (const path of ['/v1/missing', '/internal/metrics']) {
     const response = await mf.dispatchFetch(`http://localhost${path}`);
     assert.equal(response.status, 404);
