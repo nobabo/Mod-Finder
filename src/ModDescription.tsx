@@ -2,7 +2,7 @@ import { useEffect, useId, useLayoutEffect, useRef, useState, type CSSProperties
 import { createPortal } from 'react-dom';
 
 type Side = 'left' | 'right' | 'top' | 'bottom';
-const LONG_PRESS_MS = 500;
+const LONG_PRESS_MS = 300;
 const FADE_MS = 220;
 const clamp = (value: number, min: number, max: number) => Math.max(min, Math.min(value, max));
 function bubblePath(width: number, height: number, side: Side, arrow: number) {
@@ -27,6 +27,7 @@ export function ModDescription({ summary, children }: { summary: string; childre
   const pressTimer = useRef<ReturnType<typeof setTimeout> | undefined>(undefined);
   const touchPress = useRef<{ id: number; x: number; y: number; shown: boolean } | null>(null);
   const touchInput = useRef(false);
+  const touchPinned = useRef(false);
   const suppressClickUntil = useRef(0);
   const openWanted = useRef(false);
   const [rendered, setRendered] = useState(false);
@@ -46,6 +47,7 @@ export function ModDescription({ summary, children }: { summary: string; childre
     }
   };
   const close = () => {
+    touchPinned.current = false;
     cancelHide();
     clearTimeout(exitTimer.current);
     openWanted.current = false;
@@ -54,16 +56,17 @@ export function ModDescription({ summary, children }: { summary: string; childre
   };
   const hide = () => {
     cancelHide();
+    if (touchPinned.current) return;
     hideTimer.current = setTimeout(() => {
-      if (!card.current?.contains(document.activeElement)) close();
+      if (!touchPinned.current && !card.current?.contains(document.activeElement)) close();
     }, 120);
   };
-  const endPress = (pointerId: number) => {
+  const endPress = (pointerId: number, cancelled = false) => {
     if (touchPress.current?.id !== pointerId) return;
     clearTimeout(pressTimer.current);
     if (touchPress.current.shown) {
       suppressClickUntil.current = Date.now() + 700;
-      close();
+      if (cancelled) close();
     }
     touchPress.current = null;
   };
@@ -97,12 +100,17 @@ export function ModDescription({ summary, children }: { summary: string; childre
       frame = requestAnimationFrame(update);
     };
     const dismiss = (event: KeyboardEvent) => { if (event.key === 'Escape') close(); };
+    const dismissOutside = (event: PointerEvent) => {
+      if (touchPinned.current && !card.current?.contains(event.target as Node) && !tooltip.current?.contains(event.target as Node)) close();
+    };
     update();
     window.addEventListener('keydown', dismiss);
+    document.addEventListener('pointerdown', dismissOutside, true);
     return () => {
       cancelAnimationFrame(frame);
       cancelAnimationFrame(revealFrame);
       window.removeEventListener('keydown', dismiss);
+      document.removeEventListener('pointerdown', dismissOutside, true);
     };
   }, [rendered, summary]);
   return <>
@@ -120,16 +128,17 @@ export function ModDescription({ summary, children }: { summary: string; childre
         pressTimer.current = setTimeout(() => {
           if (touchPress.current?.id !== pointerId) return;
           touchPress.current.shown = true;
+          touchPinned.current = true;
           show();
         }, LONG_PRESS_MS);
       }}
       onPointerMove={event => {
         const press = touchPress.current;
         if (press?.id !== event.pointerId || Math.hypot(event.clientX - press.x, event.clientY - press.y) <= 12) return;
-        endPress(event.pointerId);
+        endPress(event.pointerId, true);
       }}
       onPointerUp={event => endPress(event.pointerId)}
-      onPointerCancel={event => endPress(event.pointerId)}
+      onPointerCancel={event => endPress(event.pointerId, true)}
       onContextMenu={event => { if (touchInput.current && (event.target as Element).closest('.mod-logo-link')) event.preventDefault(); }}
       onClickCapture={event => {
         if (Date.now() < suppressClickUntil.current && (event.target as Element).closest('.mod-logo-link')) {
