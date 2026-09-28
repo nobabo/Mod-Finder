@@ -23,6 +23,20 @@ No scripts publish binaries, send platform registration requests, or launch Dock
 
 The generated Android project is in `src/native/gen/android`. Keep keystores and `local.properties` out of source control. Gradle reads `MODFINDER_KEYSTORE_PATH`, `MODFINDER_KEYSTORE_PASSWORD`, `MODFINDER_KEY_ALIAS`, and `MODFINDER_KEY_PASSWORD` from the build environment. Supply all four together; a partial configuration fails without printing the values. With all unset, release output is unsigned and cannot be published. Debug builds use only the standard development identity. Release cleartext network traffic remains disabled.
 
+## Root build launchers
+
+On Windows x64, double-click `Build-Windows.bat` for an NSIS `setup.exe` or `Build-Android.bat` for a signed ARM64 APK (Android 10+). Both use `https://modfinder.pages.dev` as the API, regardless of the local development `.env`. Results and SHA-256 checksums are copied to `output/releases/v<version>/`. Run one build at a time because native and web builds share `output/web/`. The scripts generate local files; publishing a GitHub release is a separate step.
+
+The Android launcher uses the four signing environment variables above. When all are absent, it reads `%USERPROFILE%\.mod-finder\signing\android.json`, containing `store` (keystore path), `alias`, and `password` (shared keystore/key password). This is the private configuration created for the first public release. Back up this directory securely. Missing keys stop the build; the launcher never silently creates a new signing identity. It verifies the APK signature and alignment before copying the result.
+
+The Android launcher disables persistent Gradle daemons for its build so that generated DEX files are released afterwards. If a previous build outside this launcher left a locked file, close that build's idle Gradle daemon before retrying.
+
+`JAVA_HOME`, `ANDROID_HOME` (or `ANDROID_SDK_ROOT`), and `NDK_HOME` override automatic discovery. The defaults use Android Studio's bundled JDK and the SDK under `%LOCALAPPDATA%\Android\Sdk`. Install Rust, C++ Build Tools, Android Studio and SDK/NDK before building; the launchers do not install these tools. Windows publisher signing still requires a separately configured certificate.
+
+Use `Build-Windows.bat --check` or `Build-Android.bat --check` to check paths and configuration without building. Use `Start-Web.bat --verify` to start and check local services, then stop only services it started. Set `CI=true` when invoking a build launcher from automation to omit the final pause.
+
+## Local Android API
+
 For a locally served API on an attached device:
 
 ```powershell

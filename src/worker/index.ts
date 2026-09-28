@@ -48,7 +48,7 @@ export default {
         if (!asset.ok) return finish(asset);
         const response = new HTMLRewriter()
           .on('html', { element(element) { element.setAttribute('lang', locale); element.setAttribute('data-locale', locale); } })
-          .on('title', { element(element) { element.setInnerContent(locale === 'ko' ? 'Mod Finder — 모드를 만나는 새로운 방법' : 'Mod Finder — Discover your next mod'); } })
+          .on('title', { element(element) { element.setInnerContent('Mod Finder'); } })
           .on('meta[name="description"]', { element(element) { element.setAttribute('content', locale === 'ko' ? '여러 모드 사이트를 한곳에서 검색하고 비교하세요.' : 'Search, compare and save mods from multiple sources.'); } })
           .transform(asset);
         response.headers.set('Cache-Control', 'private, no-store');

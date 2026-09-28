@@ -25,6 +25,16 @@ npm run dev
 
 화면: [localhost:1420](http://localhost:1420) · API: `http://127.0.0.1:4318`
 
+Windows에서는 루트의 실행 파일을 더블클릭해도 됩니다.
+
+| 실행 파일 | 하는 일 |
+| --- | --- |
+| `Start-Web.bat` | 로컬 웹·API 서버를 실행하고 브라우저 열기 |
+| `Build-Windows.bat` | Windows x64용 NSIS `setup.exe` 생성 |
+| `Build-Android.bat` | 기존 릴리즈 키로 서명한 Android ARM64 APK 생성 |
+
+설치파일은 `output/releases/v버전/`에 모입니다. 두 생성기는 운영 HTTPS API 주소를 사용합니다. Android 서명 설정은 [배포 안내](docs/RELEASE.md#root-build-launchers)를 참고하세요.
+
 Workers 환경에서 로컬 실행하려면 `npm run worker:dev`를 사용하세요. 화면과 API를 [localhost:8787](http://localhost:8787)에서 함께 제공합니다.
 
 ## 설정과 빌드
@@ -55,7 +65,7 @@ docs/      개발·배포 문서와 발표·제출 자료
 output/    웹·네이티브 빌드와 검증 결과 (Git 제외)
 ```
 
-웹 빌드 결과는 `output/web/`에 생성됩니다. Windows 실행 바로가기는 `tooling/launchers/`에 있습니다. 자세한 경로와 작업 기준은 [구조 안내](docs/STRUCTURE.md)를 참고하세요.
+웹 빌드 결과는 `output/web/`에 생성됩니다. 루트에는 자주 쓰는 실행 파일 3개를 두고, 실행 로직과 기존 개발용 바로가기는 `tooling/`에서 관리합니다. 자세한 경로와 작업 기준은 [구조 안내](docs/STRUCTURE.md)를 참고하세요.
 
 ## 문서
 

@@ -1,6 +1,6 @@
 # Project instructions
 
-- Keep application code in `src/`, development scripts/tests/configuration/launchers in `tooling/`, documentation in `docs/`, and generated output in `output/`. Run npm commands from the repository root; use `npm run worker -- <command>` for the configured Wrangler CLI.
+- Keep application code in `src/`, development scripts/tests/configuration/launchers in `tooling/`, documentation in `docs/`, and generated output in `output/`. Keep the three user-facing `.bat` entry points (`Start-Web`, `Build-Windows`, `Build-Android`) at the root. Run npm commands from the repository root; use `npm run worker -- <command>` for the configured Wrangler CLI.
 - Keep the UI minimal: do not add unsolicited captions, counters, explanatory panels, decorative labels, background game titles, or playback controls. Add only controls and content needed for the user's requested flow.
 - Game and settings navigation use a single horizontal row of large icon/logo cards with concise labels. Preserve the search placeholder and game icon when opening settings. Theme colors must remain visible on panel outlines.
 

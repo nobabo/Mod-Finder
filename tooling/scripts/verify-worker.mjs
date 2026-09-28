@@ -33,7 +33,7 @@ try {
     const html = await response.text();
     assert.match(html, new RegExp(`data-locale="${language}"`));
     assert.match(html, new RegExp(`lang="${language}"`));
-    assert.ok(html.includes(language === 'ko' ? '모드를 만나는 새로운 방법' : 'Discover your next mod'));
+    assert.ok(html.includes('<title>Mod Finder</title>'));
   }
   const head = await mf.dispatchFetch('http://localhost/', { method: 'HEAD', cf: { country: 'KR' } });
   assert.equal(await head.text(), '');

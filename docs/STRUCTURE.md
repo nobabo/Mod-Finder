@@ -1,6 +1,6 @@
 # 프로젝트 구조
 
-모든 npm 명령은 저장소 루트에서 실행합니다. 루트에는 패키지·TypeScript 설정, 환경변수 파일, README와 프로젝트 작업 지침을 둡니다. `.github/`는 GitHub Actions가 사용하는 위치입니다.
+모든 npm 명령은 저장소 루트에서 실행합니다. 루트에는 패키지·TypeScript 설정, 환경변수 파일, README, 프로젝트 작업 지침과 실행 파일 3개를 둡니다. `.github/`는 GitHub Actions가 사용하는 위치입니다.
 
 ```text
 src/
@@ -29,6 +29,8 @@ output/          생성 결과 (Git 제외)
 
 ## 실행과 배포
 
+- 루트의 `Start-Web.bat`: 웹·API 서버를 실행하고 브라우저를 엽니다.
+- 루트의 `Build-Windows.bat`, `Build-Android.bat`: 운영 API에 연결하는 Windows NSIS 설치파일과 서명된 Android APK를 각각 `output/releases/v버전/`에 만듭니다.
 - `npm run dev`: 웹과 로컬 API를 실행합니다.
 - `npm run desktop:dev`, `npm run android:dev`: 이동된 네이티브 프로젝트를 실행합니다.
 - `npm run worker:dev`: 루트의 `.env`를 읽고 로컬 Worker를 실행합니다.
