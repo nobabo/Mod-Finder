@@ -14,7 +14,12 @@ import java.util.concurrent.TimeUnit
 import kotlin.coroutines.resume
 import kotlin.coroutines.resumeWithException
 
-class ModApi {
+interface ModRepository {
+    suspend fun search(request: SearchRequest, locale: String): SearchResult
+    suspend fun versions(locale: String): List<String>
+}
+
+class ModApi : ModRepository {
     private val client = OkHttpClient.Builder().cache(null).callTimeout(18, TimeUnit.SECONDS).connectTimeout(8, TimeUnit.SECONDS).build()
     private suspend fun get(path: String, params: Map<String, String>, locale: String): JSONObject {
         val url = BuildConfig.API_BASE.toHttpUrl().newBuilder().addPathSegments(path)
@@ -30,9 +35,13 @@ class ModApi {
                             if (!it.isSuccessful) throw IOException("HTTP ${it.code}")
                             val body = it.body ?: throw IOException("Empty response")
                             if (body.contentLength() > 4 * 1024 * 1024) throw IOException("Response too large")
-                            val bytes = body.byteStream().readNBytes(4 * 1024 * 1024 + 1)
-                            if (bytes.size > 4 * 1024 * 1024) throw IOException("Response too large")
-                            JSONObject(bytes.toString(Charsets.UTF_8))
+                            val buffer = okio.Buffer()
+                            val source = body.source()
+                            while (!source.exhausted()) {
+                                source.read(buffer, 8192)
+                                if (buffer.size > 4 * 1024 * 1024) throw IOException("Response too large")
+                            }
+                            JSONObject(buffer.readUtf8())
                         }
                     }
                     if (continuation.isActive) result.fold(continuation::resume, continuation::resumeWithException)
@@ -40,11 +49,11 @@ class ModApi {
             })
         }
     }
-    suspend fun search(request: SearchRequest, locale: String): SearchResult {
+    override suspend fun search(request: SearchRequest, locale: String): SearchResult {
         val params = mapOf("gameId" to request.gameId, "source" to request.source, "query" to request.query, "sort" to request.sort) + request.filters + (request.cursor?.let { mapOf("cursor" to it) } ?: emptyMap())
         return parseSearchResult(get("v1/search", params, locale), request)
     }
-    suspend fun versions(locale: String) = get("v1/minecraft/versions", emptyMap(), locale).stringList("versions").orEmpty()
+    override suspend fun versions(locale: String) = get("v1/minecraft/versions", emptyMap(), locale).stringList("versions").orEmpty()
 }
 
 fun parseSearchResult(json: JSONObject, request: SearchRequest): SearchResult {

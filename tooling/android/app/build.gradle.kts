@@ -1,3 +1,5 @@
+import java.net.URI
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -7,7 +9,7 @@ plugins {
 val workspace = rootDir.resolve("../..").canonicalFile
 layout.buildDirectory.set(workspace.resolve("output/android/gradle/app"))
 val endpoint = System.getenv("MODFINDER_API_URL") ?: "https://modfinder.pages.dev"
-val api = java.net.URI(endpoint)
+val api = URI(endpoint)
 require(api.scheme == "https" && !api.host.isNullOrBlank() && api.userInfo == null && api.query == null && api.fragment == null) {
     "MODFINDER_API_URL must be an HTTPS origin."
 }
@@ -46,6 +48,7 @@ android {
         }
     }
     buildTypes {
+        getByName("debug") { applicationIdSuffix = ".debug"; versionNameSuffix = "-debug" }
         getByName("release") {
             signingConfig = signingConfigs.findByName("release")
             isMinifyEnabled = true

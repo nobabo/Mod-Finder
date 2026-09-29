@@ -7,6 +7,9 @@ target/
 *.log
 output/
 .playwright-cli/
+tooling/android/.gradle/
+tooling/android/.kotlin/
+tooling/android/local.properties
 src/native/gen/android/.gradle/
 src/native/gen/android/**/build/
 src/native/gen/android/local.properties

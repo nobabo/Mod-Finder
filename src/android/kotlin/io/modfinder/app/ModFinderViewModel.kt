@@ -26,15 +26,15 @@ data class AppState(
     val rankingTab: String = "search",
 ) { val hasMore get() = buckets.values.any { it.result?.nextCursor != null }; val locale get() = catalog?.locale(local.language) ?: "ko" }
 
-class ModFinderViewModel(application: Application, private val saved: SavedStateHandle) : AndroidViewModel(application) {
+class ModFinderViewModel @JvmOverloads constructor(application: Application, private val saved: SavedStateHandle, private val api: ModRepository = ModApi()) : AndroidViewModel(application) {
     private val mutable = MutableStateFlow(AppState(input = saved["input"] ?: "", spec = SearchSpec(gameId = saved["game"] ?: "minecraft-java")))
     val state = mutable.asStateFlow()
     private lateinit var store: LocalStore
-    private val api = ModApi()
     private val writes = Channel<LocalState>(Channel.CONFLATED)
     private var searchJob: Job? = null
     private var generation = 0
     private var links = emptyList<VerifiedLink>()
+    private val cursors = mutableMapOf<String, MutableSet<String>>()
     init {
         viewModelScope.launch {
             val catalog = withContext(Dispatchers.IO) { Catalog(application) }
@@ -95,6 +95,7 @@ class ModFinderViewModel(application: Application, private val saved: SavedState
         searchJob?.cancel(); val run = ++generation
         val spec = if (ranking) state.value.spec.copy(query = "", sort = "downloads", categories = emptySet(), filters = if (state.value.spec.gameId == "minecraft-java") mapOf("kind" to "modpack") else emptyMap()) else state.value.spec
         links = catalog.verifiedLinks
+        cursors.clear()
         mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = true) }
         searchJob = viewModelScope.launch {
             try {
@@ -114,9 +115,11 @@ class ModFinderViewModel(application: Application, private val saved: SavedState
         }
     }
     private suspend fun runRequest(request: SearchRequest, spec: SearchSpec, run: Int) {
-        val result = try { api.search(request, state.value.locale) } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { SearchResult("error", emptyList(), null, null, "검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.") }
+        var result = try { api.search(request, state.value.locale) } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { SearchResult("error", emptyList(), null, null, "검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.") }
         currentCoroutineContext().ensureActive()
         if (generation != run) return
+        val seen = cursors.getOrPut(request.bucket) { mutableSetOf() }
+        if (result.status == "success" && result.nextCursor != null && (result.nextCursor == request.cursor || !seen.add(result.nextCursor!!))) result = result.copy(nextCursor = null)
         links = links + result.verifiedLinks
         mutable.update { previous ->
             val items = mergeListings(previous.items, result.items)

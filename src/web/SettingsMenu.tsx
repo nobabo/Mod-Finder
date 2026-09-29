@@ -1,4 +1,4 @@
-import { useEffect, useRef, useState, type ReactNode } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, Download, Globe2, Monitor, Palette, Smartphone, X } from 'lucide-react';
 import { useRailDrag } from './lib/use-rail-drag';
@@ -16,27 +16,34 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
   const isCardView = view === 'menu' || view === 'downloads';
   const rail = useRef<HTMLDivElement>(null);
   useRailAutoScroll(rail,drag.gesture,isCardView);
-  useEffect(() => {
+  useLayoutEffect(() => {
     const element = rail.current;
     if (!isCardView || !element) return;
-    element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2;
+    const nav = element.querySelector('nav')!;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
       const box = element.getBoundingClientRect();
       for (const card of element.querySelectorAll<HTMLElement>('nav button,nav a')) {
-        const rect = card.getBoundingClientRect();
-        const offset = Math.max(-1, Math.min(1, (rect.left + rect.width / 2 - box.left - box.width / 2) / (box.width / 2)));
+        const cardCenter = nav.getBoundingClientRect().left + card.offsetLeft + card.offsetWidth / 2;
+        const offset = Math.max(-1, Math.min(1, (cardCenter - box.left - box.width / 2) / (box.width / 2)));
         card.style.setProperty('--card-drop', (motion.matches ? 0 : Math.abs(offset) * 18) + 'px');
         card.style.setProperty('--card-turn', (motion.matches ? 0 : offset * -15) + 'deg');
       }
     };
-    const observer = new ResizeObserver(() => { element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2; update(); });
-    observer.observe(element);
+    const center = () => {
+      const bounds = element.getBoundingClientRect();
+      const content = nav.getBoundingClientRect();
+      element.scrollLeft += content.left + content.width / 2 - bounds.left - element.clientWidth / 2;
+      update();
+    };
+    const frame = requestAnimationFrame(center);
+    const observer = new ResizeObserver(center);
+    observer.observe(element); observer.observe(nav);
     element.addEventListener('scroll', update, { passive: true });
     motion.addEventListener('change', update);
-    update();
+    center();
     return () => {
-      observer.disconnect();
+      cancelAnimationFrame(frame); observer.disconnect();
       element.removeEventListener('scroll', update);
       motion.removeEventListener('change', update);
     };
