@@ -1,6 +1,8 @@
 import type { Listing, ResultGroup, Sort, VerifiedProjectLink } from './types';
 import { modTranslations, providerQuery } from './content';
 const normalized = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
+const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
+const representativeOrder = (a: Listing, b: Listing) => downloads(b) - downloads(a) || a.key.localeCompare(b.key);
 export function matchPriority(item: Listing, query: string): number {
   const translated = modTranslations[item.key];
   const terms = [...new Set([query, providerQuery(query, [`${item.source}:${item.scope}:`], item.gameId)].map(normalized))].filter(Boolean);
@@ -40,6 +42,7 @@ export function groupResults(items: Listing[], query: string, links: VerifiedPro
     group.listings.push(item); groups.set(id, group);
   }
   const q = normalized(query);
+  for (const group of groups.values()) group.listings.sort(representativeOrder);
   const priority = (group: ResultGroup) => Math.min(...group.listings.map(item => matchPriority(item, query)));
   const score = (group: ResultGroup) => group.listings.reduce((sum, item) => sum + 1 / (60 + item.rank), 0) + (q && group.listings.some(i => i.title.toLocaleLowerCase() === q) ? 10 : 0);
   return [...groups.values()].sort((a, b) => priority(a) - priority(b) || score(b) - score(a) || a.id.localeCompare(b.id));
@@ -50,14 +53,13 @@ export function appendStable(current: Listing[], incoming: Listing[]): Listing[]
 }
 
 export function sortResultGroups(groups: ResultGroup[], sort: Sort, modpacksFirst = false): ResultGroup[] {
-  const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
   const compare = (a: Listing, b: Listing) => sort === 'downloads'
     ? downloads(b) - downloads(a)
     : sort === 'popular' ? a.rank - b.rank
     : (Date.parse(b.updatedAt ?? '') || 0) - (Date.parse(a.updatedAt ?? '') || 0);
   const packPriority = (item: Listing) => modpacksFirst && item.kind === 'modpack' ? 0 : 1;
-  return groups.map(group => ({ ...group, listings: [...group.listings].sort((a, b) =>
-    packPriority(a) - packPriority(b) || (sort === 'relevance' ? 0 : compare(a, b))) }))
+  // Pick a source independently of the user's ordering of distinct projects.
+  return groups.map(group => ({ ...group, listings: [...group.listings].sort(representativeOrder) }))
     .sort((a, b) => packPriority(a.listings[0]) - packPriority(b.listings[0]) ||
       (sort === 'relevance' ? 0 : compare(a.listings[0], b.listings[0]) || a.id.localeCompare(b.id)));
 }

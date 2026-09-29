@@ -7,6 +7,21 @@ import type { SearchRequest } from '../../src/shared/types';
 const request: SearchRequest = { gameId: 'minecraft-java', source: 'modrinth', query: 'Sodium', filters: {}, sort: 'relevance' };
 const mod = (id: string, rank = 1) => mapModrinth({ project_id: id, title: 'Sodium', description: 'Renderer', categories: ['fabric'], versions: ['1.21.1'] }, GAMES[0], rank);
 describe('identity and relevance', () => {
+  it.each(['relevance', 'downloads', 'popular', 'updated'] as const)('shows the higher-download source for verified duplicates under %s sorting', sort => {
+    const a = { ...mod('a', 1), updatedAt: '2026-09-29', metrics: [{ label: '다운로드', value: 10 }] };
+    const b = { ...a, source: 'curseforge' as const, scope: '432', id: '123', key: 'curseforge:432:123', rank: 100, updatedAt: '2020-01-01', metrics: [{ label: '다운로드', value: 20 }] };
+    const links = [{ projectId: 'same', listingKeys: [a.key, b.key], evidenceUrl: 'https://example.com/verified' }];
+    for (const items of [[a, b], [b, a]]) {
+      const groups = sortResultGroups(groupResults(items, '', links), sort);
+      expect(groups).toHaveLength(1);
+      expect(groups[0].listings[0]).toBe(b);
+      expect(groups[0].listings).toHaveLength(2);
+    }
+    expect(sortResultGroups(groupResults([a, { ...b, metrics: [] }], '', links), sort)[0].listings[0]).toBe(a);
+    expect(sortResultGroups(groupResults([{ ...a, metrics: [{ label: '다운로드', value: 30 }] }, b], '', links), sort)[0].listings[0].key).toBe(a.key);
+    const tied = { ...b, metrics: a.metrics };
+    expect(groupResults([a, tied], '', links)[0].listings[0].key).toBe(groupResults([tied, a], '', links)[0].listings[0].key);
+  });
   it('ranks both fields, title only, then description only regardless of source rank', () => {
     const both = { ...mod('both',100),title:'Sodium Plus',summary:'SODIUM rendering tools' };
     const title = { ...mod('title',1),summary:'' };
