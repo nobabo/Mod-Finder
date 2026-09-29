@@ -81,7 +81,8 @@ export function ModDescription({ summary, children }: { summary: string; childre
     const revealFrame = requestAnimationFrame(() => { if (openWanted.current) setVisible(true); });
     const update = () => {
       if (!card.current || !tooltip.current) return;
-      const anchor = (card.current.querySelector('.mod-logo-link') ?? card.current).getBoundingClientRect();
+      const logo = card.current.querySelector('.mod-logo-link');
+      const anchor = (logo?.getClientRects().length ? logo : card.current).getBoundingClientRect();
       const rightSpace = window.innerWidth - anchor.right - 16;
       const leftSpace = anchor.left - 16;
       const side: Side = rightSpace >= 240 ? 'left' : leftSpace >= 240 ? 'right' : 'top';

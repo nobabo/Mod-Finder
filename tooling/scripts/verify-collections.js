@@ -74,6 +74,12 @@ async (page) => {
     await page.locator('#mod-query').press('Enter');
     await page.waitForFunction(() => JSON.parse(localStorage.getItem('modfinder:local:v1')).history[0].categories?.length === 2);
     await menu('TOP 10');
+    const anchors = () => page.evaluate(() => ['.search-row', '.hero-brand', '.settings-fab'].map(selector => { const box = document.querySelector(selector).getBoundingClientRect(); return [box.x, box.y, box.width, box.height]; }));
+    const withRankings = await anchors();
+    await page.locator('.ranking-panel').evaluate(element => element.style.display = 'none');
+    assert(JSON.stringify(await anchors()) === JSON.stringify(withRankings), 'Rankings preserve original centered anchors');
+    await page.locator('.ranking-panel').evaluate(element => element.style.removeProperty('display'));
+    assert((await page.locator('.ranking-panel').boundingBox()).width <= 620, 'Compact home ranking width');
     assert(await page.locator('.ranking-list>li').count() === 10, 'Ten community ranks');
     assert(await page.locator('.ranking-panel time,.ranking-metric').count() === 0, 'No ranking metadata');
     assert(await page.locator('.ranking-list strong').first().textContent() === '선릿 밸리', 'Korean pack name');
