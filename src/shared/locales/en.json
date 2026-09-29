@@ -226,5 +226,7 @@
   "새로고침": "Refresh",
   "순위를 불러오지 못했어요.": "Could not load the ranking.",
   "다시 시도": "Try again",
-  "제공되는 순위가 없어요.": "No ranking is available."
+  "제공되는 순위가 없어요.": "No ranking is available.",
+  "이전 페이지": "Previous page",
+  "다음 페이지": "Next page"
 }

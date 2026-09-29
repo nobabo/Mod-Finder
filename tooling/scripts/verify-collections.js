@@ -20,9 +20,9 @@ async (page) => {
     const both = make('qa-both', 'Both tags', ['adventure', 'magic'], 1);
     const adventure = make('qa-adventure', 'Adventure only', ['adventure'], 900);
     const magic = make('qa-magic', 'Magic only', ['magic'], 400);
-    const items = isRanking ? Array.from({ length: 12 }, (_, index) => make(`pack-${index}`, `Pack ${index + 1}`, [], 120 - index, 'modpack'))
+    const items = isRanking ? Array.from({ length: 20 }, (_, index) => { const rank = Number(params.get('cursor') || 0) + index; return { ...make(`pack-${rank}`, `${source === 'modrinth' ? 'Pack' : 'CF Pack'} ${rank + 1}`, [], 200 - rank * 2 - (source === 'modrinth' ? 0 : 1), 'modpack'), source, key: `${source}:minecraft:pack-${rank}` }; })
       : source !== 'modrinth' ? [] : category === 'modrinth:adventure' ? [adventure, both] : category === 'modrinth:magic' ? [magic, both] : [adventure, magic, both];
-    await route.fulfill({ json: { source, status: items.length ? 'success' : 'empty', items, nextCursor: null, total: items.length, fetchedAt: now, cached: false, appliedFilters: category ? { category } : {}, unsupportedFilters: [], externalUrl: null, queryForwarded: true, message: '' } });
+    await route.fulfill({ json: { source, status: items.length ? 'success' : 'empty', items, nextCursor: isRanking && !params.get('cursor') ? '20' : null, total: items.length, fetchedAt: now, cached: false, appliedFilters: category ? { category } : {}, unsupportedFilters: [], externalUrl: null, queryForwarded: true, message: '' } });
   });
   const menu = async name => {
     if (name === 'TOP 10') { await page.reload(); await page.locator('.ranking-panel').waitFor(); return; }
@@ -75,11 +75,21 @@ async (page) => {
     await page.waitForFunction(() => JSON.parse(localStorage.getItem('modfinder:local:v1')).history[0].categories?.length === 2);
     await menu('TOP 10');
     assert(await page.locator('.ranking-list>li').count() === 10, 'Ten community ranks');
-    assert(await page.locator('.ranking-source time').getAttribute('datetime'), 'Dated snapshot');
+    assert(await page.locator('.ranking-panel time,.ranking-metric').count() === 0, 'No ranking metadata');
+    assert(await page.locator('.ranking-list strong').first().textContent() === '선릿 밸리', 'Korean pack name');
     await page.screenshot({ path: 'output/playwright/community-top10-desktop.png' });
     await page.getByRole('button', { name: '다운로드 순위', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.ranked-grid>li').length === 10);
-    await page.getByRole('button', { name: 'Modrinth', exact: true }).click();
+    assert(await page.locator('.ranking-providers').count() === 0, 'No provider switches');
+    assert(await page.locator('.ranked-grid .title-button').nth(1).textContent() === 'CF Pack 1', 'Combined order');
+    assert(await page.getByRole('button', { name: '이전 페이지', exact: true }).isDisabled(), 'First page');
+    await page.getByRole('button', { name: '다음 페이지', exact: true }).click();
+    assert(await page.locator('.ranked-grid .rank-number').first().textContent() === '11', 'Second page');
+    await page.getByRole('button', { name: '다음 페이지', exact: true }).click();
+    assert(await page.locator('.ranked-grid .rank-number').last().textContent() === '30', 'Thirty ranks');
+    assert(await page.getByRole('button', { name: '다음 페이지', exact: true }).isDisabled(), 'Last page');
+    await page.getByRole('button', { name: '이전 페이지', exact: true }).click();
+    await page.getByRole('button', { name: '이전 페이지', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.ranked-grid>li').length === 10);
     await page.screenshot({ path: 'output/playwright/download-top10-desktop.png' });
     failRanking = true;
@@ -109,6 +119,6 @@ async (page) => {
     assert(await page.locator('#mod-query').inputValue() === 'Sunlit Valley', 'Community entries start real modpack searches');
     assert((await stored()).favorites.length === 1, 'Favorite remains saved');
     assert(errors.length === 0, errors.join('\n'));
-    return { passed: ['save and unsave', 'folder create, move, rename, delete', 'reload persistence', 'multiple tag selection and match priority', 'history tag persistence', 'community TOP 10 and date', 'API TOP 10 and source switching', 'failure and retry', 'mobile favorites and ranking', 'community search navigation'], pageErrors: errors, simulatedFailureRequests: failedRequests.length };
+    return { passed: ['save and unsave', 'folder create, move, rename, delete', 'reload persistence', 'multiple tag selection and match priority', 'history tag persistence', 'community TOP 10 and Korean names', 'combined API TOP 30 and pagination', 'failure and retry', 'mobile favorites and ranking', 'community search navigation'], pageErrors: errors, simulatedFailureRequests: failedRequests.length };
   } finally { await page.unrouteAll(); page.off('pageerror', onError); }
 }
