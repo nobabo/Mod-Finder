@@ -76,3 +76,15 @@ html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-g
 .folder-form .folder-input-glass input{background:transparent;border:0;border-radius:999px;outline:none;padding:13px 17px}
 html[data-glass="webgl"] .folder-modal,html[data-glass="webgl"] .folder-input-glass{backdrop-filter:none}
 @media(max-width:450px){.folder-modal{padding:56px 32px}.folder-modal .modal-heading{top:30px;left:50px;right:50px}.folder-modal .modal-actions button{flex:none;min-width:76px}}
+
+.discover-stage{display:contents}
+.content.collection-content{padding-top:140px;padding-bottom:140px;justify-content:center;min-height:100dvh}
+.collection-stage{position:relative;width:100%;min-width:0}
+.collection-stage .search-dock.compact{position:absolute;bottom:calc(100% + 24px);left:50%;transform:translateX(-50%);margin:0}
+.collection-stage>.collection-panel{margin:0;background:transparent;backdrop-filter:none;max-height:calc(100dvh - 280px);overflow-y:auto}
+.collection-stage>.page-heading{padding-top:0}
+.collection-stage .history-list{background:transparent;backdrop-filter:none;max-height:calc(100dvh - 370px);overflow-y:auto}
+.collection-stage .empty-state{background:transparent}
+@media(min-width:651px){.app-shell .settings-fab-wrap{top:50%;transform:translateY(-50%)}}
+@media(max-width:650px){.content.collection-content{padding-top:130px;padding-bottom:130px}.collection-stage>.collection-panel{max-height:calc(100dvh - 260px)}.collection-stage .history-list{max-height:calc(100dvh - 340px)}}
+.collection-stage .list-heading{background:transparent}.collection-stage:has(>.history-list)>.page-heading{position:absolute;bottom:100%;padding:0 0 24px}.collection-stage:has(>.history-list) .search-dock.compact{bottom:calc(100% + 96px)}

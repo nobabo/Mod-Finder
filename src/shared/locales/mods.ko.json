@@ -22,19 +22,19 @@
     "reviewedAt": "2026-09-25"
   },
   "modrinth:minecraft:1KVo5zza": {
-    "title": "패뷸러슬리 옵티마이즈드",
+    "title": "패뷸러슬리 최적화",
     "searchTerm": "Fabulously Optimized",
     "aliases": [
-      "패뷸러슬리 옵티마이즈드"
+      "패뷸러슬리 최적화"
     ],
     "sourceUrl": "https://modrinth.com/modpack/fabulously-optimized",
     "reviewedAt": "2026-09-30"
   },
   "modrinth:minecraft:l9m9tuPN": {
-    "title": "좀비 침공 100일",
+    "title": "좀비 인베이드 100일",
     "searchTerm": "Zombie Invade 100 Days",
     "aliases": [
-      "좀비 침공 100일"
+      "좀비 인베이드 100일"
     ],
     "sourceUrl": "https://modrinth.com/modpack/zombie-invade-100-days",
     "reviewedAt": "2026-09-30"
@@ -76,10 +76,10 @@
     "reviewedAt": "2026-09-30"
   },
   "curseforge:432:285109": {
-    "title": "알엘크래프트",
+    "title": "RL 크래프트",
     "searchTerm": "RLCraft",
     "aliases": [
-      "알엘크래프트"
+      "RL 크래프트"
     ],
     "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/rlcraft",
     "reviewedAt": "2026-09-30"
@@ -139,10 +139,10 @@
     "reviewedAt": "2026-09-30"
   },
   "curseforge:432:396246": {
-    "title": "패뷸러슬리 옵티마이즈드",
+    "title": "패뷸러슬리 최적화",
     "searchTerm": "Fabulously Optimized",
     "aliases": [
-      "패뷸러슬리 옵티마이즈드"
+      "패뷸러슬리 최적화"
     ],
     "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/fabulously-optimized",
     "reviewedAt": "2026-09-30"

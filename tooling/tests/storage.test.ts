@@ -1,21 +1,32 @@
 import { describe, expect, it, vi } from 'vitest';
-import { emptyLocalData, parseLocalData, saveLocalData } from '../../src/web/lib/storage';
+import { emptyLocalData, parseLocalData, saveLocalData, refreshFavoriteReferences, toggleFavorite, moveFavorite } from '../../src/web/lib/storage';
 import { mapModrinth } from '../../src/server/adapters';
 import { GAMES } from '../../src/shared/games';
 const item = mapModrinth({ project_id: 'saved', title: 'Saved', categories: [] }, GAMES[0], 1);
 describe('persisted data boundary', () => {
-  it('excludes CurseForge API data from both restored and newly saved collections', async () => {
-    const cf = { ...item, source: 'curseforge' as const, scope: '432', id: '123', key: 'curseforge:432:123', url: 'https://www.curseforge.com/minecraft/mc-mods/example' };
-    const data = { ...emptyLocalData(), favorites: [cf, item], compared: [cf, item] };
-    expect(parseLocalData(JSON.stringify(data))).toMatchObject({ favorites: [item], compared: [item] });
-    const setItem = vi.fn();
-    vi.stubGlobal('window', {});
-    vi.stubGlobal('localStorage', { setItem });
+  it('stores CurseForge bookmarks as references and restores their folder membership', async () => {
+    const cf = { ...item, source: 'curseforge' as const, scope: '432', id: '123', key: 'curseforge:432:123', title: 'Private API title', summary: 'API description', url: 'https://www.curseforge.com/minecraft/mc-mods/example' };
+    const data = moveFavorite(toggleFavorite({ ...emptyLocalData(), folders: [{ id: 'one', name: 'One', keys: [] }] }, cf), cf.key, 'one');
+    const setItem = vi.fn(); vi.stubGlobal('window', {}); vi.stubGlobal('localStorage', { setItem });
     try {
       await saveLocalData(data);
-      expect(JSON.parse(setItem.mock.calls[0][1])).toMatchObject({ favorites: [item], compared: [item] });
-      expect(setItem.mock.calls[0][1]).not.toContain('curseforge');
+      const raw = setItem.mock.calls[0][1]; const stored = JSON.parse(raw);
+      expect(stored.favorites).toEqual([{ source: 'curseforge', scope: '432', id: '123', key: cf.key, gameId: cf.gameId, referenceOnly: true }]);
+      expect(raw).not.toContain(cf.title); expect(raw).not.toContain(cf.summary);
+      const restored = parseLocalData(raw);
+      expect(restored.folders[0].keys).toEqual([cf.key]);
+      const fresh = await refreshFavoriteReferences(restored, async () => cf);
+      expect(fresh.favorites).toEqual([cf]);
+      expect(toggleFavorite(fresh, cf).favorites).toEqual([]);
+      expect(toggleFavorite(fresh, cf).folders[0].keys).toEqual([]);
+      expect(await refreshFavoriteReferences(restored, async () => { throw Error('offline'); })).toEqual(restored);
+      expect(await refreshFavoriteReferences(restored, async () => item)).toEqual(restored);
+      expect(parseLocalData(JSON.stringify({ ...data, compared: [cf, item] })).compared).toEqual([item]);
     } finally { vi.unstubAllGlobals(); }
+  });
+  it('rejects malformed bookmark references', () => {
+    const ref = { source: 'curseforge', scope: '432', id: '123', key: 'curseforge:432:123', gameId: 'minecraft-java', referenceOnly: true };
+    for (const invalid of [{ ...ref, id: '../bad' }, { ...ref, scope: 'wrong' }, { ...ref, key: 'wrong' }]) expect(() => parseLocalData(JSON.stringify({ ...emptyLocalData(), favorites: [invalid] }))).toThrow('invalid_local_data');
   });
   it('retains game-specific category history alongside older history', () => {
     const data = { ...emptyLocalData(), history: [{ gameId: 'minecraft-java', query: 'sodium', category: 'modrinth:optimization' }, { gameId: 'stardew-valley', query: 'farm' }] };

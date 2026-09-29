@@ -6,7 +6,7 @@ import { GENRES, gamesInScope, getGame } from '../shared/games';
 import { SOURCE_NAMES, type Filters, type Listing, type Sort } from '../shared/types';
 import { dateLabel, GameLogo, ModCard, ModIcon, Modal, Sheet, SourceMark } from './components';
 import { useSearch } from './lib/search';
-import { canPersistListing, emptyLocalData, loadLocalData, saveLocalData, toggleFavorite, type LocalData } from './lib/storage';
+import { emptyLocalData, loadLocalData, saveLocalData, toggleFavorite, type LocalData } from './lib/storage';
 import { FolderBar, MoveFavorite } from './Favorites';
 import { Rankings } from './Rankings';
 import { openExternal } from './lib/platform';
@@ -81,7 +81,7 @@ export default function App() {
     if (next === query && id === gameId && selectedGenre === genre) search.retry();
   };
   const visit = async (url: string) => { try { await openExternal(url); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
-  const save = (item: Listing) => { if (!hydrated || !canPersistListing(item)) return; setLocal(prev => toggleFavorite(prev, item)); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
+  const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => toggleFavorite(prev, item)); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
   const changeFilter = (key: keyof Filters, value: string) => setFilters(prev => { const next = { ...prev }; if (value) next[key] = value; else delete next[key]; return next; });
   const resetFilters = () => { setFilters({}); setSelectedCategories([]); };
   const go = (target: Page) => { setPage(target); setMenuOpen(false); };
@@ -93,7 +93,7 @@ export default function App() {
   const unavailable = Object.values(search.buckets).filter(b => b?.result && !['success', 'empty'].includes(b.result.status));
   const sourceErrors = unavailable.some(b => ['error', 'rate_limited'].includes(b!.result!.status));
   const activeFilters = Object.values(filters).filter(Boolean).length + selectedCategories.length;
-  const saveCandidate = (item: Listing, alternatives: Listing[] = []) => canPersistListing(item) ? item : alternatives.find(canPersistListing);
+  const saveCandidate = (item: Listing, alternatives: Listing[] = []) => local.favorites.find(saved => [item, ...alternatives].some(candidate => candidate.key === saved.key)) ?? item;
   const card = (item: Listing, alternatives: Listing[] = []) => {
     const candidate = saveCandidate(item, alternatives);
     return <ModCard key={item.key} item={item} ready={hydrated} saveAvailable={!!candidate} saved={!!candidate && local.favorites.some(f => f.key === candidate.key)} toggleSave={() => { if (candidate) save(candidate); }} open={() => void visit(item.url)} detail={() => setDetail(item)} move={page === 'favorites' ? () => setMovingFavorite(item.key) : undefined} />;
@@ -110,7 +110,7 @@ export default function App() {
       </SettingsMenu>}
     </div>
     <main className="main">
-      <div className="content">
+      <div className={`content ${page !== 'discover' ? 'collection-content' : ''}`}><div className={page !== 'discover' ? 'collection-stage' : 'discover-stage'}>
       {page === 'discover' && hasSearch && <div className="results-brand" role="img" aria-label="Mod Finder"><BrandLogo size={96} /></div>}
       <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
@@ -128,7 +128,7 @@ export default function App() {
       </div>
       {page === 'favorites' && <section className="collection-panel"><div className="page-heading"><h1>{t("즐겨찾기")}</h1></div>{hydrated && <FolderBar data={local} update={setLocal} selected={selectedFolder} select={setSelectedFolder}/>} {visible.length ? <div className="mod-grid">{visible.map(item => card(item))}</div> : <div className="empty-state spacious icon-only" role="img" aria-label={t("아직 저장한 모드가 없어요")}><Bookmark size={35} aria-hidden="true" /></div>}</section>}
       {page === 'recent' && <><div className="page-heading"><h1>{t("최근 검색")}</h1></div><div className="history-list">{local.history.length ? <><div className="list-heading"><span>{t('최근 {count}개 검색', { count: local.history.length })}</span><button className="text-button" onClick={() => setLocal(prev => ({ ...prev, history: [] }))}>{t("검색 기록 지우기")}</button></div>{local.history.map((h, i) => <button key={`${h.gameId}:${h.genre ?? 'all'}:${JSON.stringify(h.categories ?? h.category ?? '')}:${h.query}`} onClick={() => submit(h.query, h.gameId, h.genre ?? 'all', h.categories ?? (h.category ? [h.category] : []))}><span className="history-number">{String(i + 1).padStart(2, '0')}</span><Search size={18} /><strong>{h.query}</strong><span>{gameName(h.gameId)}{(h.categories ?? (h.category ? [h.category] : [])).map(id => ` · ${getCategory(h.gameId, id)?.[locale === 'ko' ? 'ko' : 'en'] ?? ''}`).join('')}{h.genre && h.genre !== 'all' ? ` · ${GENRES.find(g => g.id === h.genre)?.[locale === 'ko' ? 'ko' : 'en'] ?? ''}` : ''}</span><ArrowUpRight size={18} /></button>)}</> : <div className="empty-state spacious icon-only" role="img" aria-label={t("새로운 발견을 시작해 보세요")}><History size={34} aria-hidden="true" /></div>}</div></>}
-      </div>
+      </div></div>
     </main>
     <nav className="mobile-nav" aria-label={t("모바일 메뉴")}>{([{ id: 'discover', label: t("탐색"), icon: Compass }, { id: 'favorites', label: t("즐겨찾기"), icon: Bookmark }, { id: 'recent', label: t("최근 검색"), icon: History }, { id: 'settings', label: t("설정"), icon: Settings2 }] as const).map(n => <button key={n.id} className={n.id !== 'settings' && page === n.id ? 'active' : ''} onClick={() => n.id === 'settings' ? setMenuOpen(value => !value) : go(n.id)}><n.icon size={21} />{n.label}</button>)}</nav>
     {compared.length > 0 && <div className="compare-tray"><GitCompareArrows size={19} /><strong>{t('{count}개 모드 선택', { count: compared.length })}</strong><span className="tray-names">{compared.map(item => item.title).join(' · ')}</span><button className="primary-button" onClick={() => setCompareOpen(true)}>{t("비교하기")} <ArrowRight size={15} /></button><button className="icon-button" aria-label={t("비교 선택 초기화")} onClick={() => { setCompared([]); setCompareOpen(false); }}><X size={18} /></button></div>}

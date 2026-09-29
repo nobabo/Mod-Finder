@@ -7,7 +7,6 @@ import { t, locale } from './lib/i18n';
 import { useEffect, useRef, useState } from 'react';
 import { Download, Users, Bookmark, FolderInput, Package, X } from 'lucide-react';
 import type { Listing, Source } from '../shared/types';
-import { canPersistListing } from './lib/storage';
 export function SourceMark({ source }: { source: Source }) { return <span className={`source-mark ${source}`} aria-hidden="true">{{ modrinth: 'M', curseforge: 'C', thunderstore: 'T', nexus: 'N', steam: 'S' }[source]}</span>; }
 export function ModIcon({ item }: { item: Listing }) {
   return <div className="mod-icon">{item.iconUrl ? <img src={item.iconUrl} alt="" loading="lazy" referrerPolicy="no-referrer" onError={event => { event.currentTarget.style.display = 'none'; }} /> : <Package size={30} />}</div>;
@@ -16,7 +15,7 @@ const numberFormatter = new Intl.NumberFormat(locale, { notation: 'compact', max
 export const number = (n: number) => numberFormatter.format(n);
 export const dateLabel = (date: string | null) => date ? new Date(date).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) : t("정보 없음");
 
-export function ModCard({ item, saved, toggleSave, open, detail, ready = true, move, saveAvailable = canPersistListing(item) }: { item: Listing; saved: boolean; toggleSave: () => void; open: () => void; detail: () => void; ready?: boolean; move?: () => void; saveAvailable?: boolean }) {
+export function ModCard({ item, saved, toggleSave, open, detail, ready = true, move, saveAvailable = true }: { item: Listing; saved: boolean; toggleSave: () => void; open: () => void; detail: () => void; ready?: boolean; move?: () => void; saveAvailable?: boolean }) {
   const text = listingText(item, locale);
   return <ModDescription summary={text.summary}>
     <div className="card-cover"><button type="button" className="mod-logo-link" onClick={open} aria-label={`${text.title} ${t('원본 사이트에서 보기')}`}><ModIcon item={item} /></button>{saveAvailable && <button type="button" className={`icon-button save-button ${saved ? 'is-saved' : ''}`} disabled={!ready} onClick={toggleSave} aria-pressed={saved} aria-label={`${item.title} ${saved ? t("즐겨찾기 해제") : t("즐겨찾기")}`}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>}{move && <button type="button" className="icon-button move-favorite" aria-label={`${item.title} ${t('폴더로 이동')}`} title={t('폴더로 이동')} onClick={move}><FolderInput size={18}/></button>}</div>

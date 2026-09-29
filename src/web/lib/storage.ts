@@ -9,8 +9,18 @@ export const emptyLocalData = (): LocalData => ({ favorites: [], folders: [], co
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
 const fromRetiredSource = (value: unknown) => !!value && typeof value === 'object' && (value as { source?: unknown }).source === 'atlauncher';
-// CurseForge's third-party API terms prohibit saving or caching API data.
+// Persist user bookmark references for CurseForge, never its API payload.
 export const canPersistListing = (item: Pick<Listing, 'source'>) => item.source !== 'curseforge';
+type FavoriteReference = Pick<Listing, 'source' | 'scope' | 'id' | 'key' | 'gameId'> & { referenceOnly: true };
+function reference(item: Pick<Listing, 'source' | 'scope' | 'id' | 'key' | 'gameId'>): FavoriteReference {
+  return { source: item.source, scope: item.scope, id: item.id, key: item.key, gameId: item.gameId, referenceOnly: true };
+}
+function restoreReference(value: unknown): unknown {
+  if (!value || typeof value !== 'object' || !(value as FavoriteReference).referenceOnly) return value;
+  const item = value as FavoriteReference;
+  if (item.source !== 'curseforge' || typeof item.id !== 'string' || !/^\d+$/.test(item.id) || getGame(item.gameId)?.sources.curseforge?.scope !== item.scope || item.key !== listingKey(item.source, item.scope, item.id)) throw new Error('invalid_local_data');
+  return { ...reference(item), title: item.key, summary: '', author: null, url: 'https://www.curseforge.com/projects/' + item.id, iconUrl: null, updatedAt: null, versions: null, loaders: null, kind: null, metrics: [], tags: [], rank: 0, fetchedAt: '' } satisfies Listing & { referenceOnly: true };
+}
 function validListing(value: unknown): value is Listing {
   if (!value || typeof value !== 'object') return false;
   const item = value as Listing;
@@ -32,11 +42,11 @@ export function parseLocalData(raw: string): LocalData {
     || !strings(data.favoriteGames) || !data.favoriteGames.every(id => !!getGame(id))
     || !Array.isArray(data.history) || !data.history.every(item => item && typeof item.gameId === 'string' && (item.gameId === 'all' || !!getGame(item.gameId)) && typeof item.query === 'string' && (item.category === undefined || (typeof item.category === 'string' && !!getCategory(item.gameId, item.category))) && (item.genre === undefined || item.genre === 'all' || GENRES.some(g => g.id === item.genre)))
     || (data.compared !== undefined && !Array.isArray(data.compared))) throw new Error('invalid_local_data');
-  const favorites = data.favorites.filter(item => !fromRetiredSource(item));
+  const favorites = data.favorites.filter(item => !fromRetiredSource(item)).map(restoreReference);
   const compared = (data.compared ?? []).filter(item => !fromRetiredSource(item));
   if (!favorites.every(validListing) || !compared.every(validListing)) throw new Error('invalid_local_data');
   if (data.history.some(item => item.categories !== undefined && (!strings(item.categories) || item.categories.some(id => !getCategory(item.gameId, id))))) throw new Error('invalid_local_data');
-  const retained = favorites.filter(canPersistListing);
+  const retained = favorites.map(item => canPersistListing(item) ? item : restoreReference(reference(item)) as Listing);
   const keys = new Set(retained.map(item => item.key));
   const used = new Set<string>();
   const folders = data.folders ?? [];
@@ -45,7 +55,6 @@ export function parseLocalData(raw: string): LocalData {
 }
 
 export function toggleFavorite(data: LocalData, item: Listing): LocalData {
-  if (!canPersistListing(item)) return data;
   const saved = data.favorites.some(favorite => favorite.key === item.key);
   return { ...data, favorites: saved ? data.favorites.filter(favorite => favorite.key !== item.key) : [item, ...data.favorites],
     folders: data.folders.map(folder => ({ ...folder, keys: folder.keys.filter(key => key !== item.key) })) };
@@ -67,11 +76,26 @@ async function db() {
 export async function loadLocalData(): Promise<LocalData> {
   const raw = isNative() ? (await (await db()).select<{ data: string }[]>('SELECT data FROM local_state WHERE id=1'))[0]?.data : localStorage.getItem('modfinder:local:v1');
   if (!raw) return emptyLocalData();
-  return parseLocalData(raw);
+  const data = parseLocalData(raw);
+  const { favoriteDetails } = await import('./api');
+  return refreshFavoriteReferences(data, favoriteDetails);
+}
+export async function refreshFavoriteReferences(data: LocalData, resolve: (item: Listing) => Promise<Listing>): Promise<LocalData> {
+  const favorites = [...data.favorites];
+  let cursor = 0;
+  await Promise.all(Array.from({ length: Math.min(4, favorites.length) }, async () => {
+    while (cursor < favorites.length) {
+      const index = cursor++; const item = favorites[index];
+      if (canPersistListing(item)) continue;
+      try { const fresh = await resolve(item); if (validListing(fresh) && fresh.key === item.key && fresh.gameId === item.gameId) favorites[index] = fresh; } catch { /* Keep the bookmark and folder membership available offline. */ }
+    }
+  }));
+  return { ...data, favorites };
 }
 let pendingWrite: Promise<unknown> = Promise.resolve();
 export function saveLocalData(data: LocalData): Promise<void> {
-  const serialized = JSON.stringify(parseLocalData(JSON.stringify(data)));
+  const normalized = parseLocalData(JSON.stringify(data));
+  const serialized = JSON.stringify({ ...normalized, favorites: normalized.favorites.map(item => canPersistListing(item) ? item : reference(item)) });
   const next = pendingWrite.catch(() => {}).then(async () => {
     if (isNative()) await (await db()).execute('INSERT INTO local_state(id,data) VALUES(1,$1) ON CONFLICT(id) DO UPDATE SET data=$1', [serialized]);
     else localStorage.setItem('modfinder:local:v1', serialized);

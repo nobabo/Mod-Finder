@@ -1,7 +1,7 @@
 import { locale } from './i18n';
 import { isNative } from './platform';
 import { withRequestTimeout } from './request';
-import type { SearchRequest, SearchResult } from '../../shared/types';
+import type { Listing, SearchRequest, SearchResult } from '../../shared/types';
 const configuredBase = import.meta.env.VITE_API_BASE_URL as string | undefined;
 export const API_BASE = (configuredBase || (import.meta.env.DEV ? 'http://127.0.0.1:4318' : isNative() ? '' : window.location.origin)).replace(/\/$/, '');
 export async function minecraftVersions(signal: AbortSignal): Promise<string[]> {
@@ -23,4 +23,13 @@ export async function searchSource(request: SearchRequest, signal: AbortSignal):
     if (!response.ok) throw new Error('search_failed');
     return response.json() as Promise<SearchResult>;
   }, signal);
+}
+
+export async function favoriteDetails(item: Listing): Promise<Listing> {
+  if (!API_BASE) throw new Error('server_not_configured');
+  return withRequestTimeout(async signal => {
+    const response = await fetch(API_BASE + '/v1/listings/' + [item.source, item.scope, item.id].map(encodeURIComponent).join('/'), { signal, credentials: 'same-origin', headers: { 'Accept-Language': locale } });
+    if (!response.ok) throw new Error('listing_unavailable');
+    const result = await response.json() as { listing: Listing }; return result.listing;
+  });
 }

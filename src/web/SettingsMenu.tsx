@@ -19,7 +19,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
   useEffect(() => {
     const element = rail.current;
     if (!isCardView || !element) return;
-    element.scrollLeft = 0;
+    element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
       const box = element.getBoundingClientRect();
@@ -30,7 +30,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
         card.style.setProperty('--card-turn', (motion.matches ? 0 : offset * -15) + 'deg');
       }
     };
-    const observer = new ResizeObserver(update);
+    const observer = new ResizeObserver(() => { element.scrollLeft = (element.scrollWidth - element.clientWidth) / 2; update(); });
     observer.observe(element);
     element.addEventListener('scroll', update, { passive: true });
     motion.addEventListener('change', update);
@@ -44,7 +44,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
   const lastView = useRef<Exclude<SettingsView, 'menu'>>('theme');
   const open = (next:Exclude<SettingsView, 'menu'>) => { lastView.current = next; setView(next); };
   useEffect(() => {
-    root.current?.querySelector<HTMLButtonElement>(view === 'menu' ? `[data-preference="${lastView.current}"]` : '.settings-back')?.focus();
+    root.current?.querySelector<HTMLButtonElement>(view === 'menu' ? `[data-preference="${lastView.current}"]` : '.settings-back')?.focus({ preventScroll: true });
   }, [view]);
   useEffect(() => {
     const previous = document.activeElement as HTMLElement | null;

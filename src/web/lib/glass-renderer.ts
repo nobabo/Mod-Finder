@@ -157,7 +157,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, context ? softened : image);
   };
   const controlSelector = '.search-box, .filter-orb, .deck-search, .filter-dropdown-search, .ranking-panel, .folder-modal, .folder-input-glass';
-  const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)), .settings-fab, .modal, .sheet`;
+  const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal, .sheet`;
   const observer = new MutationObserver(() => { panelDirty = true; needsDraw = true; });
   observer.observe(document.getElementById('root')!, { childList: true, subtree: true });
   const resize = () => { panelDirty = true; needsDraw = true; schedule(); };
