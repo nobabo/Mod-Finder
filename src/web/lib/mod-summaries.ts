@@ -1,5 +1,5 @@
 import { useEffect, useState } from 'react';
-import { registerModSummaries, type SummaryTranslation } from '../../shared/mod-summaries';
+import { registerModSummaries, withReviewedSummaries, type SummaryTranslation } from '../../shared/mod-summaries';
 import reviewed from '../../shared/locales/reviewed-mod-summaries.ko.json';
 
 const files = import.meta.glob<{ default: SummaryTranslation[] }>('../../shared/locales/mod-summaries/*.json');
@@ -10,7 +10,7 @@ function load(gameId: string): Promise<void> {
   if (existing) return existing;
   const loader = files[`../../shared/locales/mod-summaries/${gameId}.json`];
   if (!loader) return Promise.resolve();
-  const task = loader().then(module => { registerModSummaries(gameId, [...module.default, ...(reviewedSummaries[gameId] ?? [])]); }).catch(error => {
+  const task = loader().then(module => { registerModSummaries(gameId, withReviewedSummaries(module.default, reviewedSummaries[gameId] ?? [])); }).catch(error => {
     pending.delete(gameId); throw error;
   });
   pending.set(gameId, task);
