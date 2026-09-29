@@ -3,8 +3,9 @@ import { getCategory } from '../../shared/categories';
 import { GENRES, getGame } from '../../shared/games';
 import { safeExternalUrl } from '../../shared/links';
 import { isNative } from './platform';
-export interface LocalData { favorites: Listing[]; compared: Listing[]; favoriteGames: string[]; history: { gameId: string; query: string; genre?: string; category?: string }[] }
-export const emptyLocalData = (): LocalData => ({ favorites: [], compared: [], favoriteGames: ['minecraft-java'], history: [] });
+export interface FavoriteFolder { id: string; name: string; keys: string[] }
+export interface LocalData { favorites: Listing[]; folders: FavoriteFolder[]; compared: Listing[]; favoriteGames: string[]; history: { gameId: string; query: string; genre?: string; category?: string; categories?: string[] }[] }
+export const emptyLocalData = (): LocalData => ({ favorites: [], folders: [], compared: [], favoriteGames: ['minecraft-java'], history: [] });
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
 const fromRetiredSource = (value: unknown) => !!value && typeof value === 'object' && (value as { source?: unknown }).source === 'atlauncher';
@@ -34,7 +35,25 @@ export function parseLocalData(raw: string): LocalData {
   const favorites = data.favorites.filter(item => !fromRetiredSource(item));
   const compared = (data.compared ?? []).filter(item => !fromRetiredSource(item));
   if (!favorites.every(validListing) || !compared.every(validListing)) throw new Error('invalid_local_data');
-  return { favorites: favorites.filter(canPersistListing), favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.filter(canPersistListing).slice(0, 3) };
+  if (data.history.some(item => item.categories !== undefined && (!strings(item.categories) || item.categories.some(id => !getCategory(item.gameId, id))))) throw new Error('invalid_local_data');
+  const retained = favorites.filter(canPersistListing);
+  const keys = new Set(retained.map(item => item.key));
+  const used = new Set<string>();
+  const folders = data.folders ?? [];
+  if (!Array.isArray(folders) || folders.some(folder => !folder || typeof folder.id !== 'string' || !folder.id || folder.id.length > 80 || typeof folder.name !== 'string' || !folder.name.trim() || folder.name.trim().length > 40 || !strings(folder.keys)) || new Set(folders.map(folder => folder.id)).size !== folders.length) throw new Error('invalid_local_data');
+  return { favorites: retained, folders: folders.map(folder => ({ id: folder.id, name: folder.name.trim(), keys: folder.keys.filter(key => keys.has(key) && !used.has(key) && !!used.add(key)) })), favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.filter(canPersistListing).slice(0, 3) };
+}
+
+export function toggleFavorite(data: LocalData, item: Listing): LocalData {
+  if (!canPersistListing(item)) return data;
+  const saved = data.favorites.some(favorite => favorite.key === item.key);
+  return { ...data, favorites: saved ? data.favorites.filter(favorite => favorite.key !== item.key) : [item, ...data.favorites],
+    folders: data.folders.map(folder => ({ ...folder, keys: folder.keys.filter(key => key !== item.key) })) };
+}
+
+export function moveFavorite(data: LocalData, key: string, folderId: string | null): LocalData {
+  if (!data.favorites.some(item => item.key === key) || (folderId !== null && !data.folders.some(folder => folder.id === folderId))) return data;
+  return { ...data, folders: data.folders.map(folder => ({ ...folder, keys: [...folder.keys.filter(value => value !== key), ...(folder.id === folderId ? [key] : [])] })) };
 }
 let database: Promise<import('@tauri-apps/plugin-sql').default> | undefined;
 async function db() {
@@ -52,7 +71,7 @@ export async function loadLocalData(): Promise<LocalData> {
 }
 let pendingWrite: Promise<unknown> = Promise.resolve();
 export function saveLocalData(data: LocalData): Promise<void> {
-  const serialized = JSON.stringify({ ...data, favorites: data.favorites.filter(canPersistListing), compared: data.compared.filter(canPersistListing) });
+  const serialized = JSON.stringify(parseLocalData(JSON.stringify(data)));
   const next = pendingWrite.catch(() => {}).then(async () => {
     if (isNative()) await (await db()).execute('INSERT INTO local_state(id,data) VALUES(1,$1) ON CONFLICT(id) DO UPDATE SET data=$1', [serialized]);
     else localStorage.setItem('modfinder:local:v1', serialized);

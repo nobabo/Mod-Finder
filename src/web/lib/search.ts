@@ -2,7 +2,8 @@ import { t } from './i18n';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getGame } from '../../shared/games';
 import { externalSearch } from '../../shared/links';
-import { appendStable, groupResults, orderSearchPage, sortResultGroups } from '../../shared/ranking';
+import { appendStable, groupResults, orderSearchPage, sortResultGroups, prioritizeCategories } from '../../shared/ranking';
+import { getCategory } from '../../shared/categories';
 import { bucketKey, searchPlan, runSearchQueue, type SearchSpec } from '../../shared/search-plan';
 import { runSearchWithCorrections } from '../../shared/search-corrections';
 import verifiedProjects from '../../shared/data/verified-projects.json';
@@ -33,7 +34,14 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       empty = (result.status === 'empty' || result.status === 'success') && !result.nextCursor && received === 0;
       const more = !!result.nextCursor && !seen.has(result.nextCursor) && result.status === 'success' && received < 100 && page < 4;
       if (generation.current !== gen || signal.aborted) return;
-      setItems(previous => appendStable(previous, orderSearchPage(result.items, request.query, request.sort)));
+      const items = result.items.map(item => ({ ...item, matchedCategories: [...new Set([
+        ...(result.appliedFilters.category ? [result.appliedFilters.category] : []),
+        ...(spec.categories ?? []).filter(id => {
+          const category = getCategory(item.gameId, id);
+          return category?.source === item.source && item.tags.some(tag => [category.value, category.en].some(value => value.toLowerCase() === tag.toLowerCase()));
+        }),
+      ])] }));
+      setItems(previous => appendStable(previous, orderSearchPage(items, request.query, request.sort)));
       if (result.verifiedLinks?.length) setLinks(previous => [...previous, ...result.verifiedLinks!]);
       setBuckets(previous => ({ ...previous, [id]: { request, loading: more, result } }));
       if (!more) break;
@@ -46,7 +54,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       const link = externalSearch(getGame(request.gameId)!, request.source, request.query, request.filters);
       setBuckets(previous => ({ ...previous, [id]: { request, loading: false, result: { source: request.source, status: 'error', message: t('검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.'), items: [], nextCursor: request.cursor ?? null, total: null, fetchedAt: new Date().toISOString(), cached: false, appliedFilters: {}, unsupportedFilters: [], externalUrl: link.url, queryForwarded: link.queryForwarded } } }));
     }
-  }, []);
+  }, [JSON.stringify(spec.categories)]);
   useEffect(() => {
     controller.current?.abort();
     const current = new AbortController(); controller.current = current;
@@ -85,7 +93,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       .finally(() => { if (generation.current === gen) busy.current = false; });
   };
   const groups = useMemo(() => {
-    return sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst);
-  }, [items, spec.query, spec.selectedSource, spec.sort, modpacksFirst, links]);
+    return prioritizeCategories(sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst), spec.categories);
+  }, [items, spec.query, spec.selectedSource, spec.sort, spec.categories, modpacksFirst, links]);
   return { items, groups, buckets, loading: searching || Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => setRefresh(n => n + 1) };
 }

@@ -48,8 +48,19 @@ export function groupResults(items: Listing[], query: string, links: VerifiedPro
   return [...groups.values()].sort((a, b) => priority(a) - priority(b) || score(b) - score(a) || a.id.localeCompare(b.id));
 }
 export function appendStable(current: Listing[], incoming: Listing[]): Listing[] {
+  const incomingByKey = new Map(incoming.map(item => [item.key, item]));
   const seen = new Set(current.map(i => i.key));
-  return [...current, ...incoming.filter(i => !seen.has(i.key) && !!seen.add(i.key))];
+  return [...current.map(item => {
+    const next = incomingByKey.get(item.key);
+    return next?.matchedCategories?.length ? { ...item, matchedCategories: [...new Set([...(item.matchedCategories ?? []), ...next.matchedCategories])] } : item;
+  }), ...incoming.filter(i => !seen.has(i.key) && !!seen.add(i.key))];
+}
+
+export function prioritizeCategories(groups: ResultGroup[], categories: string[] = []): ResultGroup[] {
+  if (!categories.length) return groups;
+  const selected = new Set(categories);
+  const score = (group: ResultGroup) => Math.max(...group.listings.map(item => new Set(item.matchedCategories?.filter(id => selected.has(id))).size));
+  return [...groups].sort((a, b) => score(b) - score(a));
 }
 
 export function sortResultGroups(groups: ResultGroup[], sort: Sort, modpacksFirst = false): ResultGroup[] {

@@ -4,4 +4,5 @@ import App from './App';
 import { EntryIntro } from './EntryIntro';
 import './styles.css';
 import './atmosphere.css';
+import './collections.css';
 ReactDOM.createRoot(document.getElementById('root')!).render(<React.StrictMode><EntryIntro><App /></EntryIntro></React.StrictMode>);

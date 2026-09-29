@@ -34,7 +34,7 @@ describe('country-based language', () => {
     expect(translate('en', '제작자가 쓴 모드 이름')).toBe('제작자가 쓴 모드 이름');
   });
   it('has English translations for every literal application message', () => {
-    for (const path of ['src/web/App.tsx', 'src/web/components.tsx', 'src/web/SettingsMenu.tsx', 'src/web/GameDeck.tsx', 'src/web/lib/api.ts', 'src/web/lib/search.ts', 'src/server/adapters.ts']) {
+    for (const path of ['src/web/App.tsx', 'src/web/components.tsx', 'src/web/Favorites.tsx', 'src/web/Rankings.tsx', 'src/web/SettingsMenu.tsx', 'src/web/GameDeck.tsx', 'src/web/lib/api.ts', 'src/web/lib/search.ts', 'src/server/adapters.ts']) {
       const file = ts.createSourceFile(path, readFileSync(path, 'utf8'), ts.ScriptTarget.Latest, true);
       function visit(node: ts.Node) {
         if (ts.isStringLiteral(node) && /[가-힣]/.test(node.text) && node.text !== '한국어') {

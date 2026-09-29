@@ -2,9 +2,12 @@ import { gamesInScope } from './games';
 import { getCategory } from './categories';
 import { providerQuery } from './content';
 import { SOURCES, type Filters, type SearchRequest, type Sort, type Source } from './types';
-export interface SearchSpec { gameId: string; genre?: string; query: string; filters: Filters; sort: Sort; selectedSource: Source | 'all' }
-export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'>) => `${request.gameId}:${request.source}`;
+export interface SearchSpec { gameId: string; genre?: string; query: string; filters: Filters; categories?: string[]; sort: Sort; selectedSource: Source | 'all' }
+export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
 export function searchPlan(spec: SearchSpec): SearchRequest[] {
+  if (spec.categories?.length) {
+    return [...new Set(spec.categories)].flatMap(category => searchPlan({ ...spec, categories: undefined, filters: { ...spec.filters, category } }));
+  }
   const category = getCategory(spec.gameId, spec.filters.category);
   if (spec.gameId !== 'all' && spec.filters.category && !category) return [];
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES

@@ -23,6 +23,7 @@ export interface Listing {
   metrics: { label: string; value: number }[];
   tags: string[]; rank: number; fetchedAt: string;
   searchMatch?: { query: string; description: boolean };
+  matchedCategories?: string[];
 }
 export interface SearchRequest {
   gameId: string; source: Source; query: string; filters: Filters; sort: Sort; cursor?: string;

@@ -1,0 +1,35 @@
+.collection-panel{margin-top:28px;padding:0 28px 28px;border:1px solid rgba(var(--tint-rgb),.5);border-radius:24px;background:rgba(7,13,23,.55);backdrop-filter:blur(20px)}
+.folder-toolbar,.folder-actions,.ranking-source{display:flex;align-items:center;gap:12px}
+.folder-toolbar{margin-bottom:26px;min-width:0}
+.folder-rail{display:flex;gap:8px;overflow-x:auto;min-width:0;flex:1;padding:4px 0;scrollbar-width:thin}
+.folder-rail button,.ranking-tabs button,.ranking-providers button{display:flex;align-items:center;justify-content:center;gap:9px;flex:none;padding:11px 15px;border:1px solid rgba(var(--tint-rgb),.28);border-radius:12px;color:var(--text-soft);background:rgba(var(--tint-rgb),.05)}
+.folder-rail button span{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.folder-rail button[aria-pressed=true],.ranking-tabs button[aria-pressed=true],.ranking-providers button[aria-pressed=true]{border-color:var(--accent);background:rgba(var(--tint-rgb),.16);color:var(--accent)}
+.folder-actions{flex:none;gap:4px}
+.folder-actions .icon-button{width:38px;height:38px}
+.folder-form{display:grid;gap:12px}
+.folder-form input{width:100%;border:1px solid var(--accent);background:var(--surface-deep);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit}
+.folder-form p{color:var(--text-soft);margin:0;font-size:13px}
+.folder-destinations{display:grid;gap:8px;max-height:60dvh;overflow:auto}
+.folder-destinations button{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid rgba(var(--tint-rgb),.3);border-radius:12px;text-align:left}
+.folder-destinations button[aria-pressed=true]{border-color:var(--accent);color:var(--accent)}
+.folder-destinations button span{flex:1;overflow-wrap:anywhere}
+.mod-card .move-favorite{position:absolute;top:50px;right:0;width:36px;height:36px;z-index:3;color:var(--text-soft)}
+.mod-card .save-button{width:36px;height:36px;z-index:3}
+.mod-card .save-button.is-saved{color:var(--accent);filter:drop-shadow(0 0 6px rgba(var(--tint-rgb),.7))}
+.ranking-tabs{display:flex;gap:10px;flex-wrap:wrap}
+.ranking-source{justify-content:space-between;margin:20px 0;color:var(--muted);font-size:12px;flex-wrap:wrap}
+.ranking-source a{color:var(--text-soft);text-decoration:none}
+.ranking-source a:hover{text-decoration:underline}
+.ranking-list,.ranked-grid{list-style:none;padding:0;margin:0}
+.ranking-list li+li{border-top:1px solid rgba(var(--tint-rgb),.18)}
+.ranking-list button{width:100%;display:flex;align-items:center;gap:18px;padding:19px 8px;text-align:left;border-radius:10px}
+.ranking-list button:hover{background:rgba(var(--tint-rgb),.1)}
+.rank-number{color:var(--accent);font:600 22px var(--display);font-variant-numeric:tabular-nums;flex:none}
+.ranking-list strong{flex:1;font-size:15px;overflow-wrap:anywhere}
+.ranking-metric{font-size:12px;color:var(--muted);white-space:nowrap}
+.ranking-providers{display:flex;gap:8px;flex-wrap:wrap}
+.ranking-providers button{padding:8px 12px;font-size:12px}
+.ranked-grid>li{position:relative;min-width:0}
+.ranked-grid>li>.rank-number{position:absolute;top:12px;left:5px;z-index:3}
+@media(max-width:650px){.collection-panel{padding:0 14px 20px;margin-top:18px;border-radius:20px}.folder-toolbar{gap:4px}.folder-rail button{padding:10px}.folder-rail button span{max-width:130px}.folder-actions .icon-button{width:32px}.ranking-list button{gap:10px;padding:17px 0}.ranking-list strong{font-size:13px}.ranking-metric{font-size:10px}.ranking-list button>svg{display:none}.rank-number{font-size:19px}}
