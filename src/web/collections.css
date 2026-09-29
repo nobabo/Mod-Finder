@@ -65,3 +65,14 @@ html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-g
 .ranking-pagination button:disabled{opacity:.35;cursor:default}
 @media(max-width:650px){.ranking-panel{padding:0 12px 12px;gap:10px;width:calc(100% - 66px);top:calc(100% + 16px)}.ranking-panel .ranking-tabs{margin:0 -12px}.ranking-panel .ranking-list,.ranking-panel .ranked-grid{grid-template-columns:1fr}.ranking-panel .ranking-tabs button{font-size:11px;padding:11px 6px}.ranking-panel .ranking-tabs svg{display:none}.ranking-panel .ranking-source{bottom:12px;right:8px}}
 .ranking-panel::after{content:"";position:absolute;top:100%;left:0;width:1px;height:85px;pointer-events:none}
+
+.folder-modal{position:relative;isolation:isolate;width:min(420px,calc(100vw - 24px));aspect-ratio:1;max-height:none;border-radius:999px;padding:64px 44px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(var(--tint-rgb),.6);background:rgba(var(--tint-rgb),.035);box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),.45),0 24px 70px #0005;overflow:visible;backdrop-filter:blur(18px) saturate(1.25)}
+.folder-modal .modal-heading{margin:0;position:absolute;top:40px;left:60px;right:60px;justify-content:flex-end}
+.folder-modal .modal-heading h2:not(.sr-only){font-size:15px;margin-right:auto}
+.folder-modal .folder-form{gap:12px}
+.folder-modal .modal-actions{justify-content:center;margin-top:12px}
+.folder-input-glass{position:relative;isolation:isolate;border-radius:999px;border:1px solid rgba(var(--tint-rgb),.55);background:transparent;box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),.4);backdrop-filter:blur(12px) saturate(1.2)}
+.folder-input-glass:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px rgba(var(--tint-rgb),.16),inset 0 1px 2px rgba(var(--tint-rgb),.5)}
+.folder-form .folder-input-glass input{background:transparent;border:0;border-radius:999px;outline:none;padding:13px 17px}
+html[data-glass="webgl"] .folder-modal,html[data-glass="webgl"] .folder-input-glass{backdrop-filter:none}
+@media(max-width:450px){.folder-modal{padding:56px 32px}.folder-modal .modal-heading{top:30px;left:50px;right:50px}.folder-modal .modal-actions button{flex:none;min-width:76px}}

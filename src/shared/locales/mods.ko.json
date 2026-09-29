@@ -3,7 +3,10 @@
     "title": "소듐 (Sodium)",
     "summary": "마인크래프트의 렌더링 엔진을 개선해 프레임 속도를 높이고 화면 끊김을 줄이는 성능 최적화 모드입니다.",
     "searchTerm": "Sodium",
-    "aliases": ["소듐", "소디움"],
+    "aliases": [
+      "소듐",
+      "소디움"
+    ],
     "sourceUrl": "https://modrinth.com/mod/sodium",
     "reviewedAt": "2026-09-25"
   },
@@ -11,8 +14,137 @@
     "title": "소듐 (Sodium)",
     "summary": "마인크래프트의 렌더링 엔진을 개선해 프레임 속도를 높이고 화면 끊김을 줄이는 성능 최적화 모드입니다.",
     "searchTerm": "Sodium",
-    "aliases": ["소듐", "소디움"],
+    "aliases": [
+      "소듐",
+      "소디움"
+    ],
     "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/sodium",
     "reviewedAt": "2026-09-25"
+  },
+  "modrinth:minecraft:1KVo5zza": {
+    "title": "패뷸러슬리 옵티마이즈드",
+    "searchTerm": "Fabulously Optimized",
+    "aliases": [
+      "패뷸러슬리 옵티마이즈드"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/fabulously-optimized",
+    "reviewedAt": "2026-09-30"
+  },
+  "modrinth:minecraft:l9m9tuPN": {
+    "title": "좀비 침공 100일",
+    "searchTerm": "Zombie Invade 100 Days",
+    "aliases": [
+      "좀비 침공 100일"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/zombie-invade-100-days",
+    "reviewedAt": "2026-09-30"
+  },
+  "modrinth:minecraft:5FFgwNNP": {
+    "title": "코블몬 공식 모드팩 (패브릭)",
+    "searchTerm": "Cobblemon Official Modpack [Fabric]",
+    "aliases": [
+      "코블몬 공식 모드팩 (패브릭)"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/cobblemon-fabric",
+    "reviewedAt": "2026-09-30"
+  },
+  "modrinth:minecraft:vwgtbO0y": {
+    "title": "픽셀몬 모드팩",
+    "searchTerm": "The Pixelmon Modpack",
+    "aliases": [
+      "픽셀몬 모드팩"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/the-pixelmon-modpack",
+    "reviewedAt": "2026-09-30"
+  },
+  "modrinth:minecraft:4BV47HRn": {
+    "title": "베터 마인크래프트 4 (포지)",
+    "searchTerm": "Better MC [FORGE] - BMC4",
+    "aliases": [
+      "베터 마인크래프트 4 (포지)"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/better-mc-forge-bmc4",
+    "reviewedAt": "2026-09-30"
+  },
+  "modrinth:minecraft:EGs3lC8D": {
+    "title": "프로미넌스 II: 하스투르의 시대",
+    "searchTerm": "Prominence™ II: Hasturian Era",
+    "aliases": [
+      "프로미넌스 II: 하스투르의 시대"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/prominence-2-fabric",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:285109": {
+    "title": "알엘크래프트",
+    "searchTerm": "RLCraft",
+    "aliases": [
+      "알엘크래프트"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/rlcraft",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:925200": {
+    "title": "올 더 모드 10",
+    "searchTerm": "All the Mods 10 - ATM10",
+    "aliases": [
+      "올 더 모드 10"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/all-the-mods-10",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:389615": {
+    "title": "픽셀몬 모드팩",
+    "searchTerm": "The Pixelmon Modpack",
+    "aliases": [
+      "픽셀몬 모드팩"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/the-pixelmon-modpack",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:876781": {
+    "title": "베터 마인크래프트 4 (포지)",
+    "searchTerm": "Better MC [FORGE] BMC4",
+    "aliases": [
+      "베터 마인크래프트 4 (포지)"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/better-mc-forge-bmc4",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:715572": {
+    "title": "올 더 모드 9",
+    "searchTerm": "All the Mods 9 - ATM9",
+    "aliases": [
+      "올 더 모드 9"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/all-the-mods-9",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:296062": {
+    "title": "스카이팩토리 4",
+    "searchTerm": "SkyFactory 4",
+    "aliases": [
+      "스카이팩토리 4"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/skyfactory-4",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:466901": {
+    "title": "프로미넌스 II: 하스투르의 시대",
+    "searchTerm": "Prominence™ II: Hasturian Era",
+    "aliases": [
+      "프로미넌스 II: 하스투르의 시대"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/prominence-2-hasturian-era",
+    "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:396246": {
+    "title": "패뷸러슬리 옵티마이즈드",
+    "searchTerm": "Fabulously Optimized",
+    "aliases": [
+      "패뷸러슬리 옵티마이즈드"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/fabulously-optimized",
+    "reviewedAt": "2026-09-30"
   }
 }

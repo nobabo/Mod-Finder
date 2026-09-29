@@ -22,7 +22,7 @@ export function FolderBar({ data, update, selected, select }: { data: LocalData;
         {folder && <><button type="button" className="icon-button" aria-label={t('폴더 이름 변경')} title={t('폴더 이름 변경')} onClick={() => edit(folder.id, folder.name)}><Pencil size={18}/></button><button type="button" className="icon-button" aria-label={t('폴더 삭제')} title={t('폴더 삭제 · 모드는 미분류로 이동')} onClick={() => { update(previous => ({ ...previous, folders: previous.folders.filter(item => item.id !== folder.id) })); select('unfiled'); }}><Trash2 size={18}/></button></>}
       </div>
     </div>
-    {editing !== null && <Modal title={t(editing ? '폴더 이름 변경' : '새 폴더')} close={() => setEditing(null)}>
+    {editing !== null && <Modal className="folder-modal" hideTitle={!editing} title={t(editing ? '폴더 이름 변경' : '새 폴더')} close={() => setEditing(null)}>
       <form className="folder-form" onSubmit={event => {
         event.preventDefault();
         const trimmed = name.trim();
@@ -33,7 +33,7 @@ export function FolderBar({ data, update, selected, select }: { data: LocalData;
         select(id); setEditing(null);
       }}>
         <label htmlFor="folder-name">{t('폴더명')}</label>
-        <input id="folder-name" data-autofocus maxLength={40} value={name} onChange={event => { setName(event.target.value); setError(''); }} />
+        <div className="folder-input-glass"><input id="folder-name" data-autofocus maxLength={40} value={name} onChange={event => { setName(event.target.value); setError(''); }} /></div>
         {error && <p role="alert">{error}</p>}
         <div className="modal-actions"><button type="button" className="secondary-button" onClick={() => setEditing(null)}>{t('취소')}</button><button type="submit" className="primary-button">{t('저장')}</button></div>
       </form>

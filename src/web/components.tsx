@@ -39,9 +39,9 @@ function useDialog(close: () => void) {
   return { ref, onKeyDown };
 }
 
-export function Modal({ title, children, close, wide = false }: { title: string; children: React.ReactNode; close: () => void; wide?: boolean }) {
+export function Modal({ title, children, close, wide = false, hideTitle = false, className = '' }: { title: string; children: React.ReactNode; close: () => void; wide?: boolean; hideTitle?: boolean; className?: string }) {
   const { ref, onKeyDown } = useDialog(close);
-  return <div className="modal-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) close(); }}><section ref={ref} className={`modal ${wide ? 'wide' : ''}`} role="dialog" aria-modal="true" aria-label={title} onKeyDown={onKeyDown}><div className="modal-heading"><h2>{title}</h2><button className="icon-button" onClick={close} aria-label={t("닫기")}><X size={21} /></button></div>{children}</section></div>;
+  return <div className="modal-backdrop" onMouseDown={event => { if (event.target === event.currentTarget) close(); }}><section ref={ref} className={`modal ${wide ? 'wide' : ''} ${className}`} role="dialog" aria-modal="true" aria-label={title} onKeyDown={onKeyDown}><div className="modal-heading"><h2 className={hideTitle ? 'sr-only' : undefined}>{title}</h2><button className="icon-button" onClick={close} aria-label={t("닫기")}><X size={21} /></button></div>{children}</section></div>;
 }
 
 export function Sheet({ title, children, close }: { title: string; children: React.ReactNode; close: () => void }) {
