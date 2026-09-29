@@ -33,3 +33,12 @@
 .ranked-grid>li{position:relative;min-width:0}
 .ranked-grid>li>.rank-number{position:absolute;top:12px;left:5px;z-index:3}
 @media(max-width:650px){.collection-panel{padding:0 14px 20px;margin-top:18px;border-radius:20px}.folder-toolbar{gap:4px}.folder-rail button{padding:10px}.folder-rail button span{max-width:130px}.folder-actions .icon-button{width:32px}.ranking-list button{gap:10px;padding:17px 0}.ranking-list strong{font-size:13px}.ranking-metric{font-size:10px}.ranking-list button>svg{display:none}.rank-number{font-size:19px}}
+
+/* Home rankings share the search bar's refractive glass renderer. */
+.ranking-panel{position:relative;isolation:isolate;margin:28px auto 0;width:100%;background:linear-gradient(145deg,rgba(var(--tint-rgb),.09),#e5efff05 40%,rgba(var(--tint-rgb),.05));backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 20px 60px #03071544,inset 0 1px 1px rgba(var(--tint-rgb),.4)}
+html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-gradient(135deg,rgba(var(--tint-rgb),.04),rgba(var(--tint-rgb),.008) 65%,rgba(var(--tint-rgb),.03))}
+.content:has(>.ranking-panel){justify-content:flex-start;padding-top:clamp(170px,24vh,260px)}
+.content:has(>.ranking-panel) .search-results-wrapper{flex:none;width:100%}
+.ranking-panel .ranking-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));column-gap:28px}
+@media(max-width:650px){.content:has(>.ranking-panel){padding-top:160px}.ranking-panel .ranking-list{grid-template-columns:1fr}.ranking-panel{margin-top:24px}}
+.content:has(>.ranking-panel) .search-dock.hero{margin:0 auto;flex:none}

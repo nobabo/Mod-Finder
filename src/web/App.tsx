@@ -1,6 +1,6 @@
 import { t, locale, languagePreference, changeLanguage } from './lib/i18n';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, Compass, GitCompareArrows, History, LoaderCircle, Search, Settings2, SlidersHorizontal, TrendingUp, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, Compass, GitCompareArrows, History, LoaderCircle, Search, Settings2, SlidersHorizontal, X } from 'lucide-react';
 import { categoriesForGame, getCategory } from '../shared/categories';
 import { GENRES, gamesInScope, getGame } from '../shared/games';
 import { SOURCE_NAMES, type Filters, type Listing, type Sort } from '../shared/types';
@@ -20,7 +20,7 @@ import { LANGUAGES } from '../shared/locale';
 import { listingText } from '../shared/content';
 import { useModSummaries } from './lib/mod-summaries';
 
-type Page = 'discover' | 'favorites' | 'recent' | 'rankings';
+type Page = 'discover' | 'favorites' | 'recent';
 const FILTER_NAMES: Record<string, string> = { version: t("게임 버전"), loader: t("로더"), kind: t("종류"), category: t("장르") };
 const THEMES = PALETTES.map(theme => ({ ...theme, name:locale === 'ko' ? theme.ko : theme.en }));
 export default function App() {
@@ -71,7 +71,7 @@ export default function App() {
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(''), 4000); return () => clearTimeout(timer); }, [toast]);
   useEffect(() => { applyTheme(accent); try { localStorage.setItem('modfinder-accent', accent); } catch { /* Theme persistence is optional. */ } }, [accent]);
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); setPage('discover'); inputRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, []);
-  const chooseGame = (id: string, nextGenre = 'all') => { setGenre(nextGenre); setGameId(id); setFilters({}); setSelectedCategories([]); if (page !== 'rankings') setPage('discover'); setGamePicker(false); requestAnimationFrame(() => inputRef.current?.focus()); };
+  const chooseGame = (id: string, nextGenre = 'all') => { setGenre(nextGenre); setGameId(id); setFilters({}); setSelectedCategories([]); setPage('discover'); setGamePicker(false); requestAnimationFrame(() => inputRef.current?.focus()); };
   const submit = (value = input, id = gameId, selectedGenre = genre, categories = id === gameId ? selectedCategories : [], kind?: string) => {
     const next = value.trim().slice(0, 200); setInput(next); setQuery(next); setSubmitted(true); setPage('discover'); setMenuOpen(false);
     if (id !== gameId || selectedGenre !== genre) { setGenre(selectedGenre); setGameId(id); setFilters(kind ? { kind } : {}); }
@@ -106,7 +106,6 @@ export default function App() {
       {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</div>}>
         <button type="button" onClick={() => go('discover')}><Compass size={34} /><span>{t("모드 둘러보기")}</span></button>
         <button type="button" onClick={() => go('favorites')}><Bookmark size={34} /><span>{t("즐겨찾기")}</span></button>
-        <button type="button" onClick={() => go('rankings')}><TrendingUp size={34} /><span>TOP 10</span></button>
         <button type="button" onClick={() => go('recent')}><History size={34} /><span>{t("최근 기록")}</span></button>
       </SettingsMenu>}
     </div>
@@ -128,11 +127,11 @@ export default function App() {
       </section>}
       </div>
       {page === 'favorites' && <section className="collection-panel"><div className="page-heading"><h1>{t("즐겨찾기")}</h1></div>{hydrated && <FolderBar data={local} update={setLocal} selected={selectedFolder} select={setSelectedFolder}/>} {visible.length ? <div className="mod-grid">{visible.map(item => card(item))}</div> : <div className="empty-state spacious icon-only" role="img" aria-label={t("아직 저장한 모드가 없어요")}><Bookmark size={35} aria-hidden="true" /></div>}</section>}
-      {page === 'rankings' && <Rankings key={gameId} gameId={gameId} card={card} searchPack={name => submit(name, 'minecraft-java', 'all', [], 'modpack')}/>}
+      {heroSearch && <Rankings key={gameId} gameId={gameId} card={card} searchPack={name => submit(name, 'minecraft-java', 'all', [], 'modpack')}/>}
       {page === 'recent' && <><div className="page-heading"><h1>{t("최근 검색")}</h1></div><div className="history-list">{local.history.length ? <><div className="list-heading"><span>{t('최근 {count}개 검색', { count: local.history.length })}</span><button className="text-button" onClick={() => setLocal(prev => ({ ...prev, history: [] }))}>{t("검색 기록 지우기")}</button></div>{local.history.map((h, i) => <button key={`${h.gameId}:${h.genre ?? 'all'}:${JSON.stringify(h.categories ?? h.category ?? '')}:${h.query}`} onClick={() => submit(h.query, h.gameId, h.genre ?? 'all', h.categories ?? (h.category ? [h.category] : []))}><span className="history-number">{String(i + 1).padStart(2, '0')}</span><Search size={18} /><strong>{h.query}</strong><span>{gameName(h.gameId)}{(h.categories ?? (h.category ? [h.category] : [])).map(id => ` · ${getCategory(h.gameId, id)?.[locale === 'ko' ? 'ko' : 'en'] ?? ''}`).join('')}{h.genre && h.genre !== 'all' ? ` · ${GENRES.find(g => g.id === h.genre)?.[locale === 'ko' ? 'ko' : 'en'] ?? ''}` : ''}</span><ArrowUpRight size={18} /></button>)}</> : <div className="empty-state spacious icon-only" role="img" aria-label={t("새로운 발견을 시작해 보세요")}><History size={34} aria-hidden="true" /></div>}</div></>}
       </div>
     </main>
-    <nav className="mobile-nav" aria-label={t("모바일 메뉴")}>{([{ id: 'discover', label: t("탐색"), icon: Compass }, { id: 'favorites', label: t("즐겨찾기"), icon: Bookmark }, { id: 'rankings', label: 'TOP 10', icon: TrendingUp }, { id: 'recent', label: t("최근 검색"), icon: History }, { id: 'settings', label: t("설정"), icon: Settings2 }] as const).map(n => <button key={n.id} className={n.id !== 'settings' && page === n.id ? 'active' : ''} onClick={() => n.id === 'settings' ? setMenuOpen(value => !value) : go(n.id)}><n.icon size={21} />{n.label}</button>)}</nav>
+    <nav className="mobile-nav" aria-label={t("모바일 메뉴")}>{([{ id: 'discover', label: t("탐색"), icon: Compass }, { id: 'favorites', label: t("즐겨찾기"), icon: Bookmark }, { id: 'recent', label: t("최근 검색"), icon: History }, { id: 'settings', label: t("설정"), icon: Settings2 }] as const).map(n => <button key={n.id} className={n.id !== 'settings' && page === n.id ? 'active' : ''} onClick={() => n.id === 'settings' ? setMenuOpen(value => !value) : go(n.id)}><n.icon size={21} />{n.label}</button>)}</nav>
     {compared.length > 0 && <div className="compare-tray"><GitCompareArrows size={19} /><strong>{t('{count}개 모드 선택', { count: compared.length })}</strong><span className="tray-names">{compared.map(item => item.title).join(' · ')}</span><button className="primary-button" onClick={() => setCompareOpen(true)}>{t("비교하기")} <ArrowRight size={15} /></button><button className="icon-button" aria-label={t("비교 선택 초기화")} onClick={() => { setCompared([]); setCompareOpen(false); }}><X size={18} /></button></div>}
       {filterOpen && <GameDeck genreMode sort={sort} setSort={setSort} filters={filters} changeFilter={changeFilter} showMinecraftFilters={gameId === 'minecraft-java'} steamSort={gameId === 'all' ? 'mixed' : game?.sources.steam ? Object.keys(game.sources).length === 1 ? 'only' : 'mixed' : 'none'} categories={gameId === 'all' ? undefined : categoriesForGame(gameId)} selectedCategories={gameId === 'all' ? undefined : selectedCategories} gameId={gameId === 'all' ? genre : 'all'} select={id => { if (gameId === 'all') { setGenre(id); setFilterOpen(false); } else { setSelectedCategories(previous => id === 'all' ? [] : previous.includes(id) ? previous.filter(value => value !== id) : [...previous, id]); setPage('discover'); } }} close={() => setFilterOpen(false)} />}
       {gamePicker && <GameDeck gameId={gameId} select={chooseGame} close={() => setGamePicker(false)} />}

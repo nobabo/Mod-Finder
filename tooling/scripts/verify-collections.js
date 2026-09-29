@@ -25,6 +25,7 @@ async (page) => {
     await route.fulfill({ json: { source, status: items.length ? 'success' : 'empty', items, nextCursor: null, total: items.length, fetchedAt: now, cached: false, appliedFilters: category ? { category } : {}, unsupportedFilters: [], externalUrl: null, queryForwarded: true, message: '' } });
   });
   const menu = async name => {
+    if (name === 'TOP 10') { await page.reload(); await page.locator('.ranking-panel').waitFor(); return; }
     await page.getByRole('button', { name: '설정 메뉴', exact: true }).click();
     await page.getByRole('dialog', { name: '설정 메뉴', exact: true }).getByRole('button', { name, exact: true }).click();
   };
@@ -101,7 +102,7 @@ async (page) => {
     await page.getByRole('button', { name: '모바일 폴더', exact: true }).click();
     await page.screenshot({ path: 'output/playwright/favorites-folders-mobile.png' });
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Mobile layout does not overflow');
-    await page.getByRole('navigation', { name: '모바일 메뉴' }).getByRole('button', { name: 'TOP 10', exact: true }).click();
+    await page.reload(); await page.locator('.ranking-panel').waitFor();
     await page.getByRole('button', { name: '검색 순위', exact: true }).click();
     await page.screenshot({ path: 'output/playwright/community-top10-mobile.png' });
     await page.locator('.ranking-list button').first().click();
