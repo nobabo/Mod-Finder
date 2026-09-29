@@ -35,14 +35,12 @@
 @media(max-width:650px){.collection-panel{padding:0 14px 20px;margin-top:18px;border-radius:20px}.folder-toolbar{gap:4px}.folder-rail button{padding:10px}.folder-rail button span{max-width:130px}.folder-actions .icon-button{width:32px}.ranking-list button{gap:10px;padding:17px 0}.ranking-list strong{font-size:13px}.ranking-metric{font-size:10px}.ranking-list button>svg{display:none}.rank-number{font-size:19px}}
 
 /* Anchor rankings below the original centered search without changing its layout. */
-.ranking-panel{position:absolute;top:calc(100% + 20px);left:50%;transform:translateX(-50%);isolation:isolate;margin:0 0 80px;width:min(620px,100%);padding:14px 18px;border-radius:18px;display:grid;grid-template-columns:auto 1fr;gap:12px 18px;background:linear-gradient(145deg,rgba(var(--tint-rgb),.09),#e5efff05 40%,rgba(var(--tint-rgb),.05));backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 12px 35px #03071533,inset 0 1px 1px rgba(var(--tint-rgb),.4)}
+.ranking-panel{position:absolute;top:calc(100% + 20px);left:max(0px,calc(50% - 310px));isolation:isolate;margin:0 0 80px;width:min(548px,calc(100% - 72px));padding:0 18px 14px;border-radius:18px;display:grid;grid-template-columns:auto 1fr;gap:12px 18px;background:linear-gradient(145deg,rgba(var(--tint-rgb),.09),#e5efff05 40%,rgba(var(--tint-rgb),.05));backdrop-filter:blur(18px) saturate(1.3);box-shadow:0 12px 35px #03071533,inset 0 1px 1px rgba(var(--tint-rgb),.4)}
 html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-gradient(135deg,rgba(var(--tint-rgb),.04),rgba(var(--tint-rgb),.008) 65%,rgba(var(--tint-rgb),.03))}
-.ranking-panel .page-heading{margin:0;padding:0;align-self:center}
-.ranking-panel h1{font-size:18px;margin:0;white-space:nowrap}
-.ranking-panel .ranking-tabs{gap:6px;justify-content:flex-end;padding-right:26px;flex-wrap:nowrap}
-.ranking-panel .ranking-tabs button{font-size:11px;padding:6px 8px;gap:5px;border-radius:9px}
+.ranking-panel .ranking-tabs{grid-column:1/-1;display:flex;gap:0;margin:0 -18px;padding:0;flex-wrap:nowrap;border-bottom:1px solid rgba(var(--tint-rgb),.25);border-radius:17px 17px 0 0;overflow:hidden}
+.ranking-panel .ranking-tabs button{flex:1;min-width:0;font-size:12px;padding:12px 8px;gap:6px;border:0;border-radius:0;background:transparent}.ranking-panel .ranking-tabs button+button{border-left:1px solid rgba(var(--tint-rgb),.25)}.ranking-panel .ranking-tabs button[aria-pressed=true]{background:rgba(var(--tint-rgb),.14);color:var(--accent);box-shadow:inset 0 -2px var(--accent)}
 .ranking-panel .ranking-tabs svg{width:14px;height:14px}
-.ranking-panel .ranking-source{position:absolute;right:10px;top:14px;margin:0}
+.ranking-panel .ranking-source{position:absolute;right:10px;bottom:14px;margin:0}
 .ranking-panel .ranking-source .icon-button{width:26px;height:26px}
 .ranking-panel .ranking-list,.ranking-panel .ranked-grid{grid-column:1/-1;display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:0 20px;margin:0}
 .ranking-panel .ranking-list li,.ranking-panel .ranked-grid>li{border:0;border-bottom:1px solid rgba(var(--tint-rgb),.14);min-width:0}
@@ -65,5 +63,5 @@ html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-g
 .ranking-pagination{grid-column:1/-1;display:flex;align-items:center;justify-content:center;gap:16px;margin:0;font-size:11px}
 .ranking-pagination button{display:flex;padding:5px;border-radius:8px}
 .ranking-pagination button:disabled{opacity:.35;cursor:default}
-@media(max-width:650px){.ranking-panel{padding:12px;gap:10px;width:100%;top:calc(100% + 16px)}.ranking-panel h1{font-size:16px}.ranking-panel .ranking-list,.ranking-panel .ranked-grid{grid-template-columns:1fr}.ranking-panel .ranking-tabs button{font-size:10px;padding:6px}.ranking-panel .ranking-tabs svg{display:none}.ranking-panel .ranking-source{top:11px;right:8px}}
+@media(max-width:650px){.ranking-panel{padding:0 12px 12px;gap:10px;width:calc(100% - 66px);top:calc(100% + 16px)}.ranking-panel .ranking-tabs{margin:0 -12px}.ranking-panel .ranking-list,.ranking-panel .ranked-grid{grid-template-columns:1fr}.ranking-panel .ranking-tabs button{font-size:11px;padding:11px 6px}.ranking-panel .ranking-tabs svg{display:none}.ranking-panel .ranking-source{bottom:12px;right:8px}}
 .ranking-panel::after{content:"";position:absolute;top:100%;left:0;width:1px;height:85px;pointer-events:none}

@@ -42,7 +42,6 @@ export function Rankings({ gameId, card, searchPack }: { gameId: string; card: (
     return () => controller.abort();
   }, [gameId, tab, refresh]);
   return <section className="collection-panel ranking-panel">
-    <div className="page-heading"><h1>TOP {tab === 'downloads' ? 30 : 10}</h1></div>
     {!game ? <p className="empty-state">{t('게임을 선택하세요.')}</p> : <>
       <div className="ranking-tabs" role="group" aria-label={t('순위 종류')}>
         {minecraft && <button type="button" aria-pressed={tab === 'search'} onClick={() => setTab('search')}><Search size={18}/>{t('검색 순위')}</button>}
