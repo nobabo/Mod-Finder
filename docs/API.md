@@ -60,7 +60,7 @@ States: `success`, `empty`, `external`, `auth_required`, `unsupported`, `error`,
 - Upstream metadata request deadline: 4 seconds, 4 MiB response limit.
 - App request deadline: 5 seconds per source. Search changes invalidate the prior generation.
 - No automatic retry on 401/403/429. Redirects are rejected without following them. Upstream clients track cooldowns for their lifetime; Workers creates a request-scoped client and does not share upstream cooldown state between requests.
-- Each search queries the upstream provider; no search-result cache is used.
+- Each request reaching the server queries the upstream provider; no server search-result cache is used. The web/Windows client can reuse complete local pages for 30 minutes (empty results: 5 minutes), keyed by the full request, API address and language. See [local search caching](SEARCH-CACHE.md) for source restrictions, limits and verification.
 - Workers uses its native rate-limit binding (120 API requests per minute per IP at a Cloudflare location; approximate, not a global upstream quota). The optional Node server uses process-local throttling.
 - `DISABLED_SOURCES` applies after server restart. The client reads live states without an app update.
 - Detailed metadata is currently fetched live; no 15-minute detail cache is enabled.

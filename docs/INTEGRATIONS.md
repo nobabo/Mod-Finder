@@ -67,3 +67,7 @@ The API terms also restrict competing services and require an approved applicati
 `tooling/tests/curseforge.test.ts` covers request mappings, limits, errors and metadata. The normal release script verifies live mods, modpacks, pagination and details after deployment. Native installers must be rebuilt to receive the client-side storage policy before enabling this integration in an older native distribution.
 
 No mod archives are fetched or hosted. Icons load from original HTTPS URLs. External navigation has a hostname allowlist in both shared code and native capabilities. Only normal text descriptions are rendered. Search strings are not in application logs, but production reverse proxies must also omit/redact query strings. No server database, search cache, or background index is used.
+
+### Local search caching (2026-09-30)
+
+The web/Tauri Windows client stores complete user-requested Modrinth, Nexus and Steam search pages in device-local IndexedDB for 30 minutes (empty pages: 5 minutes). API origin, language, game, source, exact query, filters, sort and cursor all participate in the key. The server remains live/no-store, with no shared cache or background index. CurseForge responses are never retained in a client cache. Thunderstore automatic caching stays disabled unless its separate persistence policy flag is explicitly enabled at build time. See [search-cache behavior and verification](SEARCH-CACHE.md).

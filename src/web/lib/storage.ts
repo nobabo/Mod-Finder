@@ -21,7 +21,7 @@ function restoreReference(value: unknown): unknown {
   if (item.source !== 'curseforge' || typeof item.id !== 'string' || !/^\d+$/.test(item.id) || getGame(item.gameId)?.sources.curseforge?.scope !== item.scope || item.key !== listingKey(item.source, item.scope, item.id)) throw new Error('invalid_local_data');
   return { ...reference(item), title: item.key, summary: '', author: null, url: 'https://www.curseforge.com/projects/' + item.id, iconUrl: null, updatedAt: null, versions: null, loaders: null, kind: null, metrics: [], tags: [], rank: 0, fetchedAt: '' } satisfies Listing & { referenceOnly: true };
 }
-function validListing(value: unknown): value is Listing {
+export function validListing(value: unknown): value is Listing {
   if (!value || typeof value !== 'object') return false;
   const item = value as Listing;
   return SOURCES.includes(item.source) && typeof item.scope === 'string' && typeof item.id === 'string'
