@@ -40,9 +40,18 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
             val catalog = withContext(Dispatchers.IO) { Catalog(application) }
             store = LocalStore(application, catalog.games.map { it.id }.toSet())
             val loaded = withContext(Dispatchers.IO) { runCatching { store.load() } }
-            mutable.update { it.copy(catalog = catalog, local = loaded.getOrDefault(LocalState()), hydrated = loaded.isSuccess, notice = if (loaded.isFailure) "저장된 정보를 읽지 못했어요. 저장 공간을 확인해 주세요." else null) }
+            mutable.update { it.copy(catalog = catalog, local = loaded.getOrDefault(LocalState()), hydrated = loaded.isSuccess, rankingTab = if (catalog.hasCommunityRanking(it.spec.gameId)) "search" else "downloads", notice = if (loaded.isFailure) "저장된 정보를 읽지 못했어요. 저장 공간을 확인해 주세요." else null) }
             withContext(Dispatchers.IO) { state.value.local.favorites.map { it.gameId }.distinct().forEach { catalog.loadSummaries(it) } }
-            if (state.value.spec.gameId != "minecraft-java") loadRanking()
+            val permits = Semaphore(4)
+            state.value.local.favorites.filter { it.referenceOnly }.forEach { bookmark -> launch {
+                permits.withPermit {
+                    try {
+                        val fresh = api.details(bookmark, state.value.locale)
+                        mutable.update { current -> current.copy(local = current.local.copy(favorites = current.local.favorites.map { if (it.key == bookmark.key) fresh else it })) }
+                    } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { /* Keep the user's reference available offline. */ }
+                }
+            } }
+            if (!state.value.submitted) loadRanking()
         }
         viewModelScope.launch(Dispatchers.IO) {
             for (snapshot in writes) try { store.save(snapshot) } catch (_: Exception) { mutable.update { it.copy(notice = "변경사항을 저장하지 못했어요. 저장 공간을 확인해 주세요.") } }
@@ -51,7 +60,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     fun text(key: String) = state.value.catalog?.text(state.value.locale, key) ?: key
     fun input(value: String) { val clipped = value.take(200); saved["input"] = clipped; mutable.update { it.copy(input = clipped) } }
     fun notice(message: String?) { mutable.update { it.copy(notice = message) } }
-    fun overlay(value: String?) { mutable.update { it.copy(overlay = value) }; if (value == "filters" && state.value.versions.isEmpty()) loadVersions() }
+    fun overlay(value: String?) { mutable.update { it.copy(overlay = value) }; if (value == "filters" && state.value.spec.gameId == "minecraft-java" && state.value.versions.isEmpty()) loadVersions() }
     fun detail(value: Listing?) { mutable.update { it.copy(detail = value) } }
     fun back(): Boolean {
         val current = state.value
@@ -60,12 +69,18 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
             current.overlay in listOf("theme", "language") -> overlay("settings")
             current.overlay != null -> overlay(null)
             current.page != "discover" -> page("discover")
-            current.submitted -> { mutable.update { it.copy(submitted = false, input = "", spec = it.spec.copy(query = "", filters = emptyMap(), categories = emptySet())) }; loadRanking() }
+            current.submitted -> page("discover")
             else -> return false
         }
         return true
     }
-    fun page(value: String) { mutable.update { it.copy(page = value, overlay = null) } }
+    fun page(value: String) {
+        if (value == "discover") {
+            input("")
+            mutable.update { it.copy(page = value, overlay = null, submitted = false, spec = it.spec.copy(query = "", filters = emptyMap(), categories = emptySet())) }
+            loadRanking()
+        } else mutable.update { it.copy(page = value, overlay = null) }
+    }
     fun chooseGame(id: String) {
         if (id != "all" && state.value.catalog?.game(id) == null) return
         saved["game"] = id
@@ -85,15 +100,53 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     }
     fun rankingTab(tab: String) { mutable.update { it.copy(rankingTab = tab) }; loadRanking() }
     private fun loadRanking() {
-        if (state.value.catalog?.hasCommunityRanking(state.value.spec.gameId) == true && state.value.rankingTab == "search") {
-            searchJob?.cancel(); generation++; mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = false) }
-        } else runSearch(ranking = true)
+        val current = state.value
+        val catalog = current.catalog ?: return
+        searchJob?.cancel(); val run = ++generation
+        val game = catalog.game(current.spec.gameId)
+        mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = false) }
+        if (game == null || (catalog.hasCommunityRanking(game.id) && current.rankingTab == "search")) return
+        val spec = current.spec.copy(query = "", sort = "downloads", categories = emptySet(), filters = if (game.id == "minecraft-java") mapOf("kind" to "modpack") else emptyMap())
+        mutable.update { it.copy(loading = true) }
+        searchJob = viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { catalog.loadSummaries(game.id) }
+                val batches = coroutineScope {
+                    rankingSources(game).map { source -> async {
+                        val request = SearchRequest(game.id, source, "", spec.filters, "downloads")
+                        val collected = mutableListOf<Listing>()
+                        val verified = mutableListOf<VerifiedLink>()
+                        val seen = mutableSetOf<String>()
+                        var cursor: String? = null
+                        var last = SearchResult("empty", emptyList(), null, null, "")
+                        for (page in 0 until 3) {
+                            last = try { api.search(request.copy(cursor = cursor), state.value.locale) }
+                                catch (cancelled: CancellationException) { throw cancelled }
+                                catch (_: Exception) { SearchResult("error", emptyList(), null, null, "순위를 불러오지 못했어요.") }
+                            if (last.status !in listOf("success", "empty")) break
+                            collected += last.items.filter { isRankingListing(it, game, source) }
+                            verified += last.verifiedLinks
+                            val next = last.nextCursor ?: break
+                            if (!seen.add(next)) break
+                            cursor = next
+                        }
+                        Bucket(request, false, last.copy(items = collected, nextCursor = null, verifiedLinks = verified))
+                    } }.awaitAll()
+                }
+                currentCoroutineContext().ensureActive()
+                if (generation == run) {
+                    val items = mergeListings(emptyList(), batches.flatMap { it.result!!.items })
+                    val verified = catalog.verifiedLinks + batches.flatMap { it.result!!.verifiedLinks }
+                    mutable.update { it.copy(items = items, groups = groupListings(items, verified, spec).take(30), buckets = batches.associateBy { it.request.bucket }) }
+                }
+            } finally { if (generation == run) mutable.update { it.copy(loading = false) } }
+        }
     }
     fun retry() { if (state.value.submitted) runSearch() else loadRanking() }
-    private fun runSearch(ranking: Boolean = false) {
+    private fun runSearch() {
         val catalog = state.value.catalog ?: return
         searchJob?.cancel(); val run = ++generation
-        val spec = if (ranking) state.value.spec.copy(query = "", sort = "downloads", categories = emptySet(), filters = if (state.value.spec.gameId == "minecraft-java") mapOf("kind" to "modpack") else emptyMap()) else state.value.spec
+        val spec = state.value.spec
         links = catalog.verifiedLinks
         cursors.clear()
         mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = true) }
@@ -101,8 +154,8 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
             try {
                 var eligible: Set<String>? = null
                 val tried = mutableSetOf<SearchRequest>()
-                for (query in listOf(spec.query) + if (ranking) emptyList() else catalog.correctedQueries(spec)) {
-                    val requests = catalog.searchPlan(spec.copy(query = query)).filter { (eligible == null || it.bucket in eligible!!) && tried.add(it) && (!ranking || catalog.game(spec.gameId)?.providers?.containsKey("steam") != true || it.source == "steam") }
+                for (query in listOf(spec.query) + catalog.correctedQueries(spec)) {
+                    val requests = catalog.searchPlan(spec.copy(query = query)).filter { (eligible == null || it.bucket in eligible!!) && tried.add(it) }
                     if (requests.isEmpty()) break
                     withContext(Dispatchers.IO) { requests.map { it.gameId }.distinct().forEach { catalog.loadSummaries(it) } }
                     mutable.update { it.copy(buckets = it.buckets + requests.associate { request -> request.bucket to Bucket(request) }) }
@@ -157,7 +210,6 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     fun theme(id: String) { updateLocal { it.copy(theme = id) } }
     fun language(id: String) { updateLocal { it.copy(language = id) } }
     fun toggleFavorite(item: Listing) {
-        if (!item.canPersist(BuildConfig.THUNDERSTORE_PERSISTENCE)) return
         updateLocal { local -> val exists = local.favorites.any { it.key == item.key }; local.copy(favorites = if (exists) local.favorites.filter { it.key != item.key } else listOf(item) + local.favorites, folders = if (exists) local.folders.map { it.copy(keys = it.keys - item.key) } else local.folders) }
     }
     fun clearHistory() { updateLocal { it.copy(history = emptyList()) } }

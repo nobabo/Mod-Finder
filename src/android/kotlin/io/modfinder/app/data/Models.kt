@@ -24,6 +24,9 @@ data class Choice(val id: String, val ko: String, val en: String) { fun label(lo
 data class Category(val id: String, val source: String, val value: String, val ko: String, val en: String) { fun label(locale: String) = if (locale == "ko") ko else en }
 data class Palette(val id: String, val ko: String, val en: String, val primary: String, val secondary: String)
 data class Metric(val label: String, val value: Double)
+fun rankingSources(game: Game): List<String> = if ("steam" in game.providers) listOf("steam") else sources.filter { it in game.providers }
+fun isRankingListing(item: Listing, game: Game, source: String): Boolean = item.gameId == game.id && item.source == source && item.scope == game.providers[source] &&
+    item.key == "$source:${item.scope}:${item.id}" && (game.id != "minecraft-java" || item.kind == "modpack") && (item.downloads?.let { it.isFinite() && it >= 0 } == true)
 data class Listing(
     val key: String, val source: String, val scope: String, val id: String, val gameId: String,
     val title: String, val author: String?, val summary: String, val url: String, val iconUrl: String?,
@@ -31,6 +34,7 @@ data class Listing(
     val kind: String?, val metrics: List<Metric>, val tags: List<String>, val rank: Int, val raw: String,
     val categories: Set<String> = emptySet(),
 ) {
+    val referenceOnly: Boolean get() = JSONObject(raw).optBoolean("referenceOnly", false)
     val downloads: Double? get() = metrics.find { it.label == if (source == "steam") "누적 구독자" else "다운로드" }?.value
     fun canPersist(thunderstoreOptIn: Boolean) = source != "curseforge" && (source != "thunderstore" || thunderstoreOptIn)
     companion object {
@@ -41,6 +45,14 @@ data class Listing(
             require(source in sources && id.isNotEmpty() && scope.isNotEmpty())
             val key = json.getString("key")
             require(key == "$source:$scope:$id")
+            if (json.optBoolean("referenceOnly", false)) {
+                val url = when (source) {
+                    "curseforge" -> { require(id.matches(Regex("[0-9]+"))); "https://www.curseforge.com/projects/$id" }
+                    "thunderstore" -> { require(scope.matches(Regex("[a-z0-9-]+"))); "https://thunderstore.io/c/$scope/" }
+                    else -> error("Unsupported bookmark reference")
+                }
+                return Listing(key, source, scope, id, json.getString("gameId"), "$id · ${sourceNames[source]}", null, "", url, null, null, null, null, "", null, emptyList(), emptyList(), 0, json.toString())
+            }
             val url = safeExternalUrl(json.getString("url")) ?: error("Invalid source URL")
             val icon = json.text("iconUrl")?.takeIf { runCatching { URI(it).scheme == "https" && URI(it).userInfo == null }.getOrDefault(false) }
             return Listing(key, source, scope, id, json.getString("gameId"), json.getString("title"), json.text("author"),
@@ -52,6 +64,8 @@ data class Listing(
         }
     }
 }
+fun bookmarkJson(item: Listing, thunderstoreOptIn: Boolean): JSONObject = if (item.canPersist(thunderstoreOptIn)) JSONObject(item.raw) else JSONObject()
+    .put("key", item.key).put("source", item.source).put("scope", item.scope).put("id", item.id).put("gameId", item.gameId).put("referenceOnly", true)
 data class SearchSpec(val gameId: String = "minecraft-java", val genre: String = "all", val query: String = "", val filters: Map<String, String> = emptyMap(), val categories: Set<String> = emptySet(), val sort: String = "downloads")
 data class SearchRequest(val gameId: String, val source: String, val query: String, val filters: Map<String, String>, val sort: String, val cursor: String? = null) {
     val bucket get() = "$gameId:$source:${filters["category"].orEmpty()}"

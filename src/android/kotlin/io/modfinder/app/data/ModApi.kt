@@ -17,12 +17,14 @@ import kotlin.coroutines.resumeWithException
 interface ModRepository {
     suspend fun search(request: SearchRequest, locale: String): SearchResult
     suspend fun versions(locale: String): List<String>
+    suspend fun details(item: Listing, locale: String): Listing = item
 }
 
 class ModApi : ModRepository {
     private val client = OkHttpClient.Builder().cache(null).callTimeout(18, TimeUnit.SECONDS).connectTimeout(8, TimeUnit.SECONDS).build()
-    private suspend fun get(path: String, params: Map<String, String>, locale: String): JSONObject {
+    private suspend fun get(path: String, params: Map<String, String>, locale: String, segments: List<String> = emptyList()): JSONObject {
         val url = BuildConfig.API_BASE.toHttpUrl().newBuilder().addPathSegments(path)
+        segments.forEach(url::addPathSegment)
         params.forEach { (key, value) -> url.addQueryParameter(key, value) }
         val call = client.newCall(Request.Builder().url(url.build()).header("Accept-Language", locale).header("Cache-Control", "no-store").build())
         return suspendCancellableCoroutine { continuation ->
@@ -54,6 +56,11 @@ class ModApi : ModRepository {
         return parseSearchResult(get("v1/search", params, locale), request)
     }
     override suspend fun versions(locale: String) = get("v1/minecraft/versions", emptyMap(), locale).stringList("versions").orEmpty()
+    override suspend fun details(item: Listing, locale: String): Listing {
+        val fresh = Listing.parse(get("v1/listings", emptyMap(), locale, listOf(item.source, item.scope, item.id)).getJSONObject("listing"))
+        require(fresh.key == item.key && fresh.gameId == item.gameId)
+        return fresh
+    }
 }
 
 fun parseSearchResult(json: JSONObject, request: SearchRequest): SearchResult {

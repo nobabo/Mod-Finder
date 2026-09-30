@@ -48,12 +48,14 @@ class ModelsTest {
         val allowed = listing(); val curse = listing("curseforge"); val thunder = listing("thunderstore")
         val local = LocalState(favorites = listOf(allowed, curse, thunder), compared = listOf(curse), folders = listOf(Folder("f", "Folder", listOf(allowed.key, curse.key, thunder.key))))
         val serialized = serializeLocalState(local, false)
-        assertFalse(serialized.contains("curseforge")); assertFalse(serialized.contains("thunderstore"))
+        val stored = JSONObject(serialized).getJSONArray("favorites").objects()
+        assertTrue(stored[1].getBoolean("referenceOnly")); assertFalse(stored[1].has("summary")); assertFalse(stored[1].has("title"))
+        assertTrue(stored[2].getBoolean("referenceOnly")); assertFalse(stored[2].has("metrics"))
         val restored = parseLocalState(serialized, setOf("minecraft-java"), false)
-        assertEquals(listOf(allowed.key), restored.favorites.map { it.key })
-        assertEquals(listOf(allowed.key), restored.folders.single().keys)
+        assertEquals(listOf(allowed.key, curse.key, thunder.key), restored.favorites.map { it.key })
+        assertEquals(listOf(allowed.key, curse.key, thunder.key), restored.folders.single().keys)
         assertTrue(restored.compared.isEmpty())
-        assertEquals(2, parseLocalState(serializeLocalState(local, true), setOf("minecraft-java"), true).favorites.size)
+        assertFalse(JSONObject(serializeLocalState(local, true)).getJSONArray("favorites").getJSONObject(2).has("referenceOnly"))
     }
     @Test fun malformedSnapshotsFailInsteadOfReplacingExistingData() {
         assertThrows(Exception::class.java) { parseLocalState("{}", setOf("minecraft-java"), false) }
@@ -72,5 +74,19 @@ class ModelsTest {
     @Test fun koreanKeyboardCorrectionPreservesLiteralIds() {
         assertEquals("sodium", koreanKeyboardToEnglish("내야ㅕㅡ"))
         assertEquals("900719925474099312345", koreanKeyboardToEnglish("900719925474099312345"))
+    }
+    @Test fun rankingRejectsMissingMetricsAndOtherScopesAndUsesSteamSubscriptions() {
+        val minecraft = Game("minecraft-java", "Minecraft", "마인크래프트", emptyList(), emptyList(), null, null, mapOf("modrinth" to "minecraft", "curseforge" to "432"))
+        val pack = listing().copy(kind = "modpack", metrics = listOf(Metric("다운로드", 100.0)))
+        assertTrue(isRankingListing(pack, minecraft, "modrinth"))
+        assertFalse(isRankingListing(pack.copy(scope = "other"), minecraft, "modrinth"))
+        assertFalse(isRankingListing(pack.copy(kind = "mod"), minecraft, "modrinth"))
+        assertFalse(isRankingListing(pack.copy(metrics = emptyList()), minecraft, "modrinth"))
+        assertFalse(isRankingListing(pack.copy(metrics = listOf(Metric("다운로드", -1.0))), minecraft, "modrinth"))
+        val steamGame = minecraft.copy(id = "rimworld", providers = mapOf("nexus" to "rimworld", "steam" to "294100"))
+        assertEquals(listOf("steam"), rankingSources(steamGame))
+        val steam = pack.copy(source = "steam", gameId = "rimworld", scope = "294100", key = "steam:294100:${pack.id}", kind = "mod")
+        assertFalse(isRankingListing(steam, steamGame, "steam"))
+        assertTrue(isRankingListing(steam.copy(metrics = listOf(Metric("누적 구독자", 50.0))), steamGame, "steam"))
     }
 }

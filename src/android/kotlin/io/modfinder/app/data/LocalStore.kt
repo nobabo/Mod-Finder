@@ -10,7 +10,7 @@ import java.io.File
 
 fun parseLocalState(raw: String, validGames: Set<String>, thunderstoreOptIn: Boolean): LocalState {
     val value = JSONObject(raw)
-    fun listings(key: String) = value.optJSONArray(key)?.objects()?.map { Listing.parse(it) }?.filter { it.gameId in validGames && it.canPersist(thunderstoreOptIn) }?.distinctBy { it.key }.orEmpty()
+    fun listings(key: String) = value.optJSONArray(key)?.objects()?.filter { it.text("source") != "atlauncher" }?.map { Listing.parse(it) }?.filter { it.gameId in validGames }?.distinctBy { it.key }.orEmpty()
     require(value.optJSONArray("favorites") != null && value.optJSONArray("history") != null)
     val favorites = listings("favorites")
     val validKeys = favorites.map { it.key }.toSet()
@@ -24,12 +24,12 @@ fun parseLocalState(raw: String, validGames: Set<String>, thunderstoreOptIn: Boo
     val history = value.getJSONArray("history").objects().filter { it.text("gameId") in validGames + "all" }.map {
         HistoryEntry(it.getString("gameId"), it.getString("query").take(200), it.text("genre") ?: "all", (it.stringList("categories") ?: listOfNotNull(it.text("category"))).toSet())
     }.take(20)
-    return LocalState(favorites, folders, listings("compared").take(3), value.stringList("favoriteGames").orEmpty().filter { it in validGames }, history, value.text("theme") ?: "magenta", value.text("language") ?: "auto")
+    return LocalState(favorites, folders, listings("compared").filter { it.canPersist(thunderstoreOptIn) }.take(3), value.stringList("favoriteGames").orEmpty().filter { it in validGames }, history, value.text("theme") ?: "magenta", value.text("language") ?: "auto")
 }
 fun serializeLocalState(state: LocalState, thunderstoreOptIn: Boolean): String {
-    val favorites = state.favorites.filter { it.canPersist(thunderstoreOptIn) }
+    val favorites = state.favorites
     val keys = favorites.map { it.key }.toSet()
-    return JSONObject().put("favorites", JSONArray(favorites.map { JSONObject(it.raw) }))
+    return JSONObject().put("favorites", JSONArray(favorites.map { bookmarkJson(it, thunderstoreOptIn) }))
         .put("folders", JSONArray(state.folders.map { JSONObject().put("id", it.id).put("name", it.name).put("keys", JSONArray(it.keys.filter { key -> key in keys })) }))
         .put("compared", JSONArray(state.compared.filter { it.canPersist(thunderstoreOptIn) }.take(3).map { JSONObject(it.raw) }))
         .put("favoriteGames", JSONArray(state.favoriteGames))

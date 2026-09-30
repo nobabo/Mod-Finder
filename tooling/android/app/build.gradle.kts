@@ -1,4 +1,5 @@
 import java.net.URI
+import groovy.json.JsonSlurper
 
 plugins {
     id("com.android.application")
@@ -7,11 +8,15 @@ plugins {
 }
 
 val workspace = rootDir.resolve("../..").canonicalFile
+val release = JsonSlurper().parse(workspace.resolve("tooling/config/android.json")) as Map<*, *>
 layout.buildDirectory.set(workspace.resolve("output/android/gradle/app"))
 val endpoint = System.getenv("MODFINDER_API_URL") ?: "https://modfinder.pages.dev"
 val api = URI(endpoint)
 require(api.scheme == "https" && !api.host.isNullOrBlank() && api.userInfo == null && api.query == null && api.fragment == null) {
     "MODFINDER_API_URL must be an HTTPS origin."
+}
+require(api.host.lowercase() !in setOf("localhost", "0.0.0.0", "[::1]") && !api.host.startsWith("127.") && api.path in setOf("", "/")) {
+    "Android builds require a public HTTPS API origin."
 }
 val signingValues = listOf("MODFINDER_KEYSTORE_PATH", "MODFINDER_KEYSTORE_PASSWORD", "MODFINDER_KEY_ALIAS", "MODFINDER_KEY_PASSWORD").map(System::getenv)
 require(signingValues.all { it.isNullOrBlank() } || signingValues.all { !it.isNullOrBlank() }) { "Provide all four Android signing variables." }
@@ -23,10 +28,10 @@ android {
         applicationId = "io.modfinder.app"
         minSdk = 29
         targetSdk = 36
-        versionCode = 2000
-        versionName = "0.2.0"
+        versionCode = (release["versionCode"] as Number).toInt()
+        versionName = release["version"] as String
         buildConfigField("String", "API_BASE", "\"${api.toASCIIString().trimEnd('/')}\"")
-        buildConfigField("boolean", "THUNDERSTORE_PERSISTENCE", "false")
+        buildConfigField("boolean", "THUNDERSTORE_PERSISTENCE", (System.getenv("MODFINDER_ALLOW_THUNDERSTORE_PERSISTENCE") == "true").toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
     }
     sourceSets {
@@ -87,6 +92,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-coroutines-android:1.10.2")
     implementation("com.squareup.okhttp3:okhttp:4.12.0")
     implementation("io.coil-kt:coil-compose:2.7.0")
+    implementation("io.coil-kt:coil-svg:2.7.0")
     debugImplementation("androidx.compose.ui:ui-tooling")
     debugImplementation("androidx.compose.ui:ui-test-manifest")
     testImplementation("junit:junit:4.13.2")

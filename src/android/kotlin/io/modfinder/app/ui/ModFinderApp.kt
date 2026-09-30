@@ -14,6 +14,7 @@ import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.LazyRow
 import androidx.compose.foundation.lazy.items
+import androidx.compose.foundation.lazy.itemsIndexed
 import androidx.compose.foundation.lazy.rememberLazyListState
 import androidx.compose.foundation.rememberScrollState
 import androidx.compose.foundation.shape.CircleShape
@@ -25,6 +26,7 @@ import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.outlined.ArrowBack
 import androidx.compose.material.icons.automirrored.outlined.ArrowForward
 import androidx.compose.material.icons.automirrored.outlined.OpenInNew
+import androidx.compose.material.icons.automirrored.outlined.CompareArrows
 import androidx.compose.material.icons.outlined.*
 import androidx.compose.material3.*
 import androidx.compose.runtime.*
@@ -75,7 +77,7 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
     LaunchedEffect(state.notice) { state.notice?.let { snackbars.showSnackbar(strings(it)); vm.notice(null) } }
     BackHandler(state.detail != null || state.overlay != null || state.page != "discover" || state.submitted) { vm.back() }
     MaterialTheme(colorScheme = darkColorScheme(primary = primary, secondary = secondary, background = Color(0xFF080D18), surface = Color(0xFF131A29), onSurface = Color(0xFFF1F3FA))) {
-        CompositionLocalProvider(LocalGlass provides GlassStyle(scene, primary, secondary), LocalStrings provides strings) {
+        CompositionLocalProvider(LocalGlass provides GlassStyle(scene, primary, secondary), LocalStrings provides strings, LocalContentColor provides MaterialTheme.colorScheme.onSurface) {
             Box(Modifier.fillMaxSize().background(Color(0xFF080D18)).onSizeChanged { size = it }) {
                 SceneBackground(scene)
                 if (catalog == null) CircularProgressIndicator(Modifier.align(Alignment.Center)) else Column(Modifier.fillMaxSize().safeDrawingPadding().imePadding()) {
@@ -154,10 +156,11 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 
 @Composable private fun BottomNavigation(state: AppState, vm: ModFinderViewModel) {
     val t = LocalStrings.current
+    val focus = LocalFocusManager.current
     Row(Modifier.fillMaxWidth().padding(horizontal = 12.dp, vertical = 8.dp), horizontalArrangement = Arrangement.SpaceEvenly) {
         listOf(Triple("discover", "탐색", Icons.Outlined.Explore), Triple("favorites", "즐겨찾기", Icons.Outlined.BookmarkBorder), Triple("recent", "최근 검색", Icons.Outlined.History), Triple("settings", "설정", Icons.Outlined.Tune)).forEach { (id, label, icon) ->
             val selected = if (id == "settings") state.overlay in listOf("settings", "theme", "language") else state.page == id && state.overlay == null
-            Column(Modifier.weight(1f).clip(RoundedCornerShape(16.dp)).clickable { if (id == "settings") vm.overlay("settings") else vm.page(id) }.padding(vertical = 7.dp).testTag("nav-$id"), horizontalAlignment = Alignment.CenterHorizontally) {
+            Column(Modifier.weight(1f).clip(RoundedCornerShape(16.dp)).clickable { focus.clearFocus(); if (id == "settings") vm.overlay("settings") else vm.page(id) }.padding(vertical = 7.dp).testTag("nav-$id"), horizontalAlignment = Alignment.CenterHorizontally) {
                 Icon(icon, null, Modifier.size(23.dp), tint = if (selected) LocalGlass.current.primary else Color.White.copy(alpha = .48f))
                 Spacer(Modifier.height(4.dp)); Text(t(label), fontSize = 10.sp, color = if (selected) LocalGlass.current.primary else Color.White.copy(alpha = .58f))
             }
@@ -202,6 +205,7 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 
 @Composable private fun SettingsDeck(vm: ModFinderViewModel) {
     val t = LocalStrings.current
+    val context = LocalContext.current
     Column(Modifier.fillMaxSize()) {
         OverlayHeader("설정", { vm.overlay(null) })
         Box(Modifier.weight(1f), contentAlignment = Alignment.Center) {
@@ -209,6 +213,7 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
                 items(listOf(Triple("discover", "모드 둘러보기", Icons.Outlined.Explore), Triple("favorites", "즐겨찾기", Icons.Outlined.BookmarkBorder), Triple("recent", "최근 기록", Icons.Outlined.History), Triple("theme", "테마", Icons.Outlined.Palette), Triple("language", "언어", Icons.Outlined.Language))) { (id, label, icon) ->
                     DeckCard(t(label), onClick = { if (id in listOf("theme", "language")) vm.overlay(id) else vm.page(id) }) { Icon(icon, null, Modifier.size(62.dp), tint = LocalGlass.current.primary) }
                 }
+                item { DeckCard(if (t.locale == "ko") "개인정보처리방침" else "Privacy policy", onClick = { openSource(context, PRIVACY_URL, vm) }) { Icon(Icons.Outlined.PrivacyTip, null, Modifier.size(62.dp), tint = LocalGlass.current.primary) } }
             }
         }
     }
@@ -302,15 +307,21 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 
 @Composable private fun Rankings(state: AppState, vm: ModFinderViewModel) {
     val t = LocalStrings.current; val catalog = state.catalog!!
+    if (catalog.game(state.spec.gameId) == null) {
+        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(t("게임을 선택하세요."), color = Color.White.copy(alpha = .65f)) }
+        return
+    }
     Column(Modifier.fillMaxSize().padding(top = 22.dp)) {
         if (catalog.game(state.spec.gameId) != null) Row(Modifier.padding(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
             if (catalog.hasCommunityRanking(state.spec.gameId)) FilterChip(state.rankingTab == "search", { vm.rankingTab("search") }, { Text(t("검색 순위")) })
             FilterChip(state.rankingTab == "downloads" || !catalog.hasCommunityRanking(state.spec.gameId), { vm.rankingTab("downloads") }, { Text(t(if (catalog.game(state.spec.gameId)?.providers?.containsKey("steam") == true) "구독 순위" else "다운로드 순위")) })
+            if (state.rankingTab == "downloads" || !catalog.hasCommunityRanking(state.spec.gameId)) SmallIcon(Icons.Outlined.Refresh, t("새로고침"), vm::retry, enabled = !state.loading)
         }
         if (catalog.hasCommunityRanking(state.spec.gameId) && state.rankingTab == "search") {
             LazyColumn(contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                items(catalog.rankings(state.spec.gameId), key = { it.id }) { entry ->
+                itemsIndexed(catalog.rankings(state.spec.gameId), key = { _, entry -> entry.id }) { index, entry ->
                     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.submit(entry.name, state.spec.gameId, "all", emptySet(), if (state.spec.gameId == "minecraft-java") entry.kind else null) }.padding(vertical = 16.dp, horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text((index + 1).toString().padStart(2, '0'), Modifier.width(38.dp), color = LocalGlass.current.primary, fontSize = 12.sp)
                         Text(catalog.rankingName(entry, state.spec.gameId, state.locale), Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.Medium)
                         Icon(Icons.AutoMirrored.Outlined.ArrowForward, null, Modifier.size(18.dp), tint = LocalGlass.current.primary)
                     }
@@ -329,7 +340,7 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
         snapshotFlow { scroll.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1 }.distinctUntilChanged().collect { last -> if (state.groups.isNotEmpty() && last >= state.groups.size - 2 && state.hasMore && !state.loading) vm.loadMore() }
     }
     LazyColumn(Modifier.fillMaxSize().testTag("results-list"), scroll, contentPadding = PaddingValues(horizontal = 16.dp, vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        items(if (ranking) state.groups.filter { it.item.downloads != null } else state.groups, key = { it.id }) { group -> ModRow(group.item, state, vm, group.listings) }
+        itemsIndexed(state.groups, key = { _, group -> group.id }) { index, group -> ModRow(group.item, state, vm, group.listings, rank = if (ranking) index + 1 else null) }
         if (state.loading) item { Box(Modifier.fillMaxWidth().padding(20.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(Modifier.size(26.dp), strokeWidth = 2.dp) } }
         if (!state.loading && state.groups.isEmpty()) item {
             Column(Modifier.fillMaxWidth().padding(vertical = 36.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -348,15 +359,16 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
     }
 }
 
-@Composable private fun ModRow(item: Listing, state: AppState, vm: ModFinderViewModel, alternatives: List<Listing> = listOf(item), move: (() -> Unit)? = null) {
+@Composable private fun ModRow(item: Listing, state: AppState, vm: ModFinderViewModel, alternatives: List<Listing> = listOf(item), move: (() -> Unit)? = null, rank: Int? = null) {
     val t = LocalStrings.current; val context = LocalContext.current
     val text = state.catalog!!.listingText(item, state.locale)
-    val candidate = alternatives.firstOrNull { it.canPersist(BuildConfig.THUNDERSTORE_PERSISTENCE) }
+    val candidate = alternatives.firstOrNull()
     val saved = state.local.favorites.any { it.key == candidate?.key }
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(Color(0x660B1220)).border(1.dp, LocalGlass.current.primary.copy(alpha = .25f), RoundedCornerShape(24.dp)).padding(14.dp), verticalAlignment = Alignment.Top) {
         AsyncImage(item.iconUrl, text.first, Modifier.size(54.dp).clip(RoundedCornerShape(15.dp)).background(LocalGlass.current.primary.copy(alpha = .10f)).clickable { openSource(context, item.url, vm) }, contentScale = ContentScale.Fit)
         Spacer(Modifier.width(13.dp))
         Column(Modifier.weight(1f).clickable { vm.detail(item) }.padding(vertical = 3.dp)) {
+            if (rank != null) Text(rank.toString().padStart(2, '0'), fontSize = 11.sp, color = LocalGlass.current.primary)
             Text(text.first, fontSize = 15.sp, fontWeight = FontWeight.SemiBold, maxLines = 2, overflow = TextOverflow.Ellipsis)
             if (text.second.isNotEmpty()) { Spacer(Modifier.height(7.dp)); Text(text.second, fontSize = 12.sp, lineHeight = 18.sp, color = Color.White.copy(alpha = .65f), maxLines = 3, overflow = TextOverflow.Ellipsis) }
         }
@@ -367,8 +379,9 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
     }
 }
 
+private const val PRIVACY_URL = "https://modfinder.pages.dev/privacy/"
 private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
-    val safe = safeExternalUrl(url)
+    val safe = if (url == PRIVACY_URL) url else safeExternalUrl(url)
     if (safe == null) { vm.notice("링크를 열지 못했어요. 주소를 확인해 주세요."); return }
     try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(safe)).addCategory(Intent.CATEGORY_BROWSABLE)) }
     catch (_: ActivityNotFoundException) { vm.notice("링크를 열지 못했어요. 주소를 확인해 주세요.") }
@@ -440,10 +453,10 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
                     DetailValue(t("조회 시각"), item.fetchedAt.replace('T', ' ').take(19))
                     item.metrics.forEach { DetailValue(t(it.label), NumberFormat.getNumberInstance().format(it.value)) }
                     Spacer(Modifier.height(12.dp)); Text(t("버전 정보가 표시되어도 다른 모드와의 호환성을 보장하지 않아요."), fontSize = 11.sp, color = Color.White.copy(alpha = .5f))
-                    if (item.canPersist(BuildConfig.THUNDERSTORE_PERSISTENCE)) TextButton(onClick = { vm.compare(item) }, enabled = state.hydrated && (state.local.compared.size < 3 || state.local.compared.any { it.key == item.key })) { Icon(Icons.Outlined.CompareArrows, null); Spacer(Modifier.width(8.dp)); Text(t("비교하기")); if (state.local.compared.any { it.key == item.key }) Icon(Icons.Outlined.Check, null) }
+                    if (item.canPersist(BuildConfig.THUNDERSTORE_PERSISTENCE)) TextButton(onClick = { vm.compare(item) }, enabled = state.hydrated && (state.local.compared.size < 3 || state.local.compared.any { it.key == item.key })) { Icon(Icons.AutoMirrored.Outlined.CompareArrows, null); Spacer(Modifier.width(8.dp)); Text(t("비교하기")); if (state.local.compared.any { it.key == item.key }) Icon(Icons.Outlined.Check, null) }
                 }
                 Row(Modifier.fillMaxWidth().padding(18.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    if (item.canPersist(BuildConfig.THUNDERSTORE_PERSISTENCE)) OutlinedButton(onClick = { vm.toggleFavorite(item) }, enabled = state.hydrated) { Icon(if (saved) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, t("즐겨찾기")) }
+                    OutlinedButton(onClick = { vm.toggleFavorite(item) }, enabled = state.hydrated) { Icon(if (saved) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, t("즐겨찾기")) }
                     Button(onClick = { openSource(context, item.url, vm) }, modifier = Modifier.weight(1f)) { Text(t("원본 사이트에서 보기"), maxLines = 1); Spacer(Modifier.width(8.dp)); Icon(Icons.AutoMirrored.Outlined.OpenInNew, null, Modifier.size(16.dp)) }
                 }
             }

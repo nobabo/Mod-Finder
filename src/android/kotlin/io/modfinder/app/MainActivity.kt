@@ -1,20 +1,27 @@
 package io.modfinder.app
 
 import android.os.Bundle
+import android.app.Application
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.lifecycle.viewmodel.compose.viewModel
-import coil.Coil
 import coil.ImageLoader
+import coil.ImageLoaderFactory
+import coil.decode.SvgDecoder
 import io.modfinder.app.ui.ModFinderApp
+
+class ModFinderApplication : Application(), ImageLoaderFactory {
+    override fun newImageLoader() = ImageLoader.Builder(this)
+        .components { add(SvgDecoder.Factory()) }
+        .diskCache(null)
+        .build()
+}
 
 class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        // Provider assets stay out of a persistent shared HTTP/image cache.
-        Coil.setImageLoader(ImageLoader.Builder(applicationContext).diskCache(null).build())
         setContent { ModFinderApp(viewModel()) }
     }
 }

@@ -12,26 +12,26 @@ For native apps or the optional standalone Node backend, before a public release
 2. No server database or cache service is required. Thunderstore and Nexus search anonymously on demand.
 3. Store operator keys as server secrets. Connect providers only after the integration ledger requirements are fulfilled.
 4. Set allowed CORS origins to the app's actual origin and any intended browser deployment. Public proxies must block `/internal/*`, redact query strings and apply request/rate limits.
-5. Set `VITE_API_BASE_URL` to the real HTTPS URL, run checks and rebuild both apps. Narrow native `connect-src` to that host for public release; loopback is for testing.
+5. Set `VITE_API_BASE_URL` for Windows and `MODFINDER_API_URL` for Kotlin Android to the real HTTPS origin, run checks and rebuild. Narrow Windows `connect-src` to that host for public release. Android builds reject loopback and cleartext endpoints.
 6. Supply publisher signing credentials for Windows and Android. No production signing keys are included in this repository.
 7. Test on a Windows 11 device and an Android 10+ device, including favorites after restart, external browser return and offline behavior.
-8. Distribute the signed Windows installer and submit the signed Android AAB to Google Play. Store forms, privacy declarations, screenshots, policy approval and review are operator tasks.
+8. Distribute the signed Windows installer and signed Android APK. Galaxy Store accepts an APK through Seller Portal. Complete its seller registration, listing, privacy policy, screenshots and review requirements before publication. This project does not currently generate a Google Play AAB.
 
 No scripts publish binaries, send platform registration requests, or launch Docker automatically.
 
 ## Android signing
 
-The generated Android project is in `src/native/gen/android`. Keep keystores and `local.properties` out of source control. Gradle reads `MODFINDER_KEYSTORE_PATH`, `MODFINDER_KEYSTORE_PASSWORD`, `MODFINDER_KEY_ALIAS`, and `MODFINDER_KEY_PASSWORD` from the build environment. Supply all four together; a partial configuration fails without printing the values. With all unset, release output is unsigned and cannot be published. Debug builds use only the standard development identity. Release cleartext network traffic remains disabled.
+The Kotlin Android Gradle project is in `tooling/android`; its source is in `src/android`. Keep keystores and `local.properties` out of source control. Gradle reads `MODFINDER_KEYSTORE_PATH`, `MODFINDER_KEYSTORE_PASSWORD`, `MODFINDER_KEY_ALIAS`, and `MODFINDER_KEY_PASSWORD` from the build environment. Supply all four together; a partial configuration fails without printing the values. Direct Gradle builds without these variables are unsigned. The public build launcher requires the existing key and verifies the APK signature. Debug builds use the development identity and a separate `io.modfinder.app.debug` package. Release cleartext traffic and cloud backup remain disabled.
 
 ## Root build launchers
 
-On Windows x64, double-click `Build-Windows.bat` for an NSIS `setup.exe` or `Build-Android.bat` for a signed ARM64 APK (Android 10+). Both use `https://modfinder.pages.dev` as the API, regardless of the local development `.env`. Results and SHA-256 checksums are copied to `output/releases/v<version>/`. Run one build at a time because native and web builds share `output/web/`. The scripts generate local files; publishing a GitHub release is a separate step.
+On Windows x64, double-click `Build-Windows.bat` for an NSIS `setup.exe` or `Build-Android.bat` for a signed universal Kotlin APK (Android 10+). Both default to `https://modfinder.pages.dev`, regardless of the local development `.env`. Android accepts an explicit `MODFINDER_API_URL` HTTPS origin. Results and SHA-256 checksums are copied to `output/releases/v<version>/`. Android has its own output directory and version in `tooling/config/android.json`. The scripts generate local files; publishing a GitHub release is a separate step.
 
 The Android launcher uses the four signing environment variables above. When all are absent, it reads `%USERPROFILE%\.mod-finder\signing\android.json`, containing `store` (keystore path), `alias`, and `password` (shared keystore/key password). This is the private configuration created for the first public release. Back up this directory securely. Missing keys stop the build; the launcher never silently creates a new signing identity. It verifies the APK signature and alignment before copying the result.
 
 The Android launcher disables persistent Gradle daemons for its build so that generated DEX files are released afterwards. If a previous build outside this launcher left a locked file, close that build's idle Gradle daemon before retrying.
 
-`JAVA_HOME`, `ANDROID_HOME` (or `ANDROID_SDK_ROOT`), and `NDK_HOME` override automatic discovery. The defaults use Android Studio's bundled JDK and the SDK under `%LOCALAPPDATA%\Android\Sdk`. Install Rust, C++ Build Tools, Android Studio and SDK/NDK before building; the launchers do not install these tools. Windows publisher signing still requires a separately configured certificate.
+`JAVA_HOME` and `ANDROID_HOME` (or `ANDROID_SDK_ROOT`) override automatic discovery. The defaults use Android Studio's bundled JDK and the SDK under `%LOCALAPPDATA%\Android\Sdk`. Kotlin Android needs JDK 17+, SDK Platform 36 and Build Tools. Rust, C++ Build Tools and WebView2 are Windows requirements. The launchers do not install these tools. Windows publisher signing still requires a separately configured certificate.
 
 Use `Build-Windows.bat --check` or `Build-Android.bat --check` to check paths and configuration without building. Use `Start-Web.bat --verify` to start and check local services, then stop only services it started. Set `CI=true` when invoking a build launcher from automation to omit the final pause.
 
@@ -43,13 +43,7 @@ To publish rebuilt installers, upload the generated files and `SHA256SUMS.txt` t
 
 ## Local Android API
 
-For a locally served API on an attached device:
-
-```powershell
-adb reverse tcp:4318 tcp:4318
-```
-
-Remove the reverse connection when local testing is finished. No port mapping is needed for the production HTTPS API.
+Use the production HTTPS API or an explicitly configured HTTPS test origin. Device tests inject a deterministic repository instead of weakening network security or connecting to a loopback API. No port mapping is needed.
 
 ## Rollback and observability
 

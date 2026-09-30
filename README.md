@@ -12,7 +12,7 @@
 - 등록된 한글 검색어의 영어 치환, 7개 UI 언어, 14개 테마
 - 즐겨찾기·최근 검색 저장: 웹은 localStorage, 네이티브 앱은 SQLite
 
-React + TypeScript · Tauri · Cloudflare Workers. 별도 서버 DB나 Docker는 필요하지 않습니다.
+React + TypeScript · Tauri(Windows) · Kotlin/Jetpack Compose(Android) · Cloudflare Workers. 별도 서버 DB나 Docker는 필요하지 않습니다.
 
 ## 빠른 시작
 
@@ -31,7 +31,7 @@ Windows에서는 루트의 실행 파일을 더블클릭해도 됩니다.
 | --- | --- |
 | `Start-Web.bat` | 로컬 웹·API 서버를 실행하고 브라우저 열기 |
 | `Build-Windows.bat` | Windows x64용 NSIS `setup.exe` 생성 |
-| `Build-Android.bat` | 기존 릴리즈 키로 서명한 Android ARM64 APK 생성 |
+| `Build-Android.bat` | 기존 릴리즈 키로 서명한 Kotlin Android APK 생성 |
 
 설치파일은 `output/releases/v버전/`에 모입니다. 두 생성기는 운영 HTTPS API 주소를 사용합니다. Android 서명 설정은 [배포 안내](docs/RELEASE.md#root-build-launchers)를 참고하세요.
 
@@ -54,7 +54,7 @@ Workers 환경에서 로컬 실행하려면 `npm run worker:dev`를 사용하세
 | 검증 | `npm run typecheck` · `npm test` · `npm run build` |
 | Workers 검증 | `npm run worker:verify` |
 
-Windows 개발에는 Rust·C++ Build Tools·WebView2, Android에는 Android Studio·JDK 17+·SDK 36·NDK가 필요합니다.
+Windows 개발에는 Rust·C++ Build Tools·WebView2, Android에는 Android Studio·JDK 17+·SDK 36이 필요합니다. Android 구성과 검증은 [Kotlin 앱 안내](docs/ANDROID.md)를 참고하세요.
 
 ## 폴더 구조
 

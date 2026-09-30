@@ -1,8 +1,10 @@
 package io.modfinder.app
 
 import android.app.Application
+import android.content.ContentValues
 import android.graphics.RuntimeShader
 import android.os.Build
+import android.provider.MediaStore
 import androidx.activity.ComponentActivity
 import androidx.compose.ui.graphics.asAndroidBitmap
 import androidx.compose.ui.test.*
@@ -38,12 +40,13 @@ class NativeUiTest {
             override suspend fun search(request: SearchRequest, locale: String): SearchResult {
                 requests.add(request)
                 delay(if (request.query == "slow") 900 else 30)
-                if (request.source != "modrinth") return SearchResult("external", emptyList(), null, "https://www.curseforge.com/minecraft/search", "")
+                if (request.source !in listOf("modrinth", "steam")) return SearchResult("external", emptyList(), null, "https://www.curseforge.com/minecraft/search", "")
                 val id = if (request.cursor == null) "native-fixture" else "native-fixture-page2"
-                val item = Listing.parse(JSONObject().put("key", "modrinth:minecraft:$id").put("source", "modrinth").put("scope", "minecraft").put("id", id).put("gameId", request.gameId)
+                val scope = if (request.source == "steam") "294100" else "minecraft"
+                val item = Listing.parse(JSONObject().put("key", "${request.source}:$scope:$id").put("source", request.source).put("scope", scope).put("id", id).put("gameId", request.gameId)
                     .put("title", "Native ${request.query} ${if (request.cursor == null) "first" else "second"}").put("summary", "A deterministic native search result.")
                     .put("url", "https://modrinth.com/mod/sodium").put("author", "Test author").put("iconUrl", JSONObject.NULL).put("versions", JSONObject.NULL).put("loaders", JSONObject.NULL)
-                    .put("updatedAt", JSONObject.NULL).put("fetchedAt", "2026-09-30T00:00:00Z").put("kind", "mod").put("tags", JSONArray()).put("metrics", JSONArray()).put("rank", 1))
+                    .put("updatedAt", JSONObject.NULL).put("fetchedAt", "2026-09-30T00:00:00Z").put("kind", "mod").put("tags", JSONArray()).put("metrics", if (request.source == "steam") JSONArray().put(JSONObject().put("label", "누적 구독자").put("value", 100)) else JSONArray()).put("rank", 1))
                 return SearchResult("success", listOf(item), if (request.cursor == null) "page2" else null, null, "")
             }
         }
@@ -76,7 +79,7 @@ class NativeUiTest {
         compose.runOnIdle { assertTrue(vm.state.value.items.all { "Sodium" in it.title }); assertFalse(vm.state.value.items.any { "slow" in it.title }); vm.loadMore() }
         compose.waitUntil(10_000) { !vm.state.value.loading && vm.state.value.items.size == 2 }
         compose.onNodeWithText("Native Sodium first").performClick()
-        compose.onAllNodesWithText("정보 없음").assertCountEquals(3)
+        compose.onAllNodesWithText("정보 없음", useUnmergedTree = true).assertCountEquals(3)
         screenshot("detail")
         compose.runOnIdle {
             val item = vm.state.value.items.first()
@@ -100,10 +103,35 @@ class NativeUiTest {
         compose.waitUntil(10_000) { !vm.state.value.loading }
         compose.runOnIdle { assertEquals("test", vm.state.value.spec.query); assertEquals("valheim", vm.state.value.spec.gameId) }
     }
+    @Test fun gameRankingsUseTheirOwnSourcesAndHomeClearsSearch() {
+        start()
+        compose.runOnIdle { vm.chooseGame("rimworld"); vm.rankingTab("downloads") }
+        compose.waitUntil(15_000) { !vm.state.value.loading && vm.state.value.groups.isNotEmpty() }
+        compose.runOnIdle {
+            assertTrue(requests.all { it.source == "steam" && it.gameId == "rimworld" })
+            assertTrue(requests.all { "kind" !in it.filters })
+            assertEquals(2, vm.state.value.groups.size)
+            assertFalse(vm.state.value.hasMore)
+            vm.submit("needle")
+        }
+        compose.waitUntil(15_000) { !vm.state.value.loading }
+        compose.runOnIdle { vm.page("discover"); assertFalse(vm.state.value.submitted); assertEquals("", vm.state.value.input); assertEquals("rimworld", vm.state.value.spec.gameId) }
+        compose.runOnIdle { vm.chooseGame("all") }
+        compose.onNodeWithText("게임을 선택하세요.").assertExists()
+        compose.runOnIdle { assertTrue(vm.state.value.groups.isEmpty()); assertFalse(vm.state.value.loading) }
+    }
     private fun screenshot(name: String) {
         compose.waitForIdle()
         val bitmap = compose.onRoot().captureToImage().asAndroidBitmap()
         val dir = File(compose.activity.getExternalFilesDir(null), "verification").apply { mkdirs() }
         File(dir, "$name.png").outputStream().use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
+        val values = ContentValues().apply {
+            put(MediaStore.Downloads.DISPLAY_NAME, "$name.png")
+            put(MediaStore.Downloads.MIME_TYPE, "image/png")
+            put(MediaStore.Downloads.RELATIVE_PATH, "Download/ModFinderVerification")
+        }
+        val resolver = compose.activity.contentResolver
+        val uri = checkNotNull(resolver.insert(MediaStore.Downloads.EXTERNAL_CONTENT_URI, values))
+        checkNotNull(resolver.openOutputStream(uri)).use { bitmap.compress(android.graphics.Bitmap.CompressFormat.PNG, 100, it) }
     }
 }

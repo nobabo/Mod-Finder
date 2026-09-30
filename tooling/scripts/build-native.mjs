@@ -74,13 +74,13 @@ try {
   if (process.platform !== 'win32' || process.arch !== 'x64') throw new Error('이 생성기는 Windows x64에서 실행하세요.');
   requireFile(join(root, 'node_modules/tsx/dist/cli.mjs'), '먼저 프로젝트 루트에서 npm ci를 실행하세요.');
   const config = JSON.parse(readFileSync(join(root, 'src/native/tauri.conf.json'), 'utf8'));
-  const version = platform === 'android' ? '0.2.0' : config.version;
+  const version = platform === 'android' ? JSON.parse(readFileSync(join(root, 'tooling/config/android.json'), 'utf8')).version : config.version;
   const destination = join(root, 'output/releases', `v${version}`);
   const fileName = platform === 'windows'
     ? `ModFinder-${version}-Windows-x64-setup.exe` : `ModFinder-${version}-Android.apk`;
   const android = platform === 'android' ? configureAndroid() : null;
   console.log(`[Mod Finder] ${platform === 'windows' ? 'Windows NSIS 설치파일' : 'Kotlin 네이티브 Android APK'} 생성`);
-  console.log(`[Mod Finder] API: ${env.VITE_API_BASE_URL}`);
+  console.log(`[Mod Finder] API: ${new URL(android ? env.MODFINDER_API_URL || env.VITE_API_BASE_URL : env.VITE_API_BASE_URL).origin}`);
   console.log(`[Mod Finder] 저장 위치: ${join(destination, fileName)}`);
   if (checkOnly) {
     console.log('[Mod Finder] 경로와 설정 확인 완료. 빌드는 실행하지 않았습니다.');
