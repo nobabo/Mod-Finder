@@ -146,5 +146,3499 @@
     ],
     "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/fabulously-optimized",
     "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:2400": {
+    "title": "SMAPI - 스타듀 모딩 API",
+    "searchTerm": "SMAPI - Stardew Modding API",
+    "aliases": [
+      "SMAPI - 스타듀 모딩 API"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/2400",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1915": {
+    "title": "콘텐츠 패처",
+    "searchTerm": "Content Patcher",
+    "aliases": [
+      "콘텐츠 패처"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1915",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:3753": {
+    "title": "스타듀 밸리 대확장",
+    "searchTerm": "Stardew Valley Expanded",
+    "aliases": [
+      "스타듀 밸리 대확장"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/3753",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:239": {
+    "title": "NPC 위치 표시",
+    "searchTerm": "NPC Map Locations",
+    "aliases": [
+      "NPC 위치 표시"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/239",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:5098": {
+    "title": "공통 모드 설정 메뉴 (GMCM)",
+    "searchTerm": "Generic Mod Config Menu (GMCM)",
+    "aliases": [
+      "공통 모드 설정 메뉴 (GMCM)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/5098",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1348": {
+    "title": "스페이스 코어",
+    "searchTerm": "SpaceCore",
+    "aliases": [
+      "스페이스 코어"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1348",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:3231": {
+    "title": "농장 유형 관리자 (FTM)",
+    "searchTerm": "Farm Type Manager (FTM)",
+    "aliases": [
+      "농장 유형 관리자 (FTM)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/3231",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:4": {
+    "title": "CJB 치트 메뉴",
+    "searchTerm": "CJB Cheats Menu",
+    "aliases": [
+      "CJB 치트 메뉴"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/4",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:541": {
+    "title": "무엇이든 조회",
+    "searchTerm": "Lookup Anything",
+    "aliases": [
+      "무엇이든 조회"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/541",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:93": {
+    "title": "CJB 아이템 생성기",
+    "searchTerm": "CJB Item Spawner",
+    "aliases": [
+      "CJB 아이템 생성기"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/93",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1720": {
+    "title": "JSON 에셋",
+    "searchTerm": "Json Assets",
+    "aliases": [
+      "JSON 에셋"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1720",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1063": {
+    "title": "오토메이트",
+    "searchTerm": "Automate",
+    "aliases": [
+      "오토메이트"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1063",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1839": {
+    "title": "스타듀 밸리 애니메이션 초상화",
+    "searchTerm": "stardewvalley anime mods",
+    "aliases": [
+      "스타듀 밸리 애니메이션 초상화"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1839",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:6529": {
+    "title": "확장 조건 유틸리티",
+    "searchTerm": "Expanded Preconditions Utility",
+    "aliases": [
+      "확장 조건 유틸리티"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/6529",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1401": {
+    "title": "트랙터 모드",
+    "searchTerm": "Tractor Mod",
+    "aliases": [
+      "트랙터 모드"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1401",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:963": {
+    "title": "해골 광산 엘리베이터",
+    "searchTerm": "Skull Cavern Elevator",
+    "aliases": [
+      "해골 광산 엘리베이터"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/963",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:3213": {
+    "title": "스타듀 핵",
+    "searchTerm": "StardewHack",
+    "aliases": [
+      "스타듀 핵"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/3213",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1726": {
+    "title": "PyTK - Platonymous 도구 모음",
+    "searchTerm": "PyTK - Platonymous Toolkit",
+    "aliases": [
+      "PyTK - Platonymous 도구 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1726",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:5450": {
+    "title": "계절별 의상 - 더 귀여운 스타일",
+    "searchTerm": "Seasonal Outfits - Slightly Cuter Aesthetic",
+    "aliases": [
+      "계절별 의상 - 더 귀여운 스타일"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/5450",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1536": {
+    "title": "우편 프레임워크",
+    "searchTerm": "Mail Framework Mod",
+    "aliases": [
+      "우편 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1536",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:7286": {
+    "title": "릿지사이드 빌리지",
+    "searchTerm": "Ridgeside Village",
+    "aliases": [
+      "릿지사이드 빌리지"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/7286",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:518": {
+    "title": "어디서든 상자 열기",
+    "searchTerm": "Chests Anywhere",
+    "aliases": [
+      "어디서든 상자 열기"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/518",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:9969": {
+    "title": "패션 센스",
+    "searchTerm": "Fashion Sense",
+    "aliases": [
+      "패션 센스"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/9969",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:8626": {
+    "title": "커스텀 동반자",
+    "searchTerm": "Custom Companions",
+    "aliases": [
+      "커스텀 동반자"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/8626",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:5005": {
+    "title": "상점 타일 프레임워크",
+    "searchTerm": "Shop Tile Framework",
+    "aliases": [
+      "상점 타일 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/5005",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:2697": {
+    "title": "낚시 미니게임 건너뛰기",
+    "searchTerm": "Skip Fishing Minigame",
+    "aliases": [
+      "낚시 미니게임 건너뛰기"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/2697",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:7089": {
+    "title": "커스텀 NPC 제외 설정",
+    "searchTerm": "Custom NPC Exclusions",
+    "aliases": [
+      "커스텀 NPC 제외 설정"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/7089",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:1820": {
+    "title": "TMXL 지도 도구 모음",
+    "searchTerm": "TMXL Map Toolkit",
+    "aliases": [
+      "TMXL 지도 도구 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/1820",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:8897": {
+    "title": "물속 물고기 표시",
+    "searchTerm": "Visible Fish - see catchable fish in the water",
+    "aliases": [
+      "물속 물고기 표시"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/8897",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:stardewvalley:9633": {
+    "title": "추가 지도 레이어",
+    "searchTerm": "Extra Map Layers",
+    "aliases": [
+      "추가 지도 레이어"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/9633",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:97490": {
+    "title": "JaySerpa의 소규모 모드·리소스 (주로 GTS용)",
+    "searchTerm": "JaySerpa's Small Mods and Resources (Mostly for GTS)",
+    "aliases": [
+      "JaySerpa의 소규모 모드·리소스 (주로 GTS용)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/97490",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:19518": {
+    "title": "kryptopyr의 패치 모음",
+    "searchTerm": "kryptopyr's Patch Hub",
+    "aliases": [
+      "kryptopyr의 패치 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/19518",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:17230": {
+    "title": "SSE 엔진 수정 (SKSE64 플러그인)",
+    "searchTerm": "SSE Engine Fixes (skse64 plugin)",
+    "aliases": [
+      "SSE 엔진 수정 (SKSE64 플러그인)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/17230",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:266": {
+    "title": "스카이림 SE 비공식 패치 (USSEP)",
+    "searchTerm": "Unofficial Skyrim Special Edition Patch - USSEP",
+    "aliases": [
+      "스카이림 SE 비공식 패치 (USSEP)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/266",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:32444": {
+    "title": "SKSE 플러그인 주소 라이브러리",
+    "searchTerm": "Address Library for SKSE Plugins",
+    "aliases": [
+      "SKSE 플러그인 주소 라이브러리"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/32444",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:12604": {
+    "title": "스카이 UI",
+    "searchTerm": "SkyUI",
+    "aliases": [
+      "스카이 UI"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/12604",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:2347": {
+    "title": "스카이림 202X (Pfuscher)",
+    "searchTerm": "Skyrim 202X by Pfuscher",
+    "aliases": [
+      "스카이림 202X (Pfuscher)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/2347",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:19080": {
+    "title": "레이스 메뉴",
+    "searchTerm": "RaceMenu",
+    "aliases": [
+      "레이스 메뉴"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/19080",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:20035": {
+    "title": "루시엔 - 풀 음성 남성 동료",
+    "searchTerm": "Lucien - Immersive Fully Voiced Male Follower",
+    "aliases": [
+      "루시엔 - 풀 음성 남성 동료"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/20035",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:3038": {
+    "title": "스카이림 SE 신규 동작 (FNIS SE)",
+    "searchTerm": "Fores New Idles in Skyrim SE - FNIS SE",
+    "aliases": [
+      "스카이림 SE 신규 동작 (FNIS SE)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/3038",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:198": {
+    "title": "CBBE - 체형 개선",
+    "searchTerm": "Caliente's Beautiful Bodies Enhancer -CBBE-",
+    "aliases": [
+      "CBBE - 체형 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/198",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:38845": {
+    "title": "고대 드웨머 금속 - Xtudo 호환 패치",
+    "searchTerm": "Ancient Dwemer Metal - My patches for SMIM Dawnguard Dragonborn by Xtudo",
+    "aliases": [
+      "고대 드웨머 금속 - Xtudo 호환 패치"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/38845",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:9005": {
+    "title": "잔디 모드 지형 수정",
+    "searchTerm": "Landscape Fixes For Grass Mods",
+    "aliases": [
+      "잔디 모드 지형 수정"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/9005",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:1988": {
+    "title": "XP32 확장 스켈레톤 (XPMSSE)",
+    "searchTerm": "XP32 Maximum Skeleton Special Extended - XPMSSE",
+    "aliases": [
+      "XP32 확장 스켈레톤 (XPMSSE)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/1988",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:659": {
+    "title": "정적 메시 개선 (SMIM)",
+    "searchTerm": "Static Mesh Improvement Mod - SMIM",
+    "aliases": [
+      "정적 메시 개선 (SMIM)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/659",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:6289": {
+    "title": "JK의 스카이림",
+    "searchTerm": "JK's Skyrim",
+    "aliases": [
+      "JK의 스카이림"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/6289",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:13048": {
+    "title": "파피루스 유틸 SE - 스크립트 함수",
+    "searchTerm": "PapyrusUtil SE - Modders Scripting Utility Functions",
+    "aliases": [
+      "파피루스 유틸 SE - 스크립트 함수"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/13048",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:1137": {
+    "title": "오디네이터 - 스카이림 특성",
+    "searchTerm": "Ordinator - Perks of Skyrim",
+    "aliases": [
+      "오디네이터 - 스카이림 특성"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/1137",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:1090": {
+    "title": "아포칼립스 - 스카이림 마법",
+    "searchTerm": "Apocalypse - Magic of Skyrim",
+    "aliases": [
+      "아포칼립스 - 스카이림 마법"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/1090",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:10917": {
+    "title": "비욘드 스카이림 - 브루마 SE",
+    "searchTerm": "Beyond Skyrim - Bruma SE",
+    "aliases": [
+      "비욘드 스카이림 - 브루마 SE"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/10917",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:51073": {
+    "title": "powerofthree의 개선 모음",
+    "searchTerm": "powerofthree's Tweaks",
+    "aliases": [
+      "powerofthree의 개선 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/51073",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:52130": {
+    "title": "아포테커리 - 연금술 개편",
+    "searchTerm": "Apothecary - An Alchemy Overhaul",
+    "aliases": [
+      "아포테커리 - 연금술 개편"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/52130",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:201": {
+    "title": "바디슬라이드·의상 스튜디오",
+    "searchTerm": "BodySlide and Outfit Studio",
+    "aliases": [
+      "바디슬라이드·의상 스튜디오"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/201",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:29194": {
+    "title": "개성 있는 NPC SE (3DNPC)",
+    "searchTerm": "Interesting NPCs SE (3DNPC)",
+    "aliases": [
+      "개성 있는 NPC SE (3DNPC)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/29194",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:16495": {
+    "title": "JContainers SE",
+    "searchTerm": "JContainers SE",
+    "aliases": [],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/16495",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:78809": {
+    "title": "데이드릭 성소 - Xtudo 통합 패치",
+    "searchTerm": "Daedric Shrines - All in One by Xtudo - Wintersun Lakeview Teldryn Cure Wyrmstooth Antennaria Evil Aemer Thieves Helgen Death Cut Content Moon Leaf Rest Talos",
+    "aliases": [
+      "데이드릭 성소 - Xtudo 통합 패치"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/78809",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:30379": {
+    "title": "스카이림 스크립트 확장 (SKSE64)",
+    "searchTerm": "Skyrim Script Extender (SKSE64)",
+    "aliases": [
+      "스카이림 스크립트 확장 (SKSE64)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/30379",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:1187": {
+    "title": "관계 대화 개선 (RDO SE)",
+    "searchTerm": "Relationship Dialogue Overhaul - RDO SE",
+    "aliases": [
+      "관계 대화 개선 (RDO SE)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/1187",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:22854": {
+    "title": "powerofthree의 파피루스 확장",
+    "searchTerm": "powerofthree's Papyrus Extender",
+    "aliases": [
+      "powerofthree의 파피루스 확장"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/22854",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:skyrimspecialedition:53000": {
+    "title": "MCM 도우미",
+    "searchTerm": "MCM Helper",
+    "aliases": [
+      "MCM 도우미"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/53000",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:BepInEx-BepInExPack": {
+    "title": "베핀엑스 팩",
+    "searchTerm": "BepInExPack",
+    "aliases": [
+      "베핀엑스 팩"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/BepInEx/BepInExPack/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:notnotnotswipez-MoreCompany": {
+    "title": "모어 컴퍼니",
+    "searchTerm": "MoreCompany",
+    "aliases": [
+      "모어 컴퍼니"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/notnotnotswipez/MoreCompany/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Evaisa-LethalLib": {
+    "title": "리썰 라이브러리",
+    "searchTerm": "LethalLib",
+    "aliases": [
+      "리썰 라이브러리"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Evaisa/LethalLib/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:FlipMods-ReservedItemSlotCore": {
+    "title": "전용 아이템 슬롯 코어",
+    "searchTerm": "ReservedItemSlotCore",
+    "aliases": [
+      "전용 아이템 슬롯 코어"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/FlipMods/ReservedItemSlotCore/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Rune580-LethalCompany_InputUtils": {
+    "title": "리썰 컴퍼니 입력 유틸리티",
+    "searchTerm": "LethalCompany_InputUtils",
+    "aliases": [
+      "리썰 컴퍼니 입력 유틸리티"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Rune580/LethalCompany_InputUtils/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:FlipMods-TooManyEmotes": {
+    "title": "투 매니 이모트",
+    "searchTerm": "TooManyEmotes",
+    "aliases": [
+      "투 매니 이모트"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/FlipMods/TooManyEmotes/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:x753-More_Suits": {
+    "title": "추가 슈트",
+    "searchTerm": "More_Suits",
+    "aliases": [
+      "추가 슈트"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/x753/More_Suits/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:FlipMods-ReservedFlashlightSlot": {
+    "title": "손전등 전용 슬롯",
+    "searchTerm": "ReservedFlashlightSlot",
+    "aliases": [
+      "손전등 전용 슬롯"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/FlipMods/ReservedFlashlightSlot/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:x753-Mimics": {
+    "title": "미믹",
+    "searchTerm": "Mimics",
+    "aliases": [
+      "미믹"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/x753/Mimics/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:IAmBatby-LethalLevelLoader": {
+    "title": "리썰 레벨 로더",
+    "searchTerm": "LethalLevelLoader",
+    "aliases": [
+      "리썰 레벨 로더"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/IAmBatby/LethalLevelLoader/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:FlipMods-ReservedWalkieSlot": {
+    "title": "무전기 전용 슬롯",
+    "searchTerm": "ReservedWalkieSlot",
+    "aliases": [
+      "무전기 전용 슬롯"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/FlipMods/ReservedWalkieSlot/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:malco-Lategame_Upgrades": {
+    "title": "후반부 업그레이드",
+    "searchTerm": "Lategame_Upgrades",
+    "aliases": [
+      "후반부 업그레이드"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/malco/Lategame_Upgrades/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:ebkr-r2modman": {
+    "title": "r2modman",
+    "searchTerm": "r2modman",
+    "aliases": [],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/ebkr/r2modman/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Evaisa-HookGenPatcher": {
+    "title": "훅 생성 패처",
+    "searchTerm": "HookGenPatcher",
+    "aliases": [
+      "훅 생성 패처"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Evaisa/HookGenPatcher/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:BunyaPineTree-ModelReplacementAPI": {
+    "title": "모델 교체 API",
+    "searchTerm": "ModelReplacementAPI",
+    "aliases": [
+      "모델 교체 API"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/BunyaPineTree/ModelReplacementAPI/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:loaforc-loaforcsSoundAPI": {
+    "title": "loaforc의 사운드 API",
+    "searchTerm": "loaforcsSoundAPI",
+    "aliases": [
+      "loaforc의 사운드 API"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/loaforc/loaforcsSoundAPI/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:sunnobunno-YippeeMod": {
+    "title": "이피 모드",
+    "searchTerm": "YippeeMod",
+    "aliases": [
+      "이피 모드"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/sunnobunno/YippeeMod/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Evaisa-LethalThings": {
+    "title": "리썰 아이템 추가",
+    "searchTerm": "LethalThings",
+    "aliases": [
+      "리썰 아이템 추가"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Evaisa/LethalThings/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:AinaVT-LethalConfig": {
+    "title": "리썰 설정",
+    "searchTerm": "LethalConfig",
+    "aliases": [
+      "리썰 설정"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/AinaVT/LethalConfig/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Gemumoddo-LethalEmotesAPI": {
+    "title": "리썰 이모트 API",
+    "searchTerm": "LethalEmotesAPI",
+    "aliases": [
+      "리썰 이모트 API"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Gemumoddo/LethalEmotesAPI/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Verity-TooManySuits": {
+    "title": "투 매니 슈트",
+    "searchTerm": "TooManySuits",
+    "aliases": [
+      "투 매니 슈트"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Verity/TooManySuits/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Hamunii-DetourContext_Dispose_Fix": {
+    "title": "DetourContext 해제 오류 수정",
+    "searchTerm": "DetourContext_Dispose_Fix",
+    "aliases": [
+      "DetourContext 해제 오류 수정"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Hamunii/DetourContext_Dispose_Fix/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Hamunii-AutoHookGenPatcher": {
+    "title": "자동 훅 생성 패처",
+    "searchTerm": "AutoHookGenPatcher",
+    "aliases": [
+      "자동 훅 생성 패처"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Hamunii/AutoHookGenPatcher/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:EliteMasterEric-Coroner": {
+    "title": "검시관",
+    "searchTerm": "Coroner",
+    "aliases": [
+      "검시관"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/EliteMasterEric/Coroner/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:Evaisa-FixPluginTypesSerialization": {
+    "title": "플러그인 타입 직렬화 수정",
+    "searchTerm": "FixPluginTypesSerialization",
+    "aliases": [
+      "플러그인 타입 직렬화 수정"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Evaisa/FixPluginTypesSerialization/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:FlipMods-BetterStamina": {
+    "title": "스태미나 개선",
+    "searchTerm": "BetterStamina",
+    "aliases": [
+      "스태미나 개선"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/FlipMods/BetterStamina/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:NotAtomicBomb-TerminalApi": {
+    "title": "터미널 API",
+    "searchTerm": "TerminalApi",
+    "aliases": [
+      "터미널 API"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/NotAtomicBomb/TerminalApi/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:xilophor-LethalNetworkAPI": {
+    "title": "리썰 네트워크 API",
+    "searchTerm": "LethalNetworkAPI",
+    "aliases": [
+      "리썰 네트워크 API"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/xilophor/LethalNetworkAPI/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:AudioKnight-StarlancerAIFix": {
+    "title": "Starlancer AI 수정",
+    "searchTerm": "StarlancerAIFix",
+    "aliases": [
+      "Starlancer AI 수정"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/AudioKnight/StarlancerAIFix/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:lethal-company:qwbarch-Mirage": {
+    "title": "미라지",
+    "searchTerm": "Mirage",
+    "aliases": [
+      "미라지"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/qwbarch/Mirage/",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:2009463077": {
+    "title": "하모니",
+    "searchTerm": "Harmony",
+    "aliases": [
+      "하모니"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2009463077",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:818773962": {
+    "title": "허그 라이브러리",
+    "searchTerm": "HugsLib",
+    "aliases": [
+      "허그 라이브러리"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=818773962",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:735106432": {
+    "title": "EdB 꼼꼼한 준비",
+    "searchTerm": "EdB Prepare Carefully",
+    "aliases": [
+      "EdB 꼼꼼한 준비"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=735106432",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:2023507013": {
+    "title": "바닐라 확장 프레임워크",
+    "searchTerm": "Vanilla Expanded Framework",
+    "aliases": [
+      "바닐라 확장 프레임워크"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2023507013",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1279012058": {
+    "title": "집어서 운반",
+    "searchTerm": "Pick Up And Haul",
+    "aliases": [
+      "집어서 운반"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1279012058",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1508850027": {
+    "title": "림 HUD",
+    "searchTerm": "RimHUD",
+    "aliases": [
+      "림 HUD"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1508850027",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:761421485": {
+    "title": "허용 도구",
+    "searchTerm": "Allow Tool",
+    "aliases": [
+      "허용 도구"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=761421485",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1372003680": {
+    "title": "건축물 교체",
+    "searchTerm": "Replace Stuff",
+    "aliases": [
+      "건축물 교체"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1372003680",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:839005762": {
+    "title": "인간형 외계 종족",
+    "searchTerm": "Humanoid Alien Races",
+    "aliases": [
+      "인간형 외계 종족"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=839005762",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1516158345": {
+    "title": "대화 말풍선",
+    "searchTerm": "Interaction Bubbles",
+    "aliases": [
+      "대화 말풍선"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1516158345",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1718190143": {
+    "title": "바닐라 가구 확장",
+    "searchTerm": "Vanilla Furniture Expanded",
+    "aliases": [
+      "바닐라 가구 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1718190143",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1814383360": {
+    "title": "바닐라 무기 확장",
+    "searchTerm": "Vanilla Weapons Expanded",
+    "aliases": [
+      "바닐라 무기 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1814383360",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:867467808": {
+    "title": "카메라+",
+    "searchTerm": "Camera+",
+    "aliases": [
+      "카메라+"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=867467808",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1845154007": {
+    "title": "바닐라 가구 확장 - 방어",
+    "searchTerm": "Vanilla Furniture Expanded - Security",
+    "aliases": [
+      "바닐라 가구 확장 - 방어"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1845154007",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:753498552": {
+    "title": "환대",
+    "searchTerm": "Hospitality",
+    "aliases": [
+      "환대"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=753498552",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1874644848": {
+    "title": "캐릭터 편집기",
+    "searchTerm": "Character Editor",
+    "aliases": [
+      "캐릭터 편집기"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1874644848",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:927155256": {
+    "title": "간편 보조 무기",
+    "searchTerm": "Simple sidearms",
+    "aliases": [
+      "간편 보조 무기"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=927155256",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1561769193": {
+    "title": "상식",
+    "searchTerm": "Common Sense",
+    "aliases": [
+      "상식"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1561769193",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1880253632": {
+    "title": "바닐라 가구 확장 - 생산",
+    "searchTerm": "Vanilla Furniture Expanded - Production",
+    "aliases": [
+      "바닐라 가구 확장 - 생산"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1880253632",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1718191613": {
+    "title": "바닐라 가구 확장 - 의료",
+    "searchTerm": "Vanilla Furniture Expanded - Medical Module",
+    "aliases": [
+      "바닐라 가구 확장 - 의료"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1718191613",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1957158779": {
+    "title": "바닐라 가구 확장 - 농업",
+    "searchTerm": "Vanilla Furniture Expanded - Farming",
+    "aliases": [
+      "바닐라 가구 확장 - 농업"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1957158779",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1814988282": {
+    "title": "바닐라 방어구 확장",
+    "searchTerm": "Vanilla Armour Expanded",
+    "aliases": [
+      "바닐라 방어구 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1814988282",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1446523594": {
+    "title": "Dubs 메뉴 개선",
+    "searchTerm": "Dubs Mint Menus",
+    "aliases": [
+      "Dubs 메뉴 개선"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1446523594",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:2016436324": {
+    "title": "바닐라 텍스처 확장",
+    "searchTerm": "Vanilla Textures Expanded",
+    "aliases": [
+      "바닐라 텍스처 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2016436324",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1914064942": {
+    "title": "바닐라 낚시 확장",
+    "searchTerm": "Vanilla Fishing Expanded",
+    "aliases": [
+      "바닐라 낚시 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1914064942",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:2202185773": {
+    "title": "똑똑한 건설",
+    "searchTerm": "Smarter Construction",
+    "aliases": [
+      "똑똑한 건설"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2202185773",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:2062943477": {
+    "title": "바닐라 가구 확장 - 전력",
+    "searchTerm": "Vanilla Furniture Expanded - Power",
+    "aliases": [
+      "바닐라 가구 확장 - 전력"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2062943477",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1814987817": {
+    "title": "바닐라 의상 확장",
+    "searchTerm": "Vanilla Apparel Expanded",
+    "aliases": [
+      "바닐라 의상 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1814987817",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:1938420742": {
+    "title": "바닐라 이벤트 확장",
+    "searchTerm": "Vanilla Events Expanded",
+    "aliases": [
+      "바닐라 이벤트 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1938420742",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:294100:2134308522": {
+    "title": "바닐라 식물 확장",
+    "searchTerm": "Vanilla Plants Expanded",
+    "aliases": [
+      "바닐라 식물 확장"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2134308522",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ebkr-r2modman": {
+    "title": "r2modman",
+    "searchTerm": "r2modman",
+    "aliases": [],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ebkr/r2modman/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:denikson-BepInExPack_Valheim": {
+    "title": "베핀엑스 팩 - 발헤임",
+    "searchTerm": "BepInExPack_Valheim",
+    "aliases": [
+      "베핀엑스 팩 - 발헤임"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/denikson/BepInExPack_Valheim/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ValheimModding-Jotunn": {
+    "title": "요툰",
+    "searchTerm": "Jotunn",
+    "aliases": [
+      "요툰"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ValheimModding/Jotunn/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Advize-PlantEverything": {
+    "title": "모든 식물 심기",
+    "searchTerm": "PlantEverything",
+    "aliases": [
+      "모든 식물 심기"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Advize/PlantEverything/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:RandyKnapp-EpicLoot": {
+    "title": "에픽 루트",
+    "searchTerm": "EpicLoot",
+    "aliases": [
+      "에픽 루트"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/RandyKnapp/EpicLoot/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:RandyKnapp-EquipmentAndQuickSlots": {
+    "title": "장비·퀵슬롯",
+    "searchTerm": "EquipmentAndQuickSlots",
+    "aliases": [
+      "장비·퀵슬롯"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/RandyKnapp/EquipmentAndQuickSlots/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Therzie-Warfare": {
+    "title": "전쟁",
+    "searchTerm": "Warfare",
+    "aliases": [
+      "전쟁"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Therzie/Warfare/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:JereKuusela-Server_devcommands": {
+    "title": "서버 개발자 명령어",
+    "searchTerm": "Server_devcommands",
+    "aliases": [
+      "서버 개발자 명령어"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/JereKuusela/Server_devcommands/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:shudnal-ExtraSlots": {
+    "title": "추가 슬롯",
+    "searchTerm": "ExtraSlots",
+    "aliases": [
+      "추가 슬롯"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/shudnal/ExtraSlots/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Advize-PlantEasily": {
+    "title": "간편한 심기",
+    "searchTerm": "PlantEasily",
+    "aliases": [
+      "간편한 심기"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Advize/PlantEasily/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Vapok-AdventureBackpacks": {
+    "title": "모험가 배낭",
+    "searchTerm": "AdventureBackpacks",
+    "aliases": [
+      "모험가 배낭"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Vapok/AdventureBackpacks/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:OdinPlus-OdinArchitect": {
+    "title": "오딘 건축가",
+    "searchTerm": "OdinArchitect",
+    "aliases": [
+      "오딘 건축가"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/OdinPlus/OdinArchitect/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ishid4-BetterArchery": {
+    "title": "궁술 개선",
+    "searchTerm": "BetterArchery",
+    "aliases": [
+      "궁술 개선"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ishid4/BetterArchery/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Goldenrevolver-Quick_Stack_Store_Sort_Trash_Restock": {
+    "title": "빠른 겹치기·보관·정렬·버리기·보충",
+    "searchTerm": "Quick_Stack_Store_Sort_Trash_Restock",
+    "aliases": [
+      "빠른 겹치기·보관·정렬·버리기·보충"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Goldenrevolver/Quick_Stack_Store_Sort_Trash_Restock/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Therzie-Monstrum": {
+    "title": "몬스트룸",
+    "searchTerm": "Monstrum",
+    "aliases": [
+      "몬스트룸"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Therzie/Monstrum/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Therzie-Armory": {
+    "title": "무기고",
+    "searchTerm": "Armory",
+    "aliases": [
+      "무기고"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Therzie/Armory/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:OdinPlus-OdinHorse": {
+    "title": "오딘의 말",
+    "searchTerm": "OdinHorse",
+    "aliases": [
+      "오딘의 말"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/OdinPlus/OdinHorse/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ValheimModding-JsonDotNET": {
+    "title": "Json.NET",
+    "searchTerm": "JsonDotNET",
+    "aliases": [
+      "Json.NET"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ValheimModding/JsonDotNET/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ValheimModding-YamlDotNet": {
+    "title": "YamlDotNet",
+    "searchTerm": "YamlDotNet",
+    "aliases": [],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ValheimModding/YamlDotNet/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ASharpPen-Spawn_That": {
+    "title": "생성 설정",
+    "searchTerm": "Spawn_That",
+    "aliases": [
+      "생성 설정"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ASharpPen/Spawn_That/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:MSchmoecker-MultiUserChest": {
+    "title": "여럿이 쓰는 상자",
+    "searchTerm": "MultiUserChest",
+    "aliases": [
+      "여럿이 쓰는 상자"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/MSchmoecker/MultiUserChest/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:OdinPlus-TeleportEverything": {
+    "title": "모든 물품 순간이동",
+    "searchTerm": "TeleportEverything",
+    "aliases": [
+      "모든 물품 순간이동"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/OdinPlus/TeleportEverything/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:Smoothbrain-Farming": {
+    "title": "농업",
+    "searchTerm": "Farming",
+    "aliases": [
+      "농업"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/Smoothbrain/Farming/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ValheimModding-HookGenPatcher": {
+    "title": "훅 생성 패처",
+    "searchTerm": "HookGenPatcher",
+    "aliases": [
+      "훅 생성 패처"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ValheimModding/HookGenPatcher/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:WackyMole-WackysDatabase": {
+    "title": "Wacky의 데이터베이스",
+    "searchTerm": "WackysDatabase",
+    "aliases": [
+      "Wacky의 데이터베이스"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/WackyMole/WackysDatabase/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:OdinPlus-OdinsKingdom": {
+    "title": "오딘의 왕국",
+    "searchTerm": "OdinsKingdom",
+    "aliases": [
+      "오딘의 왕국"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/OdinPlus/OdinsKingdom/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:MathiasDecrock-PlanBuild": {
+    "title": "건축 설계",
+    "searchTerm": "PlanBuild",
+    "aliases": [
+      "건축 설계"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/MathiasDecrock/PlanBuild/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:ZenDragon-Zen_ModLib": {
+    "title": "Zen 모드 라이브러리",
+    "searchTerm": "Zen_ModLib",
+    "aliases": [
+      "Zen 모드 라이브러리"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/ZenDragon/Zen_ModLib/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:RustyMods-Seasonality": {
+    "title": "계절 변화",
+    "searchTerm": "Seasonality",
+    "aliases": [
+      "계절 변화"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/RustyMods/Seasonality/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:valheim:MidnightMods-ValheimArmory": {
+    "title": "발헤임 무기고",
+    "searchTerm": "ValheimArmory",
+    "aliases": [
+      "발헤임 무기고"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/MidnightMods/ValheimArmory/",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2824688072": {
+    "title": "칼라미티 모드",
+    "searchTerm": "Calamity Mod",
+    "aliases": [
+      "칼라미티 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2824688072",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2824688266": {
+    "title": "칼라미티 모드 음악",
+    "searchTerm": "Calamity Mod Music",
+    "aliases": [
+      "칼라미티 모드 음악"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2824688266",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2619954303": {
+    "title": "레시피 브라우저",
+    "searchTerm": "Recipe Browser",
+    "aliases": [
+      "레시피 브라우저"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2619954303",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2669644269": {
+    "title": "보스 체크리스트",
+    "searchTerm": "Boss Checklist",
+    "aliases": [
+      "보스 체크리스트"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2669644269",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2563309347": {
+    "title": "매직 스토리지",
+    "searchTerm": "Magic Storage",
+    "aliases": [
+      "매직 스토리지"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2563309347",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2908170107": {
+    "title": "absoluteAquarian 유틸리티 (SerousCommonLib)",
+    "searchTerm": "absoluteAquarian Utilities (SerousCommonLib)",
+    "aliases": [
+      "absoluteAquarian 유틸리티 (SerousCommonLib)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2908170107",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2599842771": {
+    "title": "연금술사 NPC 라이트",
+    "searchTerm": "AlchemistNPC Lite",
+    "aliases": [
+      "연금술사 NPC 라이트"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2599842771",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2785100219": {
+    "title": "서브월드 라이브러리",
+    "searchTerm": "Subworld Library",
+    "aliases": [
+      "서브월드 라이브러리"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2785100219",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2565639705": {
+    "title": "광맥 채굴기 (1.4.3/1.4.4)",
+    "searchTerm": "Ore Excavator (1.4.3/1.4.4 Veinminer)",
+    "aliases": [
+      "광맥 채굴기 (1.4.3/1.4.4)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2565639705",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:3222493606": {
+    "title": "루미넌스",
+    "searchTerm": "Luminance",
+    "aliases": [
+      "루미넌스"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3222493606",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2570931073": {
+    "title": "파르고 뮤턴트 모드",
+    "searchTerm": "Fargo's Mutant Mod",
+    "aliases": [
+      "파르고 뮤턴트 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2570931073",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2797518634": {
+    "title": "테라리아 편의성 개선",
+    "searchTerm": "Quality of Terraria",
+    "aliases": [
+      "테라리아 편의성 개선"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2797518634",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2816694149": {
+    "title": "보스 위치 커서",
+    "searchTerm": "Boss Cursor",
+    "aliases": [
+      "보스 위치 커서"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2816694149",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2824688804": {
+    "title": "칼라미티 장식 아이템",
+    "searchTerm": "Calamity's Vanities",
+    "aliases": [
+      "칼라미티 장식 아이템"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2824688804",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2597324266": {
+    "title": "추가 날개 슬롯",
+    "searchTerm": "Wing Slot Extra",
+    "aliases": [
+      "추가 날개 슬롯"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2597324266",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2670628346": {
+    "title": "빛과 그림자",
+    "searchTerm": "Lights And Shadows",
+    "aliases": [
+      "빛과 그림자"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2670628346",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2838015851": {
+    "title": "카탈리스트 모드",
+    "searchTerm": "Catalyst Mod",
+    "aliases": [
+      "카탈리스트 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2838015851",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2825151264": {
+    "title": "칼라미티 중국어 번역 패치",
+    "searchTerm": "◆ Calamity Chinese Translation Patch ◆ 灾厄汉化补丁 ◆",
+    "aliases": [
+      "칼라미티 중국어 번역 패치"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2825151264",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2687866031": {
+    "title": "마을 NPC 체크리스트",
+    "searchTerm": "Census - Town NPC Checklist",
+    "aliases": [
+      "마을 NPC 체크리스트"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2687866031",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2909886416": {
+    "title": "토륨 모드",
+    "searchTerm": "Thorium Mod",
+    "aliases": [
+      "토륨 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2909886416",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2995193002": {
+    "title": "칼라미티: 신들의 분노",
+    "searchTerm": "Calamity: Wrath of the Gods",
+    "aliases": [
+      "칼라미티: 신들의 분노"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2995193002",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2815540735": {
+    "title": "파르고 소울 모드",
+    "searchTerm": "Fargo's Souls Mod",
+    "aliases": [
+      "파르고 소울 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2815540735",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2563784437": {
+    "title": "치트 시트",
+    "searchTerm": "Cheat Sheet",
+    "aliases": [
+      "치트 시트"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2563784437",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2564645933": {
+    "title": "HERO의 모드",
+    "searchTerm": "HERO's Mod",
+    "aliases": [
+      "HERO의 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2564645933",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2831752947": {
+    "title": "LuiAFK 리본",
+    "searchTerm": "LuiAFK Reborn",
+    "aliases": [
+      "LuiAFK 리본"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2831752947",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2790924965": {
+    "title": "구조물 도우미",
+    "searchTerm": "Structure Helper",
+    "aliases": [
+      "구조물 도우미"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2790924965",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:2565540604": {
+    "title": "자동 버리기",
+    "searchTerm": "Auto Trash",
+    "aliases": [
+      "자동 버리기"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2565540604",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:3403460014": {
+    "title": "실키 UI",
+    "searchTerm": "SilkyUI",
+    "aliases": [
+      "실키 UI"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3403460014",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:3478363753": {
+    "title": "데이브레이크",
+    "searchTerm": "DAYBREAK",
+    "aliases": [
+      "데이브레이크"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3478363753",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:1281930:3459129920": {
+    "title": "칼라미티 인페르넘 모드",
+    "searchTerm": "Calamity Mod Infernum Mode",
+    "aliases": [
+      "칼라미티 인페르넘 모드"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3459129920",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2169435993": {
+    "title": "모드 옵션 (빌드 41)",
+    "searchTerm": "Mod Options (Build 41)",
+    "aliases": [
+      "모드 옵션 (빌드 41)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2169435993",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2392709985": {
+    "title": "Tsar 공통 라이브러리 2.0 (B41 전용)",
+    "searchTerm": "Tsar's Common Library 2.0 [Only for B41]",
+    "aliases": [
+      "Tsar 공통 라이브러리 2.0 (B41 전용)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2392709985",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2619072426": {
+    "title": "무기 내구도 표시 (41.60+)",
+    "searchTerm": "Weapon Condition Indicator [41.60+]",
+    "aliases": [
+      "무기 내구도 표시 (41.60+)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2619072426",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2200148440": {
+    "title": "브리타 무기 팩",
+    "searchTerm": "Brita's Weapon Pack",
+    "aliases": [
+      "브리타 무기 팩"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2200148440",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2313387159": {
+    "title": "분류 개선",
+    "searchTerm": "Better Sorting",
+    "aliases": [
+      "분류 개선"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2313387159",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2875848298": {
+    "title": "상식",
+    "searchTerm": "Common Sense",
+    "aliases": [
+      "상식"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2875848298",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2487022075": {
+    "title": "트루 액션 1·2 - 앉기·눕기 (B41 전용)",
+    "searchTerm": "True Actions. Act 1 & 2 - Sitting & Lying [Only for B41]",
+    "aliases": [
+      "트루 액션 1·2 - 앉기·눕기 (B41 전용)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2487022075",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2460154811": {
+    "title": "브리타 방어구 팩",
+    "searchTerm": "Brita's Armor Pack",
+    "aliases": [
+      "브리타 방어구 팩"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2460154811",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2297098490": {
+    "title": "아스널[26] 건파이터 2.0",
+    "searchTerm": "Arsenal[26] GunFighter Mod [2.0]",
+    "aliases": [
+      "아스널[26] 건파이터 2.0"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2297098490",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2642541073": {
+    "title": "92년형 AM 제너럴 M998·M101A3 화물 트레일러",
+    "searchTerm": "'92 AM General M998 + M101A3 Cargo trailer",
+    "aliases": [
+      "92년형 AM 제너럴 M998·M101A3 화물 트레일러"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2642541073",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2694448564": {
+    "title": "모드 관리자",
+    "searchTerm": "Mod Manager",
+    "aliases": [
+      "모드 관리자"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2694448564",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2282429356": {
+    "title": "오토차르 트레일러",
+    "searchTerm": "Autotsar Trailers",
+    "aliases": [
+      "오토차르 트레일러"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2282429356",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2544353492": {
+    "title": "읽은 책 표시",
+    "searchTerm": "Has Been Read",
+    "aliases": [
+      "읽은 책 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2544353492",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2447729538": {
+    "title": "풍성한 머리카락 (B41/B42)",
+    "searchTerm": "Fluffy Hair [B41/B42]",
+    "aliases": [
+      "풍성한 머리카락 (B41/B42)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2447729538",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2503622437": {
+    "title": "스킬 복구 일지",
+    "searchTerm": "Skill Recovery Journal",
+    "aliases": [
+      "스킬 복구 일지"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2503622437",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2335368829": {
+    "title": "어센틱 Z",
+    "searchTerm": "Authentic Z",
+    "aliases": [
+      "어센틱 Z"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2335368829",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:3171167894": {
+    "title": "that DAMN 라이브러리",
+    "searchTerm": "that DAMN Library",
+    "aliases": [
+      "that DAMN 라이브러리"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3171167894",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2657661246": {
+    "title": "빗물로 씻기",
+    "searchTerm": "Rain Wash",
+    "aliases": [
+      "빗물로 씻기"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2657661246",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2566953935": {
+    "title": "86년형 오시코시 P19A·군용 트레일러",
+    "searchTerm": "'86 Oshkosh P19A + Military Trailers",
+    "aliases": [
+      "86년형 오시코시 P19A·군용 트레일러"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2566953935",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:1510950729": {
+    "title": "Filibuster Rhymes의 중고차",
+    "searchTerm": "Filibuster Rhymes' Used Cars!",
+    "aliases": [
+      "Filibuster Rhymes의 중고차"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1510950729",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2896041179": {
+    "title": "오류 확대 표시",
+    "searchTerm": "errorMagnifier",
+    "aliases": [
+      "오류 확대 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2896041179",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2599752664": {
+    "title": "Dylan 타일 팩",
+    "searchTerm": "Dylan's Tile Pack",
+    "aliases": [
+      "Dylan 타일 팩"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2599752664",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2337452747": {
+    "title": "Daddy Dirkie dirks 타일",
+    "searchTerm": "Daddy Dirkie dirks tiles",
+    "aliases": [
+      "Daddy Dirkie dirks 타일"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2337452747",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2618213077": {
+    "title": "82년형 오시코시 M911·군용 세미 트레일러",
+    "searchTerm": "'82 Oshkosh M911 + Military Semi-Trailers",
+    "aliases": [
+      "82년형 오시코시 M911·군용 세미 트레일러"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2618213077",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2529746725": {
+    "title": "간편 설정 (Chucked)",
+    "searchTerm": "Easy Config Chucked",
+    "aliases": [
+      "간편 설정 (Chucked)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2529746725",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2592358528": {
+    "title": "오토차르 튜닝 공방 - 버스 (2.0)",
+    "searchTerm": "Autotsar Tuning Atelier - Bus [TUNING 2.0]",
+    "aliases": [
+      "오토차르 튜닝 공방 - 버스 (2.0)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2592358528",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2423906082": {
+    "title": "야생 생존 장비 - 도구 (B41/B42)",
+    "searchTerm": "Bushcraft Gear - Tools [B41/B42]",
+    "aliases": [
+      "야생 생존 장비 - 도구 (B41/B42)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2423906082",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2384329562": {
+    "title": "throttlekitty 타일",
+    "searchTerm": "throttlekitty's tiles",
+    "aliases": [
+      "throttlekitty 타일"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2384329562",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2463184726": {
+    "title": "Spongie 머리카락",
+    "searchTerm": "Spongie's Hair",
+    "aliases": [
+      "Spongie 머리카락"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2463184726",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:108600:2778576730": {
+    "title": "오토차르 모터클럽 (B41 전용)",
+    "searchTerm": "Autotsar Motorclub [Only for B41]",
+    "aliases": [
+      "오토차르 모터클럽 (B41 전용)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2778576730",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:107": {
+    "title": "사이버 엔진 트윅",
+    "searchTerm": "Cyber Engine Tweaks",
+    "aliases": [
+      "사이버 엔진 트윅"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/107",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4198": {
+    "title": "아카이브 XL",
+    "searchTerm": "ArchiveXL",
+    "aliases": [
+      "아카이브 XL"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4198",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:2380": {
+    "title": "RED4ext",
+    "searchTerm": "RED4ext",
+    "aliases": [],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/2380",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:1511": {
+    "title": "레드스크립트",
+    "searchTerm": "redscript",
+    "aliases": [
+      "레드스크립트"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/1511",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4197": {
+    "title": "트윅 XL",
+    "searchTerm": "TweakXL",
+    "aliases": [
+      "트윅 XL"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4197",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:7780": {
+    "title": "코드웨어",
+    "searchTerm": "Codeware",
+    "aliases": [
+      "코드웨어"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/7780",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:6072": {
+    "title": "WINGDEER 헤어 컬렉션",
+    "searchTerm": "WINGDEER HAIR COLLECTION",
+    "aliases": [
+      "WINGDEER 헤어 컬렉션"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/6072",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:2987": {
+    "title": "가상 의상실",
+    "searchTerm": "Virtual Atelier",
+    "aliases": [
+      "가상 의상실"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/2987",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4885": {
+    "title": "모드 설정",
+    "searchTerm": "Mod Settings",
+    "aliases": [
+      "모드 설정"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4885",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:3518": {
+    "title": "기본 설정 UI",
+    "searchTerm": "Native Settings UI",
+    "aliases": [
+      "기본 설정 UI"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/3518",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:6945": {
+    "title": "장비 확장 (Equipment-EX)",
+    "searchTerm": "Equipment-EX",
+    "aliases": [
+      "장비 확장 (Equipment-EX)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/6945",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:10064": {
+    "title": "꿈의 도시 개편",
+    "searchTerm": "City of Dreams Overhaul",
+    "aliases": [
+      "꿈의 도시 개편"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/10064",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4575": {
+    "title": "입력 로더",
+    "searchTerm": "Input Loader",
+    "aliases": [
+      "입력 로더"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4575",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:790": {
+    "title": "외형 메뉴 모드",
+    "searchTerm": "Appearance Menu Mod",
+    "aliases": [
+      "외형 메뉴 모드"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/790",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4454": {
+    "title": "가상 자동차 판매점",
+    "searchTerm": "Virtual Car Dealer",
+    "aliases": [
+      "가상 자동차 판매점"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4454",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:1424": {
+    "title": "spawn0 체형 모드 2.0",
+    "searchTerm": "spawn0 - BODY MOD 2.0 - in game better body shape",
+    "aliases": [
+      "spawn0 체형 모드 2.0"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/1424",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:2675": {
+    "title": "몰입형 1인칭 2.0 - 키·카메라 개선",
+    "searchTerm": "Immersive First Person v2.0 - Native Height and Camera Rework",
+    "aliases": [
+      "몰입형 1인칭 2.0 - 키·카메라 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/2675",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:7054": {
+    "title": "여성 V 기본 체형 HD (VTK)",
+    "searchTerm": "VTK Vanilla HD Body for FemV - High Resolution Mesh and Textures - Plus Resources",
+    "aliases": [
+      "여성 V 기본 체형 HD (VTK)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/7054",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:9429": {
+    "title": "사이버웨어 확장 (Cyberware-EX)",
+    "searchTerm": "Cyberware-EX",
+    "aliases": [
+      "사이버웨어 확장 (Cyberware-EX)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/9429",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:10038": {
+    "title": "브라우저 확장",
+    "searchTerm": "Browser Extension",
+    "aliases": [
+      "브라우저 확장"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/10038",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:11077": {
+    "title": "리지의 브레인댄스",
+    "searchTerm": "Lizzie's Braindances",
+    "aliases": [
+      "리지의 브레인댄스"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/11077",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4626": {
+    "title": "팬앰 연애 개선",
+    "searchTerm": "Panam Romanced Enhanced",
+    "aliases": [
+      "팬앰 연애 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4626",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:4508": {
+    "title": "주디 연애 개선",
+    "searchTerm": "Judy Romanced Enhanced",
+    "aliases": [
+      "주디 연애 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/4508",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:7831": {
+    "title": "Deceptious 퀘스트 코어",
+    "searchTerm": "Deceptious Quest Core",
+    "aliases": [
+      "Deceptious 퀘스트 코어"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/7831",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:9765": {
+    "title": "Proxima의 아파트 모음",
+    "searchTerm": "Proxima's Apartment Emporium",
+    "aliases": [
+      "Proxima의 아파트 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/9765",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:3850": {
+    "title": "캐릭터 프리셋 관리자 (ACU)",
+    "searchTerm": "ACU - Character Preset Manager",
+    "aliases": [
+      "캐릭터 프리셋 관리자 (ACU)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/3850",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:5266": {
+    "title": "재질·텍스처 덮어쓰기",
+    "searchTerm": "Material and Texture Override",
+    "aliases": [
+      "재질·텍스처 덮어쓰기"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/5266",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:20808": {
+    "title": "리럭스 - 통합 조명 개선",
+    "searchTerm": "ReLUX (Lighting Redux - Accurate Lighting - AIO)",
+    "aliases": [
+      "리럭스 - 통합 조명 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/20808",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:16310": {
+    "title": "LUT 전환기 3",
+    "searchTerm": "LUT Switcher 3 (Realtime - Scanner - Weather - Menu)",
+    "aliases": [
+      "LUT 전환기 3"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/16310",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:cyberpunk2077:3783": {
+    "title": "KS UV 텍스처 프레임워크",
+    "searchTerm": "-KS- UV Texture Framework",
+    "aliases": [
+      "KS UV 텍스처 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/3783",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:366": {
+    "title": "UI 개선 (ImpUI)",
+    "searchTerm": "ImpUI (ImprovedUI)",
+    "aliases": [
+      "UI 개선 (ImpUI)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/366",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:141": {
+    "title": "발더스 게이트 3 모드 오류 수정",
+    "searchTerm": "Baldur's Gate 3 Mod Fixer",
+    "aliases": [
+      "발더스 게이트 3 모드 오류 수정"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/141",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:1420": {
+    "title": "Vessnelle 헤어 컬렉션",
+    "searchTerm": "Vessnelle's Hair Collection",
+    "aliases": [
+      "Vessnelle 헤어 컬렉션"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/1420",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:215": {
+    "title": "판타지 멀티버스",
+    "searchTerm": "Fantastical Multiverse",
+    "aliases": [
+      "판타지 멀티버스"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/215",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:125": {
+    "title": "D&D 5판 주문",
+    "searchTerm": "5e Spells",
+    "aliases": [
+      "D&D 5판 주문"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/125",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:213": {
+    "title": "타브의 미용실",
+    "searchTerm": "Tav's Hair Salon",
+    "aliases": [
+      "타브의 미용실"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/213",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:944": {
+    "title": "네이티브 모드 로더",
+    "searchTerm": "Native Mod Loader",
+    "aliases": [
+      "네이티브 모드 로더"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/944",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:377": {
+    "title": "레벨 제한 해제 13~20 (패치 8)",
+    "searchTerm": "UnlockLevelCurve - Level 13-20 I PATCH 8",
+    "aliases": [
+      "레벨 제한 해제 13~20 (패치 8)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/377",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:899": {
+    "title": "외형 편집 확장",
+    "searchTerm": "Appearance Edit Enhanced",
+    "aliases": [
+      "외형 편집 확장"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/899",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:327": {
+    "title": "파티 인원 제한 해제",
+    "searchTerm": "Party Limit Begone",
+    "aliases": [
+      "파티 인원 제한 해제"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/327",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:97": {
+    "title": "장비 바구니 - NSFW 버전",
+    "searchTerm": "Basket Full of Equipment. NSFW version",
+    "aliases": [
+      "장비 바구니 - NSFW 버전"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/97",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:945": {
+    "title": "기본 카메라 개선",
+    "searchTerm": "Native Camera Tweaks",
+    "aliases": [
+      "기본 카메라 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/945",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:353": {
+    "title": "P4 패치",
+    "searchTerm": "P4 Patches",
+    "aliases": [
+      "P4 패치"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/353",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:2754": {
+    "title": "타브 커스텀 외형",
+    "searchTerm": "Unique Tav Custom Appearance",
+    "aliases": [
+      "타브 커스텀 외형"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/2754",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:315": {
+    "title": "아름다운 눈",
+    "searchTerm": "Eyes of the Beholder",
+    "aliases": [
+      "아름다운 눈"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/315",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:2226": {
+    "title": "Vemperen 추가 얼굴 수정",
+    "searchTerm": "Vemperen's Other Heads Repaired",
+    "aliases": [
+      "Vemperen 추가 얼굴 수정"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/2226",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:781": {
+    "title": "WASD 캐릭터 이동",
+    "searchTerm": "WASD Character Movement",
+    "aliases": [
+      "WASD 캐릭터 이동"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/781",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:652": {
+    "title": "나체 체형 개선",
+    "searchTerm": "Enhanced Nude Bodies",
+    "aliases": [
+      "나체 체형 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/652",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:2172": {
+    "title": "발더스 게이트 3 스크립트 확장 (BG3SE)",
+    "searchTerm": "Baldur's Gate 3 Script Extender (BG3SE)",
+    "aliases": [
+      "발더스 게이트 3 스크립트 확장 (BG3SE)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/2172",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:205": {
+    "title": "새 캐릭터 생성 프리셋",
+    "searchTerm": "New Character Creation Presets",
+    "aliases": [
+      "새 캐릭터 생성 프리셋"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/205",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:457": {
+    "title": "튜토리얼 상자 소환",
+    "searchTerm": "Tutorial Chest Summoning",
+    "aliases": [
+      "튜토리얼 상자 소환"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/457",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:9162": {
+    "title": "모드 설정 메뉴 (MCM)",
+    "searchTerm": "Mod Configuration Menu (MCM)",
+    "aliases": [
+      "모드 설정 메뉴 (MCM)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/9162",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:3346": {
+    "title": "타브 미용실 아이콘·종족 패치",
+    "searchTerm": "Icon and Race Patches for Tav's Hair Salon",
+    "aliases": [
+      "타브 미용실 아이콘·종족 패치"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/3346",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:429": {
+    "title": "페이룬의 얼굴",
+    "searchTerm": "Faces of Faerun",
+    "aliases": [
+      "페이룬의 얼굴"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/429",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:1933": {
+    "title": "호환성 프레임워크",
+    "searchTerm": "Compatibility Framework",
+    "aliases": [
+      "호환성 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/1933",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:1779": {
+    "title": "아티피서 직업·하위 직업",
+    "searchTerm": "Artificer class and all subclasses",
+    "aliases": [
+      "아티피서 직업·하위 직업"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/1779",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:1333": {
+    "title": "발더스 게이트 3 커뮤니티 라이브러리",
+    "searchTerm": "Baldur's Gate 3 Community Library",
+    "aliases": [
+      "발더스 게이트 3 커뮤니티 라이브러리"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/1333",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:2256": {
+    "title": "지도 개선 통합판",
+    "searchTerm": "Better Maps All-In-One",
+    "aliases": [
+      "지도 개선 통합판"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/2256",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:668": {
+    "title": "도전 과제 활성화",
+    "searchTerm": "Achievement Enabler",
+    "aliases": [
+      "도전 과제 활성화"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/668",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:baldursgate3:6045": {
+    "title": "BG3SX - 성인 프레임워크",
+    "searchTerm": "BG3SX - Sex Framework",
+    "aliases": [
+      "BG3SX - 성인 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/6045",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:15": {
+    "title": "CBBE - 체형 개선",
+    "searchTerm": "Caliente's Beautiful Bodies Enhancer -CBBE-",
+    "aliases": [
+      "CBBE - 체형 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/15",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:6091": {
+    "title": "방어구·무기 키워드 공통 리소스 (AWKCR)",
+    "searchTerm": "Armor and Weapon Keywords Community Resource (AWKCR)",
+    "aliases": [
+      "방어구·무기 키워드 공통 리소스 (AWKCR)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/6091",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:2228": {
+    "title": "아머스미스 확장",
+    "searchTerm": "Armorsmith Extended",
+    "aliases": [
+      "아머스미스 확장"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/2228",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:60927": {
+    "title": "스토리웰스 - 패치 모음",
+    "searchTerm": "A StoryWealth - Assorted Patches",
+    "aliases": [
+      "스토리웰스 - 패치 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/60927",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:4598": {
+    "title": "폴아웃 4 비공식 패치 (UFO4P)",
+    "searchTerm": "Unofficial Fallout 4 Patch - UFO4P",
+    "aliases": [
+      "폴아웃 4 비공식 패치 (UFO4P)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/4598",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:21497": {
+    "title": "모드 설정 메뉴",
+    "searchTerm": "Mod Configuration Menu",
+    "aliases": [
+      "모드 설정 메뉴"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/21497",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:12631": {
+    "title": "외형 메뉴",
+    "searchTerm": "LooksMenu",
+    "aliases": [
+      "외형 메뉴"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/12631",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:65720": {
+    "title": "폴아웃 4 HD 개편 2K",
+    "searchTerm": "Fallout 4 HD Overhaul 2k",
+    "aliases": [
+      "폴아웃 4 HD 개편 2K"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/65720",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:25": {
+    "title": "바디슬라이드·의상 스튜디오",
+    "searchTerm": "BodySlide and Outfit Studio",
+    "aliases": [
+      "바디슬라이드·의상 스튜디오"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/25",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:42147": {
+    "title": "폴아웃 4 스크립트 확장 (F4SE)",
+    "searchTerm": "Fallout 4 Script Extender (F4SE)",
+    "aliases": [
+      "폴아웃 4 스크립트 확장 (F4SE)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/42147",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:4472": {
+    "title": "트루 스톰 - 황무지 날씨 개선",
+    "searchTerm": "True Storms - Wasteland Edition (Thunder-Rain-Weather Redone)",
+    "aliases": [
+      "트루 스톰 - 황무지 날씨 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/4472",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:20309": {
+    "title": "HUD 프레임워크",
+    "searchTerm": "HUDFramework",
+    "aliases": [
+      "HUD 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/20309",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:1235": {
+    "title": "전체 대화문 표시",
+    "searchTerm": "Full Dialogue Interface (NewDialog English and CN-DE-ES-FR-IT-JA-PL-PTBR-RU translations)",
+    "aliases": [
+      "전체 대화문 표시"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/1235",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:8126": {
+    "title": "Azar 포니테일 헤어 3.0",
+    "searchTerm": "Ponytail Hairstyles by Azar v3.0",
+    "aliases": [
+      "Azar 포니테일 헤어 3.0"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/8126",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:9424": {
+    "title": "어디든 배치",
+    "searchTerm": "Place Everywhere",
+    "aliases": [
+      "어디든 배치"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/9424",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:133": {
+    "title": "아름다운 눈 - 폴아웃",
+    "searchTerm": "The Eyes Of Beauty Fallout Edition",
+    "aliases": [
+      "아름다운 눈 - 폴아웃"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/133",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:9476": {
+    "title": "투명 조준경",
+    "searchTerm": "See Through Scopes",
+    "aliases": [
+      "투명 조준경"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/9476",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:11402": {
+    "title": "커먼웰스 헤어 모음 (KS·Apachii)",
+    "searchTerm": "Commonwealth Cuts - KS Hairdos - ApachiiSkyHair",
+    "aliases": [
+      "커먼웰스 헤어 모음 (KS·Apachii)"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/11402",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:35004": {
+    "title": "작업장 프레임워크",
+    "searchTerm": "Workshop Framework",
+    "aliases": [
+      "작업장 프레임워크"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/35004",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:47327": {
+    "title": "F4SE 플러그인 주소 라이브러리",
+    "searchTerm": "Address Library for F4SE Plugins",
+    "aliases": [
+      "F4SE 플러그인 주소 라이브러리"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/47327",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:8704": {
+    "title": "아토믹 라디오·커먼웰스 이야기",
+    "searchTerm": "Atomic Radio and Tales from the Commonwealth",
+    "aliases": [
+      "아토믹 라디오·커먼웰스 이야기"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/8704",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:1478": {
+    "title": "홈메이커 - 정착지 확장",
+    "searchTerm": "Homemaker - Expanded Settlements",
+    "aliases": [
+      "홈메이커 - 정착지 확장"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/1478",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:78619": {
+    "title": "DegenerateDak ESL 패치 모음",
+    "searchTerm": "DegenerateDak ESLified Patch Hub",
+    "aliases": [
+      "DegenerateDak ESL 패치 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/78619",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:212": {
+    "title": "혈흔 텍스처 개선",
+    "searchTerm": "Enhanced Blood Textures",
+    "aliases": [
+      "혈흔 텍스처 개선"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/212",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:52423": {
+    "title": "폴아웃 4 HD 개편",
+    "searchTerm": "Fallout 4 HD Overhaul",
+    "aliases": [
+      "폴아웃 4 HD 개편"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/52423",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:1215": {
+    "title": "도로가 보이는 지도",
+    "searchTerm": "Improved Map with Visible Roads",
+    "aliases": [
+      "도로가 보이는 지도"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/1215",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:24830": {
+    "title": "외형 메뉴 꾸미기 모음",
+    "searchTerm": "Looks Menu Customization Compendium",
+    "aliases": [
+      "외형 메뉴 꾸미기 모음"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/24830",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:3841": {
+    "title": "발키르 여성 얼굴·체형 텍스처",
+    "searchTerm": "Valkyr Female Face and Body Textures",
+    "aliases": [
+      "발키르 여성 얼굴·체형 텍스처"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/3841",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:21872": {
+    "title": "심 세틀먼트",
+    "searchTerm": "Sim Settlements",
+    "aliases": [
+      "심 세틀먼트"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/21872",
+    "reviewedAt": "2026-09-30"
+  },
+  "nexus:fallout4:4398": {
+    "title": "디럭스 메이크업",
+    "searchTerm": "deLuxe Makeup",
+    "aliases": [
+      "디럭스 메이크업"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/fallout4/mods/4398",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:ebkr-r2modman": {
+    "title": "r2modman",
+    "searchTerm": "r2modman",
+    "aliases": [],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/ebkr/r2modman/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:bbepis-BepInExPack": {
+    "title": "베핀엑스 팩",
+    "searchTerm": "BepInExPack",
+    "aliases": [
+      "베핀엑스 팩"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/bbepis/BepInExPack/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-RoR2BepInExPack": {
+    "title": "리스크 오브 레인 2 베핀엑스 팩",
+    "searchTerm": "RoR2BepInExPack",
+    "aliases": [
+      "리스크 오브 레인 2 베핀엑스 팩"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/RoR2BepInExPack/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:MonoDetour-MonoDetour": {
+    "title": "MonoDetour",
+    "searchTerm": "MonoDetour",
+    "aliases": [],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/MonoDetour/MonoDetour/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:MonoDetour-MonoDetour_BepInEx_5": {
+    "title": "MonoDetour - 베핀엑스 5",
+    "searchTerm": "MonoDetour_BepInEx_5",
+    "aliases": [
+      "MonoDetour - 베핀엑스 5"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/MonoDetour/MonoDetour_BepInEx_5/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Core": {
+    "title": "R2API 코어",
+    "searchTerm": "R2API_Core",
+    "aliases": [
+      "R2API 코어"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Core/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Director": {
+    "title": "R2API 디렉터",
+    "searchTerm": "R2API_Director",
+    "aliases": [
+      "R2API 디렉터"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Director/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:tristanmcpherson-R2API": {
+    "title": "R2API",
+    "searchTerm": "R2API",
+    "aliases": [],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/tristanmcpherson/R2API/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_ContentManagement": {
+    "title": "R2API 콘텐츠 관리",
+    "searchTerm": "R2API_ContentManagement",
+    "aliases": [
+      "R2API 콘텐츠 관리"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_ContentManagement/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_RecalculateStats": {
+    "title": "R2API 능력치 재계산",
+    "searchTerm": "R2API_RecalculateStats",
+    "aliases": [
+      "R2API 능력치 재계산"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_RecalculateStats/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Skins": {
+    "title": "R2API 스킨",
+    "searchTerm": "R2API_Skins",
+    "aliases": [
+      "R2API 스킨"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Skins/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-HookGenPatcher": {
+    "title": "훅 생성 패처",
+    "searchTerm": "HookGenPatcher",
+    "aliases": [
+      "훅 생성 패처"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/HookGenPatcher/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_DamageType": {
+    "title": "R2API 피해 유형",
+    "searchTerm": "R2API_DamageType",
+    "aliases": [
+      "R2API 피해 유형"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_DamageType/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Dot": {
+    "title": "R2API 지속 피해",
+    "searchTerm": "R2API_Dot",
+    "aliases": [
+      "R2API 지속 피해"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Dot/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:Rune580-Risk_Of_Options": {
+    "title": "리스크 오브 옵션",
+    "searchTerm": "Risk_Of_Options",
+    "aliases": [
+      "리스크 오브 옵션"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/Rune580/Risk_Of_Options/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Elites": {
+    "title": "R2API 정예 몬스터",
+    "searchTerm": "R2API_Elites",
+    "aliases": [
+      "R2API 정예 몬스터"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Elites/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Items": {
+    "title": "R2API 아이템",
+    "searchTerm": "R2API_Items",
+    "aliases": [
+      "R2API 아이템"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Items/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Prefab": {
+    "title": "R2API 프리팹",
+    "searchTerm": "R2API_Prefab",
+    "aliases": [
+      "R2API 프리팹"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Prefab/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:TeamMoonstorm-Starstorm2": {
+    "title": "스타스톰 2",
+    "searchTerm": "Starstorm2",
+    "aliases": [
+      "스타스톰 2"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/TeamMoonstorm/Starstorm2/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Addressables": {
+    "title": "R2API 어드레서블",
+    "searchTerm": "R2API_Addressables",
+    "aliases": [
+      "R2API 어드레서블"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Addressables/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Networking": {
+    "title": "R2API 네트워킹",
+    "searchTerm": "R2API_Networking",
+    "aliases": [
+      "R2API 네트워킹"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Networking/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-FixPluginTypesSerialization": {
+    "title": "플러그인 타입 직렬화 수정",
+    "searchTerm": "FixPluginTypesSerialization",
+    "aliases": [
+      "플러그인 타입 직렬화 수정"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/FixPluginTypesSerialization/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Sound": {
+    "title": "R2API 사운드",
+    "searchTerm": "R2API_Sound",
+    "aliases": [
+      "R2API 사운드"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Sound/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-BepInEx_GUI": {
+    "title": "베핀엑스 GUI",
+    "searchTerm": "BepInEx_GUI",
+    "aliases": [
+      "베핀엑스 GUI"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/BepInEx_GUI/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_TempVisualEffect": {
+    "title": "R2API 임시 시각 효과",
+    "searchTerm": "R2API_TempVisualEffect",
+    "aliases": [
+      "R2API 임시 시각 효과"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_TempVisualEffect/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:EnforcerGang-Enforcer": {
+    "title": "인포서",
+    "searchTerm": "Enforcer",
+    "aliases": [
+      "인포서"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/EnforcerGang/Enforcer/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_Language": {
+    "title": "R2API 언어",
+    "searchTerm": "R2API_Language",
+    "aliases": [
+      "R2API 언어"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_Language/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_CommandHelper": {
+    "title": "R2API 명령어 도우미",
+    "searchTerm": "R2API_CommandHelper",
+    "aliases": [
+      "R2API 명령어 도우미"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_CommandHelper/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:KingEnderBrine-ScrollableLobbyUI": {
+    "title": "스크롤 가능한 로비 UI",
+    "searchTerm": "ScrollableLobbyUI",
+    "aliases": [
+      "스크롤 가능한 로비 UI"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/KingEnderBrine/ScrollableLobbyUI/",
+    "reviewedAt": "2026-09-30"
+  },
+  "thunderstore:riskofrain2:RiskofThunder-R2API_SceneAsset": {
+    "title": "R2API 장면 에셋",
+    "searchTerm": "R2API_SceneAsset",
+    "aliases": [
+      "R2API 장면 에셋"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/RiskofThunder/R2API_SceneAsset/",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2040656402": {
+    "title": "하모니 2.2.2-0",
+    "searchTerm": "Harmony 2.2.2-0 (Mod Dependency)",
+    "aliases": [
+      "하모니 2.2.2-0"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2040656402",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:1619685021": {
+    "title": "무브 잇",
+    "searchTerm": "Move It",
+    "aliases": [
+      "무브 잇"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1619685021",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:1637663252": {
+    "title": "교통 관리자 (TM:PE 11.9.4.1 안정판)",
+    "searchTerm": "TM:PE 11.9.4.1 STABLE (Traffic Manager: President Edition)",
+    "aliases": [
+      "교통 관리자 (TM:PE 11.9.4.1 안정판)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1637663252",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:445589127": {
+    "title": "정밀 설계",
+    "searchTerm": "Precision Engineering",
+    "aliases": [
+      "정밀 설계"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=445589127",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:502750307": {
+    "title": "추가 조경 도구",
+    "searchTerm": "Extra Landscaping Tools",
+    "aliases": [
+      "추가 조경 도구"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=502750307",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:812125426": {
+    "title": "도로 확장 2",
+    "searchTerm": "Network Extensions 2",
+    "aliases": [
+      "도로 확장 2"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=812125426",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:405810376": {
+    "title": "25개 구역 모두 구매",
+    "searchTerm": "All 25 Areas purchasable",
+    "aliases": [
+      "25개 구역 모두 구매"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=405810376",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2140418403": {
+    "title": "교차로 노면 표시 도구 1.15",
+    "searchTerm": "Intersection Marking Tool 1.15",
+    "aliases": [
+      "교차로 노면 표시 도구 1.15"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2140418403",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:593588108": {
+    "title": "장식물·나무 배치 제한 해제",
+    "searchTerm": "Prop & Tree Anarchy",
+    "aliases": [
+      "장식물·나무 배치 제한 해제"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=593588108",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:689937287": {
+    "title": "지면 페인트",
+    "searchTerm": "Surface Painter",
+    "aliases": [
+      "지면 페인트"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=689937287",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:639486063": {
+    "title": "자동 철거 2",
+    "searchTerm": "Automatic Bulldoze v2",
+    "aliases": [
+      "자동 철거 2"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=639486063",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2862121823": {
+    "title": "81개 구역 2 (1.0.5)",
+    "searchTerm": "81 Tiles 2 1.0.5",
+    "aliases": [
+      "81개 구역 2 (1.0.5)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2862121823",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2472062376": {
+    "title": "노드 컨트롤러 리뉴얼 3.5.4",
+    "searchTerm": "Node Controller Renewal 3.5.4",
+    "aliases": [
+      "노드 컨트롤러 리뉴얼 3.5.4"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2472062376",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:1625704117": {
+    "title": "회전교차로 건설",
+    "searchTerm": "Roundabout Builder",
+    "aliases": [
+      "회전교차로 건설"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1625704117",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2862881785": {
+    "title": "도로 배치 제한 해제",
+    "searchTerm": "Network Anarchy",
+    "aliases": [
+      "도로 배치 제한 해제"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2862881785",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:1285201733": {
+    "title": "주차장 도로",
+    "searchTerm": "Parking Lot Roads",
+    "aliases": [
+      "주차장 도로"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1285201733",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:530871278": {
+    "title": "클래식 일광",
+    "searchTerm": "Daylight Classic",
+    "aliases": [
+      "클래식 일광"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=530871278",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2041457644": {
+    "title": "패치 로더",
+    "searchTerm": "Patch Loader Mod",
+    "aliases": [
+      "패치 로더"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2041457644",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:432840529": {
+    "title": "대형 재활용 센터",
+    "searchTerm": "Large Recycling Center",
+    "aliases": [
+      "대형 재활용 센터"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=432840529",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2560782729": {
+    "title": "도로 다용도 도구 1.3.9",
+    "searchTerm": "Network Multitool 1.3.9",
+    "aliases": [
+      "도로 다용도 도구 1.3.9"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2560782729",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2133885971": {
+    "title": "파인드 잇 2",
+    "searchTerm": "Find It! 2",
+    "aliases": [
+      "파인드 잇 2"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2133885971",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:1440928803": {
+    "title": "평행 도로 도구",
+    "searchTerm": "Parallel Road Tool",
+    "aliases": [
+      "평행 도로 도구"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1440928803",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:2105755179": {
+    "title": "FPS 향상",
+    "searchTerm": "FPS Booster",
+    "aliases": [
+      "FPS 향상"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2105755179",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:523824395": {
+    "title": "구름·안개 켜기·끄기",
+    "searchTerm": "Clouds & Fog Toggler",
+    "aliases": [
+      "구름·안개 켜기·끄기"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=523824395",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:928128676": {
+    "title": "대중교통 개선 2",
+    "searchTerm": "Improved Public Transport 2",
+    "aliases": [
+      "대중교통 개선 2"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=928128676",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:650436109": {
+    "title": "부두 배치 제한 해제",
+    "searchTerm": "Quay Anarchy",
+    "aliases": [
+      "부두 배치 제한 해제"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=650436109",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:515489008": {
+    "title": "추가 기차역 선로 (ETST)",
+    "searchTerm": "Extra Train Station Tracks ( ETST )",
+    "aliases": [
+      "추가 기차역 선로 (ETST)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=515489008",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:787611845": {
+    "title": "장식물 스냅",
+    "searchTerm": "Prop Snapping",
+    "aliases": [
+      "장식물 스냅"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=787611845",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:791221322": {
+    "title": "장식물 정밀 배치",
+    "searchTerm": "Prop Precision",
+    "aliases": [
+      "장식물 정밀 배치"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=791221322",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:255710:406269372": {
+    "title": "Timboh 터빈형 나들목",
+    "searchTerm": "Timboh's Turbine Interchange",
+    "aliases": [
+      "Timboh 터빈형 나들목"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=406269372",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:376333686": {
+    "title": "통합 상태 표시",
+    "searchTerm": "Combined Status",
+    "aliases": [
+      "통합 상태 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=376333686",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:378160973": {
+    "title": "전역 위치 표시",
+    "searchTerm": "Global Positions",
+    "aliases": [
+      "전역 위치 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=378160973",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:345692228": {
+    "title": "미니맵 HUD",
+    "searchTerm": "Minimap HUD",
+    "aliases": [
+      "미니맵 HUD"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=345692228",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:351325790": {
+    "title": "격자 배치",
+    "searchTerm": "Geometric Placement",
+    "aliases": [
+      "격자 배치"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=351325790",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:727774324": {
+    "title": "요리 냄비 (DS·ROG·SW·DST)",
+    "searchTerm": "Craft Pot [DS, ROG, SW, DST]",
+    "aliases": [
+      "요리 냄비 (DS·ROG·SW·DST)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=727774324",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1207269058": {
+    "title": "간단한 체력바 (DST)",
+    "searchTerm": "Simple Health Bar DST",
+    "aliases": [
+      "간단한 체력바 (DST)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1207269058",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:375859599": {
+    "title": "체력 정보",
+    "searchTerm": "Health Info",
+    "aliases": [
+      "체력 정보"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=375859599",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:375850593": {
+    "title": "추가 장비 슬롯",
+    "searchTerm": "Extra Equip Slots",
+    "aliases": [
+      "추가 장비 슬롯"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=375850593",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:347079953": {
+    "title": "음식 수치 표시",
+    "searchTerm": "Display Food Values",
+    "aliases": [
+      "음식 수치 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=347079953",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:362175979": {
+    "title": "웜홀 표시 (DST)",
+    "searchTerm": "Wormhole Marks [DST]",
+    "aliases": [
+      "웜홀 표시 (DST)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=362175979",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1185229307": {
+    "title": "에픽 체력바",
+    "searchTerm": "Epic Healthbar",
+    "aliases": [
+      "에픽 체력바"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1185229307",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:666155465": {
+    "title": "정보 표시 (원본)",
+    "searchTerm": "Show Me (Origin)",
+    "aliases": [
+      "정보 표시 (원본)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=666155465",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:374550642": {
+    "title": "묶음 수량 증가",
+    "searchTerm": "Increased Stack size",
+    "aliases": [
+      "묶음 수량 증가"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=374550642",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:661253977": {
+    "title": "아이템 전부 떨어뜨리지 않기",
+    "searchTerm": "Don't Drop Everything",
+    "aliases": [
+      "아이템 전부 떨어뜨리지 않기"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=661253977",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:367546858": {
+    "title": "중국어 언어 팩",
+    "searchTerm": "Chinese Language Pack",
+    "aliases": [
+      "중국어 언어 팩"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=367546858",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:2287303119": {
+    "title": "정보 표시 (신판)",
+    "searchTerm": "Show Me(New)",
+    "aliases": [
+      "정보 표시 (신판)"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2287303119",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:501385076": {
+    "title": "빠른 채집",
+    "searchTerm": "Quick Pick",
+    "aliases": [
+      "빠른 채집"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=501385076",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:352373173": {
+    "title": "제스처 휠",
+    "searchTerm": "Gesture Wheel",
+    "aliases": [
+      "제스처 휠"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=352373173",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:365119238": {
+    "title": "똑똑한 요리 냄비",
+    "searchTerm": "Smarter Crock Pot",
+    "aliases": [
+      "똑똑한 요리 냄비"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=365119238",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1240565842": {
+    "title": "DST 러시아어 번역 팩",
+    "searchTerm": "Russification Pack for DST",
+    "aliases": [
+      "DST 러시아어 번역 팩"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1240565842",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:2078243581": {
+    "title": "공격 범위 표시",
+    "searchTerm": "Display Attack Range",
+    "aliases": [
+      "공격 범위 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2078243581",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1120124958": {
+    "title": "보스 위치 표시",
+    "searchTerm": "Boss Indicators",
+    "aliases": [
+      "보스 위치 표시"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1120124958",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:836583293": {
+    "title": "아이템 정보",
+    "searchTerm": "Item Info",
+    "aliases": [
+      "아이템 정보"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=836583293",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1608191708": {
+    "title": "액션 큐 리본",
+    "searchTerm": "ActionQueue Reborn",
+    "aliases": [
+      "액션 큐 리본"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1608191708",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:458587300": {
+    "title": "빠른 이동",
+    "searchTerm": "Fast Travel",
+    "aliases": [
+      "빠른 이동"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=458587300",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:786556008": {
+    "title": "인벤토리 45칸",
+    "searchTerm": "45 Inventory Slots",
+    "aliases": [
+      "인벤토리 45칸"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=786556008",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1271089343": {
+    "title": "내 해골에서 부활",
+    "searchTerm": "Your Skeleton Respawn",
+    "aliases": [
+      "내 해골에서 부활"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1271089343",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:466732225": {
+    "title": "보온석 내구도 무제한",
+    "searchTerm": "No Thermal Stone Durability",
+    "aliases": [
+      "보온석 내구도 무제한"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=466732225",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:569043634": {
+    "title": "모닥불 부활",
+    "searchTerm": "Campfire Respawn",
+    "aliases": [
+      "모닥불 부활"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=569043634",
+    "reviewedAt": "2026-09-30"
+  },
+  "steam:322330:1595631294": {
+    "title": "스마트 작은 표지판",
+    "searchTerm": "Smart Minisign",
+    "aliases": [
+      "스마트 작은 표지판"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1595631294",
+    "reviewedAt": "2026-09-30"
   }
 }

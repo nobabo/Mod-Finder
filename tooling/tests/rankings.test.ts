@@ -55,6 +55,17 @@ describe('game community rankings', () => {
     expect(countCommunityMentions(posts, 'minecraft-java').map(entry => [entry.id, entry.mentions])).toEqual([['gtnh', 1]]);
     expect(countCommunityMentions(posts, 'cities-skylines')).toEqual([]);
   });
+  it('uses the same localized names in stored and newly counted community rankings', () => {
+    for (const game of GAMES.filter(game => game.id !== 'minecraft-java')) {
+      const mods = communityMods(game.id);
+      for (const entry of communityRanking(game.id)?.entries ?? []) {
+        expect(entry.koreanName, `${game.id}:${entry.id}`).toBe(mods.find(mod => mod.id === entry.id)?.koreanName);
+        expect(entry.koreanName).toBeTruthy();
+      }
+    }
+    expect(countCommunityMentions([{ id: '1', title: 'CJB Cheats Menu' }], 'stardew-valley')[0].koreanName).toBe('CJB 치트 메뉴');
+    expect(countCommunityMentions([{ id: '1', title: 'BepInEx' }], 'lethal-company')[0].koreanName).toBe('베핀엑스 팩');
+  });
   it('excludes explicitly different games from shared series galleries', () => {
     expect(countCommunityMentions([{ id: '1', title: '[뉴베] CBBE' }, { id: '2', title: '[폴4] CBBE' }], 'fallout-4').map(entry => entry.postIds)).toEqual([['2']]);
     expect(countCommunityMentions([{ id: '1', title: '오블리비언 ENB' }, { id: '2', title: '[SE] ENB' }], 'skyrim-se').map(entry => entry.postIds)).toEqual([['2']]);

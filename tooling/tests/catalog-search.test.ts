@@ -1,6 +1,6 @@
 import { describe, expect, it, vi } from 'vitest';
 import { GAMES, GENRES, findGames } from '../../src/shared/games';
-import { listingText, providerQuery, tagText } from '../../src/shared/content';
+import { listingText, modTranslations, providerQuery, tagText } from '../../src/shared/content';
 import { searchPlan, bucketKey, runSearchQueue, type SearchSpec } from '../../src/shared/search-plan';
 import { groupResults } from '../../src/shared/ranking';
 import verified from '../../src/shared/data/verified-projects.json';
@@ -61,6 +61,24 @@ describe('catalog and global search', () => {
   });
 });
 describe('localized content and verified duplicates', () => {
+  it('keeps ranking translations tied to source IDs and searches their original names', () => {
+    for (const game of GAMES.filter(game => game.id !== 'minecraft-java')) {
+      const prefixes = Object.entries(game.sources).map(([source, mapping]) => `${source}:${mapping.scope}:`);
+      const entries = Object.entries(modTranslations).filter(([key]) => prefixes.some(prefix => key.startsWith(prefix)));
+      expect(entries.length, game.id).toBeGreaterThanOrEqual(30);
+      for (const [key, entry] of entries) {
+        const original = { ...sodium(), key, gameId: game.id, title: entry.searchTerm };
+        expect(listingText(original, 'ko').title).toBe(entry.title);
+        expect(listingText(original, 'en').title).toBe(entry.searchTerm);
+        expect(original.title).toBe(entry.searchTerm);
+        expect(providerQuery(entry.title!, [key.slice(0, key.lastIndexOf(':') + 1)], game.id), key).toBe(entry.searchTerm);
+        expect(listingText({ ...original, key: `${key}-unknown` }, 'ko').title).toBe(entry.searchTerm);
+      }
+    }
+    const sameName = { ...sodium(), title: 'Content Patcher' };
+    expect(listingText({ ...sameName, key: 'nexus:stardewvalley:1915' }, 'ko').title).toBe('콘텐츠 패처');
+    expect(listingText({ ...sameName, key: 'nexus:skyrimspecialedition:1915' }, 'ko').title).toBe('Content Patcher');
+  });
   it('overlays Korean text without overwriting original data or unknown fields', () => {
     const item = sodium();
     expect(listingText(item, 'ko').title).toBe('소듐 (Sodium)');
@@ -79,7 +97,10 @@ describe('localized content and verified duplicates', () => {
     expect(tagText('Gameplay', 'ko')).toBe('게임플레이');
     expect(tagText('quality of life', 'ko')).toBe('편의성');
     expect(tagText('Gameplay', 'en')).toBe('Gameplay');
-    expect(tagText('BepInEx', 'ko')).toBe('BepInEx');
+    expect(tagText('BepInEx', 'ko')).toBe('베핀엑스');
+    expect(tagText('bepinex', 'ko')).toBe('베핀엑스');
+    expect(tagText('BepInEx', 'en')).toBe('BepInEx');
+    expect(tagText('UnknownLoader', 'ko')).toBe('UnknownLoader');
   });
   it('forwards exact Korean search terms in English while leaving other queries untouched', () => {
     const koreanSpec = { ...spec, gameId: 'minecraft-java', query: '  편의성  ' };

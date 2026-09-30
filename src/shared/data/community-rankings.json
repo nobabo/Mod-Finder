@@ -794,7 +794,8 @@
           "195975",
           "194404",
           "194137"
-        ]
+        ],
+        "koreanName": "ENB"
       },
       {
         "id": "colossus",
@@ -834,7 +835,8 @@
           "240624",
           "235085",
           "200382"
-        ]
+        ],
+        "koreanName": "SKSE"
       },
       {
         "id": "skyui",
@@ -879,7 +881,8 @@
         "postIds": [
           "268028",
           "267888"
-        ]
+        ],
+        "koreanName": "세라나 대화 확장"
       }
     ]
   },
@@ -933,7 +936,8 @@
           "33187",
           "33161",
           "33103"
-        ]
+        ],
+        "koreanName": "LCMI"
       },
       {
         "id": "brutal-company",
@@ -957,7 +961,8 @@
         "postIds": [
           "30984",
           "13609"
-        ]
+        ],
+        "koreanName": "검시관"
       },
       {
         "id": "elads-hud",
@@ -967,7 +972,8 @@
         "postIds": [
           "30834",
           "13310"
-        ]
+        ],
+        "koreanName": "Elad의 HUD"
       },
       {
         "id": "mirage",
@@ -998,7 +1004,8 @@
         "mentions": 1,
         "postIds": [
           "15203"
-        ]
+        ],
+        "koreanName": "컨트롤 컴퍼니"
       },
       {
         "id": "facility-meltdown",
@@ -1007,7 +1014,8 @@
         "mentions": 1,
         "postIds": [
           "9610"
-        ]
+        ],
+        "koreanName": "시설 멜트다운"
       },
       {
         "id": "lategame-upgrades",
@@ -1016,7 +1024,8 @@
         "mentions": 1,
         "postIds": [
           "33542"
-        ]
+        ],
+        "koreanName": "후반부 업그레이드"
       }
     ]
   },
@@ -1124,7 +1133,8 @@
           "930436",
           "927372",
           "910586"
-        ]
+        ],
+        "koreanName": "그래브타이드"
       },
       {
         "id": "palim",
@@ -1157,7 +1167,8 @@
         "postIds": [
           "929051",
           "928121"
-        ]
+        ],
+        "koreanName": "dd 정의 조정 도구"
       },
       {
         "id": "medieval-overhaul",
@@ -1370,7 +1381,8 @@
           "57808",
           "55303",
           "46415"
-        ]
+        ],
+        "koreanName": "빠른 겹치기·보관·정렬·버리기·보충"
       },
       {
         "id": "jewelcrafting",
@@ -1391,7 +1403,8 @@
         "postIds": [
           "43535",
           "43416"
-        ]
+        ],
+        "koreanName": "간편한 심기"
       },
       {
         "id": "autorepair",
@@ -1410,7 +1423,8 @@
         "mentions": 1,
         "postIds": [
           "47253"
-        ]
+        ],
+        "koreanName": "UI 개선"
       }
     ]
   },
@@ -1866,7 +1880,8 @@
           "277872",
           "253983",
           "249504"
-        ]
+        ],
+        "koreanName": "트루 뮤직"
       },
       {
         "id": "common-sense",
@@ -1887,7 +1902,8 @@
         "postIds": [
           "309865",
           "309858"
-        ]
+        ],
+        "koreanName": "PZ3D"
       },
       {
         "id": "raven-creek",
@@ -1919,7 +1935,8 @@
         "postIds": [
           "304005",
           "263657"
-        ]
+        ],
+        "koreanName": "특성·직업 간편 개편"
       },
       {
         "id": "vanilla-outfits",
@@ -1929,7 +1946,8 @@
         "postIds": [
           "305048",
           "303117"
-        ]
+        ],
+        "koreanName": "바닐라 의상 확장"
       },
       {
         "id": "alife",
@@ -1938,7 +1956,8 @@
         "mentions": 1,
         "postIds": [
           "308868"
-        ]
+        ],
+        "koreanName": "프로젝트 A-라이프"
       },
       {
         "id": "brutal-handwork",
@@ -1947,7 +1966,8 @@
         "mentions": 1,
         "postIds": [
           "301861"
-        ]
+        ],
+        "koreanName": "브루탈 핸드워크"
       },
       {
         "id": "extraction",
@@ -1956,7 +1976,8 @@
         "mentions": 1,
         "postIds": [
           "309891"
-        ]
+        ],
+        "koreanName": "탈출 모드"
       }
     ]
   },
@@ -2037,7 +2058,8 @@
           "596989",
           "591797",
           "584688"
-        ]
+        ],
+        "koreanName": "아크팩"
       },
       {
         "id": "combat-evolved",
@@ -2049,7 +2071,8 @@
           "672721",
           "671878",
           "671191"
-        ]
+        ],
+        "koreanName": "전투 개편"
       },
       {
         "id": "k-head",
@@ -2061,7 +2084,8 @@
           "673555",
           "672448",
           "672142"
-        ]
+        ],
+        "koreanName": "K-헤드"
       },
       {
         "id": "they-will-remember",
@@ -2072,7 +2096,8 @@
           "673658",
           "658958",
           "635029"
-        ]
+        ],
+        "koreanName": "그들은 기억한다"
       },
       {
         "id": "cet",
@@ -2093,7 +2118,8 @@
         "postIds": [
           "694534",
           "628577"
-        ]
+        ],
+        "koreanName": "드론 동료"
       },
       {
         "id": "hunted",
@@ -2103,7 +2129,8 @@
         "postIds": [
           "667453",
           "666180"
-        ]
+        ],
+        "koreanName": "헌티드"
       },
       {
         "id": "immersive-gigs",
@@ -2113,7 +2140,8 @@
         "postIds": [
           "666740",
           "645752"
-        ]
+        ],
+        "koreanName": "몰입형 의뢰"
       },
       {
         "id": "korface",
@@ -2123,7 +2151,8 @@
         "postIds": [
           "673785",
           "673349"
-        ]
+        ],
+        "koreanName": "KORFACE"
       },
       {
         "id": "virtual-atelier",
@@ -2258,7 +2287,8 @@
         "mentions": 1,
         "postIds": [
           "944912"
-        ]
+        ],
+        "koreanName": "기본 카메라 개선"
       },
       {
         "id": "mod-fixer",
@@ -2353,7 +2383,8 @@
         "postIds": [
           "223603",
           "223441"
-        ]
+        ],
+        "koreanName": "엑스셀"
       },
       {
         "id": "haemul-pack",
@@ -2362,7 +2393,8 @@
         "mentions": 1,
         "postIds": [
           "233810"
-        ]
+        ],
+        "koreanName": "해물육수팩"
       },
       {
         "id": "myeolyuk-pack",
@@ -2371,7 +2403,8 @@
         "mentions": 1,
         "postIds": [
           "245643"
-        ]
+        ],
+        "koreanName": "멸육팩"
       },
       {
         "id": "sim-settlements",
@@ -2467,7 +2500,8 @@
         "mentions": 1,
         "postIds": [
           "29581"
-        ]
+        ],
+        "koreanName": "아군 폭발 회피"
       },
       {
         "id": "betterui",
@@ -2476,7 +2510,8 @@
         "mentions": 1,
         "postIds": [
           "29246"
-        ]
+        ],
+        "koreanName": "UI 개선"
       },
       {
         "id": "mystics-items",
@@ -2485,7 +2520,8 @@
         "mentions": 1,
         "postIds": [
           "24428"
-        ]
+        ],
+        "koreanName": "미스틱 아이템"
       },
       {
         "id": "quality",
@@ -2494,7 +2530,8 @@
         "mentions": 1,
         "postIds": [
           "28864"
-        ]
+        ],
+        "koreanName": "퀄리티"
       },
       {
         "id": "skills-plus-plus",
@@ -2503,7 +2540,8 @@
         "mentions": 1,
         "postIds": [
           "21550"
-        ]
+        ],
+        "koreanName": "스킬 플러스 플러스 개선"
       }
     ]
   }
