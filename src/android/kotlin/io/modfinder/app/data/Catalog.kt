@@ -9,10 +9,11 @@ data class CommunityRankingEntry(val id: String, val name: String, val koreanNam
 
 class Catalog(private val context: Context) {
     private val data = context.assets.open("catalog.json").bufferedReader().use { JSONObject(it.readText()) }
+    private fun assetUrl(path: String?) = path?.let { artworkUrl(it, data.getJSONObject("assetRevisions").text(it)) }
     val games = data.getJSONArray("games").objects().map { item ->
         val providers = item.getJSONObject("sources")
         Game(item.getString("id"), item.getString("name"), item.getString("koreanName"), item.stringList("aliases").orEmpty(), item.stringList("genres").orEmpty(),
-            item.text("image"), data.getJSONObject("logos").optJSONObject(item.getString("id"))?.text("src"), providers.keys().asSequence().associateWith { providers.getJSONObject(it).getString("scope") })
+            assetUrl(item.text("image")), assetUrl(data.getJSONObject("logos").optJSONObject(item.getString("id"))?.text("src")), providers.keys().asSequence().associateWith { providers.getJSONObject(it).getString("scope") })
     }
     val genres = data.getJSONArray("genres").objects().map { Choice(it.getString("id"), it.getString("ko"), it.getString("en")) }
     val themes = data.getJSONArray("themes").objects().map { Palette(it.getString("id"), it.getString("ko"), it.getString("en"), it.getString("primary"), it.getString("secondary")) }
@@ -38,7 +39,7 @@ class Catalog(private val context: Context) {
     }
     fun photos(spec: SearchSpec): List<String> {
         val scope = games.filter { if (spec.gameId == "all") spec.genre == "all" || spec.genre in it.genres else it.id == spec.gameId }
-        return (0 until 6).flatMap { index -> scope.mapNotNull { data.getJSONObject("backgrounds").optJSONObject(it.id)?.optJSONArray("screenshots")?.optJSONObject(index)?.text("src") } }
+        return (0 until 6).flatMap { index -> scope.mapNotNull { assetUrl(data.getJSONObject("backgrounds").optJSONObject(it.id)?.optJSONArray("screenshots")?.optJSONObject(index)?.text("src")) } }
     }
     fun providerQuery(query: String, game: Game, source: String): String {
         val q = normalized(query)

@@ -94,6 +94,11 @@ try {
       : join(env.CARGO_TARGET_DIR, 'release/bundle/nsis', `${config.productName}_${version}_x64-setup.exe`);
     requireFile(artifact, '빌드 결과를 찾을 수 없습니다. 위 빌드 로그를 확인하세요.');
     if (android) {
+      const listing = spawnSync(join(env.JAVA_HOME, 'bin/jar.exe'), ['tf', artifact], { encoding: 'utf8', windowsHide: true, maxBuffer: 8 * 1024 * 1024 });
+      if (listing.error || listing.status !== 0) throw new Error('APK 에셋 목록 검사에 실패했습니다.');
+      if (/^assets\/.*\.(png|jpe?g|webp|avif|gif|svg)$/im.test(listing.stdout)) {
+        throw new Error('APK에 원격 게임 이미지가 포함되어 있습니다. Android 에셋 준비 단계를 확인하세요.');
+      }
       run(android.java, ['-jar', join(android.buildTools, 'lib/apksigner.jar'), 'verify', '--verbose', artifact], 'APK 서명 검사');
       run(join(android.buildTools, 'zipalign.exe'), ['-c', '-P', '16', '4', artifact], 'APK 정렬 검사');
     }

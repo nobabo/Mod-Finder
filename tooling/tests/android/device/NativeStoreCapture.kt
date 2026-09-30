@@ -8,6 +8,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import androidx.test.platform.app.InstrumentationRegistry
 import org.junit.Assume.assumeTrue
+import org.junit.Assert.assertEquals
 import org.junit.Rule
 import org.junit.Test
 import org.junit.runner.RunWith
@@ -37,8 +38,10 @@ class NativeStoreCapture {
         compose.waitForIdle()
         // Coil decodes provider artwork independently of the Compose idle tracker.
         Thread.sleep(1200)
+        val automation = InstrumentationRegistry.getInstrumentation().uiAutomation
+        assertEquals("Dismiss system dialogs before capturing store images", compose.activity.packageName, automation.rootInActiveWindow?.packageName?.toString())
         // Capture the displayed window so retained graphics layers and Coil artwork are included.
-        val bitmap = checkNotNull(InstrumentationRegistry.getInstrumentation().uiAutomation.takeScreenshot())
+        val bitmap = checkNotNull(automation.takeScreenshot())
         val resolver = compose.activity.contentResolver
         val values = ContentValues().apply {
             put(MediaStore.Downloads.DISPLAY_NAME, "$name.png")

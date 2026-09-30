@@ -130,7 +130,7 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 }
 @Composable private fun GameImage(game: Game?, modifier: Modifier = Modifier, logo: Boolean = false) {
     if (game == null) Icon(Icons.Outlined.Apps, null, modifier, tint = LocalGlass.current.primary)
-    else AsyncImage("file:///android_asset/${(if (logo) game.logo ?: game.image else game.image)?.removePrefix("/")}", null, modifier, contentScale = ContentScale.Fit)
+    else AsyncImage(if (logo) game.logo ?: game.image else game.image, null, imageLoader = GameArtwork.loader(LocalContext.current), modifier = modifier, contentScale = ContentScale.Fit)
 }
 
 @Composable private fun SearchBar(state: AppState, vm: ModFinderViewModel) {

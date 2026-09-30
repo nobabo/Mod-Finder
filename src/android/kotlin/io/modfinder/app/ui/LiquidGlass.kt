@@ -1,7 +1,7 @@
 package io.modfinder.app.ui
 
 import android.graphics.Bitmap
-import android.graphics.BitmapFactory
+import android.graphics.drawable.BitmapDrawable
 import android.graphics.BitmapShader
 import android.graphics.Canvas as AndroidCanvas
 import android.graphics.Color as AndroidColor
@@ -45,6 +45,9 @@ import androidx.compose.ui.unit.dp
 import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.compose.LocalLifecycleOwner
 import androidx.lifecycle.repeatOnLifecycle
+import coil.request.ImageRequest
+import coil.size.Scale
+import io.modfinder.app.data.GameArtwork
 import io.modfinder.app.data.Palette
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.delay
@@ -58,7 +61,7 @@ data class GlassScene(val bitmap: Bitmap, val screen: IntSize)
 data class GlassStyle(val scene: GlassScene?, val primary: Color, val secondary: Color)
 val LocalGlass = staticCompositionLocalOf { GlassStyle(null, Color(0xFFF564A1), Color(0xFFFF9D6D)) }
 
-/** The backdrop is built on IO only when the photo, theme or viewport changes. */
+/** Download/decode off the main thread, then share one static backdrop across panels. */
 @Composable
 fun rememberGlassScene(photos: List<String>, palette: Palette, size: IntSize, playing: Boolean): GlassScene? {
     val context = LocalContext.current
@@ -69,29 +72,19 @@ fun rememberGlassScene(photos: List<String>, palette: Palette, size: IntSize, pl
             while (isActive) { delay(20_000); index = (index + 1) % photos.size }
         }
     }
-    var scene by remember { mutableStateOf<GlassScene?>(null) }
+    var scene by remember(photos, palette.id, size) { mutableStateOf<GlassScene?>(null) }
     LaunchedEffect(photos.getOrNull(index), palette.id, size) {
         if (size.width <= 0 || size.height <= 0) return@LaunchedEffect
-        val next = withContext(Dispatchers.Default) {
-            val scale = min(1.0, min(1200.0 / max(size.width, size.height), sqrt(750_000.0 / size.width / size.height)))
-            val width = max(1, (size.width * scale).toInt()); val height = max(1, (size.height * scale).toInt())
+        val scale = min(1.0, min(1200.0 / max(size.width, size.height), sqrt(750_000.0 / size.width / size.height)))
+        val width = max(1, (size.width * scale).toInt()); val height = max(1, (size.height * scale).toInt())
+        suspend fun buildScene(photo: Bitmap?) = withContext(Dispatchers.Default) {
             val bitmap = Bitmap.createBitmap(width, height, Bitmap.Config.ARGB_8888)
             val canvas = AndroidCanvas(bitmap)
             canvas.drawColor(AndroidColor.rgb(8, 13, 24))
-            photos.getOrNull(index)?.let { asset ->
-                runCatching {
-                    val options = BitmapFactory.Options().apply { inJustDecodeBounds = true }
-                    context.assets.open(asset.removePrefix("/")).use { BitmapFactory.decodeStream(it, null, options) }
-                    options.inSampleSize = 1
-                    while (options.outWidth / (options.inSampleSize * 2) >= width && options.outHeight / (options.inSampleSize * 2) >= height) options.inSampleSize *= 2
-                    options.inJustDecodeBounds = false
-                    context.assets.open(asset.removePrefix("/")).use { BitmapFactory.decodeStream(it, null, options) }?.let { photo ->
-                        val zoom = max(width.toFloat() / photo.width, height.toFloat() / photo.height) * 1.04f
-                        val transform = Matrix().apply { setScale(zoom, zoom); postTranslate((width - photo.width * zoom) / 2, (height - photo.height * zoom) / 2) }
-                        canvas.drawBitmap(photo, transform, Paint(Paint.FILTER_BITMAP_FLAG).apply { alpha = 95 })
-                        photo.recycle()
-                    }
-                }
+            if (photo != null) {
+                val zoom = max(width.toFloat() / photo.width, height.toFloat() / photo.height) * 1.04f
+                val transform = Matrix().apply { setScale(zoom, zoom); postTranslate((width - photo.width * zoom) / 2, (height - photo.height * zoom) / 2) }
+                canvas.drawBitmap(photo, transform, Paint(Paint.FILTER_BITMAP_FLAG).apply { alpha = 95 })
             }
             val primary = AndroidColor.parseColor(palette.primary)
             val secondary = AndroidColor.parseColor(palette.secondary)
@@ -104,7 +97,13 @@ fun rememberGlassScene(photos: List<String>, palette: Palette, size: IntSize, pl
             })
             GlassScene(bitmap, size)
         }
-        scene = next
+        // Draw the theme immediately, and keep the previous photo during the next download.
+        if (scene == null) scene = buildScene(null)
+        photos.getOrNull(index)?.let { url ->
+            val result = GameArtwork.loader(context).execute(ImageRequest.Builder(context).data(url)
+                .size(width, height).scale(Scale.FILL).allowHardware(false).build())
+            (result.drawable as? BitmapDrawable)?.bitmap?.let { scene = buildScene(it) }
+        }
     }
     return scene
 }
