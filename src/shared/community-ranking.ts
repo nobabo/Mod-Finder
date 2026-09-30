@@ -1,4 +1,16 @@
+import mods from './data/community-mods.json';
+import galleries from './data/community-galleries.json';
+
 export interface CommunityPost { id: string; title: string }
+export interface CommunityMod { id: string; name: string; pattern: string; koreanName?: string; kind?: string }
+export interface CommunityEntry { id: string; name: string; koreanName?: string; kind: string; mentions: number; postIds: string[] }
+export interface CommunitySnapshot {
+  gameId: string; fetchedAt: string; sourceUrl: string; sourceUrls: string[];
+  pages: number; postCount: number; basis: 'titles'; entries: CommunityEntry[];
+}
+export interface CommunityGallery { id: string; heads: { id: string; label: string }[] }
+export const COMMUNITY_GALLERIES: Record<string, CommunityGallery> = galleries;
+export const COMMUNITY_SAMPLE_SIZE = 750;
 // Deliberate aliases for individual packs. Ambiguous standalone mod names (e.g.
 // Create, GregTech, Cobblemon, Aeronautics) are not counted as modpacks.
 export const COMMUNITY_PACKS = [
@@ -24,11 +36,21 @@ export const COMMUNITY_PACKS = [
   { id: 'meatballcraft', name: 'MeatballCraft', pattern: 'meatballcraft|미트볼크래프트' },
 ];
 
-export function countCommunityMentions(posts: CommunityPost[]) {
+export function communityMods(gameId: string): CommunityMod[] {
+  return gameId === 'minecraft-java' ? COMMUNITY_PACKS.map(pack => ({ ...pack, kind: 'modpack' })) : (mods as Record<string, CommunityMod[]>)[gameId] ?? [];
+}
+
+export function countCommunityMentions(posts: CommunityPost[], gameId = 'minecraft-java'): CommunityEntry[] {
   const unique = [...new Map(posts.map(post => [post.id, post])).values()];
-  return COMMUNITY_PACKS.map(pack => {
+  return communityMods(gameId).map(pack => {
     const pattern = new RegExp(pack.pattern, 'i');
-    const matched = unique.filter(post => pattern.test(post.title.normalize('NFKC')));
-    return { id: pack.id, name: pack.name, mentions: matched.length, postIds: matched.map(post => post.id) };
+    // These galleries also discuss other games in the same series.
+    const matched = unique.filter(post => {
+      const title = post.title.normalize('NFKC');
+      if (gameId === 'skyrim-se' && /모로윈드|오블리비언|morrowind|oblivion/i.test(title) && !/스카이림|skyrim|\b(?:se|ae)\b/i.test(title)) return false;
+      if (gameId === 'fallout-4' && /뉴베|폴3|클래식|new\s*vegas|\b(?:fnv|ttw)\b|폴76/i.test(title) && !/폴4|폴아웃\s*4|fallout\s*4|\bfo4\b/i.test(title)) return false;
+      return pattern.test(title);
+    });
+    return { id: pack.id, name: pack.name, ...(pack.koreanName ? { koreanName: pack.koreanName } : {}), kind: pack.kind ?? 'mod', mentions: matched.length, postIds: matched.map(post => post.id) };
   }).filter(item => item.mentions > 0).sort((a, b) => b.mentions - a.mentions || a.id.localeCompare(b.id));
 }

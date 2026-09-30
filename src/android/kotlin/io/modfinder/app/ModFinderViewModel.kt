@@ -69,7 +69,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     fun chooseGame(id: String) {
         if (id != "all" && state.value.catalog?.game(id) == null) return
         saved["game"] = id
-        mutable.update { it.copy(spec = it.spec.copy(gameId = id, genre = "all", filters = emptyMap(), categories = emptySet()), page = "discover", overlay = null, rankingTab = if (id == "minecraft-java") "search" else "downloads") }
+        mutable.update { it.copy(spec = it.spec.copy(gameId = id, genre = "all", filters = emptyMap(), categories = emptySet()), page = "discover", overlay = null, rankingTab = if (it.catalog?.hasCommunityRanking(id) == true) "search" else "downloads") }
         if (state.value.submitted) runSearch() else loadRanking()
     }
     fun submit(value: String = state.value.input, gameId: String = state.value.spec.gameId, genre: String = state.value.spec.genre, categories: Set<String> = state.value.spec.categories, kind: String? = null) {
@@ -85,7 +85,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     }
     fun rankingTab(tab: String) { mutable.update { it.copy(rankingTab = tab) }; loadRanking() }
     private fun loadRanking() {
-        if (state.value.spec.gameId == "minecraft-java" && state.value.rankingTab == "search") {
+        if (state.value.catalog?.hasCommunityRanking(state.value.spec.gameId) == true && state.value.rankingTab == "search") {
             searchJob?.cancel(); generation++; mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = false) }
         } else runSearch(ranking = true)
     }
@@ -102,7 +102,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
                 var eligible: Set<String>? = null
                 val tried = mutableSetOf<SearchRequest>()
                 for (query in listOf(spec.query) + if (ranking) emptyList() else catalog.correctedQueries(spec)) {
-                    val requests = catalog.searchPlan(spec.copy(query = query)).filter { (eligible == null || it.bucket in eligible!!) && tried.add(it) }
+                    val requests = catalog.searchPlan(spec.copy(query = query)).filter { (eligible == null || it.bucket in eligible!!) && tried.add(it) && (!ranking || catalog.game(spec.gameId)?.providers?.containsKey("steam") != true || it.source == "steam") }
                     if (requests.isEmpty()) break
                     withContext(Dispatchers.IO) { requests.map { it.gameId }.distinct().forEach { catalog.loadSummaries(it) } }
                     mutable.update { it.copy(buckets = it.buckets + requests.associate { request -> request.bucket to Bucket(request) }) }

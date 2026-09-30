@@ -5,6 +5,8 @@ import org.json.JSONArray
 import org.json.JSONObject
 import java.util.Locale
 
+data class CommunityRankingEntry(val id: String, val name: String, val koreanName: String?, val kind: String)
+
 class Catalog(private val context: Context) {
     private val data = context.assets.open("catalog.json").bufferedReader().use { JSONObject(it.readText()) }
     val games = data.getJSONArray("games").objects().map { item ->
@@ -16,8 +18,12 @@ class Catalog(private val context: Context) {
     val themes = data.getJSONArray("themes").objects().map { Palette(it.getString("id"), it.getString("ko"), it.getString("en"), it.getString("primary"), it.getString("secondary")) }
     val languages = data.getJSONArray("languages").objects().map { it.getString("id") to it.getString("name") }
     val verifiedLinks = data.getJSONArray("verifiedLinks").objects().map { VerifiedLink(it.stringList("listingKeys").orEmpty(), it.getString("evidenceUrl")) }
-    val rankings = data.getJSONObject("rankings").getJSONArray("entries").objects().map { it.getString("id") to it.getString("name") }
-    fun packName(id: String, original: String, locale: String) = if (locale == "ko") data.getJSONObject("packNames").optString(id, original) else original
+    fun hasCommunityRanking(gameId: String) = data.getJSONObject("rankings").has(gameId)
+    fun rankings(gameId: String) = data.getJSONObject("rankings").optJSONObject(gameId)?.getJSONArray("entries")?.objects()?.map {
+        CommunityRankingEntry(it.getString("id"), it.getString("name"), it.text("koreanName"), it.optString("kind", "mod"))
+    }.orEmpty()
+    fun rankingName(entry: CommunityRankingEntry, gameId: String, locale: String) = if (locale == "ko") entry.koreanName
+        ?: (if (gameId == "minecraft-java") data.getJSONObject("packNames").optString(entry.id, entry.name) else entry.name) else entry.name
     fun game(id: String) = games.find { it.id == id }
     fun theme(id: String) = themes.find { it.id == id } ?: themes.first { it.id == "magenta" }
     fun categories(id: String) = data.getJSONObject("categories").optJSONArray(id)?.objects()?.map { Category(it.getString("id"), it.getString("source"), it.getString("value"), it.getString("ko"), it.getString("en")) }.orEmpty()

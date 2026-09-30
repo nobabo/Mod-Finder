@@ -303,15 +303,15 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 @Composable private fun Rankings(state: AppState, vm: ModFinderViewModel) {
     val t = LocalStrings.current; val catalog = state.catalog!!
     Column(Modifier.fillMaxSize().padding(top = 22.dp)) {
-        if (state.spec.gameId == "minecraft-java") Row(Modifier.padding(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-            FilterChip(state.rankingTab == "search", { vm.rankingTab("search") }, { Text(t("검색 순위")) })
-            FilterChip(state.rankingTab == "downloads", { vm.rankingTab("downloads") }, { Text(t("다운로드 순위")) })
+        if (catalog.game(state.spec.gameId) != null) Row(Modifier.padding(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            if (catalog.hasCommunityRanking(state.spec.gameId)) FilterChip(state.rankingTab == "search", { vm.rankingTab("search") }, { Text(t("검색 순위")) })
+            FilterChip(state.rankingTab == "downloads" || !catalog.hasCommunityRanking(state.spec.gameId), { vm.rankingTab("downloads") }, { Text(t(if (catalog.game(state.spec.gameId)?.providers?.containsKey("steam") == true) "구독 순위" else "다운로드 순위")) })
         }
-        if (state.spec.gameId == "minecraft-java" && state.rankingTab == "search") {
+        if (catalog.hasCommunityRanking(state.spec.gameId) && state.rankingTab == "search") {
             LazyColumn(contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
-                items(catalog.rankings, key = { it.first }) { (id, name) ->
-                    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.submit(name, "minecraft-java", "all", emptySet(), "modpack") }.padding(vertical = 16.dp, horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically) {
-                        Text(catalog.packName(id, name, state.locale), Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.Medium)
+                items(catalog.rankings(state.spec.gameId), key = { it.id }) { entry ->
+                    Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(16.dp)).clickable { vm.submit(entry.name, state.spec.gameId, "all", emptySet(), if (state.spec.gameId == "minecraft-java") entry.kind else null) }.padding(vertical = 16.dp, horizontal = 10.dp), verticalAlignment = Alignment.CenterVertically) {
+                        Text(catalog.rankingName(entry, state.spec.gameId, state.locale), Modifier.weight(1f), fontSize = 15.sp, fontWeight = FontWeight.Medium)
                         Icon(Icons.AutoMirrored.Outlined.ArrowForward, null, Modifier.size(18.dp), tint = LocalGlass.current.primary)
                     }
                     HorizontalDivider(color = LocalGlass.current.primary.copy(alpha = .15f))

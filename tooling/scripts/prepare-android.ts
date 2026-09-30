@@ -18,7 +18,7 @@ const save = (path: string, value: unknown) => {
 const logos = read('src/shared/data/logos.json') as Record<string, { src: string }>;
 save('catalog.json', { games: GAMES, genres: GENRES, categories: GAME_CATEGORIES, themes: THEMES, languages: LANGUAGES,
   backgrounds: BACKGROUNDS, logos, dictionaries, verifiedLinks: read('src/shared/data/verified-projects.json'),
-  rankings: read('src/shared/data/community-ranking.json'), packNames: read('src/shared/data/community-pack-names.ko.json'),
+  rankings: read('src/shared/data/community-rankings.json'), packNames: read('src/shared/data/community-pack-names.ko.json'),
   mods: read('src/shared/locales/mods.ko.json'), search: read('src/shared/locales/search.ko.json'),
   gameSearch: read('src/shared/locales/search.games.ko.json'), corrections: read('src/shared/data/search-corrections.json'),
 });

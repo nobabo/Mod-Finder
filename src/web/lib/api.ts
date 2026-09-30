@@ -18,15 +18,16 @@ export async function minecraftVersions(signal: AbortSignal): Promise<string[]> 
     return data.versions.filter((version): version is string => typeof version === 'string');
   }, signal);
 }
-export async function searchSource(request: SearchRequest, signal: AbortSignal): Promise<SearchResult> {
+export async function searchSource(request: SearchRequest, signal: AbortSignal, fresh = false): Promise<SearchResult> {
   if (!API_BASE) throw new Error('server_not_configured');
   const params = new URLSearchParams({ gameId: request.gameId, source: request.source, query: request.query, sort: request.sort, ...request.filters });
   if (request.cursor) params.set('cursor', request.cursor);
-  return searchCache.search(request, { endpoint: API_BASE, locale }, sharedSignal => withRequestTimeout(async requestSignal => {
+  const fetchResult = (sharedSignal: AbortSignal) => withRequestTimeout(async requestSignal => {
     const response = await fetch(`${API_BASE}/v1/search?${params}`, { signal: requestSignal, credentials: 'same-origin', headers: { 'Accept-Language': locale } });
     if (!response.ok) throw new Error('search_failed');
     return response.json() as Promise<SearchResult>;
-  }, sharedSignal), signal);
+  }, sharedSignal);
+  return fresh ? fetchResult(signal) : searchCache.search(request, { endpoint: API_BASE, locale }, fetchResult, signal);
 }
 
 export async function favoriteDetails(item: Listing): Promise<Listing> {

@@ -4,6 +4,9 @@
   "private": true,
   "type": "module",
   "scripts": {
+    "community:collect": "tsx tooling/scripts/collect-community-titles.ts",
+    "community:build": "tsx tooling/scripts/build-community-ranking.ts",
+    "community:refresh": "npm run community:collect && npm run community:build",
     "release": "tsx tooling/scripts/release.ts",
     "release:check": "tsx tooling/scripts/release.ts --check",
     "dev": "concurrently -k -n api,app \"npm:dev:api\" \"npm:dev:ui\"",

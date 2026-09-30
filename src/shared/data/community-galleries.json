@@ -1,0 +1,14 @@
+{
+  "minecraft-java": { "id": "steve", "heads": [{ "id": "70", "label": "🧪모드" }] },
+  "stardew-valley": { "id": "stardew", "heads": [{ "id": "40", "label": "모드/리텍" }] },
+  "skyrim-se": { "id": "skyrim", "heads": [{ "id": "310", "label": "모드" }, { "id": "270", "label": "통팩" }] },
+  "lethal-company": { "id": "lethalcompany", "heads": [{ "id": "60", "label": "⚙️모드" }] },
+  "rimworld": { "id": "rimworld", "heads": [{ "id": "30", "label": "모드소개" }, { "id": "70", "label": "모드번역" }, { "id": "190", "label": "모드후기" }, { "id": "80", "label": "모드제보" }] },
+  "valheim": { "id": "valheim", "heads": [{ "id": "30", "label": "모드 ⚙️" }] },
+  "terraria": { "id": "terraria", "heads": [{ "id": "160", "label": "💾모드" }] },
+  "project-zomboid": { "id": "pzom", "heads": [{ "id": "50", "label": "모드소개" }] },
+  "cyberpunk-2077": { "id": "cyberpunk2077", "heads": [{ "id": "110", "label": "모드⚙️" }] },
+  "baldurs-gate-3": { "id": "bg3", "heads": [{ "id": "120", "label": "🛠모드" }, { "id": "250", "label": "❓모드질문" }] },
+  "fallout-4": { "id": "fallout", "heads": [{ "id": "50", "label": "모드소개" }] },
+  "risk-of-rain-2": { "id": "riskofrain2", "heads": [{ "id": "110", "label": "🛠모드" }] }
+}

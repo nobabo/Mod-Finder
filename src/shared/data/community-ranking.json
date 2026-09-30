@@ -1,6 +1,10 @@
 {
-  "fetchedAt": "2026-09-29T14:30:11.404Z",
+  "gameId": "minecraft-java",
+  "fetchedAt": "2026-09-30T07:10:55.120Z",
   "sourceUrl": "https://gall.dcinside.com/mgallery/board/lists/?id=steve&sort_type=N&search_head=70&page=1",
+  "sourceUrls": [
+    "https://gall.dcinside.com/mgallery/board/lists/?id=steve&sort_type=N&search_head=70&page=1"
+  ],
   "pages": 15,
   "postCount": 750,
   "basis": "titles",
@@ -8,7 +12,8 @@
     {
       "id": "sunlit-valley",
       "name": "Sunlit Valley",
-      "mentions": 129,
+      "kind": "modpack",
+      "mentions": 128,
       "postIds": [
         "392256",
         "392242",
@@ -137,14 +142,14 @@
         "382433",
         "382427",
         "382373",
-        "382076",
-        "382030"
+        "382076"
       ]
     },
     {
       "id": "gtnh",
       "name": "GT New Horizons",
-      "mentions": 84,
+      "kind": "modpack",
+      "mentions": 83,
       "postIds": [
         "392660",
         "392659",
@@ -228,13 +233,13 @@
         "382308",
         "382225",
         "382152",
-        "382096",
-        "382026"
+        "382096"
       ]
     },
     {
       "id": "star-technology",
       "name": "Star Technology",
+      "kind": "modpack",
       "mentions": 81,
       "postIds": [
         "392795",
@@ -323,6 +328,7 @@
     {
       "id": "deceasedcraft",
       "name": "DeceasedCraft",
+      "kind": "modpack",
       "mentions": 41,
       "postIds": [
         "392330",
@@ -371,6 +377,7 @@
     {
       "id": "cobbleverse",
       "name": "COBBLEVERSE",
+      "kind": "modpack",
       "mentions": 39,
       "postIds": [
         "392117",
@@ -417,6 +424,7 @@
     {
       "id": "monifactory",
       "name": "Monifactory",
+      "kind": "modpack",
       "mentions": 39,
       "postIds": [
         "392793",
@@ -463,6 +471,7 @@
     {
       "id": "gregtech-odyssey",
       "name": "GregTech Odyssey",
+      "kind": "modpack",
       "mentions": 18,
       "postIds": [
         "390666",
@@ -488,8 +497,10 @@
     {
       "id": "prominence2",
       "name": "Prominence II RPG",
-      "mentions": 12,
+      "kind": "modpack",
+      "mentions": 13,
       "postIds": [
+        "392830",
         "392668",
         "392469",
         "391988",
@@ -507,6 +518,7 @@
     {
       "id": "atm10",
       "name": "All the Mods 10",
+      "kind": "modpack",
       "mentions": 9,
       "postIds": [
         "392624",
@@ -523,6 +535,7 @@
     {
       "id": "zero-to-engineering",
       "name": "Zero to Engineering",
+      "kind": "modpack",
       "mentions": 9,
       "postIds": [
         "391973",
