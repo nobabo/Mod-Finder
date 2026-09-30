@@ -1,7 +1,7 @@
-:root { --ui-font:'Chiron GoRound TC','Noto Sans KR','Inter',sans-serif; }
-:root:lang(ko) { --ui-font:'Chiron GoRound TC','Noto Sans KR','Inter',sans-serif; }
-:root:lang(ja) { --ui-font:'Chiron GoRound TC','Noto Sans JP','Inter',sans-serif; }
-:root:lang(zh) { --ui-font:'Chiron GoRound TC','Noto Sans SC','Inter',sans-serif; }
+:root { --ui-font:'Kulim Park','Chiron GoRound TC','Noto Sans KR',sans-serif; }
+:root:lang(ko) { --ui-font:'Kulim Park','Chiron GoRound TC','Noto Sans KR',sans-serif; }
+:root:lang(ja) { --ui-font:'Kulim Park','Chiron GoRound TC','Noto Sans JP',sans-serif; }
+:root:lang(zh) { --ui-font:'Kulim Park','Chiron GoRound TC','Noto Sans SC',sans-serif; }
 
 /* ============================================================
    Mod Finder — search-first launcher
@@ -414,7 +414,7 @@ body { background:var(--canvas); }
 .theme-options i { width:24px;height:24px;border-radius:50%; }
 .original-copy { color:var(--muted);font-size:12px;line-height:1.8;margin-bottom:20px; }
 .original-copy summary { cursor:pointer;margin-bottom:8px;color:var(--accent); }
-html[lang="en"] { --kr:Arial,sans-serif;--display:Arial,sans-serif; }
+html[lang="en"] { --kr:var(--ui-font);--display:var(--ui-font); }
 @media(max-width:650px) {
  .search-dock,.search-dock.hero { max-width:100%; }
  .search-box { gap:5px; }
