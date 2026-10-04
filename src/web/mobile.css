@@ -9,7 +9,7 @@
   .search-row .search-box input,.search-dock.hero .search-box input { font-size:16px;padding:10px 0; }
   .search-box input::-webkit-search-cancel-button { display:none; }
   .search-row .game-orb,.search-dock.hero .game-orb { width:44px;height:44px;flex:none; }
-  .search-row .search-box .search-submit { width:48px;height:48px;padding:10px;flex:none;background:rgba(var(--tint-rgb),.12);border:0; }
+  .search-row .search-box .search-submit { width:48px;height:48px;padding:10px;flex:none;background:none;border:0; }
   .search-row .search-box .search-submit svg { width:26px;height:26px; }
   .search-row .filter-orb { width:48px;height:48px; }
 
@@ -22,6 +22,7 @@
   .deck-rail,.settings-rail { display:flex;flex-direction:column;gap:16px;width:100%;padding:0;min-height:0;overflow:visible;perspective:none;touch-action:pan-y;cursor:auto; }
   .settings-rail nav { display:flex;flex-direction:column;gap:16px;width:100%;min-width:0; }
   .picker-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;width:100%; }
+  .picker-grid-3-columns { grid-template-columns:repeat(3,minmax(0,1fr)); }
   .picker-grid-single-row { grid-template-rows:minmax(0,1fr); }
   .deck-card,.settings-menu nav .picker-grid :is(button,a) { width:100%;min-width:0;height:clamp(116px,21dvh,170px);min-height:0;padding:12px 8px;gap:12px;transform:none;cursor:pointer;animation:none; }
   .settings-menu nav .picker-grid :is(button,a):hover { transform:none; }
@@ -33,6 +34,8 @@
   .preference-panel .theme-options,.preference-panel .language-options { display:flex;flex-direction:column;gap:16px; }
   .preference-panel .picker-grid button { min-height:116px;font-size:14px; }
   .preference-panel .theme-options i { width:40px;height:40px; }
+  .settings-menu nav .picker-grid-3-columns :is(button,a),.preference-panel .picker-grid-3-columns button { font-size:13px;overflow-wrap:anywhere; }
+  .settings-menu nav .picker-grid-3-columns :is(button,a) svg { width:48px;height:48px; }
   .picker-pagination { display:flex;justify-content:center;gap:24px;flex:none; }
   .picker-pagination>button,.settings-menu nav .picker-pagination>button,.preference-panel .picker-pagination>button { display:grid;place-items:center;width:48px;height:48px;min-height:48px;flex:none;padding:0;margin:0;border:1px solid var(--accent);border-radius:50%;background:rgba(var(--tint-rgb),.08);color:var(--accent);transform:none;box-shadow:none; }
   .picker-pagination>button:disabled { opacity:.3;cursor:default; }

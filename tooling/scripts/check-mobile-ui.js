@@ -12,6 +12,7 @@ async (page) => {
       check(Math.abs(box.x + box.width / 2 - width / 2) < 2, `${selector} is off center`);
     }
     check(await page.locator('.search-submit').evaluate(el => getComputedStyle(el).borderTopWidth === '0px'), 'Search button still has a border');
+    check(await page.locator('.search-submit').evaluate(el => { const s = getComputedStyle(el); return s.backgroundColor === 'rgba(0, 0, 0, 0)' && s.backgroundImage === 'none'; }), 'Search button still has a background');
   }
   const centered = async (selector, height) => {
     const panel = await rect(selector);
@@ -32,12 +33,15 @@ async (page) => {
   await page.setViewportSize({ width:390, height:844 });
   await page.getByRole('button', { name:'게임 바꾸기' }).click();
   const checkGrid = async () => {
+    const columns = await page.locator('.picker-grid').evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length);
+    const expectedColumns = await page.locator('.settings-menu').count() ? 3 : 2;
+    check(columns === expectedColumns, 'Wrong column count');
     const boxes = await page.locator('.picker-grid').evaluate(el => Array.from(el.children).map(child => {
       const r = child.getBoundingClientRect(); return { x:r.x, y:r.y, width:r.width, right:r.right };
     }));
-    check(boxes.length > 0 && boxes.length <= 4, 'Wrong page size');
+    check(boxes.length > 0 && boxes.length <= columns * 2, 'Wrong page size');
     check(new Set(boxes.map(b => Math.round(b.y))).size <= 2, 'More than two rows');
-    check(boxes.every(b => b.x >= 0 && b.right <= 390 && b.width > 100), 'Cards cut off');
+    check(boxes.every(b => b.x >= 0 && b.right <= page.viewportSize().width && b.width > 70), 'Cards cut off');
     return boxes;
   };
   await checkGrid();
@@ -70,7 +74,10 @@ async (page) => {
   check(await page.getByRole('button', { name:'관련도순', exact:true }).getAttribute('aria-pressed') === 'true', 'Sort selection lost');
   await page.getByRole('button', { name:'닫기', exact:true }).click();
   await nav.getByRole('button', { name:'설정', exact:true }).click();
-  await checkGrid();
+  for (const width of [320,768,390]) {
+    await page.setViewportSize({width,height:844});
+    await checkGrid();
+  }
   check(await page.getByRole('button', { name:'모드 둘러보기', exact:true }).count() === 0, 'Browse card remains');
   await page.screenshot({ path:'output/playwright/mobile-settings.png' });
   await page.getByRole('button', { name:'테마', exact:true }).click();
@@ -78,7 +85,6 @@ async (page) => {
   await page.getByRole('button', { name:'다음 페이지', exact:true }).click();
   await checkGrid();
   await page.getByRole('button', { name:'뒤로', exact:true }).click();
-  await page.getByRole('button', { name:'다음 페이지', exact:true }).click();
   await page.getByRole('button', { name:'웹 / 앱 다운로드', exact:true }).click();
   check(await page.getByRole('link', { name:'웹에서 열기', exact:true }).count() === 0, 'Open web card remains');
   check(await page.getByRole('link', { name:'Windows', exact:true }).count() === 1 && await page.getByRole('link', { name:'Android', exact:true }).count() === 1, 'App downloads missing');

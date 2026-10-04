@@ -10,15 +10,16 @@ export function flattenCards(children: ReactNode): ReactNode[] {
       ? flattenCards(child.props.children) : [child]);
 }
 
-export function CardPages({ children }: { children: ReactNode }) {
+export function CardPages({ children, columns = 2 }: { children: ReactNode; columns?: 2 | 3 }) {
   const mobile = useMobileLayout();
   const [page, setPage] = useState(0);
   if (!mobile) return children;
   const cards = flattenCards(children);
-  const lastPage = Math.max(0, Math.ceil(cards.length / 4) - 1);
+  const pageSize = columns * 2;
+  const lastPage = Math.max(0, Math.ceil(cards.length / pageSize) - 1);
   const current = Math.min(page, lastPage);
   return <>
-    <div className={`picker-grid ${cards.length <= 2 ? 'picker-grid-single-row' : ''}`}>{cards.slice(current * 4, current * 4 + 4)}</div>
+    <div className={`picker-grid picker-grid-${columns}-columns ${cards.length <= columns ? 'picker-grid-single-row' : ''}`}>{cards.slice(current * pageSize, current * pageSize + pageSize)}</div>
     {lastPage > 0 && <div className="picker-pagination">
       <button type="button" aria-label={t('이전 페이지')} disabled={current === 0} onClick={() => setPage(current - 1)}><ArrowLeft size={22}/></button>
       <button type="button" aria-label={t('다음 페이지')} disabled={current === lastPage} onClick={() => setPage(current + 1)}><ArrowRight size={22}/></button>

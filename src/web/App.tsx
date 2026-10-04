@@ -66,7 +66,7 @@ export default function App() {
   const gameName = (id: string) => { const g = getGame(id); return g ? (locale === 'ko' ? g.koreanName : g.name) : t('전체 게임'); };
   const scopeGames = gamesInScope(gameId, genre);
   useModSummaries([...scopeGames.map(game => game.id), ...local.favorites.map(item => item.gameId), ...compared.map(item => item.gameId)], true);
-  const themeControls = <div className="theme-options"><CardPages>{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={accent === theme.id} onClick={() => setAccent(theme.id)}><i style={{ background: theme.grad }} />{theme.name}{accent === theme.id && <Check size={14} />}</button>)}</CardPages></div>;
+  const themeControls = <div className="theme-options"><CardPages columns={3}>{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={accent === theme.id} onClick={() => setAccent(theme.id)}><i style={{ background: theme.grad }} />{theme.name}{accent === theme.id && <Check size={14} />}</button>)}</CardPages></div>;
   const hasSearch = submitted || selectedCategories.length > 0;
   useLayoutEffect(() => {
     if (page === 'discover' && hasSearch) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
@@ -101,16 +101,21 @@ export default function App() {
   const sourceErrors = unavailable.some(b => ['error', 'rate_limited'].includes(b!.result!.status));
   const activeFilters = Object.values(filters).filter(Boolean).length + selectedCategories.length;
   const saveCandidate = (item: Listing, alternatives: Listing[] = []) => local.favorites.find(saved => [item, ...alternatives].some(candidate => candidate.key === saved.key)) ?? item;
-  const card = (item: Listing, alternatives: Listing[] = []) => {
+  const card = (item: Listing, alternatives: Listing[] = [], select?: () => void) => {
     const candidate = saveCandidate(item, alternatives);
-    return <ModCard key={item.key} item={item} ready={hydrated} saveAvailable={!!candidate} saved={!!candidate && local.favorites.some(f => f.key === candidate.key)} toggleSave={() => { if (candidate) save(candidate); }} open={() => void visit(item.url)} detail={() => setDetail(item)} move={page === 'favorites' ? () => setMovingFavorite(item.key) : undefined} />;
+    return <ModCard key={item.key} item={item} ready={hydrated} saveAvailable={!!candidate} saved={!!candidate && local.favorites.some(f => f.key === candidate.key)} toggleSave={() => { if (candidate) save(candidate); }} open={select ?? (() => void visit(item.url))} detail={select ?? (() => setDetail(item))} move={page === 'favorites' ? () => setMovingFavorite(item.key) : undefined} />;
   };
+  const rankedCard = (item: Listing, alternatives: Listing[]) => card(item, alternatives, () => {
+    const kind = item.gameId === 'minecraft-java' && item.kind === 'modpack' ? 'modpack' : undefined;
+    setFilters(kind ? { kind } : {});
+    submit(item.title, item.gameId, 'all', [], kind);
+  });
   const renderGroup = (group: { id: string; listings: Listing[] }) => card(group.listings[0], group.listings);
   const detailCandidate = detail ? saveCandidate(detail, search.groups.find(group => group.listings.some(item => item.key === detail.key))?.listings) : undefined;
   return <div className={`app-shell ${page === 'discover' && hasSearch ? 'has-results' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg><Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} />
     <div className="settings-fab-wrap">
       <button type="button" className="settings-fab" aria-label={t("설정 메뉴")} aria-expanded={menuOpen} title={t("설정 메뉴")} onClick={() => setMenuOpen(value => !value)}><Settings2 size={25} /></button>
-      {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
+      {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages columns={3}><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
         <button type="button" onClick={() => go('favorites')}><Bookmark size={34} /><span>{t("즐겨찾기")}</span></button>
         <button type="button" onClick={() => go('recent')}><History size={34} /><span>{t("최근 기록")}</span></button>
       </SettingsMenu>}
@@ -121,7 +126,7 @@ export default function App() {
       <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
       <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row">{page !== 'discover' && <button type="button" className="collection-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={76}/></button>}{heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160} /></div>}<form className="search-box" onSubmit={e => { e.preventDefault(); if (window.matchMedia("(pointer: coarse), (max-width: 850px)").matches) inputRef.current?.blur(); submit(); }}><button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" type="search" inputMode="search" enterKeyHint="search" name="q" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit" aria-label={t("모드 검색")}><ArrowRight size={18} aria-hidden="true" /></button></form><button type="button" className={`filter-orb ${filterOpen || activeFilters ? 'active' : ''}`} aria-label={t("검색 필터")} aria-expanded={filterOpen} onClick={() => setFilterOpen(value => !value)}><SlidersHorizontal size={18}/></button></div>
-      {heroSearch && <Rankings key={gameId} gameId={gameId} card={card} searchMod={entry => { setFilters(entry.kind === 'modpack' && gameId === 'minecraft-java' ? { kind: 'modpack' } : {}); submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined); }}/>}
+      {heroSearch && <Rankings key={gameId} gameId={gameId} card={rankedCard} searchMod={entry => { setFilters(entry.kind === 'modpack' && gameId === 'minecraft-java' ? { kind: 'modpack' } : {}); submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined); }}/>}
       </div>
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
