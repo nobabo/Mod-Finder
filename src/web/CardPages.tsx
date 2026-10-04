@@ -18,10 +18,15 @@ export function CardPages({ children, columns = 2, rows = 2, swipe = false }: { 
   const pageSize = columns * rows;
   const lastPage = Math.max(0, Math.ceil(cards.length / pageSize) - 1);
   const current = Math.min(page, lastPage);
-  const swipeHandlers = usePageSwipe(mobile && swipe && lastPage > 0, direction => setPage(Math.max(0, Math.min(lastPage, current + direction))));
+  const swipeState = usePageSwipe(mobile && swipe && lastPage > 0, direction => setPage(Math.max(0, Math.min(lastPage, current + direction))), direction => current + direction >= 0 && current + direction <= lastPage);
   if (!mobile) return children;
+  const gridClass = `picker-grid picker-grid-${columns}-columns picker-grid-${rows}-rows ${cards.length <= columns ? 'picker-grid-single-row' : ''}`;
   return <>
-    <div {...swipeHandlers} className={`picker-grid ${swipe ? 'picker-grid-swipe' : ''} picker-grid-${columns}-columns picker-grid-${rows}-rows ${cards.length <= columns ? 'picker-grid-single-row' : ''}`}>{cards.slice(current * pageSize, current * pageSize + pageSize)}</div>
+    {swipe ? <div {...swipeState.handlers} className="picker-swipe-viewport">
+      <div className={`picker-swipe-track ${swipeState.dragging ? 'is-dragging' : ''}`} style={{ transform: `translate3d(calc(${-current * 100}% + ${swipeState.offset}px),0,0)` }}>
+        {Array.from({ length: lastPage + 1 }, (_, index) => <div key={index} className={gridClass} inert={index !== current} aria-hidden={index !== current ? true : undefined}>{cards.slice(index * pageSize, (index + 1) * pageSize)}</div>)}
+      </div>
+    </div> : <div className={gridClass}>{cards.slice(current * pageSize, current * pageSize + pageSize)}</div>}
     {lastPage > 0 && <div className="picker-pagination">
       <button type="button" aria-label={t('이전 페이지')} disabled={current === 0} onClick={() => setPage(current - 1)}><ArrowLeft size={22}/></button>
       <button type="button" aria-label={t('다음 페이지')} disabled={current === lastPage} onClick={() => setPage(current + 1)}><ArrowRight size={22}/></button>
