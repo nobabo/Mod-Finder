@@ -400,3 +400,26 @@ html[data-glass="webgl"] :is(.deck-search,.filter-dropdown-search) { backdrop-fi
 .settings-menu nav :is(button,a):hover,.settings-card { background:transparent; }
 .deck-card { backdrop-filter:none;-webkit-backdrop-filter:none; }
 .settings-card { border-color:rgba(var(--tint-rgb),.35); }
+
+/* Genre selection uses the same visual state on desktop, touch and narrow windows. */
+.genre-deck { --genre-card-rest:translateY(var(--card-drop,0px)) rotateY(var(--card-turn,0deg));--genre-card-raised:translateY(calc(var(--card-drop,0px) - 8px)) rotateY(var(--card-turn,0deg)) scale(1.02);--genre-card-draw:translateY(calc(var(--card-drop,0px) - 32px)) rotateY(var(--card-turn,0deg)) rotateZ(-3deg) scale(1.04); }
+.genre-deck .deck-card { filter:grayscale(1);color:#c9cbd0;background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.25);box-shadow:0 12px 26px #0004,inset 0 1px 1px #ffffff22;transition:filter .2s,color .2s,background .2s,border-color .2s,box-shadow .2s,transform .2s; }
+.genre-deck .deck-card::after { border-color:#ffffff12; }
+.genre-deck .deck-card>span { color:inherit; }
+.genre-deck .deck-card>svg { color:inherit;stroke:currentColor!important; }
+.genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking) { filter:none;color:var(--accent);border-color:var(--accent);background:linear-gradient(145deg,rgba(var(--tint-rgb),.24),rgba(var(--secondary-rgb),.12));box-shadow:0 18px 32px #0006,0 0 24px rgba(var(--tint-rgb),.36),inset 0 1px 1px rgba(var(--tint-rgb),.5);transform:var(--genre-card-raised);animation:genre-card-pick .42s cubic-bezier(.2,.75,.22,1) both; }
+.genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking)>svg { stroke:url(#theme-icon-gradient)!important; }
+.genre-deck.is-selecting .deck-card:not(.is-picking) { opacity:1; }
+@media(max-width:850px) {
+ .genre-deck { --genre-card-rest:translateY(0);--genre-card-raised:translateY(-4px) scale(1.015);--genre-card-draw:translateY(-12px) scale(1.04); }
+ .genre-deck .picker-swipe-track>.picker-grid { padding:16px 4px 8px; }
+}
+@keyframes genre-card-pick {
+ 0% { transform:var(--genre-card-rest); }
+ 45% { transform:var(--genre-card-draw); }
+ 100% { transform:var(--genre-card-raised); }
+}
+@media(prefers-reduced-motion:reduce) {
+ .genre-deck .deck-card { transition:none; }
+ .genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking) { animation:none;transform:var(--genre-card-rest);transition:none; }
+}

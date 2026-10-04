@@ -93,25 +93,8 @@
   .app-shell.is-choosing .mobile-header { visibility:hidden; }
   .compare-tray { bottom:calc(16px + env(safe-area-inset-bottom)); }
   .toast { bottom:calc(24px + env(safe-area-inset-bottom)); }
-  .mobile-genre-deck .deck-card { filter:grayscale(1);color:#c9cbd0;background:rgba(255,255,255,.025);border-color:rgba(255,255,255,.25);box-shadow:0 12px 26px #0004,inset 0 1px 1px #ffffff22;transition:filter .2s,color .2s,background .2s,border-color .2s,box-shadow .2s,transform .2s; }
-  .mobile-genre-deck .deck-card::after { border-color:#ffffff12; }
-  .mobile-genre-deck .deck-card>span { color:inherit; }
-  .mobile-genre-deck .deck-card>svg { color:inherit;stroke:currentColor!important; }
-  .mobile-genre-deck .picker-swipe-track>.picker-grid { padding:16px 4px 8px; }
-  .mobile-genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking) { filter:none;color:var(--accent);border-color:var(--accent);background:linear-gradient(145deg,rgba(var(--tint-rgb),.24),rgba(var(--secondary-rgb),.12));box-shadow:0 18px 32px #0006,0 0 24px rgba(var(--tint-rgb),.36),inset 0 1px 1px rgba(var(--tint-rgb),.5);transform:translateY(-4px) scale(1.015);animation:genre-card-pick .42s cubic-bezier(.2,.75,.22,1) both; }
-  .mobile-genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking)>svg { stroke:url(#theme-icon-gradient)!important; }
-  .mobile-genre-deck.is-selecting .deck-card:not(.is-picking) { opacity:1; }
 }
 @media(max-width:650px) and (hover:none) and (pointer:coarse) {
   .app-shell { --mobile-header-height:100px; }
   .page-brand .brand-logo { width:76px;height:76px; }
-}
-@keyframes genre-card-pick {
-  0% { transform:translateY(0) scale(1); }
-  45% { transform:translateY(-12px) scale(1.04); }
-  100% { transform:translateY(-4px) scale(1.015); }
-}
-@media(prefers-reduced-motion:reduce) and (hover:none) and (pointer:coarse) {
-  .mobile-genre-deck .deck-card { transition:none; }
-  .mobile-genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking) { animation:none;transform:none;transition:none; }
 }

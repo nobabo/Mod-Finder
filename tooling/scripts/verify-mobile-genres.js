@@ -38,7 +38,7 @@ async (page) => {
   try {
     const mobile = await create(true,390);
     await openGenres(mobile);
-    check(await mobile.locator('.mobile-genre-deck').count() === 1, 'Mobile genre styling absent');
+    check(await mobile.locator('.genre-deck').count() === 1, 'Mobile genre styling absent');
     check(await mobile.locator('.picker-grid:not([inert]) .deck-card').evaluateAll(items => items.every(el => getComputedStyle(el).filter === 'grayscale(1)')), 'Initial utility cards are not monochrome');
     await button(mobile,'다음 페이지').click();
     const first = cards(mobile).nth(0), second = cards(mobile).nth(1);
@@ -108,11 +108,17 @@ async (page) => {
     await cyan.screenshot({path:'output/playwright/mobile-genres-cyan-320.png'});
     const desktop = await create(false,1920);
     await openGenres(desktop);
-    check(await desktop.locator('.mobile-genre-deck').count() === 0, 'Mobile genre styling leaked onto PC');
+    check(await desktop.locator('.genre-deck').count() === 1, 'PC genre styling absent');
     const desktopCard = desktop.locator('[data-genre-id]').first();
+    const otherDesktopCard = desktop.locator('[data-genre-id]').nth(1);
+    check(await gray(desktopCard) && await gray(otherDesktopCard), 'PC genres are not monochrome by default');
     await desktopCard.dispatchEvent('click');
-    check(await desktopCard.locator('.sort-selection').count() === 1, 'PC genre selection check changed');
-    check(await desktopCard.evaluate(el => el.getAnimations().some(animation => animation.id === 'filter-card-pick')), 'PC genre draw animation changed');
+    check(await desktopCard.locator('.sort-selection').count() === 0, 'PC genre still has a check mark');
+    check(await desktopCard.evaluate(el => el.getAnimations().some(animation => animation.animationName === 'genre-card-pick')), 'PC genre draw animation absent');
+    await finish(desktop);
+    check(await selectedColor(desktopCard) && await gray(otherDesktopCard), 'PC theme color did not follow selection');
+    await desktopCard.dispatchEvent('click'); await finish(desktop);
+    check(await gray(desktopCard), 'PC deselection did not restore monochrome');
     for (const name of ['게임 버전','모드 로더','프로젝트 종류']) {
       await button(desktop,name).dispatchEvent('click');
       const dropdown = desktop.getByRole('group',{name,exact:true});

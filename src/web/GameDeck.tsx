@@ -10,7 +10,6 @@ import { GAME_RAIL_MOTION } from './lib/deck-motion';
 import { locale, t } from './lib/i18n';
 import { CardPages } from './CardPages';
 import { useMobileLayout } from './lib/use-mobile-layout';
-import { useMobileLayout as useMobileDevice } from './lib/mobile-layout';
 import { useRailDrag } from './lib/use-rail-drag';
 import { minecraftVersions } from './lib/api';
 
@@ -26,7 +25,6 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   const [query, setQuery] = useState('');
   const genre = 'all';
   const mobile = useMobileLayout();
-  const touchLayout = useMobileDevice();
   const drag = useRailDrag();
   const [picking, setPicking] = useState<string | null>(null);
   const genreIcons = [Boxes,Swords,Trees,Building2,Flag,Zap,Dices,Ghost];
@@ -107,7 +105,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     for (const animation of card.getAnimations()) {
       if (animation.id === 'filter-card-pick') animation.cancel();
     }
-    if (mobile || (touchLayout && genreMode && view === 'genre') || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (mobile || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
     const resting = 'translateY(var(--card-drop,0px)) rotateY(var(--card-turn,0deg))';
     const lift = Math.min(55, card.offsetHeight * .18);
     const shadow = getComputedStyle(card).boxShadow;
@@ -117,11 +115,11 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
       { transform: resting, boxShadow: shadow },
     ], { id: 'filter-card-pick', duration: 560 });
   };
-  const choose = (id: string, card: HTMLButtonElement) => {
-    if (selectedCategories) { animateFilterPick(card); select(id, genre); return; }
+  const choose = (id: string) => {
+    if (selectedCategories) { select(id, genre); return; }
     if (busy.current) return;
     busy.current = true; setPicking(id);
-    timer.current = setTimeout(() => select(id, genre), touchLayout && genreMode && id !== 'all' && !reduced.current ? 420 : mobile || reduced.current ? 0 : 560);
+    timer.current = setTimeout(() => select(id, genre), genreMode ? id !== 'all' && !reduced.current ? 420 : 0 : mobile || reduced.current ? 0 : 560);
   };
   const step = (direction: number) => rail.current?.scrollBy({ left: direction * 300, behavior: reduced.current ? 'instant' : 'smooth' });
   const openDropdown = (id: 'version' | 'loader' | 'kind', button: HTMLButtonElement) => {
@@ -143,7 +141,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
     }
   };
-  return <section ref={root} className={`game-deck ${touchLayout && genreMode && view === 'genre' ? 'mobile-genre-deck' : ''} ${picking ? 'is-selecting' : ''}`} role="dialog" aria-modal="true" aria-label={t(title)} onKeyDown={keyboard} onClick={event => { if (event.target === event.currentTarget) close(); }}>
+  return <section ref={root} className={`game-deck ${genreMode && view === 'genre' ? 'genre-deck' : ''} ${picking ? 'is-selecting' : ''}`} role="dialog" aria-modal="true" aria-label={t(title)} onKeyDown={keyboard} onClick={event => { if (event.target === event.currentTarget) close(); }}>
     <header className="deck-header">{genreMode && view !== 'menu' && <button className="deck-close filter-back" aria-label={t('뒤로')} onClick={() => { setQuery(''); setOpenFilter(null); setView('menu'); }}><ArrowLeft size={24}/></button>}<h2>{t(title)}</h2><button className="deck-close" aria-label={t('닫기')} onClick={close}><X size={24} /></button></header>
     {view === 'genre' && <><div className="deck-tools"><label className="deck-search"><Search size={17} /><input aria-label={t(genreMode ? '장르' : '게임 찾기')} placeholder={t(genreMode ? '장르' : '게임 이름으로 찾기')} value={query} onChange={event => setQuery(event.target.value)} /></label></div>
     </>}
@@ -154,9 +152,9 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
           {[{ id:'genre' as const, label:'장르', Icon:Layers }, { id:'sort' as const, label:'정렬 방법', Icon:ArrowDownWideNarrow }].map(({ id,label,Icon }) => <button key={id} className="deck-card" style={{ '--game-color':'var(--accent)' } as React.CSSProperties} onClick={() => setView(id)}><Icon size={100}/><span>{t(label)}</span></button>)}
         </>}
         {view === 'sort' && [{ id:'relevance' as const, label:'관련도순', Icon:Search }, { id:'updated' as const, label:'최근 업데이트순', Icon:Clock }, { id:'downloads' as const, label:countSortLabel, Icon:Download }, { id:'popular' as const, label:'인기도순', Icon:TrendingUp }].map(({ id,label,Icon }) => <button key={id} className={sort === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={sort === id} onClick={event => { animateFilterPick(event.currentTarget); setSort?.(id); }}>{sort === id && <Check className="sort-selection" size={24}/>}<Icon size={100}/><span>{t(label)}</span></button>)}
-        {view === 'genre' && <>{!query && <button type="button" className={`deck-card ${selected('all') ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selected('all')} disabled={!!picking} onClick={event => choose('all', event.currentTarget)}>{genreMode ? <Layers size={100}/> : <BrandLogo size={100}/>}<span>{t(genreMode ? '전체 장르' : '전체 게임')}</span></button>}{genreMode && showMinecraftFilters && [{ id:'version' as const, label:'게임 버전', Icon:Hash }, { id:'loader' as const, label:'모드 로더', Icon:Cpu }, { id:'kind' as const, label:'프로젝트 종류', Icon:Package }].map(({ id,label,Icon }) => <button key={id} className={openFilter === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-expanded={openFilter === id} onClick={event => openDropdown(id, event.currentTarget)}><Icon size={100}/><span>{t(label)}</span></button>)}
-        {games.map(game => <button type="button" key={game.id} data-genre-id={genreMode ? game.id : undefined} className={`deck-card ${selected(game.id) ? 'is-current' : ''} ${picking === game.id ? 'is-picking' : ''}`} style={{ '--game-color': game.color } as React.CSSProperties} aria-label={locale === 'ko' ? game.koreanName : game.name} aria-pressed={selected(game.id)} disabled={!!picking} onClick={event => choose(game.id, event.currentTarget)} onFocus={event => { if (!mobile && !busy.current && !drag.gesture.current) event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced.current ? 'instant' : 'smooth' }); }}>
-          {!touchLayout && selectedCategories && selected(game.id) && <Check className="sort-selection" size={24}/>} {genreMode ? (() => { const Icon = categories ? categoryIcon(game.name) : genreIcons[GENRES.findIndex(g => g.id === game.id)] ?? Layers; return <Icon size={100}/>; })() : <img className={`logo-${game.id}`} src={logoCatalog[game.id]?.src} alt="" draggable={false} />}<span>{locale === 'ko' ? game.koreanName : game.name}</span>
+        {view === 'genre' && <>{!query && <button type="button" className={`deck-card ${selected('all') ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selected('all')} disabled={!!picking} onClick={() => choose('all')}>{genreMode ? <Layers size={100}/> : <BrandLogo size={100}/>}<span>{t(genreMode ? '전체 장르' : '전체 게임')}</span></button>}{genreMode && showMinecraftFilters && [{ id:'version' as const, label:'게임 버전', Icon:Hash }, { id:'loader' as const, label:'모드 로더', Icon:Cpu }, { id:'kind' as const, label:'프로젝트 종류', Icon:Package }].map(({ id,label,Icon }) => <button key={id} className={openFilter === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-expanded={openFilter === id} onClick={event => openDropdown(id, event.currentTarget)}><Icon size={100}/><span>{t(label)}</span></button>)}
+        {games.map(game => <button type="button" key={game.id} data-genre-id={genreMode ? game.id : undefined} className={`deck-card ${selected(game.id) ? 'is-current' : ''} ${picking === game.id ? 'is-picking' : ''}`} style={{ '--game-color': game.color } as React.CSSProperties} aria-label={locale === 'ko' ? game.koreanName : game.name} aria-pressed={selected(game.id)} disabled={!!picking} onClick={() => choose(game.id)} onFocus={event => { if (!mobile && !busy.current && !drag.gesture.current) event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced.current ? 'instant' : 'smooth' }); }}>
+          {genreMode ? (() => { const Icon = categories ? categoryIcon(game.name) : genreIcons[GENRES.findIndex(g => g.id === game.id)] ?? Layers; return <Icon size={100}/>; })() : <img className={`logo-${game.id}`} src={logoCatalog[game.id]?.src} alt="" draggable={false} />}<span>{locale === 'ko' ? game.koreanName : game.name}</span>
         </button>)}</>}
         </CardPages>
       </div>
