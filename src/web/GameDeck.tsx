@@ -31,6 +31,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   const games = genreMode ? (categories ?? GENRES).filter(g => [g.ko,g.en].some(name => name.toLowerCase().includes(query.toLowerCase()))).map(g => ({ id:g.id, name:g.en, koreanName:g.ko, color:'var(--accent)' })) : findGames(query, genre);
   const root = useRef<HTMLElement>(null);
   const rail = useRef<HTMLDivElement>(null);
+  const filterAnchor = useRef<HTMLButtonElement>(null);
   const timer = useRef<ReturnType<typeof setTimeout>>(undefined);
   const reduced = useRef(matchMedia('(prefers-reduced-motion: reduce)').matches);
   const busy = useRef(false);
@@ -55,8 +56,32 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     void minecraftVersions(controller.signal).then(setVersions).catch(() => {});
     return () => controller.abort();
   }, [openFilter]);
-  useEffect(() => { root.current?.querySelector<HTMLElement>('.filter-dropdown input,.filter-dropdown button')?.focus(); }, [openFilter]);
-  useEffect(() => { const onResize = () => setOpenFilter(null); window.addEventListener('resize', onResize); return () => window.removeEventListener('resize', onResize); }, []);
+  useEffect(() => { root.current?.querySelector<HTMLElement>(mobile ? '.filter-dropdown button' : '.filter-dropdown input,.filter-dropdown button')?.focus({ preventScroll: true }); }, [openFilter, mobile]);
+  useEffect(() => {
+    if (!openFilter) return;
+    // Keyboard opening, browser chrome and rotation resize the viewport without dismissing the picker.
+    const viewport = window.visualViewport;
+    const position = () => {
+      const rect = filterAnchor.current?.getBoundingClientRect();
+      if (!rect) return;
+      const leftEdge = viewport?.offsetLeft ?? 0;
+      const topEdge = viewport?.offsetTop ?? 0;
+      const height = viewport?.height ?? innerHeight;
+      const width = Math.min(320, (viewport?.width ?? innerWidth) - 24);
+      const top = Math.max(topEdge + 12, Math.min(rect.bottom + 10, topEdge + height - 240));
+      const left = Math.max(leftEdge + 12, Math.min(leftEdge + (viewport?.width ?? innerWidth) - width - 12, rect.left + rect.width / 2 - width / 2));
+      setDropdownStyle({ width, left, top, maxHeight: Math.max(0, topEdge + height - top - 12) });
+    };
+    position();
+    window.addEventListener('resize', position);
+    viewport?.addEventListener('resize', position);
+    viewport?.addEventListener('scroll', position);
+    return () => {
+      window.removeEventListener('resize', position);
+      viewport?.removeEventListener('resize', position);
+      viewport?.removeEventListener('scroll', position);
+    };
+  }, [openFilter]);
   useEffect(() => {
     if (mobile) return;
     let frame = 0;
@@ -99,10 +124,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   const step = (direction: number) => rail.current?.scrollBy({ left: direction * 300, behavior: reduced.current ? 'instant' : 'smooth' });
   const openDropdown = (id: 'version' | 'loader' | 'kind', button: HTMLButtonElement) => {
     if (openFilter === id) { setOpenFilter(null); return; }
-    const rect = button.getBoundingClientRect();
-    const width = Math.min(320, innerWidth - 24);
-    const top = Math.min(rect.bottom + 10, Math.max(12, innerHeight - 240));
-    setDropdownStyle({ width, left: Math.max(12, Math.min(innerWidth - width - 12, rect.left + rect.width / 2 - width / 2)), top, maxHeight: Math.max(120, innerHeight - top - 12) });
+    filterAnchor.current = button;
     setDropdownQuery(''); setOpenFilter(id);
   };
   const selected = (id: string) => selectedCategories ? id === 'all' ? !selectedCategories.length : selectedCategories.includes(id) : gameId === id;

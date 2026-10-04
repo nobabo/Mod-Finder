@@ -72,7 +72,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
   }}>
     <header className="settings-deck-header">{view !== 'menu' && <button className="deck-close settings-back" aria-label={t('뒤로')} onClick={() => setView('menu')}><ArrowLeft size={24}/></button>}<h2>{t(view === 'theme' ? '테마' : view === 'language' ? '언어' : view === 'downloads' ? '웹 / 앱 다운로드' : '설정')}</h2><button className="deck-close" aria-label={t('닫기')} onClick={close}><X size={24}/></button></header>
     {isCardView ? <div ref={rail} className={`settings-rail ${drag.dragging ? 'is-dragging' : ''}`} {...(mobile ? {} : drag.handlers)} onWheel={event => { if (!mobile && Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.currentTarget.scrollLeft += event.deltaY; }}><nav aria-label={t(view === 'downloads' ? '웹 / 앱 다운로드' : '주 메뉴')}>
-      <CardPages key={view} columns={3}>{view === 'downloads' ? <>
+      <CardPages key={view} columns={2} rows={3}>{view === 'downloads' ? <>
         <a href={DOWNLOADS.windows}><Monitor/><span>Windows</span></a>
         <a href={DOWNLOADS.android}><Smartphone/><span>Android</span></a>
       </> : <>{children}<button type="button" data-preference="theme" onClick={() => open('theme')}><Palette/><span>{t('테마')}</span></button><button type="button" data-preference="language" onClick={() => open('language')}><Globe2/><span>{t('언어')}</span></button>{!isNative() && <button type="button" data-preference="downloads" aria-label={t('웹 / 앱 다운로드')} onClick={() => open('downloads')}><Download/><span>{t(mobile ? '다운로드' : '웹 / 앱 다운로드')}</span></button>}</>}
