@@ -5,6 +5,14 @@ async (page) => {
   await page.reload();
   const nav = page.getByRole('navigation', { name: '모바일 메뉴' });
   const rect = selector => page.locator(selector).boundingBox();
+  for (const [width, height] of [[320,568], [390,844], [768,1024]]) {
+    await page.setViewportSize({ width, height });
+    for (const selector of ['.search-dock.hero .search-box', '.ranking-panel']) {
+      const box = await rect(selector);
+      check(Math.abs(box.x + box.width / 2 - width / 2) < 2, `${selector} is off center`);
+    }
+    check(await page.locator('.search-submit').evaluate(el => getComputedStyle(el).borderTopWidth === '0px'), 'Search button still has a border');
+  }
   const centered = async (selector, height) => {
     const panel = await rect(selector);
     const search = await rect('.search-row');
@@ -52,6 +60,10 @@ async (page) => {
   await page.getByRole('button', { name:'마인크래프트', exact:true }).click();
   await page.getByRole('button', { name:'검색 필터', exact:true }).click();
   await checkGrid();
+  const filterHeader = await rect('.deck-header');
+  const filterCards = await rect('.picker-grid');
+  check(Math.abs((filterHeader.y + filterCards.y + filterCards.height) / 2 - 422) < 2, 'Filter contents are not vertically centered');
+  await page.screenshot({ path:'output/playwright/mobile-filter-centered.png' });
   await page.getByRole('button', { name:'정렬 방법', exact:true }).click();
   await checkGrid();
   await page.getByRole('button', { name:'관련도순', exact:true }).click();
@@ -59,6 +71,7 @@ async (page) => {
   await page.getByRole('button', { name:'닫기', exact:true }).click();
   await nav.getByRole('button', { name:'설정', exact:true }).click();
   await checkGrid();
+  check(await page.getByRole('button', { name:'모드 둘러보기', exact:true }).count() === 0, 'Browse card remains');
   await page.screenshot({ path:'output/playwright/mobile-settings.png' });
   await page.getByRole('button', { name:'테마', exact:true }).click();
   await checkGrid();
@@ -66,14 +79,23 @@ async (page) => {
   await checkGrid();
   await page.getByRole('button', { name:'뒤로', exact:true }).click();
   await page.getByRole('button', { name:'다음 페이지', exact:true }).click();
+  await page.getByRole('button', { name:'웹 / 앱 다운로드', exact:true }).click();
+  check(await page.getByRole('link', { name:'웹에서 열기', exact:true }).count() === 0, 'Open web card remains');
+  check(await page.getByRole('link', { name:'Windows', exact:true }).count() === 1 && await page.getByRole('link', { name:'Android', exact:true }).count() === 1, 'App downloads missing');
+  await page.screenshot({ path:'output/playwright/mobile-downloads.png' });
+  await page.getByRole('button', { name:'뒤로', exact:true }).click();
   await page.getByRole('button', { name:'언어', exact:true }).click();
   await checkGrid();
   await page.getByRole('button', { name:'닫기', exact:true }).click();
   const input = page.getByRole('searchbox', { name:'모드 검색어' });
   check(await input.getAttribute('enterkeyhint') === 'search', 'Missing keyboard search action');
   await input.fill('sodium');
+  await page.evaluate(() => window.scrollTo({ top:120, behavior:'instant' }));
+  check(await page.evaluate(() => scrollY > 0), 'Search scroll regression did not start scrolled');
   await input.press('Enter');
   await page.locator('.has-results').waitFor();
+  check(await page.evaluate(() => scrollY === 0), 'Search retained old scroll position');
+  check((await rect('.search-row')).y >= 0, 'Search clipped after submitting');
   check(await input.evaluate(el => document.activeElement !== el), 'Keyboard focus not released after submit');
   await nav.getByRole('button', { name:'최근 검색', exact:true }).click();
   check((await page.locator('.history-list').innerText()).includes('sodium'), 'Enter did not save query');
@@ -94,5 +116,5 @@ async (page) => {
   check(await page.locator('.picker-grid').count() === 0, 'Desktop rail replaced');
   check(await page.locator('.deck-card').count() === seen.size, 'Desktop/mobile games differ');
   await page.screenshot({ path:'output/playwright/desktop-games.png' });
-  return `PASS: 4 viewport sizes; ${seen.size} games; page boundaries; filter/settings/theme/language; Enter search; centered empty and populated collections; desktop rail.`;
+  return `PASS: 4 viewport sizes; ${seen.size} games; page boundaries; simplified settings/downloads; centered mobile search, rankings and filters; borderless search button; Enter resets scroll; centered collections; desktop rail.`;
 }

@@ -18,7 +18,7 @@ export function CardPages({ children }: { children: ReactNode }) {
   const lastPage = Math.max(0, Math.ceil(cards.length / 4) - 1);
   const current = Math.min(page, lastPage);
   return <>
-    <div className="picker-grid">{cards.slice(current * 4, current * 4 + 4)}</div>
+    <div className={`picker-grid ${cards.length <= 2 ? 'picker-grid-single-row' : ''}`}>{cards.slice(current * 4, current * 4 + 4)}</div>
     {lastPage > 0 && <div className="picker-pagination">
       <button type="button" aria-label={t('이전 페이지')} disabled={current === 0} onClick={() => setPage(current - 1)}><ArrowLeft size={22}/></button>
       <button type="button" aria-label={t('다음 페이지')} disabled={current === lastPage} onClick={() => setPage(current + 1)}><ArrowRight size={22}/></button>

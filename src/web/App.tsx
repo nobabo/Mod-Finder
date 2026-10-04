@@ -1,5 +1,5 @@
 import { t, locale, languagePreference, changeLanguage } from './lib/i18n';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useLayoutEffect, useRef, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, Compass, GitCompareArrows, History, LoaderCircle, Search, Settings2, SlidersHorizontal, X } from 'lucide-react';
 import { categoriesForGame, getCategory } from '../shared/categories';
 import { GENRES, gamesInScope, getGame } from '../shared/games';
@@ -30,6 +30,7 @@ export default function App() {
   const [genre, setGenre] = useState('all');
   const [input, setInput] = useState(''); const [query, setQuery] = useState('');
   const [submitted, setSubmitted] = useState(false);
+  const [searchNavigation, setSearchNavigation] = useState(0);
   const [filters, setFilters] = useState<Filters>({}); const [filterOpen, setFilterOpen] = useState(false);
   const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
   const [selectedFolder, setSelectedFolder] = useState('all');
@@ -67,6 +68,9 @@ export default function App() {
   useModSummaries([...scopeGames.map(game => game.id), ...local.favorites.map(item => item.gameId), ...compared.map(item => item.gameId)], true);
   const themeControls = <div className="theme-options"><CardPages>{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={accent === theme.id} onClick={() => setAccent(theme.id)}><i style={{ background: theme.grad }} />{theme.name}{accent === theme.id && <Check size={14} />}</button>)}</CardPages></div>;
   const hasSearch = submitted || selectedCategories.length > 0;
+  useLayoutEffect(() => {
+    if (page === 'discover' && hasSearch) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
+  }, [page, hasSearch, searchNavigation]);
   const search = useSearch({ gameId, genre, query, filters, categories: selectedCategories, selectedSource: 'all', sort }, false, hasSearch && page === 'discover');
   useEffect(() => { let current = true; loadLocalData().then(data => { if (current) { setLocal(data); setHydrated(true); } }).catch(() => { if (current) setToast(t("저장된 정보를 읽지 못했어요. 저장 공간을 확인해 주세요.")); }); return () => { current = false; }; }, []);
   useEffect(() => { if (hydrated) void saveLocalData(local).catch(() => setToast(t("변경사항을 저장하지 못했어요. 저장 공간을 확인해 주세요."))); }, [local, hydrated]);
@@ -75,6 +79,7 @@ export default function App() {
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); setPage('discover'); inputRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, []);
   const chooseGame = (id: string, nextGenre = 'all') => { setGenre(nextGenre); setGameId(id); setFilters({}); setSelectedCategories([]); setPage('discover'); setGamePicker(false); if (!matchMedia('(pointer: coarse), (max-width: 850px)').matches) requestAnimationFrame(() => inputRef.current?.focus()); };
   const submit = (value = input, id = gameId, selectedGenre = genre, categories = id === gameId ? selectedCategories : [], kind?: string) => {
+    setSearchNavigation(value => value + 1);
     const next = value.trim().slice(0, 200); setInput(next); setQuery(next); setSubmitted(true); setPage('discover'); setMenuOpen(false);
     if (id !== gameId || selectedGenre !== genre) { setGenre(selectedGenre); setGameId(id); setFilters(kind ? { kind } : {}); }
     else if (kind) setFilters({ kind });
@@ -106,7 +111,6 @@ export default function App() {
     <div className="settings-fab-wrap">
       <button type="button" className="settings-fab" aria-label={t("설정 메뉴")} aria-expanded={menuOpen} title={t("설정 메뉴")} onClick={() => setMenuOpen(value => !value)}><Settings2 size={25} /></button>
       {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
-        <button type="button" onClick={() => go('discover')}><Compass size={34} /><span>{t("모드 둘러보기")}</span></button>
         <button type="button" onClick={() => go('favorites')}><Bookmark size={34} /><span>{t("즐겨찾기")}</span></button>
         <button type="button" onClick={() => go('recent')}><History size={34} /><span>{t("최근 기록")}</span></button>
       </SettingsMenu>}
