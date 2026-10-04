@@ -1,11 +1,12 @@
 import type { Listing, ResultGroup, Sort, VerifiedProjectLink } from './types';
 import { modTranslations, providerQuery } from './content';
+import { numberQueries } from './search-number-variants';
 const normalized = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
 const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
 const representativeOrder = (a: Listing, b: Listing) => downloads(b) - downloads(a) || a.key.localeCompare(b.key);
 export function matchPriority(item: Listing, query: string): number {
   const translated = modTranslations[item.key];
-  const terms = [...new Set([query, providerQuery(query, [`${item.source}:${item.scope}:`], item.gameId)].map(normalized))].filter(Boolean);
+  const terms = [...new Set([query, providerQuery(query, [`${item.source}:${item.scope}:`], item.gameId)].flatMap(numberQueries).map(normalized))].filter(Boolean);
   if (!terms.length) return 3;
   const title = [item.title, translated?.title ?? ''].map(normalized);
   const summary = [item.summary, translated?.summary ?? ''].map(normalized);

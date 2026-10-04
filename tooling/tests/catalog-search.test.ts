@@ -1,7 +1,7 @@
 import { describe, expect, it, vi } from 'vitest';
 import { GAMES, GENRES, findGames } from '../../src/shared/games';
 import { listingText, modTranslations, providerQuery, tagText } from '../../src/shared/content';
-import { searchPlan, bucketKey, runSearchQueue, type SearchSpec } from '../../src/shared/search-plan';
+import { searchPlan, bucketKey, sourceBucketKey, runSearchQueue, type SearchSpec } from '../../src/shared/search-plan';
 import { groupResults } from '../../src/shared/ranking';
 import verified from '../../src/shared/data/verified-projects.json';
 import { mapModrinth } from '../../src/server/adapters';
@@ -34,7 +34,7 @@ describe('catalog and global search', () => {
     expect(plan.length).toBeGreaterThan(1);
     expect(plan.every(p => p.source === 'steam' && findGames('', 'survival').some(g => g.id === p.gameId) && !Object.keys(p.filters).length)).toBe(true);
     expect(searchPlan({ ...spec, gameId: 'minecraft-java', filters: { loader: 'fabric' } }).every(p => p.filters.loader === 'fabric')).toBe(true);
-    expect(searchPlan({ ...spec, query: ' ' }).map(bucketKey)).toEqual(searchPlan(spec).map(bucketKey));
+    expect(searchPlan({ ...spec, query: ' ' }).map(sourceBucketKey)).toEqual(searchPlan(spec).map(sourceBucketKey));
     expect(findGames('좀보이드')[0].id).toBe('project-zomboid');
     expect(GAMES.find(g => g.id === 'terraria')?.sources.steam?.scope).toBe('1281930');
   });
@@ -117,9 +117,9 @@ describe('localized content and verified duplicates', () => {
     const forwarded = (gameId: string, query: string) => [...new Set(searchPlan({ ...spec, gameId, query }).map(request => request.query))];
     expect(forwarded('minecraft-java', '패브릭')).toEqual(['fabric']);
     expect(forwarded('rimworld', '패브릭')).toEqual(['패브릭']);
-    expect(forwarded('skyrim-se', '동료')).toEqual(['follower']);
-    expect(forwarded('fallout-4', '동료')).toEqual(['companion']);
-    expect(forwarded('minecraft-java', '동료')).toEqual(['companions']);
+    expect(forwarded('skyrim-se', '동료')).toEqual(['follower', 'followers']);
+    expect(forwarded('fallout-4', '동료')).toEqual(['companion', 'companions']);
+    expect(forwarded('minecraft-java', '동료')).toEqual(['companions', 'companion']);
     expect(forwarded('minecraft-java', '시야')).toEqual(['view']);
     expect(forwarded('lethal-company', '시야')).toEqual(['vision']);
     expect(forwarded('cities-skylines', '시야')).toEqual(['camera']);

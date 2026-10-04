@@ -1,9 +1,11 @@
 import { gamesInScope } from './games';
 import { getCategory } from './categories';
 import { providerQuery } from './content';
+import { numberQueries } from './search-number-variants';
 import { SOURCES, type Filters, type SearchRequest, type Sort, type Source } from './types';
 export interface SearchSpec { gameId: string; genre?: string; query: string; filters: Filters; categories?: string[]; sort: Sort; selectedSource: Source | 'all' }
-export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
+export const sourceBucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
+export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source' | 'query'> & { filters?: Filters }) => JSON.stringify([sourceBucketKey(request), request.query]);
 export function searchPlan(spec: SearchSpec): SearchRequest[] {
   if (spec.categories?.length) {
     return [...new Set(spec.categories)].flatMap(category => searchPlan({ ...spec, categories: undefined, filters: { ...spec.filters, category } }));
@@ -13,10 +15,10 @@ export function searchPlan(spec: SearchSpec): SearchRequest[] {
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES
     .filter(source => game.sources[source] && (spec.selectedSource === 'all' || source === spec.selectedSource))
     .filter(source => !category || category.source === source)
-    .map(source => ({ gameId: game.id, source,
-      query: providerQuery(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id),
+    .flatMap(source => numberQueries(providerQuery(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id)).map(query => ({ gameId: game.id, source,
+      query,
       filters: spec.gameId === 'all' ? {} : spec.filters,
-      sort: source === 'thunderstore' && spec.sort === 'relevance' ? 'updated' as const : spec.sort })));
+      sort: source === 'thunderstore' && spec.sort === 'relevance' ? 'updated' as const : spec.sort }))));
 }
 // A bounded queue keeps global searches from flooding provider or application limits.
 export async function runSearchQueue<T>(requests: T[], run: (request: T) => Promise<void>, signal: AbortSignal, concurrency = 4) {
