@@ -69,24 +69,3 @@
   .deck-card img,.deck-card>svg:not(.sort-selection),.settings-menu nav .picker-grid :is(button,a) svg { width:44px;height:44px; }
   .collection-stage:has(>.history-list) .collection-brand { display:none; }
 }
-/* Shared top placement for the home and collection pages. */
-.page-brand { position:absolute;top:calc(20px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);line-height:0;z-index:26; }
-.page-brand .brand-logo { width:96px;height:96px; }
-.app-shell .settings-fab-wrap { display:block;left:20px;right:auto;top:calc(20px + env(safe-area-inset-top));transform:none; }
-.app-shell .settings-fab { display:grid;width:58px;height:58px;color:var(--accent);border-color:var(--accent); }
-.content:has(.search-dock.hero),.content.collection-content { padding-top:calc(148px + env(safe-area-inset-top));padding-bottom:calc(90px + env(safe-area-inset-bottom));min-height:100dvh;height:auto;display:flex;justify-content:flex-start; }
-.content .search-dock.hero { margin:0 auto; }
-.search-dock.hero .ranking-panel { position:relative;top:auto;left:0;margin:16px 0 0; }
-.collection-stage .search-dock.compact,.collection-stage:has(>.history-list) .search-dock.compact { position:relative;bottom:auto;left:auto;transform:none;margin:0 auto 24px; }
-.collection-stage:has(>.history-list)>.page-heading { position:static;padding:0 0 24px; }
-.collection-stage>.collection-panel,.collection-stage .history-list { max-height:none;overflow:visible; }
-.collection-stage>.collection-panel>.page-heading { justify-content:center;text-align:center; }
-.favorites-empty-icon { display:block;color:var(--accent);margin:60px auto; }
-@media(max-width:850px) {
-  .app-shell .settings-fab-wrap { left:16px;top:calc(16px + env(safe-area-inset-top)); }
-  .app-shell .settings-fab { width:48px;height:48px; }
-  .content:has(.search-dock.hero),.content.collection-content { padding-top:calc(132px + env(safe-area-inset-top)); }
-}
-@media(max-width:650px) {
-  .page-brand .brand-logo { width:76px;height:76px; }
-}

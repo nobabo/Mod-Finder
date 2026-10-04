@@ -36,7 +36,7 @@ describe('game community rankings', () => {
       expect(snapshot!.postCount).toBeGreaterThan(0);
       expect(snapshot!.postCount).toBeLessThanOrEqual(750);
       expect(snapshot!.entries.length).toBeGreaterThan(0);
-      expect(snapshot!.entries.length).toBeLessThanOrEqual(11);
+      expect(snapshot!.entries.length).toBeLessThanOrEqual(10);
       expect(snapshot!.sourceUrls).toEqual(COMMUNITY_GALLERIES[game.id].heads.map(head => galleryPageUrl(game.id, head.id, 1)));
       const ids = new Set(communityMods(game.id).map(mod => mod.id));
       snapshot!.entries.forEach((entry, index) => {
