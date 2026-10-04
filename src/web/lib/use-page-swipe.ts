@@ -1,19 +1,24 @@
-import { useRef, type MouseEvent, type PointerEvent } from 'react';
+import { useEffect, useRef, useState, type MouseEvent, type PointerEvent } from 'react';
 
 /** Keep vertical scrolling native; claim only deliberate horizontal touch drags. */
-export function usePageSwipe(enabled: boolean, turnPage: (direction: number) => void) {
+export function usePageSwipe(enabled: boolean, turnPage: (direction: number) => void, canTurn: (direction: number) => boolean) {
   const gesture = useRef<{ id: number; x: number; y: number; horizontal: boolean } | null>(null);
   const suppressClick = useRef(false);
+  const [offset, setOffset] = useState(0);
+  const [dragging, setDragging] = useState(false);
+  const reset = () => { setOffset(0); setDragging(false); };
+  useEffect(() => { if (!enabled) { gesture.current = null; reset(); } }, [enabled]);
   const finish = (event: PointerEvent<HTMLDivElement>, cancelled = false) => {
     const drag = gesture.current;
     if (!drag || drag.id !== event.pointerId) return;
     gesture.current = null;
+    reset();
     if (!cancelled && drag.horizontal && Math.abs(event.clientX - drag.x) >= 48) {
       turnPage(event.clientX < drag.x ? 1 : -1);
     }
     if (event.currentTarget.hasPointerCapture(event.pointerId)) event.currentTarget.releasePointerCapture(event.pointerId);
   };
-  return {
+  return { offset, dragging, handlers: {
     onPointerDown(event: PointerEvent<HTMLDivElement>) {
       suppressClick.current = false;
       if (!enabled || !event.isPrimary || event.pointerType === 'mouse') return;
@@ -28,20 +33,24 @@ export function usePageSwipe(enabled: boolean, turnPage: (direction: number) => 
         if (Math.max(x, y) < 10) return;
         if (x <= y * 1.2) { gesture.current = null; return; }
         drag.horizontal = true;
+        setDragging(true);
         suppressClick.current = true;
         event.currentTarget.setPointerCapture(event.pointerId);
       }
+      const delta = event.clientX - drag.x;
+      const limit = event.currentTarget.clientWidth;
+      setOffset(canTurn(delta < 0 ? 1 : -1) ? Math.max(-limit, Math.min(limit, delta)) : delta * .18);
       event.preventDefault();
     },
     onPointerUp: (event: PointerEvent<HTMLDivElement>) => finish(event),
     onPointerCancel: (event: PointerEvent<HTMLDivElement>) => finish(event, true),
     onLostPointerCapture(event: PointerEvent<HTMLDivElement>) {
-      if (event.target === event.currentTarget) gesture.current = null;
+      if (event.target === event.currentTarget) { gesture.current = null; reset(); }
     },
     onClickCapture(event: MouseEvent<HTMLDivElement>) {
       if (suppressClick.current && event.detail !== 0) {
         event.preventDefault(); event.stopPropagation(); suppressClick.current = false;
       }
     },
-  };
+  } };
 }

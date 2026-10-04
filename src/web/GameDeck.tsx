@@ -135,7 +135,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   const keyboard = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') { event.preventDefault(); openFilter ? setOpenFilter(null) : genreMode && view !== 'menu' ? (setQuery(''), setView('menu')) : close(); }
     if (event.key === 'Tab') {
-      const controls = [...root.current!.querySelectorAll<HTMLElement>('button:not(:disabled),input,select')];
+      const controls = [...root.current!.querySelectorAll<HTMLElement>('button:not(:disabled),input,select')].filter(control => !control.closest('[inert]'));
       const first = controls[0]; const last = controls.at(-1);
       if (event.shiftKey && document.activeElement === first) { event.preventDefault(); last?.focus(); }
       else if (!event.shiftKey && document.activeElement === last) { event.preventDefault(); first?.focus(); }
