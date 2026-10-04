@@ -2,8 +2,11 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { backgroundPlaylist } from '../shared/backgrounds';
 import { createGlassRenderer } from './lib/glass-renderer';
 import { ThemeEffects } from './ThemeEffects';
+import { useScenePaused } from './lib/use-scene-paused';
 
 export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParallax = false }: { gameIds: string[]; theme: string; motionEnabled?: boolean; scrollParallax?: boolean }) {
+  const paused = useScenePaused();
+  const parallax = useRef({ x: 0, y: 0 });
   const scope = gameIds.join('|');
   const photos = useMemo(() => backgroundPlaylist(gameIds), [scope]);
   const [position, setPosition] = useState({ scope, index: 0 });
@@ -30,18 +33,19 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     return () => { element.removeEventListener('webglcontextrestored', restore); engine?.dispose(); renderer.current = null; };
   }, [epoch]);
   useEffect(() => { renderer.current?.setTheme(theme); }, [theme, epoch]);
+  useEffect(() => { renderer.current?.setPaused(paused); }, [paused, epoch]);
   useEffect(() => {
     const element = backdrop.current!;
     let frame = 0;
     let last = 0;
-    let x = 0; let y = 0; let pointerX = 0; let pointerY = 0;
+    let { x, y } = parallax.current; let pointerX = 0; let pointerY = 0;
     const write = () => {
       element.style.setProperty('--background-x', `${x}px`);
       element.style.setProperty('--background-y', `${y}px`);
       renderer.current?.setBackgroundOffset(x, y);
     };
     write();
-    if (reduced || !motionEnabled) return;
+    if (reduced || !motionEnabled || paused) return;
     const tick = (now: number) => {
       frame = 0;
       const amount = 1 - Math.exp(-Math.min(now - last, 64) / 140);
@@ -83,9 +87,9 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
       window.removeEventListener('scroll', schedule);
       window.removeEventListener('resize', schedule);
       document.removeEventListener('visibilitychange', visibility);
-      x = 0; y = 0; write();
+      parallax.current = { x, y };
     };
-  }, [reduced, motionEnabled, scrollParallax, epoch]);
+  }, [reduced, motionEnabled, scrollParallax, epoch, paused]);
   useEffect(() => {
     const media = matchMedia('(prefers-reduced-motion: reduce)');
     const change = () => setReduced(media.matches);
@@ -114,19 +118,19 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     void image.decode().catch(() => {});
   }, [photo?.src]);
   useEffect(() => {
-    if (reduced || photos.length < 2) return;
+    if (reduced || paused || photos.length < 2) return;
     const timer = setInterval(() => {
       if (!document.hidden) setPosition(previous => ({ scope, index: previous.scope === scope ? (previous.index + 1) % photos.length : 1 }));
     }, 20000);
     return () => clearInterval(timer);
-  }, [scope, photos.length, reduced]);
+  }, [scope, photos.length, reduced, paused]);
   useEffect(() => { document.documentElement.dataset.glass = ready ? 'webgl' : 'fallback'; }, [ready]);
-  return <div ref={backdrop} className={`atmosphere ${ready ? 'is-ready' : ''}`} aria-hidden="true">
+  return <div ref={backdrop} className={`atmosphere ${ready ? 'is-ready' : ''}`} data-paused={paused} aria-hidden="true">
     {previous && <div className="atmosphere-fallback" style={{ backgroundImage:`url("${previous.src}")` }} />}
     <div key={current?.src} className={`atmosphere-fallback ${fading ? 'is-crossfading' : ''}`} onAnimationEnd={() => { setPrevious(undefined); setFading(false); }} style={{ backgroundImage: current ? `url("${current.src}")` : undefined }} />
     <div className="aurora-fallback" />
     <canvas ref={canvas} className="atmosphere-canvas" />
-    <ThemeEffects theme={theme} enabled={!reduced && motionEnabled} />
+    <ThemeEffects theme={theme} enabled={!reduced && motionEnabled} paused={paused} />
     <div className="atmosphere-grain" />
   </div>;
 }

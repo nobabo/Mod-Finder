@@ -1,16 +1,23 @@
-import { useEffect, useRef, type CSSProperties } from 'react';
+import { memo, useEffect, useRef, type CSSProperties } from 'react';
 import { themeById } from './lib/themes';
 import './theme-effects.css';
+import { PetalCanvas } from './PetalCanvas';
 
-export function ThemeEffects({ theme, enabled = true }: { theme: string; enabled?: boolean }) {
+export const ThemeEffects = memo(function ThemeEffects({ theme, enabled = true, paused = false }: { theme: string; enabled?: boolean; paused?: boolean }) {
   const layer = useRef<HTMLDivElement>(null);
+
+
   const effect = themeById(theme).effect;
   useEffect(() => {
-    const sync = () => { if (layer.current) layer.current.dataset.paused = String(document.hidden); };
+    const sync = () => {
+      const stopped = paused || document.hidden;
+      if (layer.current) layer.current.dataset.paused = String(stopped);
+
+    };
     sync();
     document.addEventListener('visibilitychange', sync);
     return () => document.removeEventListener('visibilitychange', sync);
-  }, [effect, enabled]);
+  }, [effect, enabled, paused]);
   if (!enabled || effect === 'none') return null;
 
   // Stable, staggered positions avoid a fresh burst on every React render.
@@ -21,8 +28,6 @@ export function ThemeEffects({ theme, enabled = true }: { theme: string; enabled
       '--phase': -(i * 1.73 + .4),
       '--speed': .75 + seed / 180,
       '--size': .65 + seed / 125,
-      '--drift': `${(seed - 50) * 2}px`,
-      '--turn': `${seed * 3.6}deg`,
     } as CSSProperties}>
       {kind === 'petal' && <svg viewBox="0 0 20 24" focusable="false"><path d="M10 23C1 18-3 8 3 2Q6-1 10 4Q14-1 17 2C23 8 19 18 10 23Z" fill="currentColor"/><path d="M10 22Q7 12 10 5" fill="none" stroke="white" strokeOpacity=".3" strokeWidth=".6"/></svg>}
       {kind === 'bamboo' && <svg viewBox="0 0 180 600" preserveAspectRatio="none" focusable="false">
@@ -41,9 +46,9 @@ export function ThemeEffects({ theme, enabled = true }: { theme: string; enabled
     </span>;
   });
   return <div ref={layer} className={`theme-effects effect-${effect}`} aria-hidden="true" data-effect={effect}>
-    {effect === 'petals' && particles('petal', 30)}
+    {effect === 'petals' && <PetalCanvas theme={theme} paused={paused} />}
     {effect === 'rain' && particles('raindrop', 48)}
     {effect === 'fire' && <>{particles('flame', 14)}{particles('ember', 20)}</>}
     {effect === 'bamboo' && particles('bamboo', 8)}
   </div>;
-}
+});

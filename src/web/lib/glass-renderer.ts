@@ -11,6 +11,8 @@ precision highp float;
 varying vec2 vUv;
 uniform sampler2D uPhotoA;
 uniform sampler2D uPhotoB;
+uniform sampler2D uScene;
+uniform int uUseScene;
 uniform vec2 uSize;
 uniform vec4 uView;
 uniform vec2 uImageA;
@@ -36,6 +38,7 @@ vec2 cover(vec2 uv, vec2 image) {
   return (uv - 0.5 + camera) * scale / zoom + 0.5 + vec2(sin(uTime * 0.024), cos(uTime * 0.02)) * 0.006 * uMotion;
 }
 vec3 scene(vec2 uv) {
+  if (uUseScene == 1) return texture2D(uScene, uv).rgb;
   vec3 photo = mix(texture2D(uPhotoA, cover(uv, uImageA)).rgb, texture2D(uPhotoB, cover(uv, uImageB)).rgb, uMix);
   float t = uTime * 0.14;
   float wave = 0.55 + 0.19 * sin(uv.x * 4.4 + t) + 0.105 * sin(uv.x * 8.0 - t * 0.7);
@@ -124,7 +127,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const position = gl.getAttribLocation(program, 'aPosition');
   gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const uniform = (name: string) => gl.getUniformLocation(program, name);
-  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
+  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
   const texture = () => {
     const tex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -136,12 +139,20 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     return tex;
   };
   let front = texture(); let back = texture();
+  const sceneTexture = texture();
+  const sceneTarget = gl.createFramebuffer();
+  let sceneWidth = 0; let sceneHeight = 0; let sceneCache = !!sceneTarget;
   let frontSize = [1,1]; let backSize = [1,1];
   let hasPhoto = false; let blendElapsed = 0; let blending = false; let invalidated = false;
   let pendingPhoto: HTMLImageElement | null = null;
   let theme = themeById('violet'); let disposed = false; let raf = 0;
-  let lastFrame = 0; let elapsed = 0; let needsDraw = true;
+  let lastFrame = 0; let elapsed = 0;
+  let paused = false;
   let panelElements: HTMLElement[] = []; let panelDirty = true;
+  const geometry = new Map<HTMLElement, { rect: DOMRect; radius: number }>();
+  const observed = new Set<HTMLElement>();
+  const rects = new Float32Array(32); const radii = new Float32Array(8);
+  const lensRect = new Float32Array(4); const lensRadius = new Float32Array(1);
   const controlLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D }>();
   let pointer = [0,0];
   let backgroundOffset = [0,0];
@@ -158,24 +169,26 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   };
   const controlSelector = '.search-box, .filter-orb, .deck-search, .filter-dropdown-search, .ranking-panel, .folder-modal, .folder-input-glass';
   const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal, .sheet`;
-  const observer = new MutationObserver(() => { panelDirty = true; needsDraw = true; });
-  observer.observe(document.getElementById('root')!, { childList: true, subtree: true });
-  const resize = () => { panelDirty = true; needsDraw = true; schedule(); };
-  const move = (event: PointerEvent) => { pointer = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1]; if (!reduced) needsDraw = true; };
-  const motion = () => { reduced = media.matches; needsDraw = true; schedule(); };
-  const visibility = () => { lastFrame = 0; if (document.hidden) cancelAnimationFrame(raf); else { needsDraw = true; schedule(); } };
+  const observer = new MutationObserver(() => { panelDirty = true; if (paused || reduced) schedule(); });
+  observer.observe(document.body, { childList: true, subtree: true });
+  const resize = () => { panelDirty = true; schedule(); };
+  const sizes = new ResizeObserver(resize);
+  document.addEventListener('transitionend', resize, true);
+  document.addEventListener('animationend', resize, true);
+  const move = (event: PointerEvent) => { if (paused) return; pointer = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1];  };
+  const motion = () => { reduced = media.matches; schedule(); };
+  const visibility = () => { lastFrame = 0; if (document.hidden) cancelAnimationFrame(raf); else { schedule(); } };
   const lost = (event: Event) => { event.preventDefault(); invalidated = true; cancelAnimationFrame(raf); onFailure(); };
   canvas.addEventListener('webglcontextlost', lost);
   window.addEventListener('resize', resize); window.addEventListener('scroll', resize, { passive: true, capture: true });
   window.addEventListener('pointermove', move, { passive: true });
   document.addEventListener('visibilitychange', visibility); media.addEventListener('change', motion);
-  // Repaint static reduced-motion scenes for layout/image changes without a hot RAF.
-  const redraw = window.setInterval(() => { if (reduced && needsDraw) schedule(); }, 150);
+  // Paused scenes redraw only for changed layout/content, keeping new dialogs legible.
   function schedule() { if (!disposed && !document.hidden) { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); } }
   function draw(now: number) {
     if (disposed || document.hidden || gl!.isContextLost()) return;
-    if (!reduced && lastFrame && now - lastFrame < 1000 / 30) { raf = requestAnimationFrame(draw); return; }
-    const delta = lastFrame ? Math.min(now - lastFrame, 100) : 0;
+    if (!paused && !reduced && lastFrame && now - lastFrame < 1000 / 30) { raf = requestAnimationFrame(draw); return; }
+    const delta = !paused && lastFrame ? Math.min(now - lastFrame, 100) : 0;
     if (!reduced) elapsed += delta;
     if (blending) blendElapsed += delta;
     lastFrame = now;
@@ -187,6 +200,12 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (panelDirty) {
       const deck = document.querySelector('.game-deck');
       panelElements = [...(deck ?? document).querySelectorAll<HTMLElement>(deck ? controlSelector : selector)].filter(el => getComputedStyle(el).visibility !== 'hidden');
+      for (const element of observed) if (!panelElements.includes(element)) { sizes.unobserve(element); observed.delete(element); }
+      geometry.clear();
+      for (const element of panelElements) {
+        if (!observed.has(element)) { sizes.observe(element); observed.add(element); }
+        geometry.set(element, { rect: element.getBoundingClientRect(), radius: parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0 });
+      }
       panelDirty = false;
     }
     for (const [element, lens] of controlLenses) {
@@ -202,13 +221,13 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       element.insertBefore(surface, element.firstChild);
       controlLenses.set(element, { canvas: surface, context });
     }
-    const rects = new Float32Array(32); const radii = new Float32Array(8); let count = 0;
+    rects.fill(0); radii.fill(0); let count = 0;
     // Dialogs are listed last in DOM order and therefore cover underlying lenses.
-    const visible = panelElements.filter(el => { if (!el.isConnected || controlLenses.has(el) || el.matches('.search-results-panel')) return false; const r = el.getBoundingClientRect(); return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
+    const visible = panelElements.filter(el => { if (!el.isConnected || controlLenses.has(el) || el.matches('.search-results-panel')) return false; const r = geometry.get(el)!.rect; return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
     for (const element of visible) {
-      const rect = element.getBoundingClientRect();
+      const { rect, radius } = geometry.get(element)!;
       rects.set([rect.left,rect.top,rect.width,rect.height], count * 4);
-      radii[count++] = parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0;
+      radii[count++] = radius;
     }
     let mix = blending ? Math.min(1,blendElapsed / 2400) : 0;
     if (reduced && blending) mix = 1;
@@ -226,10 +245,34 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform3fv(uniforms.uColorA,theme.rgb.map(value => value / 255)); gl!.uniform3fv(uniforms.uColorB,theme.secondaryRgb.map(value => value / 255));
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);
     gl!.uniform2fv(uniforms.uBackgroundOffset,reduced ? [0,0] : backgroundOffset);
+    // Calculate the photographic/aurora scene once per frame. Refraction samples
+    // this texture instead of repeating its trigonometry for every RGB/blur tap.
+    gl!.uniform1i(uniforms.uScene,2); gl!.uniform1i(uniforms.uUseScene,0);
+    gl!.activeTexture(gl!.TEXTURE2);
+    if (sceneCache) {
+      gl!.bindTexture(gl!.TEXTURE_2D,sceneTexture);
+      gl!.bindFramebuffer(gl!.FRAMEBUFFER,sceneTarget);
+      if (sceneWidth !== width || sceneHeight !== height) {
+        gl!.texImage2D(gl!.TEXTURE_2D,0,gl!.RGBA,width,height,0,gl!.RGBA,gl!.UNSIGNED_BYTE,null);
+        gl!.framebufferTexture2D(gl!.FRAMEBUFFER,gl!.COLOR_ATTACHMENT0,gl!.TEXTURE_2D,sceneTexture,0);
+        sceneCache = gl!.checkFramebufferStatus(gl!.FRAMEBUFFER) === gl!.FRAMEBUFFER_COMPLETE;
+        sceneWidth = width; sceneHeight = height;
+      }
+      // Never sample a texture while it is attached to the active render target.
+      gl!.bindTexture(gl!.TEXTURE_2D,front);
+      if (sceneCache) {
+        gl!.uniform4f(uniforms.uView,0,0,innerWidth,innerHeight);
+        gl!.uniform1i(uniforms.uCount,0);
+        gl!.drawArrays(gl!.TRIANGLES,0,6);
+      }
+      gl!.bindFramebuffer(gl!.FRAMEBUFFER,null);
+    }
+    gl!.bindTexture(gl!.TEXTURE_2D,sceneCache ? sceneTexture : front);
+    gl!.uniform1i(uniforms.uUseScene,sceneCache ? 1 : 0);
     // Copy each lens onto its own DOM surface. The browser then scrolls its
     // pixels and the control's border together, even between WebGL frames.
     for (const [element, lens] of controlLenses) {
-      const rect = element.getBoundingClientRect();
+      const { rect, radius } = geometry.get(element)!;
       if (!rect.width || !rect.height || rect.bottom <= 0 || rect.top >= innerHeight) continue;
       const lensWidth = Math.min(width, Math.max(1, Math.round(rect.width * ratio)));
       const lensHeight = Math.min(height, Math.max(1, Math.round(rect.height * ratio)));
@@ -238,8 +281,9 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       }
       gl!.viewport(0,0,lensWidth,lensHeight);
       gl!.uniform4f(uniforms.uView,rect.left,rect.top,rect.width,rect.height);
-      gl!.uniform4fv(uniforms.uPanels,new Float32Array([rect.left,rect.top,rect.width,rect.height]));
-      gl!.uniform1fv(uniforms.uRadii,new Float32Array([parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0]));
+      lensRect.set([rect.left,rect.top,rect.width,rect.height]); lensRadius[0] = radius;
+      gl!.uniform4fv(uniforms.uPanels,lensRect);
+      gl!.uniform1fv(uniforms.uRadii,lensRadius);
       gl!.uniform1i(uniforms.uCount,1);
       gl!.drawArrays(gl!.TRIANGLES,0,6);
       lens.context.drawImage(canvas,0,height - lensHeight,lensWidth,lensHeight,0,0,lensWidth,lensHeight);
@@ -249,30 +293,32 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform4f(uniforms.uView,0,0,innerWidth,innerHeight);
     gl!.uniform4fv(uniforms.uPanels,rects); gl!.uniform1fv(uniforms.uRadii,radii); gl!.uniform1i(uniforms.uCount,count);
     gl!.drawArrays(gl!.TRIANGLES,0,6);
-    needsDraw = false;
-    if (!reduced) raf = requestAnimationFrame(draw);
+
+    if (!paused && !reduced) raf = requestAnimationFrame(draw);
   }
   schedule();
   return {
-    setTheme(value: string) { theme = themeById(value); needsDraw = true; schedule(); },
-    setBackgroundOffset(x: number, y: number) { backgroundOffset = [x,y]; needsDraw = true; },
+    setPaused(value: boolean) { if (paused === value) return; paused = value; lastFrame = 0; schedule(); },
+    setTheme(value: string) { theme = themeById(value); schedule(); },
+    setBackgroundOffset(x: number, y: number) { backgroundOffset = [x,y]; },
     setPhoto(image: HTMLImageElement, immediate = false) {
       if (disposed || gl.isContextLost()) return false;
       if (!hasPhoto || reduced || immediate) { upload(front,image); frontSize = [image.naturalWidth,image.naturalHeight]; hasPhoto = true; blending = false; pendingPhoto = null; }
       else if (blending) pendingPhoto = image;
       else { upload(back,image); backSize = [image.naturalWidth,image.naturalHeight]; blendElapsed = 0; blending = true; }
-      needsDraw = true; schedule();
+      schedule();
       return true;
     },
     dispose() {
-      disposed = true; cancelAnimationFrame(raf); clearInterval(redraw); observer.disconnect();
+      disposed = true; cancelAnimationFrame(raf); observer.disconnect(); sizes.disconnect();
+      document.removeEventListener('transitionend',resize,true); document.removeEventListener('animationend',resize,true);
       for (const lens of controlLenses.values()) lens.canvas.remove();
       controlLenses.clear();
       window.removeEventListener('resize',resize); window.removeEventListener('scroll',resize,true); window.removeEventListener('pointermove',move);
       document.removeEventListener('visibilitychange',visibility); media.removeEventListener('change',motion); canvas.removeEventListener('webglcontextlost',lost);
       // A lost context has already released these objects; after restoration
       // their handles belong to the old generation and must not be deleted.
-      if (!invalidated) { gl.deleteTexture(front); gl.deleteTexture(back); gl.deleteBuffer(buffer); shaders.forEach(shader => gl.deleteShader(shader)); gl.deleteProgram(program); }
+      if (!invalidated) { gl.deleteTexture(front); gl.deleteTexture(back); gl.deleteTexture(sceneTexture); gl.deleteFramebuffer(sceneTarget); gl.deleteBuffer(buffer); shaders.forEach(shader => gl.deleteShader(shader)); gl.deleteProgram(program); }
     },
   };
 }

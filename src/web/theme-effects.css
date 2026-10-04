@@ -1,16 +1,17 @@
 .theme-effects { position:absolute;inset:0;overflow:hidden;pointer-events:none;contain:layout paint; }
-.theme-particle { position:absolute;left:var(--x);pointer-events:none; }
+.theme-particle { position:absolute;left:var(--x);pointer-events:none;will-change:transform,opacity; }
+.atmosphere[data-paused="true"] *, .atmosphere[data-paused="true"] *::before, .atmosphere[data-paused="true"] *::after { animation-play-state:paused !important; }
 .theme-effects[data-paused="true"] :is(.theme-particle,.bamboo-stem,.bamboo-leaves) { animation-play-state:paused; }
 
 /* Translucent, notched petals tumble at different depths. */
 .petal { top:-32px;width:calc(13px * var(--size));height:calc(17px * var(--size));color:color-mix(in srgb,var(--accent) 32%,#ffe1ee);animation:petal-fall calc(22s * var(--speed)) linear infinite;animation-delay:calc(var(--phase) * 1s); }
 .petal svg { width:100%;height:100%; }
 @keyframes petal-fall {
-  0% { opacity:0;transform:translate3d(-35px,-25px,0) rotate(var(--turn)) rotateY(0deg); }
+  0% { opacity:0;transform:translate3d(-35px,-25px,0) rotate(0deg) rotateY(0deg); }
   12% { opacity:.3; }
-  38% { transform:translate3d(35px,38vh,0) rotate(calc(var(--turn) + 100deg)) rotateY(130deg); }
-  70% { opacity:.25;transform:translate3d(var(--drift),73vh,0) rotate(calc(var(--turn) + 230deg)) rotateY(240deg); }
-  100% { opacity:0;transform:translate3d(65px,calc(100vh + 50px),0) rotate(calc(var(--turn) + 330deg)) rotateY(360deg); }
+  38% { transform:translate3d(35px,38vh,0) rotate(100deg) rotateY(130deg); }
+  70% { opacity:.25;transform:translate3d(-25px,73vh,0) rotate(230deg) rotateY(240deg); }
+  100% { opacity:0;transform:translate3d(65px,calc(100vh + 50px),0) rotate(330deg) rotateY(360deg); }
 }
 
 /* Fine trails and rounded highlights read as water without a heavy rain curtain. */
@@ -34,37 +35,18 @@
   0% { opacity:0;transform:translate3d(0,0,0); }
   18% { opacity:.4; }
   65% { opacity:.18; }
-  100% { opacity:0;transform:translate3d(var(--drift),-62vh,0); }
+  100% { opacity:0;transform:translate3d(45px,-62vh,0); }
 }
 
 /* Jointed stalks rise slowly, then leaves unfold from each node. */
 .effect-bamboo { mask-image:linear-gradient(90deg,#000,rgba(0,0,0,.45) 40%,rgba(0,0,0,.45) 60%,#000); }
 .bamboo { bottom:-20px;width:calc(150px * var(--size));height:calc(58vh * var(--size));max-height:90vh;color:color-mix(in srgb,var(--accent) 38%,#c5e4d4);transform-origin:50% 100%;animation:bamboo-sway calc(12s * var(--speed)) ease-in-out infinite;animation-delay:calc(var(--phase) * 1s); }
 .bamboo svg { width:100%;height:100%;overflow:visible; }
-.bamboo-stem { transform-box:fill-box;transform-origin:50% 100%;animation:bamboo-grow calc(28s * var(--speed)) ease-in-out infinite;animation-delay:calc(var(--phase) * 1s); }
-.bamboo-leaves { transform-origin:0 0;animation:bamboo-unfurl calc(28s * var(--speed)) ease-in-out infinite;animation-delay:calc(var(--phase) * 1s); }
-.bamboo-leaves.is-upper { animation-name:bamboo-unfurl-upper; }
+/* Rasterize the complete plant once; animate its HTML surface, not each SVG group. */
+.bamboo-stem,.bamboo-leaves { opacity:1; }
 @keyframes bamboo-sway {
-  0%,100% { transform:translateX(-50%) rotate(-2deg); }
-  50% { transform:translateX(-50%) rotate(2deg); }
-}
-@keyframes bamboo-grow {
-  0% { opacity:0;transform:scaleY(.05); }
-  30% { opacity:.24;transform:scaleY(1); }
-  78% { opacity:.21;transform:scaleY(1); }
-  100% { opacity:0;transform:scaleY(1); }
-}
-@keyframes bamboo-unfurl {
-  0%,24% { opacity:0;transform:scale(.05) rotate(-18deg); }
-  44% { opacity:.2;transform:scale(1) rotate(0deg); }
-  78% { opacity:.17;transform:scale(1) rotate(3deg); }
-  100% { opacity:0;transform:scale(1) rotate(0deg); }
-}
-@keyframes bamboo-unfurl-upper {
-  0%,32% { opacity:0;transform:scale(.05) rotate(-18deg); }
-  52% { opacity:.2;transform:scale(1) rotate(0deg); }
-  78% { opacity:.17;transform:scale(1) rotate(-3deg); }
-  100% { opacity:0;transform:scale(1) rotate(0deg); }
+  0%,100% { opacity:.18;transform:translate3d(-50%,0,0) rotate(-2deg); }
+  50% { opacity:.24;transform:translate3d(-50%,0,0) rotate(2deg); }
 }
 @media(max-width:650px) {
   .theme-particle:nth-child(even) { display:none; }
@@ -74,3 +56,5 @@
   .theme-effects { display:none; }
   .theme-particle,.bamboo-stem,.bamboo-leaves { animation:none; }
 }
+
+.petal-canvas { position:absolute;inset:0;width:100%;height:100%;pointer-events:none; }

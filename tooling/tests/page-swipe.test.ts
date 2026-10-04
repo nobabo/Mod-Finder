@@ -10,6 +10,9 @@ vi.mock('react', () => ({
 afterEach(() => { lifecycle.cleanups.splice(0).forEach(cleanup => cleanup()); vi.unstubAllGlobals(); });
 
 function setup() {
+  vi.stubGlobal('matchMedia', () => ({ matches: false }));
+  vi.stubGlobal('getComputedStyle', () => ({ transform: 'none' }));
+  vi.stubGlobal('DOMMatrixReadOnly', class { m41 = 0; });
   const frames = new Map<number, FrameRequestCallback>();
   let next = 0;
   vi.stubGlobal('requestAnimationFrame', vi.fn((callback: FrameRequestCallback) => { frames.set(++next, callback); return next; }));
@@ -54,5 +57,20 @@ describe('swipe frame scheduling', () => {
     s.handlers.onPointerCancel(s.event(150));
     expect(s.frames.size).toBe(0);
     expect(s.turn).not.toHaveBeenCalled();
+  });
+  it('continues an interrupted transition from the displayed position', () => {
+    const s = setup();
+    vi.stubGlobal('DOMMatrixReadOnly', class { m41 = -100; });
+    s.handlers.onPointerDown(s.event(250));
+    s.handlers.onPointerMove(s.event(270));
+    s.frames.values().next().value!(0);
+    expect(s.style.transform).toBe('translate3d(calc(0% + -80px),0,0)');
+  });
+  it('recognizes a short fast flick without requiring a fixed frame count', () => {
+    const s = setup();
+    s.handlers.onPointerDown({ ...s.event(250), timeStamp: 0 });
+    s.handlers.onPointerMove({ ...s.event(225), timeStamp: 20 });
+    s.handlers.onPointerUp({ ...s.event(225), timeStamp: 25 });
+    expect(s.turn).toHaveBeenCalledWith(1);
   });
 });
