@@ -27,6 +27,8 @@ const nounPairs = [
   ['ghost', 'ghosts'], ['demon', 'demons'], ['trap', 'traps'],
   ['season', 'seasons'], ['event', 'events'], ['settlement', 'settlements'],
   ['city', 'cities'], ['library', 'libraries'], ['patch', 'patches'],
+  ['knife', 'knives'], ['wolf', 'wolves'], ['leaf', 'leaves'],
+  ['child', 'children'], ['person', 'people'],
 ] as const;
 const variants = new Map<string, string>();
 for (const [singular, plural] of nounPairs) {

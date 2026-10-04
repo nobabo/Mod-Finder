@@ -14,6 +14,12 @@ describe('English singular and plural searches', () => {
     ['boss', ['boss', 'bosses']], ['bosses', ['bosses', 'boss']],
     ['class', ['class', 'classes']], ['cities', ['cities', 'city']],
     [' bus ', [' bus ', 'buses']], ['libraries', ['libraries', 'library']],
+    ['weapon', ['weapon', 'weapons']], ['companions', ['companions', 'companion']],
+    ['spell', ['spell', 'spells']], ['vehicles', ['vehicles', 'vehicle']],
+    ['chest', ['chest', 'chests']], ['crops', ['crops', 'crop']],
+    ['knife', ['knife', 'knives']], ['wolves', ['wolves', 'wolf']],
+    ['leaf', ['leaf', 'leaves']], ['children', ['children', 'child']],
+    ['person', ['person', 'people']],
   ])('searches both number forms for %s', (query, expected) => {
     expect(numberQueries(query)).toEqual(expected);
   });
