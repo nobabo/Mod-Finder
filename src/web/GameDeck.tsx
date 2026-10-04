@@ -163,7 +163,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
       {view === 'genre' && !games.length && <p className="deck-empty">{t('일치하는 게임이 없어요')}</p>}
     </div>
     {!mobile && view === 'genre' && <div className="deck-navigation"><button aria-label={t('이전 게임')} onClick={() => step(-1)}><ArrowLeft size={22} /></button><button aria-label={t('다음 게임')} onClick={() => step(1)}><ArrowRight size={22} /></button></div>}
-    {genreMode && openFilter && <div className={`filter-dropdown ${touchLayout ? 'is-liquid-glass' : ''}`} style={dropdownStyle} role="group" aria-label={t(({ version:'게임 버전', loader:'모드 로더', kind:'프로젝트 종류' } as const)[openFilter])}>
+    {genreMode && openFilter && <div className="filter-dropdown is-liquid-glass" style={dropdownStyle} role="group" aria-label={t(({ version:'게임 버전', loader:'모드 로더', kind:'프로젝트 종류' } as const)[openFilter])}>
       {openFilter === 'version' && <label className="filter-dropdown-search"><Search size={17}/><input aria-label={t('게임 버전')} placeholder={t('예: 1.21.1')} value={dropdownQuery} maxLength={40} onChange={event => setDropdownQuery(event.target.value)} /></label>}
       <div className="filter-dropdown-options">
         {openFilter === 'version' && <>{!versionQuery && option('all', t('전체 버전'), !filters.version, () => changeFilter?.('version', ''))}{versionOptions.map(version => option(version, version, filters.version === version, () => changeFilter?.('version', version)))}</>}

@@ -100,9 +100,6 @@
   .mobile-genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking) { filter:none;color:var(--accent);border-color:var(--accent);background:linear-gradient(145deg,rgba(var(--tint-rgb),.24),rgba(var(--secondary-rgb),.12));box-shadow:0 18px 32px #0006,0 0 24px rgba(var(--tint-rgb),.36),inset 0 1px 1px rgba(var(--tint-rgb),.5);transform:translateY(-4px) scale(1.015);animation:genre-card-pick .42s cubic-bezier(.2,.75,.22,1) both; }
   .mobile-genre-deck [data-genre-id]:is([aria-pressed="true"],.is-picking)>svg { stroke:url(#theme-icon-gradient)!important; }
   .mobile-genre-deck.is-selecting .deck-card:not(.is-picking) { opacity:1; }
-  .filter-dropdown.is-liquid-glass { isolation:isolate;background:linear-gradient(145deg,rgba(var(--tint-rgb),.06),rgba(var(--secondary-rgb),.025));backdrop-filter:blur(12px) saturate(1.2);-webkit-backdrop-filter:blur(12px) saturate(1.2);box-shadow:0 20px 60px #0009,inset 0 1px 1px rgba(var(--tint-rgb),.35),inset 0 -1px 1px rgba(var(--secondary-rgb),.2); }
-  .filter-dropdown.is-liquid-glass::before { display:none; }
-  html[data-glass="webgl"] .filter-dropdown.is-liquid-glass { background:transparent;backdrop-filter:none;-webkit-backdrop-filter:none; }
 }
 @media(max-width:650px) and (hover:none) and (pointer:coarse) {
   .app-shell { --mobile-header-height:100px; }

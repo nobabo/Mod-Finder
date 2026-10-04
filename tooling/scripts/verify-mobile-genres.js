@@ -113,9 +113,27 @@ async (page) => {
     await desktopCard.dispatchEvent('click');
     check(await desktopCard.locator('.sort-selection').count() === 1, 'PC genre selection check changed');
     check(await desktopCard.evaluate(el => el.getAnimations().some(animation => animation.id === 'filter-card-pick')), 'PC genre draw animation changed');
-    await button(desktop,'프로젝트 종류').dispatchEvent('click');
-    check(await desktop.locator('.filter-dropdown.is-liquid-glass').count() === 0, 'Mobile dropdown change leaked onto PC');
+    for (const name of ['게임 버전','모드 로더','프로젝트 종류']) {
+      await button(desktop,name).dispatchEvent('click');
+      const dropdown = desktop.getByRole('group',{name,exact:true});
+      await dropdown.locator(':scope > .glass-control-surface').waitFor({state:'attached'});
+      await desktop.waitForFunction(() => document.documentElement.dataset.glass === 'webgl');
+      check(await dropdown.evaluate(el => getComputedStyle(el).backdropFilter === 'none' && el.classList.contains('is-liquid-glass')), 'PC dropdown does not use liquid glass');
+      check(await dropdown.locator(':scope > .glass-control-surface').evaluate(el => el.width > 1 && el.height > 1 && getComputedStyle(el).visibility === 'visible'), 'PC dropdown lens is empty');
+      const rect = await dropdown.boundingBox();
+      check(rect.width === 320 && rect.x >= 0 && rect.x + rect.width <= 1920, 'PC dropdown geometry changed');
+      if (name === '프로젝트 종류') {
+        await desktop.screenshot({path:'output/playwright/desktop-liquid-glass-dropdown.png'});
+        await dropdown.getByRole('button',{name:'모드팩',exact:true}).click();
+        await button(desktop,name).dispatchEvent('click');
+        check(await dropdown.getByRole('button',{name:'모드팩',exact:true}).getAttribute('aria-pressed') === 'true', 'PC dropdown selection lost');
+        await desktop.evaluate(() => { document.documentElement.dataset.glass = 'fallback'; });
+        check(await dropdown.evaluate(el => getComputedStyle(el).backdropFilter.includes('blur')), 'PC glass fallback missing');
+        await desktop.evaluate(() => { document.documentElement.dataset.glass = 'webgl'; });
+      }
+      await dropdown.getByRole('button').first().click();
+    }
     check(errors.length === 0, errors.join('\n'));
-    return {mobileMonochrome:true,themeSelection:true,drawEffect:true,multiSelect:true,reducedMotion:true,dropdownGlass:true,dropdownFallback:true,pcPreserved:true,errors};
+    return {mobileMonochrome:true,themeSelection:true,drawEffect:true,multiSelect:true,reducedMotion:true,dropdownGlass:true,dropdownFallback:true,pcDropdownGlass:true,pcLayoutPreserved:true,errors};
   } finally { for (const context of contexts) await context.close(); }
 }
