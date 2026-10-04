@@ -26,6 +26,7 @@ coverage/
 
 # Local reports and generated native files
 /docs/제출용/
+/docs/presentation/
 src/native/gen/schemas/
 src/native/gen/android/.kotlin/
 src/native/gen/android/**/.gradle/
