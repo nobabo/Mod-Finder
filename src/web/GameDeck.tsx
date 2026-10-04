@@ -100,7 +100,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     };
     frame = requestAnimationFrame(animate);
     return () => cancelAnimationFrame(frame);
-  }, []);
+  }, [mobile]);
   const animateFilterPick = (card: HTMLButtonElement) => {
     for (const animation of card.getAnimations()) {
       if (animation.id === 'filter-card-pick') animation.cancel();

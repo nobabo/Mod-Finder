@@ -24,9 +24,10 @@
   .picker-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;width:100%; }
   .picker-grid-3-columns { grid-template-columns:repeat(3,minmax(0,1fr)); }
   .picker-swipe-viewport { width:100%;overflow:hidden;touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none; }
-  .picker-swipe-track { display:flex;width:100%;transition:transform 280ms cubic-bezier(.22,.75,.25,1); }
+  .picker-swipe-track { display:flex;width:100%;will-change:transform;transition:transform 280ms cubic-bezier(.22,.75,.25,1); }
   .picker-swipe-track.is-dragging { transition:none; }
   .picker-swipe-track>.picker-grid { flex:0 0 100%;min-width:0;box-sizing:border-box;padding:3px; }
+  .picker-swipe-track .deck-card { backdrop-filter:none;-webkit-backdrop-filter:none;transform-style:flat;background:linear-gradient(150deg,#283044e6,#14203be6 50%,#091224e6); }
   .picker-grid-3-rows { grid-template-rows:repeat(3,minmax(0,1fr)); }
   .filter-dropdown-search input { font-size:16px; }
   .picker-grid-single-row { grid-template-rows:minmax(0,1fr); }
