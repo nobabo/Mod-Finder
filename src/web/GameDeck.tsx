@@ -147,7 +147,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     </>}
     <div className="deck-stage">
       <div ref={rail} className={`deck-rail ${view !== 'genre' ? 'filter-menu-rail' : ''} ${drag.dragging ? 'is-dragging' : ''}`} {...(mobile ? {} : drag.handlers)} onWheel={event => { if (!mobile && Math.abs(event.deltaY) > Math.abs(event.deltaX)) rail.current!.scrollLeft += event.deltaY; }}>
-        <CardPages key={`${view}:${query}`}>
+        <CardPages key={`${view}:${query}`} swipe>
         {view === 'menu' && <>
           {[{ id:'genre' as const, label:'장르', Icon:Layers }, { id:'sort' as const, label:'정렬 방법', Icon:ArrowDownWideNarrow }].map(({ id,label,Icon }) => <button key={id} className="deck-card" style={{ '--game-color':'var(--accent)' } as React.CSSProperties} onClick={() => setView(id)}><Icon size={100}/><span>{t(label)}</span></button>)}
         </>}

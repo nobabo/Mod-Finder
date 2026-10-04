@@ -23,6 +23,7 @@
   .settings-rail nav { display:flex;flex-direction:column;gap:16px;width:100%;min-width:0; }
   .picker-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;width:100%; }
   .picker-grid-3-columns { grid-template-columns:repeat(3,minmax(0,1fr)); }
+  .picker-grid-swipe { touch-action:pan-y pinch-zoom;user-select:none;-webkit-user-select:none; }
   .picker-grid-3-rows { grid-template-rows:repeat(3,minmax(0,1fr)); }
   .filter-dropdown-search input { font-size:16px; }
   .picker-grid-single-row { grid-template-rows:minmax(0,1fr); }
