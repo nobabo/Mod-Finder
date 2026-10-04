@@ -61,6 +61,15 @@ describe('scoped fuzzy search', () => {
     }, new AbortController().signal, () => {});
     expect(queries).toEqual(['soduim', 'sodium']);
   });
+  it('preserves another provider’s results while correcting only the empty provider', async () => {
+    const requests: SearchRequest[] = [];
+    await runSearchWithCorrections({ ...spec, selectedSource: 'all' }, async request => {
+      requests.push(request);
+      return request.source === 'curseforge' || request.query === 'Sodium' ? success : empty;
+    }, new AbortController().signal, () => {});
+    expect(requests.filter(request => request.source === 'curseforge').map(request => request.query)).toEqual(['소듕']);
+    expect(requests.filter(request => request.source === 'modrinth').map(request => request.query)).toEqual(['소듕', 'Sodium']);
+  });
   it('bounds global retries and never sends a Minecraft correction to another game', async () => {
     const requests: SearchRequest[] = [];
     await runSearchWithCorrections({ ...spec, gameId: 'all', selectedSource: 'all' }, async request => {

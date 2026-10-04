@@ -71,14 +71,16 @@ export async function runSearchWithCorrections(
     }, signal);
     return hasItems;
   };
-  if (await round(original)) return;
+  let hasItems = await round(original);
   for (const query of correctedQueries(spec.query, spec)) {
-    if (signal.aborted || !eligible.size) return;
-    if (await round(searchPlan({ ...spec, query }))) return;
+    if (hasItems || signal.aborted || !eligible.size) break;
+    hasItems = await round(searchPlan({ ...spec, query }));
   }
   if (signal.aborted || !eligible.size) return;
   // One confident fuzzy candidate per eligible game/source; never fan a game's
-  // corrected name out across other games in a global search.
+  // corrected name out across other games in a global search. A provider that
+  // ignores Korean queries may return a popular list; that must not suppress
+  // a confident fallback for other providers that actually returned nothing.
   const fuzzyRequests = [...eligible.values()].flatMap(request =>
     fuzzyQueries(spec.query, request.gameId, request.source).flatMap(query =>
       searchPlan({ ...spec, gameId: request.gameId, selectedSource: request.source,
