@@ -38,6 +38,7 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     const element = backdrop.current!;
     let frame = 0;
     let last = 0;
+    const touch = matchMedia('(hover: none) and (pointer: coarse)');
     let { x, y } = parallax.current; let pointerX = 0; let pointerY = 0;
     const write = () => {
       element.style.setProperty('--background-x', `${x}px`);
@@ -50,7 +51,7 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
       frame = 0;
       const amount = 1 - Math.exp(-Math.min(now - last, 64) / 140);
       last = now;
-      const scroll = scrollParallax ? Math.min(Math.max(0, window.scrollY) * .06, Math.min(24, innerHeight * .025)) : 0;
+      const scroll = scrollParallax && !touch.matches ? Math.min(Math.max(0, window.scrollY) * .06, Math.min(24, innerHeight * .025)) : 0;
       const targetY = pointerY - scroll;
       x += (pointerX - x) * amount; y += (targetY - y) * amount;
       if (Math.abs(pointerX - x) + Math.abs(targetY - y) < .02) { x = pointerX; y = targetY; }

@@ -141,14 +141,14 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let front = texture(); let back = texture();
   const sceneTexture = texture();
   const sceneTarget = gl.createFramebuffer();
-  let sceneWidth = 0; let sceneHeight = 0; let sceneCache = !!sceneTarget;
+  let sceneWidth = 0; let sceneHeight = 0; let sceneCache = !!sceneTarget; let sceneDirty = true;
   let frontSize = [1,1]; let backSize = [1,1];
   let hasPhoto = false; let blendElapsed = 0; let blending = false; let invalidated = false;
   let pendingPhoto: HTMLImageElement | null = null;
   let theme = themeById('violet'); let disposed = false; let raf = 0;
-  let lastFrame = 0; let elapsed = 0;
+  let lastSceneFrame = 0; let elapsed = 0;
   let paused = false;
-  let panelElements: HTMLElement[] = []; let panelDirty = true;
+  let panelElements: HTMLElement[] = []; let panelDirty = true; let geometryDirty = true;
   const geometry = new Map<HTMLElement, { rect: DOMRect; radius: number }>();
   const observed = new Set<HTMLElement>();
   const rects = new Float32Array(32); const radii = new Float32Array(8);
@@ -169,33 +169,50 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   };
   const controlSelector = '.search-box, .filter-orb, .deck-search, .filter-dropdown-search, .ranking-panel, .folder-modal, .folder-input-glass';
   const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal, .sheet`;
-  const observer = new MutationObserver(() => { panelDirty = true; if (paused || reduced) schedule(); });
+  const observer = new MutationObserver(() => { panelDirty = true; schedule(); });
   observer.observe(document.body, { childList: true, subtree: true });
   const resize = () => { panelDirty = true; schedule(); };
+  // Scrolling changes positions, not the set of panels or their corner styles.
+  // Present geometry at display cadence independently of the 30 Hz scene clock.
+  const scroll = () => { geometryDirty = true; schedule(); };
   const sizes = new ResizeObserver(resize);
+  sizes.observe(canvas);
   document.addEventListener('transitionend', resize, true);
   document.addEventListener('animationend', resize, true);
-  const move = (event: PointerEvent) => { if (paused) return; pointer = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1];  };
-  const motion = () => { reduced = media.matches; schedule(); };
-  const visibility = () => { lastFrame = 0; if (document.hidden) cancelAnimationFrame(raf); else { schedule(); } };
-  const lost = (event: Event) => { event.preventDefault(); invalidated = true; cancelAnimationFrame(raf); onFailure(); };
+  const move = (event: PointerEvent) => { if (paused || event.pointerType !== 'mouse') return; pointer = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1];  };
+  const motion = () => { reduced = media.matches; sceneDirty = true; lastSceneFrame = 0; schedule(); };
+  const visibility = () => { lastSceneFrame = 0; if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else { geometryDirty = true; schedule(); } };
+  const lost = (event: Event) => { event.preventDefault(); invalidated = true; cancelAnimationFrame(raf); raf = 0; onFailure(); };
   canvas.addEventListener('webglcontextlost', lost);
-  window.addEventListener('resize', resize); window.addEventListener('scroll', resize, { passive: true, capture: true });
+  window.addEventListener('resize', resize); window.addEventListener('scroll', scroll, { passive: true, capture: true });
+  window.visualViewport?.addEventListener('resize', scroll); window.visualViewport?.addEventListener('scroll', scroll);
   window.addEventListener('pointermove', move, { passive: true });
   document.addEventListener('visibilitychange', visibility); media.addEventListener('change', motion);
   // Paused scenes redraw only for changed layout/content, keeping new dialogs legible.
-  function schedule() { if (!disposed && !document.hidden) { cancelAnimationFrame(raf); raf = requestAnimationFrame(draw); } }
+  function schedule() { if (!disposed && !invalidated && !document.hidden && !raf) raf = requestAnimationFrame(draw); }
   function draw(now: number) {
+    raf = 0;
     if (disposed || document.hidden || gl!.isContextLost()) return;
-    if (!paused && !reduced && lastFrame && now - lastFrame < 1000 / 30) { raf = requestAnimationFrame(draw); return; }
-    const delta = !paused && lastFrame ? Math.min(now - lastFrame, 100) : 0;
-    if (!reduced) elapsed += delta;
-    if (blending) blendElapsed += delta;
-    lastFrame = now;
+    const sceneDue = !paused && !reduced && (!lastSceneFrame || now - lastSceneFrame >= 1000 / 30);
+    if (!panelDirty && !geometryDirty && !sceneDirty && !sceneDue) {
+      if (!paused && !reduced) schedule();
+      return;
+    }
+    // CSS fixes the touch backdrop to the large viewport. innerHeight changes
+    // as browser chrome retracts and must not resize/re-crop this texture.
+    const viewWidth = Math.max(1, canvas.clientWidth); const viewHeight = Math.max(1, canvas.clientHeight);
     // Limit fill cost on high-DPI mobile screens and large desktop monitors.
-    const ratio = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2200000 / (innerWidth * innerHeight)));
-    const width = Math.round(innerWidth * ratio); const height = Math.round(innerHeight * ratio);
-    if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; }
+    const ratio = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2200000 / (viewWidth * viewHeight)));
+    const width = Math.round(viewWidth * ratio); const height = Math.round(viewHeight * ratio);
+    if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; sceneDirty = true; geometryDirty = true; }
+    const updateScene = sceneDirty || sceneDue;
+    if (updateScene) {
+      const delta = !paused && !reduced && lastSceneFrame ? Math.min(now - lastSceneFrame, 100) : 0;
+      elapsed += delta;
+      if (blending) blendElapsed += delta;
+      lastSceneFrame = now;
+      sceneDirty = false;
+    }
     gl!.viewport(0,0,width,height);
     if (panelDirty) {
       const deck = document.querySelector('.game-deck');
@@ -207,6 +224,10 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
         geometry.set(element, { rect: element.getBoundingClientRect(), radius: parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0 });
       }
       panelDirty = false;
+      geometryDirty = false;
+    } else if (geometryDirty) {
+      for (const element of panelElements) geometry.get(element)!.rect = element.getBoundingClientRect();
+      geometryDirty = false;
     }
     for (const [element, lens] of controlLenses) {
       if (!panelElements.includes(element)) { lens.canvas.remove(); controlLenses.delete(element); }
@@ -238,7 +259,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.activeTexture(gl!.TEXTURE0); gl!.bindTexture(gl!.TEXTURE_2D,front);
     gl!.activeTexture(gl!.TEXTURE1); gl!.bindTexture(gl!.TEXTURE_2D,back);
     gl!.uniform1i(uniforms.uPhotoA,0); gl!.uniform1i(uniforms.uPhotoB,1);
-    gl!.uniform2f(uniforms.uSize,innerWidth,innerHeight);
+    gl!.uniform2f(uniforms.uSize,viewWidth,viewHeight);
     gl!.uniform2fv(uniforms.uImageA,frontSize); gl!.uniform2fv(uniforms.uImageB,backSize);
     gl!.uniform1f(uniforms.uMix,mix * mix * (3 - 2 * mix));
     gl!.uniform1f(uniforms.uTime,elapsed / 1000); gl!.uniform1f(uniforms.uMotion,reduced ? 0 : 1);
@@ -249,7 +270,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     // this texture instead of repeating its trigonometry for every RGB/blur tap.
     gl!.uniform1i(uniforms.uScene,2); gl!.uniform1i(uniforms.uUseScene,0);
     gl!.activeTexture(gl!.TEXTURE2);
-    if (sceneCache) {
+    if (sceneCache && updateScene) {
       gl!.bindTexture(gl!.TEXTURE_2D,sceneTexture);
       gl!.bindFramebuffer(gl!.FRAMEBUFFER,sceneTarget);
       if (sceneWidth !== width || sceneHeight !== height) {
@@ -261,7 +282,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       // Never sample a texture while it is attached to the active render target.
       gl!.bindTexture(gl!.TEXTURE_2D,front);
       if (sceneCache) {
-        gl!.uniform4f(uniforms.uView,0,0,innerWidth,innerHeight);
+        gl!.uniform4f(uniforms.uView,0,0,viewWidth,viewHeight);
         gl!.uniform1i(uniforms.uCount,0);
         gl!.drawArrays(gl!.TRIANGLES,0,6);
       }
@@ -290,23 +311,23 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     }
     // Replace the temporary lens renders with the full background scene.
     gl!.viewport(0,0,width,height);
-    gl!.uniform4f(uniforms.uView,0,0,innerWidth,innerHeight);
+    gl!.uniform4f(uniforms.uView,0,0,viewWidth,viewHeight);
     gl!.uniform4fv(uniforms.uPanels,rects); gl!.uniform1fv(uniforms.uRadii,radii); gl!.uniform1i(uniforms.uCount,count);
     gl!.drawArrays(gl!.TRIANGLES,0,6);
 
-    if (!paused && !reduced) raf = requestAnimationFrame(draw);
+    if (!paused && !reduced) schedule();
   }
   schedule();
   return {
-    setPaused(value: boolean) { if (paused === value) return; paused = value; lastFrame = 0; schedule(); },
-    setTheme(value: string) { theme = themeById(value); schedule(); },
-    setBackgroundOffset(x: number, y: number) { backgroundOffset = [x,y]; },
+    setPaused(value: boolean) { if (paused === value) return; paused = value; lastSceneFrame = 0; geometryDirty = true; schedule(); },
+    setTheme(value: string) { theme = themeById(value); sceneDirty = true; schedule(); },
+    setBackgroundOffset(x: number, y: number) { if (backgroundOffset[0] === x && backgroundOffset[1] === y) return; backgroundOffset = [x,y]; sceneDirty = true; schedule(); },
     setPhoto(image: HTMLImageElement, immediate = false) {
       if (disposed || gl.isContextLost()) return false;
       if (!hasPhoto || reduced || immediate) { upload(front,image); frontSize = [image.naturalWidth,image.naturalHeight]; hasPhoto = true; blending = false; pendingPhoto = null; }
       else if (blending) pendingPhoto = image;
       else { upload(back,image); backSize = [image.naturalWidth,image.naturalHeight]; blendElapsed = 0; blending = true; }
-      schedule();
+      sceneDirty = true; schedule();
       return true;
     },
     dispose() {
@@ -314,7 +335,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       document.removeEventListener('transitionend',resize,true); document.removeEventListener('animationend',resize,true);
       for (const lens of controlLenses.values()) lens.canvas.remove();
       controlLenses.clear();
-      window.removeEventListener('resize',resize); window.removeEventListener('scroll',resize,true); window.removeEventListener('pointermove',move);
+      window.removeEventListener('resize',resize); window.removeEventListener('scroll',scroll,true); window.removeEventListener('pointermove',move);
+      window.visualViewport?.removeEventListener('resize',scroll); window.visualViewport?.removeEventListener('scroll',scroll);
       document.removeEventListener('visibilitychange',visibility); media.removeEventListener('change',motion); canvas.removeEventListener('webglcontextlost',lost);
       // A lost context has already released these objects; after restoration
       // their handles belong to the old generation and must not be deleted.

@@ -1,6 +1,10 @@
 /* The canvas owns the photograph, aurora and refractive glass material. */
 .app-shell { position:relative;isolation:isolate;background:transparent; }
 .atmosphere { position:fixed;inset:0;z-index:-1;overflow:hidden;pointer-events:none;background:#08101a; }
+/* Browser toolbar/keyboard changes must not stretch the photographic scene. */
+@media (hover:none) and (pointer:coarse) {
+ .atmosphere { bottom:auto;height:100vh;height:100lvh; }
+}
 .atmosphere-fallback { position:absolute;inset:-2%;background-size:cover;background-position:center;filter:blur(2.5px) brightness(.29) saturate(.82); }
 .atmosphere-canvas { position:absolute;inset:0;width:100%;height:100%;opacity:0;transition:opacity 1.2s ease; }
 .atmosphere.is-ready .atmosphere-canvas { opacity:1; }
