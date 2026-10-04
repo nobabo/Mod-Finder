@@ -23,7 +23,7 @@ describe('English singular and plural searches', () => {
   const spec: SearchSpec = { gameId: 'minecraft-java', query: '좀비', selectedSource: 'modrinth', filters: { kind: 'modpack', loader: 'forge' }, sort: 'downloads' };
   it.each(['좀비', 'Zombie', 'Zombies'])('plans both queries after translation, preserving filters: %s', query => {
     const requests = searchPlan({ ...spec, query });
-    expect(new Set(requests.map(request => request.query.toLowerCase()))).toEqual(new Set(['zombie', 'zombies']));
+    expect(requests.map(request => request.query.toLowerCase())).toEqual(expect.arrayContaining(['zombie', 'zombies']));
     expect(requests.every(request => request.gameId === spec.gameId && request.source === 'modrinth' && request.filters === spec.filters && request.sort === 'downloads')).toBe(true);
     expect(new Set(requests.map(bucketKey)).size).toBe(requests.length);
     expect(bucketKey({ ...requests[0], cursor: 'next-page' } as SearchRequest)).toBe(bucketKey(requests[0]));

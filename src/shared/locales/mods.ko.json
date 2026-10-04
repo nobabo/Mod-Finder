@@ -1,4 +1,12 @@
 {
+  "curseforge:432:490660": {
+    "title": "디시즈드크래프트",
+    "summary": "감염자에게 점령된 도시를 탐험하고 물자를 수집하며 싸우는 좀비 아포칼립스 모드팩입니다. 기술을 발전시키고 장비를 제작해 방사능 황무지에서 치료제를 찾습니다.",
+    "searchTerm": "DeceasedCraft",
+    "aliases": ["디시즈드크래프트", "디시즈드 크래프트"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/deceasedcraft",
+    "reviewedAt": "2026-10-04"
+  },
   "modrinth:minecraft:AANobbMI": {
     "title": "소듐 (Sodium)",
     "summary": "마인크래프트의 렌더링 엔진을 개선해 프레임 속도를 높이고 화면 끊김을 줄이는 성능 최적화 모드입니다.",

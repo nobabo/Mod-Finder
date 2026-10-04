@@ -1,7 +1,7 @@
 import { gamesInScope } from './games';
 import { getCategory } from './categories';
-import { providerQuery } from './content';
 import { numberQueries } from './search-number-variants';
+import { localizedQueries } from './localized-search';
 import { SOURCES, type Filters, type SearchRequest, type Sort, type Source } from './types';
 export interface SearchSpec { gameId: string; genre?: string; query: string; filters: Filters; categories?: string[]; sort: Sort; selectedSource: Source | 'all' }
 export const sourceBucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
@@ -15,7 +15,7 @@ export function searchPlan(spec: SearchSpec): SearchRequest[] {
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES
     .filter(source => game.sources[source] && (spec.selectedSource === 'all' || source === spec.selectedSource))
     .filter(source => !category || category.source === source)
-    .flatMap(source => numberQueries(providerQuery(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id)).map(query => ({ gameId: game.id, source,
+    .flatMap(source => [...new Set(localizedQueries(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id).flatMap(numberQueries))].map(query => ({ gameId: game.id, source,
       query,
       filters: spec.gameId === 'all' ? {} : spec.filters,
       sort: source === 'thunderstore' && spec.sort === 'relevance' ? 'updated' as const : spec.sort }))));
