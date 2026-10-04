@@ -81,7 +81,7 @@
   .app-shell>.main { padding-top:calc(var(--mobile-header-height) + env(safe-area-inset-top));padding-bottom:calc(24px + env(safe-area-inset-bottom)); }
   .app-shell .content { min-height:calc(100dvh - var(--mobile-header-height) - env(safe-area-inset-top) - 24px - env(safe-area-inset-bottom)); }
   .content:has(.search-dock.hero),.content.collection-content { padding-top:16px;padding-bottom:0;height:auto;display:flex;justify-content:flex-start; }
-  .content:has(.search-dock.hero) { padding-top:40px; }
+  .content:has(.search-dock.hero) { padding-top:max(24px,calc(40dvh - var(--mobile-header-height) - env(safe-area-inset-top) - 32px)); }
   .content .search-dock.hero { margin:0 auto; }
   .search-dock.hero .ranking-panel { position:relative;top:auto;left:0;width:100%;margin:16px 0 0; }
   .ranking-panel .ranking-list,.ranking-panel .ranked-grid { grid-template-columns:repeat(2,minmax(0,1fr));gap:0 12px; }

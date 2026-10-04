@@ -73,7 +73,9 @@ async (page) => {
       const filter = await mobile.locator('.filter-orb').boundingBox();
       const search = await mobile.locator('.search-box').boundingBox();
       check(header.y === 0 && settings.x >= 0 && settings.x <= 20 && Math.abs(settings.y - filter.y) < 1, 'Mobile header alignment');
-      check(search.y >= header.y + header.height + 40, 'Home search was not lowered below the header');
+      check(search.y >= header.y + header.height + 24, 'Header overlaps the home search');
+      const searchCenter = search.y + search.height / 2;
+      check(searchCenter >= height * .38 && searchCenter < height * .5, 'Home search is not slightly above the screen center');
       check(await mobile.locator('.mobile-header').evaluate(el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).backdropFilter === 'none'), 'Header hides the cover photograph');
       const backdrop = await mobile.locator('.atmosphere').boundingBox();
       check(backdrop.y === 0 && backdrop.width >= width && backdrop.height >= height, 'Photograph does not cover the mobile viewport');
