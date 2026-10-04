@@ -1,4 +1,4 @@
-import { Children, Fragment, isValidElement, useState, type ReactNode } from 'react';
+import { Children, Fragment, isValidElement, useRef, useState, type ReactNode } from 'react';
 import { ArrowLeft, ArrowRight } from 'lucide-react';
 import { t } from './lib/i18n';
 import { useMobileLayout } from './lib/use-mobile-layout';
@@ -18,13 +18,14 @@ export function CardPages({ children, columns = 2, rows = 2, swipe = false }: { 
   const pageSize = columns * rows;
   const lastPage = Math.max(0, Math.ceil(cards.length / pageSize) - 1);
   const current = Math.min(page, lastPage);
-  const swipeState = usePageSwipe(mobile && swipe && lastPage > 0, direction => setPage(Math.max(0, Math.min(lastPage, current + direction))), direction => current + direction >= 0 && current + direction <= lastPage);
+  const track = useRef<HTMLDivElement>(null);
+  const swipeHandlers = usePageSwipe(mobile && swipe && lastPage > 0, track, current, direction => setPage(Math.max(0, Math.min(lastPage, current + direction))), direction => current + direction >= 0 && current + direction <= lastPage);
   if (!mobile) return children;
   const gridClass = `picker-grid picker-grid-${columns}-columns picker-grid-${rows}-rows ${cards.length <= columns ? 'picker-grid-single-row' : ''}`;
   return <>
-    {swipe ? <div {...swipeState.handlers} className="picker-swipe-viewport">
-      <div className={`picker-swipe-track ${swipeState.dragging ? 'is-dragging' : ''}`} style={{ transform: `translate3d(calc(${-current * 100}% + ${swipeState.offset}px),0,0)` }}>
-        {Array.from({ length: lastPage + 1 }, (_, index) => <div key={index} className={gridClass} inert={index !== current} aria-hidden={index !== current ? true : undefined}>{cards.slice(index * pageSize, (index + 1) * pageSize)}</div>)}
+    {swipe ? <div {...swipeHandlers} className="picker-swipe-viewport">
+      <div ref={track} className="picker-swipe-track" style={{ transform: `translate3d(${-current * 100}%,0,0)` }}>
+        {Array.from({ length: lastPage + 1 }, (_, index) => <div key={index} className={gridClass} inert={index !== current} aria-hidden={index !== current ? true : undefined}>{Math.abs(index - current) <= 1 ? cards.slice(index * pageSize, (index + 1) * pageSize) : null}</div>)}
       </div>
     </div> : <div className={gridClass}>{cards.slice(current * pageSize, current * pageSize + pageSize)}</div>}
     {lastPage > 0 && <div className="picker-pagination">
