@@ -1,30 +1,16 @@
+import { convertHangulToQwerty } from 'es-hangul';
+import { fuzzyQueries } from './search-fuzzy';
 import corrections from './data/search-corrections.json';
 import { GENRES, getGame } from './games';
 import { runSearchQueue, searchPlan, bucketKey, sourceBucketKey, type SearchSpec } from './search-plan';
 import type { SearchRequest } from './types';
 
-const initials = ['r', 'R', 's', 'e', 'E', 'f', 'a', 'q', 'Q', 't', 'T', 'd', 'w', 'W', 'c', 'z', 'x', 'v', 'g'];
-const vowels = ['k', 'o', 'i', 'O', 'j', 'p', 'u', 'P', 'h', 'hk', 'ho', 'hl', 'y', 'n', 'nj', 'np', 'nl', 'b', 'm', 'ml', 'l'];
-const finals = ['', 'r', 'R', 'rt', 's', 'sw', 'sg', 'e', 'f', 'fr', 'fa', 'fq', 'ft', 'fx', 'fv', 'fg', 'a', 'q', 'qt', 't', 'T', 'd', 'w', 'c', 'z', 'x', 'v', 'g'];
-const consonants = ['r', 'R', 'rt', 's', 'sw', 'sg', 'e', 'E', 'f', 'fr', 'fa', 'fq', 'ft', 'fx', 'fv', 'fg', 'a', 'q', 'Q', 'qt', 't', 'T', 'd', 'w', 'W', 'c', 'z', 'x', 'v', 'g'];
 const common: Record<string, string> = corrections.common;
 const byGenre: Record<string, Record<string, string>> = corrections.genres;
 
-// Decompose syllables before mapping each two-set Korean keyboard key.
+// Keep decomposed Unicode input equivalent to ordinary Korean keyboard input.
 export function koreanKeyboardToEnglish(value: string): string {
-  return [...value.normalize('NFC')].map(character => {
-    const code = character.charCodeAt(0);
-    if (code >= 0xac00 && code <= 0xd7a3) {
-      const offset = code - 0xac00;
-      return initials[Math.floor(offset / 588)] + vowels[Math.floor(offset % 588 / 28)] + finals[offset % 28];
-    }
-    if (code >= 0x3131 && code <= 0x314e) return consonants[code - 0x3131];
-    if (code >= 0x314f && code <= 0x3163) return vowels[code - 0x314f];
-    if (code >= 0x1100 && code <= 0x1112) return initials[code - 0x1100];
-    if (code >= 0x1161 && code <= 0x1175) return vowels[code - 0x1161];
-    if (code >= 0x11a8 && code <= 0x11c2) return finals[code - 0x11a7];
-    return character;
-  }).join('');
+  return convertHangulToQwerty(value.normalize('NFC'));
 }
 
 function genresForScope(scope?: Pick<SearchSpec, 'gameId' | 'genre'>): string[] {
@@ -64,22 +50,39 @@ export async function runSearchWithCorrections(
   signal: AbortSignal,
   onRound: (requests: SearchRequest[]) => void,
 ) {
-  let requests = searchPlan(spec);
+  const original = searchPlan(spec);
+  const eligible = new Map(original.map(request => [sourceBucketKey(request), request]));
   const tried = new Set<string>();
-  const candidates = [spec.query, ...correctedQueries(spec.query, spec)];
-  for (const query of candidates) {
-    if (signal.aborted || !requests.length) return;
-    const eligible = new Set(requests.map(sourceBucketKey));
-    requests = searchPlan({ ...spec, query }).filter(request => {
-      const key = JSON.stringify(request);
+  const round = async (candidates: SearchRequest[]) => {
+    const requests = candidates.filter(request => {
+      const key = bucketKey(request);
       if (!eligible.has(sourceBucketKey(request)) || tried.has(key)) return false;
       tried.add(key);
       return true;
     });
-    const outcomes = new Map<string, SearchOutcome | undefined>();
+    if (!requests.length || signal.aborted) return false;
+    let hasItems = false;
     onRound(requests);
-    await runSearchQueue(requests, async request => { outcomes.set(bucketKey(request), await run(request)); }, signal);
-    if ([...outcomes.values()].some(outcome => outcome?.hasItems)) return;
-    requests = requests.filter(request => outcomes.get(bucketKey(request))?.empty);
+    await runSearchQueue(requests, async request => {
+      const outcome = await run(request);
+      if (outcome?.hasItems) hasItems = true;
+      // A failed or unavailable variant does not establish an empty bucket.
+      if (!outcome?.empty || outcome.hasItems) eligible.delete(sourceBucketKey(request));
+    }, signal);
+    return hasItems;
+  };
+  if (await round(original)) return;
+  for (const query of correctedQueries(spec.query, spec)) {
+    if (signal.aborted || !eligible.size) return;
+    if (await round(searchPlan({ ...spec, query }))) return;
   }
+  if (signal.aborted || !eligible.size) return;
+  // One confident fuzzy candidate per eligible game/source; never fan a game's
+  // corrected name out across other games in a global search.
+  const fuzzyRequests = [...eligible.values()].flatMap(request =>
+    fuzzyQueries(spec.query, request.gameId, request.source).flatMap(query =>
+      searchPlan({ ...spec, gameId: request.gameId, selectedSource: request.source,
+        categories: undefined, filters: request.filters, query }))
+  );
+  await round(fuzzyRequests);
 }

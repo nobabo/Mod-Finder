@@ -20,10 +20,15 @@ describe('English singular and plural searches', () => {
     ['knife', ['knife', 'knives']], ['wolves', ['wolves', 'wolf']],
     ['leaf', ['leaf', 'leaves']], ['children', ['children', 'child']],
     ['person', ['person', 'people']],
+    ['battery', ['battery', 'batteries']], ['batteries', ['batteries', 'battery']],
+    ['mouse', ['mouse', 'mice']], ['mice', ['mice', 'mouse']],
+    ['shelf', ['shelf', 'shelves']], ['shelves', ['shelves', 'shelf']],
+    ['axe', ['axe', 'axes']], ['axes', ['axes', 'axe']],
+    ['accessory', ['accessory', 'accessories']], ['geese', ['geese', 'goose']],
   ])('searches both number forms for %s', (query, expected) => {
     expect(numberQueries(query)).toEqual(expected);
   });
-  it.each(['Iris', 'Nemesis', 'SMAPI', 'Sodium', 'All the Mods 10', 'Zombie Apocalypse', 'zombie-mod', 'Glass', 'news', 'zombiez', '좀비', ''])('preserves titles and unknown words: %s', query => {
+  it.each(['Iris', 'Nemesis', 'SMAPI', 'Sodium', 'All the Mods 10', 'Zombie Apocalypse', 'zombie-mod', 'Glass', 'news', 'fish', 'sheep', 'deer', 'zombiez', '좀비', ''])('preserves titles and unknown words: %s', query => {
     expect(numberQueries(query)).toEqual([query]);
   });
   const spec: SearchSpec = { gameId: 'minecraft-java', query: '좀비', selectedSource: 'modrinth', filters: { kind: 'modpack', loader: 'forge' }, sort: 'downloads' };
