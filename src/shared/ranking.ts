@@ -1,11 +1,12 @@
 import type { Listing, ResultGroup, Sort, VerifiedProjectLink } from './types';
-import { modTranslations, providerQuery } from './content';
+import { modTranslations } from './content';
+import { localizedQueries } from './localized-search';
 const normalized = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
 const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
 const representativeOrder = (a: Listing, b: Listing) => downloads(b) - downloads(a) || a.key.localeCompare(b.key);
 export function matchPriority(item: Listing, query: string): number {
   const translated = modTranslations[item.key];
-  const terms = [...new Set([query, providerQuery(query, [`${item.source}:${item.scope}:`], item.gameId)].map(normalized))].filter(Boolean);
+  const terms = [...new Set([query, ...localizedQueries(query, [`${item.source}:${item.scope}:`], item.gameId)].map(normalized))].filter(Boolean);
   if (!terms.length) return 3;
   const title = [item.title, translated?.title ?? ''].map(normalized);
   const summary = [item.summary, translated?.summary ?? ''].map(normalized);
@@ -43,9 +44,10 @@ export function groupResults(items: Listing[], query: string, links: VerifiedPro
   }
   const q = normalized(query);
   for (const group of groups.values()) group.listings.sort(representativeOrder);
-  const priority = (group: ResultGroup) => Math.min(...group.listings.map(item => matchPriority(item, query)));
+  // Resolve localized hints once per listing, not on every sort comparison.
+  const priorities = new Map([...groups.values()].map(group => [group.id, Math.min(...group.listings.map(item => matchPriority(item, query)))]));
   const score = (group: ResultGroup) => group.listings.reduce((sum, item) => sum + 1 / (60 + item.rank), 0) + (q && group.listings.some(i => i.title.toLocaleLowerCase() === q) ? 10 : 0);
-  return [...groups.values()].sort((a, b) => priority(a) - priority(b) || score(b) - score(a) || a.id.localeCompare(b.id));
+  return [...groups.values()].sort((a, b) => priorities.get(a.id)! - priorities.get(b.id)! || score(b) - score(a) || a.id.localeCompare(b.id));
 }
 export function appendStable(current: Listing[], incoming: Listing[]): Listing[] {
   const incomingByKey = new Map(incoming.map(item => [item.key, item]));

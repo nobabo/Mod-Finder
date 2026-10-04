@@ -1,6 +1,6 @@
 import corrections from './data/search-corrections.json';
 import { GENRES, getGame } from './games';
-import { runSearchQueue, searchPlan, bucketKey, type SearchSpec } from './search-plan';
+import { runSearchQueue, searchPlan, bucketKey, sourceBucketKey, type SearchSpec } from './search-plan';
 import type { SearchRequest } from './types';
 
 const initials = ['r', 'R', 's', 'e', 'E', 'f', 'a', 'q', 'Q', 't', 'T', 'd', 'w', 'W', 'c', 'z', 'x', 'v', 'g'];
@@ -69,10 +69,10 @@ export async function runSearchWithCorrections(
   const candidates = [spec.query, ...correctedQueries(spec.query, spec)];
   for (const query of candidates) {
     if (signal.aborted || !requests.length) return;
-    const eligible = new Set(requests.map(bucketKey));
+    const eligible = new Set(requests.map(sourceBucketKey));
     requests = searchPlan({ ...spec, query }).filter(request => {
       const key = JSON.stringify(request);
-      if (!eligible.has(bucketKey(request)) || tried.has(key)) return false;
+      if (!eligible.has(sourceBucketKey(request)) || tried.has(key)) return false;
       tried.add(key);
       return true;
     });
