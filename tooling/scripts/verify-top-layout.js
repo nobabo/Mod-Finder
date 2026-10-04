@@ -73,7 +73,11 @@ async (page) => {
       const filter = await mobile.locator('.filter-orb').boundingBox();
       const search = await mobile.locator('.search-box').boundingBox();
       check(header.y === 0 && settings.x >= 0 && settings.x <= 20 && Math.abs(settings.y - filter.y) < 1, 'Mobile header alignment');
-      check(search.y >= header.y + header.height, 'Header overlaps search');
+      check(search.y >= header.y + header.height + 40, 'Home search was not lowered below the header');
+      check(await mobile.locator('.mobile-header').evaluate(el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).backdropFilter === 'none'), 'Header hides the cover photograph');
+      const backdrop = await mobile.locator('.atmosphere').boundingBox();
+      check(backdrop.y === 0 && backdrop.width >= width && backdrop.height >= height, 'Photograph does not cover the mobile viewport');
+      check(await mobile.locator('.atmosphere-fallback').last().evaluate(el => getComputedStyle(el).backgroundSize === 'cover' && el.style.backgroundImage.includes('url(')), 'Cover photograph missing');
       check(await mobile.locator('.ranking-list').evaluate(el => getComputedStyle(el).gridTemplateColumns.split(' ').length) === 2, 'Mobile ranking is not two columns');
       const rows = await mobile.locator('.ranking-list li').evaluateAll(items => items.map(el => {const r=el.getBoundingClientRect();return {x:r.x,y:r.y};}));
       check(rows.length === 10 && Math.abs(rows[0].y-rows[1].y) < 1 && rows[0].x < rows[1].x, 'Ranking items do not occupy both columns');
