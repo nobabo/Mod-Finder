@@ -1,6 +1,8 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
 import { ArrowLeft, Download, Globe2, Monitor, Palette, Smartphone, X } from 'lucide-react';
+import { CardPages } from './CardPages';
+import { useMobileLayout } from './lib/use-mobile-layout';
 import { useRailDrag } from './lib/use-rail-drag';
 import { useRailAutoScroll } from './lib/use-rail-auto-scroll';
 import { t } from './lib/i18n';
@@ -11,14 +13,15 @@ type SettingsView = 'menu' | 'theme' | 'language' | 'downloads';
 
 export function SettingsMenu({ children,themeOptions,languageOptions,close }: { children:ReactNode; themeOptions:ReactNode; languageOptions:ReactNode; close:() => void }) {
   const root = useRef<HTMLDivElement>(null);
+  const mobile = useMobileLayout();
   const drag = useRailDrag();
   const [view,setView] = useState<SettingsView>('menu');
   const isCardView = view === 'menu' || view === 'downloads';
   const rail = useRef<HTMLDivElement>(null);
-  useRailAutoScroll(rail,drag.gesture,isCardView);
+  useRailAutoScroll(rail,drag.gesture,isCardView && !mobile);
   useLayoutEffect(() => {
     const element = rail.current;
-    if (!isCardView || !element) return;
+    if (mobile || !isCardView || !element) return;
     const nav = element.querySelector('nav')!;
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
@@ -47,7 +50,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
       element.removeEventListener('scroll', update);
       motion.removeEventListener('change', update);
     };
-  }, [view, isCardView]);
+  }, [view, isCardView, mobile]);
   const lastView = useRef<Exclude<SettingsView, 'menu'>>('theme');
   const open = (next:Exclude<SettingsView, 'menu'>) => { lastView.current = next; setView(next); };
   useEffect(() => {
@@ -68,12 +71,13 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
     else if (!event.shiftKey && document.activeElement === items.at(-1)) { event.preventDefault(); items[0]?.focus(); }
   }}>
     <header className="settings-deck-header">{view !== 'menu' && <button className="deck-close settings-back" aria-label={t('뒤로')} onClick={() => setView('menu')}><ArrowLeft size={24}/></button>}<h2>{t(view === 'theme' ? '테마' : view === 'language' ? '언어' : view === 'downloads' ? '웹 / 앱 다운로드' : '설정')}</h2><button className="deck-close" aria-label={t('닫기')} onClick={close}><X size={24}/></button></header>
-    {isCardView ? <div ref={rail} className={`settings-rail ${drag.dragging ? 'is-dragging' : ''}`} {...drag.handlers} onWheel={event => { if (Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.currentTarget.scrollLeft += event.deltaY; }}><nav aria-label={t(view === 'downloads' ? '웹 / 앱 다운로드' : '주 메뉴')}>
-      {view === 'downloads' ? <>
+    {isCardView ? <div ref={rail} className={`settings-rail ${drag.dragging ? 'is-dragging' : ''}`} {...(mobile ? {} : drag.handlers)} onWheel={event => { if (!mobile && Math.abs(event.deltaY) > Math.abs(event.deltaX)) event.currentTarget.scrollLeft += event.deltaY; }}><nav aria-label={t(view === 'downloads' ? '웹 / 앱 다운로드' : '주 메뉴')}>
+      <CardPages key={view}>{view === 'downloads' ? <>
         <a href={DOWNLOADS.web} target="_blank" rel="noopener noreferrer"><Globe2/><span>{t('웹에서 열기')}</span></a>
         <a href={DOWNLOADS.windows}><Monitor/><span>Windows</span></a>
         <a href={DOWNLOADS.android}><Smartphone/><span>Android</span></a>
       </> : <>{children}<button type="button" data-preference="theme" onClick={() => open('theme')}><Palette/><span>{t('테마')}</span></button><button type="button" data-preference="language" onClick={() => open('language')}><Globe2/><span>{t('언어')}</span></button>{!isNative() && <button type="button" data-preference="downloads" onClick={() => open('downloads')}><Download/><span>{t('웹 / 앱 다운로드')}</span></button>}</>}
+      </CardPages>
     </nav></div>
       : <div className={`preference-panel preference-${view}`}>{view === 'theme' ? themeOptions : languageOptions}</div>}
   </div>,document.body);

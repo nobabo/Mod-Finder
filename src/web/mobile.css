@@ -1,0 +1,53 @@
+/* Mobile pickers share a two-row page; desktop keeps the horizontal rail. */
+@media (max-width:850px) {
+  .search-dock,.search-dock.hero { max-width:100%; }
+  .search-row { gap:8px; }
+  .search-row .search-box,.search-dock.hero .search-box { min-height:64px;padding:6px;gap:4px; }
+  .search-row .search-box input,.search-dock.hero .search-box input { font-size:16px;padding:10px 0; }
+  .search-box input::-webkit-search-cancel-button { display:none; }
+  .search-row .game-orb,.search-dock.hero .game-orb { width:44px;height:44px;flex:none; }
+  .search-row .search-box .search-submit { width:48px;height:48px;padding:10px;flex:none;background:rgba(var(--tint-rgb),.12);border:1px solid rgba(var(--tint-rgb),.4); }
+  .search-row .search-box .search-submit svg { width:26px;height:26px; }
+  .search-row .filter-orb { width:48px;height:48px; }
+
+  .game-deck,.settings-menu,.settings-menu:has(.preference-panel) { justify-content:safe center;height:100dvh;padding:calc(20px + env(safe-area-inset-top)) 16px calc(20px + env(safe-area-inset-bottom));overflow-y:auto; }
+  .deck-header,.settings-deck-header { width:100%;min-height:44px;margin:0 auto 16px;flex:none; }
+  .deck-close { width:44px;height:44px; }
+  .deck-tools { width:100%;margin:0 auto 16px;flex:none; }
+  .deck-search input { font-size:16px; }
+  .deck-stage { flex:none; }
+  .deck-rail,.settings-rail { display:flex;flex-direction:column;gap:16px;width:100%;padding:0;min-height:0;overflow:visible;perspective:none;touch-action:pan-y;cursor:auto; }
+  .settings-rail nav { display:flex;flex-direction:column;gap:16px;width:100%;min-width:0; }
+  .picker-grid { display:grid;grid-template-columns:repeat(2,minmax(0,1fr));grid-template-rows:repeat(2,minmax(0,1fr));gap:12px;width:100%; }
+  .deck-card,.settings-menu nav .picker-grid :is(button,a) { width:100%;min-width:0;height:clamp(116px,21dvh,170px);min-height:0;padding:12px 8px;gap:12px;transform:none;cursor:pointer;animation:none; }
+  .settings-menu nav .picker-grid :is(button,a):hover { transform:none; }
+  .deck-card img,.deck-card>svg:not(.sort-selection),.settings-menu nav .picker-grid :is(button,a) svg { width:64px;height:64px;max-width:100%;flex:none; }
+  .deck-card>span,.settings-menu nav .picker-grid :is(button,a) { font-size:14px;overflow-wrap:anywhere; }
+  .deck-card .sort-selection { top:8px;right:8px;width:18px;height:18px; }
+  .deck-empty { position:static;margin:16px 0;text-align:center; }
+  .preference-panel { width:100%;margin:0; }
+  .preference-panel .theme-options,.preference-panel .language-options { display:flex;flex-direction:column;gap:16px; }
+  .preference-panel .picker-grid button { min-height:116px;font-size:14px; }
+  .preference-panel .theme-options i { width:40px;height:40px; }
+  .picker-pagination { display:flex;justify-content:center;gap:24px;flex:none; }
+  .picker-pagination>button,.settings-menu nav .picker-pagination>button,.preference-panel .picker-pagination>button { display:grid;place-items:center;width:48px;height:48px;min-height:48px;flex:none;padding:0;margin:0;border:1px solid var(--accent);border-radius:50%;background:rgba(var(--tint-rgb),.08);color:var(--accent);transform:none;box-shadow:none; }
+  .picker-pagination>button:disabled { opacity:.3;cursor:default; }
+  .settings-menu nav .picker-pagination>button::after { display:none; }
+  .settings-menu nav .picker-pagination>button svg,.preference-panel .picker-pagination>button svg { position:static;width:22px;height:22px; }
+
+  /* Keep the collection itself centered, reserving space above for search. */
+  .main:has(.collection-content) { padding-bottom:0; }
+  .content.collection-content { display:grid;grid-template-columns:minmax(0,1fr);place-items:center;height:100dvh;min-height:0;padding:0 16px; }
+  .collection-stage>.collection-panel,.collection-stage .history-list { max-height:max(100px,calc(100dvh - 400px));overflow-y:auto;overscroll-behavior:contain; }
+  .collection-stage .search-dock.compact { bottom:calc(100% + 16px);width:100%;max-width:100%; }
+  .collection-stage:has(>.history-list) .search-dock.compact { bottom:calc(100% + 72px); }
+  .collection-stage:has(>.history-list)>.page-heading { padding:0 0 16px; }
+  .collection-brand { bottom:calc(100% + 6px); }
+  .collection-brand .brand-logo { width:40px;height:40px; }
+  .collection-stage .empty-state.spacious { padding:44px 16px; }
+}
+
+@media (max-width:850px) and (max-height:500px) {
+  .deck-card img,.deck-card>svg:not(.sort-selection),.settings-menu nav .picker-grid :is(button,a) svg { width:44px;height:44px; }
+  .collection-stage:has(>.history-list) .collection-brand { display:none; }
+}
