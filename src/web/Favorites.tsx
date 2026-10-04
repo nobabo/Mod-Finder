@@ -5,7 +5,7 @@ import { moveFavorite, type LocalData } from './lib/storage';
 import { t } from './lib/i18n';
 
 type Update = Dispatch<SetStateAction<LocalData>>;
-export function FolderBar({ data, update, selected, select }: { data: LocalData; update: Update; selected: string; select: (id: string) => void }) {
+export function FolderBar({ data, update, selected, select, mobileLayout }: { data: LocalData; update: Update; selected: string; select: (id: string) => void; mobileLayout: boolean }) {
   const [editing, setEditing] = useState<string | null>(null);
   const [name, setName] = useState('');
   const [error, setError] = useState('');
@@ -14,12 +14,12 @@ export function FolderBar({ data, update, selected, select }: { data: LocalData;
   return <>
     <div className="folder-toolbar">
       <nav className="folder-rail" aria-label={t('즐겨찾기 폴더')}>
-        {[{ id: 'all', name: t('전체'), Icon: Bookmark }, { id: 'unfiled', name: t('미분류'), Icon: Folder }, ...data.folders.map(item => ({ ...item, Icon: Folder }))].map(item =>
+        {[{ id: 'all', name: t('전체'), Icon: Bookmark }, ...(mobileLayout ? [] : [{ id: 'unfiled', name: t('미분류'), Icon: Folder }]), ...data.folders.map(item => ({ ...item, Icon: Folder }))].map(item =>
           <button type="button" key={item.id} aria-pressed={selected === item.id} onClick={() => select(item.id)}><item.Icon size={18}/><span>{item.name}</span></button>)}
       </nav>
       <div className="folder-actions">
         <button type="button" className="icon-button" aria-label={t('새 폴더')} title={t('새 폴더')} onClick={() => edit('', '')}><FolderPlus size={20}/></button>
-        {folder && <><button type="button" className="icon-button" aria-label={t('폴더 이름 변경')} title={t('폴더 이름 변경')} onClick={() => edit(folder.id, folder.name)}><Pencil size={18}/></button><button type="button" className="icon-button" aria-label={t('폴더 삭제')} title={t('폴더 삭제 · 모드는 미분류로 이동')} onClick={() => { update(previous => ({ ...previous, folders: previous.folders.filter(item => item.id !== folder.id) })); select('unfiled'); }}><Trash2 size={18}/></button></>}
+        {folder && <><button type="button" className="icon-button" aria-label={t('폴더 이름 변경')} title={t('폴더 이름 변경')} onClick={() => edit(folder.id, folder.name)}><Pencil size={18}/></button><button type="button" className="icon-button" aria-label={t('폴더 삭제')} title={t(mobileLayout ? '폴더 삭제' : '폴더 삭제 · 모드는 미분류로 이동')} onClick={() => { update(previous => ({ ...previous, folders: previous.folders.filter(item => item.id !== folder.id) })); select(mobileLayout ? 'all' : 'unfiled'); }}><Trash2 size={18}/></button></>}
       </div>
     </div>
     {editing !== null && <Modal className="folder-modal" hideTitle={!editing} title={t(editing ? '폴더 이름 변경' : '새 폴더')} close={() => setEditing(null)}>

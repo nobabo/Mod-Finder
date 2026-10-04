@@ -167,7 +167,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (context) { context.filter = 'blur(2.5px)'; context.drawImage(image,-6,-6,softened.width + 12,softened.height + 12); }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, context ? softened : image);
   };
-  const controlSelector = '.search-box, .filter-orb, .deck-search, .filter-dropdown-search, .ranking-panel, .folder-modal, .folder-input-glass';
+  const controlSelector = '.search-box, .filter-orb, .mobile-header .settings-fab, .deck-search, .filter-dropdown.is-liquid-glass, .filter-dropdown-search, .ranking-panel, .folder-modal, .folder-input-glass';
   const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal, .sheet`;
   const observer = new MutationObserver(() => { panelDirty = true; schedule(); });
   observer.observe(document.body, { childList: true, subtree: true });
