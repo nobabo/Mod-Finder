@@ -386,3 +386,10 @@ html[data-glass="webgl"] :is(.deck-search,.filter-dropdown-search) { backdrop-fi
 .deck-search:focus-within,.filter-dropdown-search:focus-within { border-color:var(--accent);box-shadow:0 0 22px rgba(var(--tint-rgb),.2),inset 0 1px 1px rgba(var(--tint-rgb),.45); }
 .settings-menu nav a { text-decoration:none; }
 .settings-menu nav a svg { stroke:url(#theme-icon-gradient); }
+
+/* Keep card outlines and selection cues while showing the scene through the cards. */
+.deck-card,.settings-menu nav :is(button,a),.preference-panel .theme-options button,.language-options button,
+.preference-panel button[aria-pressed="true"],.language-options button:hover,.preference-panel .theme-options button:hover,
+.settings-menu nav :is(button,a):hover,.settings-card { background:transparent; }
+.deck-card { backdrop-filter:none;-webkit-backdrop-filter:none; }
+.settings-card { border-color:rgba(var(--tint-rgb),.35); }
