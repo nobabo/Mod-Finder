@@ -549,6 +549,22 @@
           "389962",
           "387496"
         ]
+      },
+      {
+        "id": "craft-to-exile2",
+        "name": "Craft to Exile 2",
+        "kind": "modpack",
+        "mentions": 8,
+        "postIds": [
+          "392645",
+          "391289",
+          "389903",
+          "388282",
+          "387016",
+          "385978",
+          "383666",
+          "382892"
+        ]
       }
     ]
   },
@@ -726,6 +742,16 @@
         "postIds": [
           "200752"
         ]
+      },
+      {
+        "id": "ui-info-suite",
+        "name": "UI Info Suite 2",
+        "koreanName": "UI 정보 모음 2",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "245309"
+        ]
       }
     ]
   },
@@ -883,6 +909,16 @@
           "267888"
         ],
         "koreanName": "세라나 대화 확장"
+      },
+      {
+        "id": "nordic-ui",
+        "name": "Nordic UI",
+        "koreanName": "노르딕 UI",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "276967"
+        ]
       }
     ]
   },
@@ -1026,6 +1062,16 @@
           "33542"
         ],
         "koreanName": "후반부 업그레이드"
+      },
+      {
+        "id": "lethal-level-loader",
+        "name": "LethalLevelLoader",
+        "koreanName": "리썰 레벨 로더",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "18068"
+        ]
       }
     ]
   },
@@ -1190,6 +1236,17 @@
         "postIds": [
           "924898",
           "882735"
+        ]
+      },
+      {
+        "id": "rimkata",
+        "name": "RimKata",
+        "koreanName": "림카타",
+        "kind": "mod",
+        "mentions": 2,
+        "postIds": [
+          "926470",
+          "923585"
         ]
       }
     ]
@@ -1425,6 +1482,16 @@
           "47253"
         ],
         "koreanName": "UI 개선"
+      },
+      {
+        "id": "craft-containers",
+        "name": "CraftFromContainers",
+        "koreanName": "상자 재료로 제작",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "46612"
+        ]
       }
     ]
   },
@@ -1978,6 +2045,16 @@
           "309891"
         ],
         "koreanName": "탈출 모드"
+      },
+      {
+        "id": "filibuster",
+        "name": "Filibuster Rhymes' Used Cars",
+        "koreanName": "Filibuster Rhymes의 중고차",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "269254"
+        ]
       }
     ]
   },
@@ -2164,6 +2241,16 @@
           "612380",
           "602715"
         ]
+      },
+      {
+        "id": "cyberware-ex",
+        "name": "Cyberware-EX",
+        "koreanName": "사이버웨어 확장 (Cyberware-EX)",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "690931"
+        ]
       }
     ]
   },
@@ -2298,6 +2385,16 @@
         "mentions": 1,
         "postIds": [
           "945637"
+        ]
+      },
+      {
+        "id": "sword-dancer",
+        "name": "Bladesinger",
+        "koreanName": "블레이드싱어",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "942821"
         ]
       }
     ]
@@ -2542,6 +2639,16 @@
           "21550"
         ],
         "koreanName": "스킬 플러스 플러스 개선"
+      },
+      {
+        "id": "zet-aspects",
+        "name": "ZetAspects",
+        "koreanName": "Zet의 정예 특성",
+        "kind": "mod",
+        "mentions": 1,
+        "postIds": [
+          "21328"
+        ]
       }
     ]
   }

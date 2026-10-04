@@ -79,9 +79,9 @@ describe('community ranking', () => {
     expect(ranking).toHaveLength(3);
     expect(ranking.every(entry => entry.mentions === 1)).toBe(true);
   });
-  it('ships a complete, dated 15-page snapshot with ten verifiable counts', () => {
+  it('ships a complete, dated 15-page snapshot with eleven verifiable counts', () => {
     expect(snapshot.pages).toBe(15);
-    expect(snapshot.entries).toHaveLength(10);
+    expect(snapshot.entries).toHaveLength(11);
     expect(Number.isFinite(Date.parse(snapshot.fetchedAt))).toBe(true);
     expect(snapshot.basis).toBe('titles');
     snapshot.entries.forEach((entry, index) => {

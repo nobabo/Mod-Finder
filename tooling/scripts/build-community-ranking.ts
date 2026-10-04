@@ -11,7 +11,7 @@ for (const gameId of Object.keys(COMMUNITY_GALLERIES)) {
   const sourceUrls = collection.pages.filter(page => page.page === 1).map(page => page.url);
   snapshots[gameId] = {
     gameId, fetchedAt: collection.fetchedAt, sourceUrl: sourceUrls[0], sourceUrls,
-    pages: collection.pages.length, postCount: collection.posts.length, basis: 'titles', entries: countCommunityMentions(collection.posts, gameId).slice(0, 10),
+    pages: collection.pages.length, postCount: collection.posts.length, basis: 'titles', entries: countCommunityMentions(collection.posts, gameId).slice(0, 11),
   };
 }
 const target = 'src/shared/data/community-rankings.json';
