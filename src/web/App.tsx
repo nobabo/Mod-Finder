@@ -1,6 +1,6 @@
 import { t, locale, languagePreference, changeLanguage } from './lib/i18n';
-import { useEffect, useLayoutEffect, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, Compass, GitCompareArrows, History, LoaderCircle, Search, Settings2, SlidersHorizontal, X } from 'lucide-react';
+import { useEffect, useRef, useState } from 'react';
+import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, GitCompareArrows, History, LoaderCircle, RefreshCw, Search, Settings2, SlidersHorizontal, X } from 'lucide-react';
 import { categoriesForGame, getCategory } from '../shared/categories';
 import { GENRES, gamesInScope, getGame } from '../shared/games';
 import { SOURCE_NAMES, type Filters, type Listing, type Sort } from '../shared/types';
@@ -21,35 +21,37 @@ import { LANGUAGES } from '../shared/locale';
 import { listingText } from '../shared/content';
 import { useModSummaries } from './lib/mod-summaries';
 import { useMobileLayout } from './lib/mobile-layout';
+import { useNavigation } from './lib/use-navigation';
+import type { Page } from './lib/navigation';
+import { searchRecoveryLinks } from './lib/search-recovery';
 
-type Page = 'discover' | 'favorites' | 'recent';
 const FILTER_NAMES: Record<string, string> = { version: t("게임 버전"), loader: t("로더"), kind: t("종류"), category: t("장르") };
 const THEMES = PALETTES.map(theme => ({ ...theme, name:locale === 'ko' ? theme.ko : theme.en }));
 export default function App() {
   const mobileLayout = useMobileLayout();
-  const [page, setPage] = useState<Page>('discover');
-  const [gameId, setGameId] = useState('minecraft-java');
-  const [genre, setGenre] = useState('all');
-  const [input, setInput] = useState(''); const [query, setQuery] = useState('');
-  const [submitted, setSubmitted] = useState(false);
-  const [searchNavigation, setSearchNavigation] = useState(0);
-  const [filters, setFilters] = useState<Filters>({}); const [filterOpen, setFilterOpen] = useState(false);
-  const [selectedCategories, setSelectedCategories] = useState<string[]>([]);
-  const [selectedFolder, setSelectedFolder] = useState('all');
-  useEffect(() => { if (mobileLayout) setSelectedFolder(value => value === 'unfiled' ? 'all' : value); }, [mobileLayout]);
+  const { state: navigation, navigate, restoration, detailKey, openDetail, closeDetail } = useNavigation();
+  const { page, gameId, genre, query, submitted, filters, categories: selectedCategories, sort, folder: selectedFolder } = navigation;
+  const [input, setInput] = useState(query);
+  useEffect(() => setInput(query), [query, restoration]);
+  const [filterOpen, setFilterOpen] = useState(false);
+  const setSelectedFolder = (folder: string) => navigate({ folder });
+  const setSort = (value: Sort) => navigate({ sort: value });
+  useEffect(() => { if (mobileLayout && selectedFolder === 'unfiled') navigate({ folder: 'all' }, true); }, [mobileLayout, selectedFolder, navigate]);
   const [movingFavorite, setMovingFavorite] = useState<string | null>(null);
-  const [sort, setSort] = useState<Sort>('downloads');
   const [local, setLocal] = useState<LocalData>(emptyLocalData); const [hydrated, setHydrated] = useState(false);
   const compared = local.compared;
   const setCompared = (next: Listing[] | ((prev: Listing[]) => Listing[])) => setLocal(prev => ({ ...prev, compared: typeof next === 'function' ? next(prev.compared) : next })); const [compareOpen, setCompareOpen] = useState(false);
-  const [detail, setDetail] = useState<Listing | null>(null);
+  const viewedDetails = useRef(new Map<string, Listing>());
+  const detail = detailKey ? viewedDetails.current.get(detailKey) ?? null : null;
+  const showDetail = (item: Listing) => { viewedDetails.current.set(item.key, item); openDetail(item.key); };
   const [gamePicker, setGamePicker] = useState(false); const [menuOpen, setMenuOpen] = useState(false);
+  useEffect(() => { setMenuOpen(false); setFilterOpen(false); setGamePicker(false); setMovingFavorite(null); setCompareOpen(false); }, [restoration]);
   const [accent, setAccent] = useState(() => {
     try { const saved = localStorage.getItem('modfinder-accent'); if (THEMES.some(theme => theme.id === saved)) return saved!; } catch { /* Optional storage. */ }
     return 'magenta';
   });
   const [toast, setToast] = useState('');
-  const returnHome = () => { setPage('discover'); setInput(''); setQuery(''); setSubmitted(false); setFilters({}); setSelectedCategories([]); setMenuOpen(false); setFilterOpen(false); setGamePicker(false); setDetail(null); window.scrollTo(0, 0); };
+  const returnHome = () => { navigate({ page: 'discover', query: '', submitted: false, filters: {}, categories: [] }); setInput(''); setMenuOpen(false); setFilterOpen(false); setGamePicker(false); };
   const searchButtonRef = useRef<HTMLButtonElement>(null);
   const searchRowRef = useRef<HTMLDivElement>(null);
   useEffect(() => {
@@ -71,30 +73,26 @@ export default function App() {
   useModSummaries([...scopeGames.map(game => game.id), ...local.favorites.map(item => item.gameId), ...compared.map(item => item.gameId)], true);
   const themeControls = <div className="theme-options"><CardPages columns={3}>{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={accent === theme.id} onClick={() => setAccent(theme.id)}><i style={{ background: theme.grad }} />{theme.name}{accent === theme.id && <Check size={14} />}</button>)}</CardPages></div>;
   const hasSearch = submitted || selectedCategories.length > 0;
-  useLayoutEffect(() => {
-    if (page === 'discover' && hasSearch) window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-  }, [page, hasSearch, searchNavigation]);
   const search = useSearch({ gameId, genre, query, filters, categories: selectedCategories, selectedSource: 'all', sort }, false, hasSearch && page === 'discover');
   useEffect(() => { let current = true; loadLocalData().then(data => { if (current) { setLocal(data); setHydrated(true); } }).catch(() => { if (current) setToast(t("저장된 정보를 읽지 못했어요. 저장 공간을 확인해 주세요.")); }); return () => { current = false; }; }, []);
   useEffect(() => { if (hydrated) void saveLocalData(local).catch(() => setToast(t("변경사항을 저장하지 못했어요. 저장 공간을 확인해 주세요."))); }, [local, hydrated]);
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(''), 4000); return () => clearTimeout(timer); }, [toast]);
   useEffect(() => { applyTheme(accent); try { localStorage.setItem('modfinder-accent', accent); } catch { /* Theme persistence is optional. */ } }, [accent]);
-  useEffect(() => { const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); setPage('discover'); inputRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, []);
-  const chooseGame = (id: string, nextGenre = 'all') => { setGenre(nextGenre); setGameId(id); setFilters({}); setSelectedCategories([]); setPage('discover'); setGamePicker(false); if (!matchMedia('(pointer: coarse), (max-width: 850px)').matches) requestAnimationFrame(() => inputRef.current?.focus()); };
-  const submit = (value = input, id = gameId, selectedGenre = genre, categories = id === gameId ? selectedCategories : [], kind?: string) => {
-    setSearchNavigation(value => value + 1);
-    const next = value.trim().slice(0, 200); setInput(next); setQuery(next); setSubmitted(true); setPage('discover'); setMenuOpen(false);
-    if (id !== gameId || selectedGenre !== genre) { setGenre(selectedGenre); setGameId(id); setFilters(kind ? { kind } : {}); }
-    else if (kind) setFilters({ kind });
-    setSelectedCategories(categories);
+  useEffect(() => { const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); navigate({ page: 'discover' }); inputRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, [navigate]);
+  const chooseGame = (id: string, nextGenre = 'all') => { navigate({ gameId: id, genre: nextGenre, filters: {}, categories: [], page: 'discover' }); setGamePicker(false); if (!matchMedia('(pointer: coarse), (max-width: 850px)').matches) requestAnimationFrame(() => inputRef.current?.focus()); };
+  const submit = (value = input, id = gameId, selectedGenre = genre, categories = id === gameId ? selectedCategories : [], kind?: string, clearFilters = false) => {
+    const next = value.trim().slice(0, 200); setInput(next); setMenuOpen(false);
+    const nextFilters = kind ? { kind } : clearFilters || id !== gameId || selectedGenre !== genre ? {} : filters;
+    navigate({ page: 'discover', gameId: id, genre: selectedGenre, query: next, submitted: true, categories, filters: nextFilters });
+    window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
     if (next && hydrated) setLocal(prev => ({ ...prev, history: [{ gameId: id, genre: selectedGenre, query: next, ...(categories.length ? { categories } : {}) }, ...prev.history.filter(item => item.query !== next || item.gameId !== id || (item.genre ?? 'all') !== selectedGenre || JSON.stringify(item.categories ?? (item.category ? [item.category] : [])) !== JSON.stringify(categories))].slice(0, 20) }));
     if (next === query && id === gameId && selectedGenre === genre) search.retry();
   };
   const visit = async (url: string) => { try { await openExternal(url); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
   const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => toggleFavorite(prev, item)); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
-  const changeFilter = (key: keyof Filters, value: string) => setFilters(prev => { const next = { ...prev }; if (value) next[key] = value; else delete next[key]; return next; });
-  const resetFilters = () => { setFilters({}); setSelectedCategories([]); };
-  const go = (target: Page) => { setPage(target); setMenuOpen(false); window.scrollTo(0, 0); };
+  const changeFilter = (key: keyof Filters, value: string) => navigate(prev => { const next = { ...prev.filters }; if (value) next[key] = value; else delete next[key]; return { ...prev, filters: next }; });
+  const resetFilters = () => navigate({ filters: {}, categories: [] });
+  const go = (target: Page) => { navigate({ page: target }); setMenuOpen(false); };
   const heroSearch = page === 'discover' && !hasSearch;
   const visible = local.favorites.filter(item => selectedFolder === 'all' || (selectedFolder === 'unfiled' ? !local.folders.some(folder => folder.keys.includes(item.key)) : local.folders.find(folder => folder.id === selectedFolder)?.keys.includes(item.key)));
   const groups = page === 'favorites' ? local.favorites.map(item => ({ id: item.key, listings: [item] })) : search.groups;
@@ -102,16 +100,16 @@ export default function App() {
   const completed = Object.values(search.buckets).filter(b => b?.result && ['success', 'empty'].includes(b.result.status)).length;
   const unavailable = Object.values(search.buckets).filter(b => b?.result && !['success', 'empty'].includes(b.result.status));
   const sourceErrors = unavailable.some(b => ['error', 'rate_limited'].includes(b!.result!.status));
+  const recoveryLinks = searchRecoveryLinks(Object.values(search.buckets));
   const activeFilters = Object.values(filters).filter(Boolean).length + selectedCategories.length;
   const saveCandidate = (item: Listing, alternatives: Listing[] = []) => local.favorites.find(saved => [item, ...alternatives].some(candidate => candidate.key === saved.key)) ?? item;
   const card = (item: Listing, alternatives: Listing[] = [], select?: () => void) => {
     const candidate = saveCandidate(item, alternatives);
-    return <ModCard key={item.key} item={item} ready={hydrated} saveAvailable={!!candidate} saved={!!candidate && local.favorites.some(f => f.key === candidate.key)} toggleSave={() => { if (candidate) save(candidate); }} open={select ?? (() => void visit(item.url))} detail={select ?? (() => setDetail(item))} move={page === 'favorites' ? () => setMovingFavorite(item.key) : undefined} />;
+    return <ModCard key={item.key} item={item} ready={hydrated} saveAvailable={!!candidate} saved={!!candidate && local.favorites.some(f => f.key === candidate.key)} toggleSave={() => { if (candidate) save(candidate); }} select={select ?? (() => showDetail(item))} selectLabel={select ? t('모드 검색') : t('자세히 보기')} move={page === 'favorites' ? () => setMovingFavorite(item.key) : undefined} />;
   };
   const rankedCard = (item: Listing, alternatives: Listing[]) => card(item, alternatives, () => {
     const kind = item.gameId === 'minecraft-java' && item.kind === 'modpack' ? 'modpack' : undefined;
-    setFilters(kind ? { kind } : {});
-    submit(item.title, item.gameId, 'all', [], kind);
+    submit(item.title, item.gameId, 'all', [], kind, true);
   });
   const renderGroup = (group: { id: string; listings: Listing[] }) => card(group.listings[0], group.listings);
   const detailCandidate = detail ? saveCandidate(detail, search.groups.find(group => group.listings.some(item => item.key === detail.key))?.listings) : undefined;
@@ -132,7 +130,7 @@ export default function App() {
       <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
       <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row">{!mobileLayout && page !== 'discover' && <button type="button" className="collection-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={76}/></button>}{!mobileLayout && heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160}/></div>}<form className="search-box" onSubmit={e => { e.preventDefault(); if (window.matchMedia("(pointer: coarse), (max-width: 850px)").matches) inputRef.current?.blur(); submit(); }}><button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" type="search" inputMode="search" enterKeyHint="search" name="q" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit" aria-label={t("모드 검색")}><ArrowRight size={18} aria-hidden="true" /></button></form>{!mobileLayout && filterControl}</div>
-      {heroSearch && <Rankings key={gameId} gameId={gameId} card={rankedCard} searchMod={entry => { setFilters(entry.kind === 'modpack' && gameId === 'minecraft-java' ? { kind: 'modpack' } : {}); submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined); }}/>}
+      {heroSearch && <Rankings key={gameId} gameId={gameId} card={rankedCard} searchMod={entry => submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined, true)}/>}
       </div>
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
@@ -140,6 +138,10 @@ export default function App() {
         {search.loading && !search.items.length && <div className="results-loading" role="status" aria-label={t("검색 중")}><span className="results-spinner" aria-hidden="true" /></div>}
         {!search.loading && !search.items.length && <div className="empty-state"><Search size={30} /><h3>{sourceErrors ? t("잠시 검색에 연결하지 못했어요") : unavailable.length && !completed ? t("원본 사이트에서 탐색을 이어가세요") : t("검색 결과가 없어요")}</h3><p>{sourceErrors ? t("다시 검색하거나 아래 원본 사이트에서 탐색을 이어갈 수 있어요.") : unavailable.length && !completed ? t("이 게임의 검색 연동을 준비하고 있어요. 아래 출처에서 모드를 찾아보세요.") : t("모드의 원래 이름으로 검색하거나 필터를 조금 줄여 보세요.")}</p>{completed > 0 && activeFilters > 0 && <button className="secondary-button" onClick={resetFilters}>{t("필터 초기화")}</button>}</div>}
 
+        {!search.loading && unavailable.length > 0 && <div className="search-recovery" role="group" aria-label={t('다시 검색')}>
+          {sourceErrors && <button type="button" className="secondary-button" onClick={search.retry}><RefreshCw size={16}/>{t('다시 시도')}</button>}
+          {recoveryLinks.map(link => <a key={link.url} className="secondary-button" href={link.url} target="_blank" rel="noopener noreferrer" onClick={event => { event.preventDefault(); void visit(link.url); }}>{SOURCE_NAMES[link.source]}{scopeGames.length > 1 && ` · ${gameName(link.gameId)}`}<ArrowUpRight size={16}/></a>)}
+        </div>}
         {search.hasMore && <div className="load-more"><button className="secondary-button" onClick={search.loadMore} disabled={search.loading}>{search.loading ? <LoaderCircle size={17} className="spin" /> : <ChevronDown size={17} />} {t("모드 더 보기")}</button></div>}
       </section>}
       </div>
@@ -147,12 +149,11 @@ export default function App() {
       {page === 'recent' && <><div className="page-heading"><h1>{t("최근 검색")}</h1></div><div className="history-list">{local.history.length ? <><div className="list-heading"><span>{t('최근 {count}개 검색', { count: local.history.length })}</span><button className="text-button" onClick={() => setLocal(prev => ({ ...prev, history: [] }))}>{t("검색 기록 지우기")}</button></div>{local.history.map((h, i) => <button key={`${h.gameId}:${h.genre ?? 'all'}:${JSON.stringify(h.categories ?? h.category ?? '')}:${h.query}`} onClick={() => submit(h.query, h.gameId, h.genre ?? 'all', h.categories ?? (h.category ? [h.category] : []))}><span className="history-number">{String(i + 1).padStart(2, '0')}</span><Search size={18} /><strong>{h.query}</strong><span>{gameName(h.gameId)}{(h.categories ?? (h.category ? [h.category] : [])).map(id => ` · ${getCategory(h.gameId, id)?.[locale === 'ko' ? 'ko' : 'en'] ?? ''}`).join('')}{h.genre && h.genre !== 'all' ? ` · ${GENRES.find(g => g.id === h.genre)?.[locale === 'ko' ? 'ko' : 'en'] ?? ''}` : ''}</span><ArrowUpRight size={18} /></button>)}</> : <div className="empty-state spacious icon-only" role="img" aria-label={t("새로운 발견을 시작해 보세요")}><History size={34} aria-hidden="true" /></div>}</div></>}
       </div></div>
     </main>
-    {!mobileLayout && <nav className="mobile-nav" aria-label={t("모바일 메뉴")}>{([{ id: 'discover', label: t("탐색"), icon: Compass }, { id: 'favorites', label: t("즐겨찾기"), icon: Bookmark }, { id: 'recent', label: t("최근 검색"), icon: History }, { id: 'settings', label: t("설정"), icon: Settings2 }] as const).map(n => <button key={n.id} className={n.id !== 'settings' && page === n.id ? 'active' : ''} onClick={() => n.id === 'settings' ? setMenuOpen(value => !value) : go(n.id)}><n.icon size={21} />{n.label}</button>)}</nav>}
     {compared.length > 0 && <div className="compare-tray"><GitCompareArrows size={19} /><strong>{t('{count}개 모드 선택', { count: compared.length })}</strong><span className="tray-names">{compared.map(item => item.title).join(' · ')}</span><button className="primary-button" onClick={() => setCompareOpen(true)}>{t("비교하기")} <ArrowRight size={15} /></button><button className="icon-button" aria-label={t("비교 선택 초기화")} onClick={() => { setCompared([]); setCompareOpen(false); }}><X size={18} /></button></div>}
-      {filterOpen && <GameDeck genreMode sort={sort} setSort={setSort} filters={filters} changeFilter={changeFilter} showMinecraftFilters={gameId === 'minecraft-java'} steamSort={gameId === 'all' ? 'mixed' : game?.sources.steam ? Object.keys(game.sources).length === 1 ? 'only' : 'mixed' : 'none'} categories={gameId === 'all' ? undefined : categoriesForGame(gameId)} selectedCategories={gameId === 'all' ? undefined : selectedCategories} gameId={gameId === 'all' ? genre : 'all'} select={id => { if (gameId === 'all') { setGenre(id); setFilterOpen(false); } else { setSelectedCategories(previous => id === 'all' ? [] : previous.includes(id) ? previous.filter(value => value !== id) : [...previous, id]); setPage('discover'); } }} close={() => setFilterOpen(false)} />}
+      {filterOpen && <GameDeck genreMode sort={sort} setSort={setSort} filters={filters} changeFilter={changeFilter} showMinecraftFilters={gameId === 'minecraft-java'} steamSort={gameId === 'all' ? 'mixed' : game?.sources.steam ? Object.keys(game.sources).length === 1 ? 'only' : 'mixed' : 'none'} categories={gameId === 'all' ? undefined : categoriesForGame(gameId)} selectedCategories={gameId === 'all' ? undefined : selectedCategories} gameId={gameId === 'all' ? genre : 'all'} select={id => { if (gameId === 'all') { navigate({ genre: id }); setFilterOpen(false); } else { navigate(previous => ({ ...previous, categories: id === 'all' ? [] : previous.categories.includes(id) ? previous.categories.filter(value => value !== id) : [...previous.categories, id], page: 'discover' })); } }} close={() => setFilterOpen(false)} />}
       {gamePicker && <GameDeck gameId={gameId} select={chooseGame} close={() => setGamePicker(false)} />}
     {compareOpen && <Modal title={t("모드 비교")} close={() => setCompareOpen(false)} wide><p className="modal-intro">{t("출처마다 제공하는 정보와 통계의 기준이 달라요. 호환 여부는 원본 페이지에서 확인해 주세요.")}</p><div className="comparison-scroll"><table className="comparison-table"><thead><tr><th>{t("비교 항목")}</th>{compared.map(item => <th key={item.key}><ModIcon item={item} />{listingText(item, locale).title}</th>)}</tr></thead><tbody>{([[t("게임"), (i: Listing) => getGame(i.gameId)?.name], [t("출처"), (i: Listing) => SOURCE_NAMES[i.source]], [t("제작자"), (i: Listing) => i.author ?? t("정보 없음")], [t("설명"), (i: Listing) => listingText(i, locale).summary || t("정보 없음")], [t("게임 버전"), (i: Listing) => i.versions?.join(', ') || t("정보 없음")], [t("로더"), (i: Listing) => i.loaders?.join(', ') || t("정보 없음")], [t("업데이트"), (i: Listing) => dateLabel(i.updatedAt)], [t("통계"), (i: Listing) => i.metrics.map(m => `${t(m.label)} ${m.value.toLocaleString(locale)}`).join(' · ') || t("정보 없음")]] as const).map(([label, format]) => <tr key={label}><th>{label}</th>{compared.map(item => <td key={item.key}><span className="cell-scroll">{format(item)}</span></td>)}</tr>)}<tr><th>{t("원본 링크")}</th>{compared.map(item => <td key={item.key}><button className="external-link" onClick={() => void visit(item.url)}>{t("사이트에서 보기")} <ArrowUpRight size={14} /></button></td>)}</tr></tbody></table></div></Modal>}
-    {detail && <Sheet title={listingText(detail, locale).title} close={() => setDetail(null)}><div className="detail-cover" style={{ '--game-color': getGame(detail.gameId)?.color ?? '#6d5cff' } as React.CSSProperties}><ModIcon item={detail} /><div><span className="source-label"><SourceMark source={detail.source} />{SOURCE_NAMES[detail.source]}</span><p>by {detail.author ?? t("제작자 정보 없음")}</p></div></div><p className="detail-description">{listingText(detail, locale).summary || t("원본 사이트에서 자세한 설명을 확인해 주세요.")}</p>{listingText(detail, locale).translated && <details className="original-copy"><summary>{t('원문 보기')}</summary><strong>{detail.title}</strong><p>{detail.summary}</p></details>}<dl className="detail-info"><dt>{t("게임")}</dt><dd>{gameName(detail.gameId)}</dd><dt>{t("게임 버전")}</dt><dd><span className="cell-scroll">{detail.versions?.join(', ') || t("정보 없음")}</span></dd><dt>{t("로더")}</dt><dd>{detail.loaders?.join(', ') || t("정보 없음")}</dd><dt>{t("업데이트")}</dt><dd>{dateLabel(detail.updatedAt)}</dd><dt>{t("조회 시각")}</dt><dd>{new Date(detail.fetchedAt).toLocaleString(locale)}</dd></dl><p className="detail-note">{t("버전 정보가 표시되어도 다른 모드와의 호환성을 보장하지 않아요.")}</p><div className="modal-actions">{detailCandidate && <button className="secondary-button" disabled={!hydrated} aria-pressed={local.favorites.some(item => item.key === detailCandidate.key)} onClick={() => save(detailCandidate)}><Bookmark size={16} />{local.favorites.some(f => f.key === detailCandidate.key) ? t("저장 해제") : t("즐겨찾기")}</button>}<button className="primary-button" onClick={() => void visit(detail.url)}>{t("원본 사이트에서 보기")} <ArrowUpRight size={16} /></button></div></Sheet>}
+    {detail && <Sheet title={listingText(detail, locale).title} close={closeDetail}><div className="detail-cover" style={{ '--game-color': getGame(detail.gameId)?.color ?? '#6d5cff' } as React.CSSProperties}><ModIcon item={detail} /><div><span className="source-label"><SourceMark source={detail.source} />{SOURCE_NAMES[detail.source]}</span><p>by {detail.author ?? t("제작자 정보 없음")}</p></div></div><p className="detail-description">{listingText(detail, locale).summary || t("원본 사이트에서 자세한 설명을 확인해 주세요.")}</p>{listingText(detail, locale).translated && <details className="original-copy"><summary>{t('원문 보기')}</summary><strong>{detail.title}</strong><p>{detail.summary}</p></details>}<dl className="detail-info"><dt>{t("게임")}</dt><dd>{gameName(detail.gameId)}</dd><dt>{t("게임 버전")}</dt><dd><span className="cell-scroll">{detail.versions?.join(', ') || t("정보 없음")}</span></dd><dt>{t("로더")}</dt><dd>{detail.loaders?.join(', ') || t("정보 없음")}</dd><dt>{t("업데이트")}</dt><dd>{dateLabel(detail.updatedAt)}</dd><dt>{t("조회 시각")}</dt><dd>{new Date(detail.fetchedAt).toLocaleString(locale)}</dd></dl><p className="detail-note">{t("버전 정보가 표시되어도 다른 모드와의 호환성을 보장하지 않아요.")}</p><div className="modal-actions">{detailCandidate && <button className="secondary-button" disabled={!hydrated} aria-pressed={local.favorites.some(item => item.key === detailCandidate.key)} onClick={() => save(detailCandidate)}><Bookmark size={16} />{local.favorites.some(f => f.key === detailCandidate.key) ? t("저장 해제") : t("즐겨찾기")}</button>}<button className="primary-button" onClick={() => void visit(detail.url)}>{t("원본 사이트에서 보기")} <ArrowUpRight size={16} /></button></div></Sheet>}
     {movingFavorite && <MoveFavorite itemKey={movingFavorite} data={local} update={setLocal} close={() => setMovingFavorite(null)}/>}
     {toast && <div className="toast" role="status"><Check size={17} />{toast}<button className="icon-button" onClick={() => setToast('')} aria-label={t("알림 닫기")}><X size={15} /></button></div>}
   </div>;

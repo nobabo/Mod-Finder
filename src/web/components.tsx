@@ -15,12 +15,12 @@ const numberFormatter = new Intl.NumberFormat(locale, { notation: 'compact', max
 export const number = (n: number) => numberFormatter.format(n);
 export const dateLabel = (date: string | null) => date ? new Date(date).toLocaleDateString(locale, { year: 'numeric', month: 'short', day: 'numeric' }) : t("정보 없음");
 
-export function ModCard({ item, saved, toggleSave, open, detail, ready = true, move, saveAvailable = true }: { item: Listing; saved: boolean; toggleSave: () => void; open: () => void; detail: () => void; ready?: boolean; move?: () => void; saveAvailable?: boolean }) {
+export function ModCard({ item, saved, toggleSave, select, selectLabel, ready = true, move, saveAvailable = true }: { item: Listing; saved: boolean; toggleSave: () => void; select: () => void; selectLabel: string; ready?: boolean; move?: () => void; saveAvailable?: boolean }) {
   const text = listingText(item, locale);
   return <ModDescription summary={text.summary}>
-    <div className="card-cover"><button type="button" className="mod-logo-link" onClick={open} aria-label={`${text.title} ${t('원본 사이트에서 보기')}`}><ModIcon item={item} /></button>{saveAvailable && <button type="button" className={`icon-button save-button ${saved ? 'is-saved' : ''}`} disabled={!ready} onClick={toggleSave} aria-pressed={saved} aria-label={`${item.title} ${saved ? t("즐겨찾기 해제") : t("즐겨찾기")}`}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>}{move && <button type="button" className="icon-button move-favorite" aria-label={`${item.title} ${t('폴더로 이동')}`} title={t('폴더로 이동')} onClick={move}><FolderInput size={18}/></button>}</div>
+    <div className="card-cover"><button type="button" className="mod-logo-link" onClick={select} aria-label={`${text.title} ${selectLabel}`}><ModIcon item={item} /></button>{saveAvailable && <button type="button" className={`icon-button save-button ${saved ? 'is-saved' : ''}`} disabled={!ready} onClick={toggleSave} aria-pressed={saved} aria-label={`${item.title} ${saved ? t("즐겨찾기 해제") : t("즐겨찾기")}`}><Bookmark size={18} fill={saved ? 'currentColor' : 'none'} /></button>}{move && <button type="button" className="icon-button move-favorite" aria-label={`${item.title} ${t('폴더로 이동')}`} title={t('폴더로 이동')} onClick={move}><FolderInput size={18}/></button>}</div>
     <div className="card-body">
-      <button className="title-button" onClick={detail}>{text.title}</button>
+      <button className="title-button" onClick={select}>{text.title}</button>
       <p className="card-author">by {item.author ?? t("제작자 정보 없음")}</p>
       <div className="card-meta">{item.metrics[0] ? <span title={t(item.metrics[0].label)} aria-label={number(item.metrics[0].value) + ' ' + t(item.metrics[0].label)}>{item.metrics[0].label === '다운로드' ? <Download size={13}/> : <Users size={13}/>} {number(item.metrics[0].value)}</span> : <span>{t("통계 정보 없음")}</span>}</div>
       <div className="tags">{(item.loaders?.length ? item.loaders : item.tags).slice(0, 3).map(tag => <span key={tag}>{tagText(tag, locale)}</span>)}{!item.tags.length && !item.loaders?.length && <span>{item.kind ? tagText(item.kind, locale) : t("모드")}</span>}</div>

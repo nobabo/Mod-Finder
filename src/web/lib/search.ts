@@ -20,8 +20,9 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
   const generation = useRef(0);
   const controller = useRef<AbortController | null>(null);
   const busy = useRef(false);
+  const forceFresh = useRef(false);
   const key = JSON.stringify(spec);
-  const run = useCallback(async (request: SearchRequest, gen: number, signal: AbortSignal) => {
+  const run = useCallback(async (request: SearchRequest, gen: number, signal: AbortSignal, fresh = false) => {
     const id = bucketKey(request);
     try {
       const seen = new Set<string>();
@@ -29,7 +30,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       let received = 0;
       let empty = false;
       for (let page = 0; page < 5; page++) {
-      const result = await searchSource(nextRequest, signal);
+      const result = await searchSource(nextRequest, signal, fresh);
       received += result.items.length;
       empty = (result.status === 'empty' || result.status === 'success') && !result.nextCursor && received === 0;
       const more = !!result.nextCursor && !seen.has(result.nextCursor) && result.status === 'success' && received < 100 && page < 4;
@@ -59,6 +60,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
     controller.current?.abort();
     const current = new AbortController(); controller.current = current;
     const gen = ++generation.current;
+    const fresh = forceFresh.current; forceFresh.current = false;
     const requests = enabled ? searchPlan(spec) : [];
     busy.current = requests.length > 0;
     setSearching(requests.length > 0);
@@ -66,7 +68,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
     setBuckets(Object.fromEntries(requests.map(request => [bucketKey(request), { request, loading: true }])));
     const timer = setTimeout(() => {
       if (!enabled) return;
-      void runSearchWithCorrections(spec, request => run(request, gen, current.signal), current.signal, round => {
+      void runSearchWithCorrections(spec, request => run(request, gen, current.signal, fresh), current.signal, round => {
         if (generation.current !== gen || current.signal.aborted) return;
         setBuckets(previous => {
           const next = { ...previous };
@@ -95,5 +97,5 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
   const groups = useMemo(() => {
     return prioritizeCategories(sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst), spec.categories);
   }, [items, spec.query, spec.selectedSource, spec.sort, spec.categories, modpacksFirst, links]);
-  return { items, groups, buckets, loading: searching || Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => setRefresh(n => n + 1) };
+  return { items, groups, buckets, loading: searching || Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => { forceFresh.current = true; setRefresh(n => n + 1); } };
 }

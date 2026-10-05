@@ -42,7 +42,6 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
 .settings-menu nav :is(button,a) svg { stroke-width:1.3;filter:drop-shadow(0 3px 8px rgba(var(--tint-rgb),.45)); }
 .settings-menu nav :is(button,a):hover { transform:translateY(-4px);background:rgba(var(--tint-rgb),0.086);border-color:rgba(var(--tint-rgb),0.333); }
 .settings-menu nav :is(button,a) { background:linear-gradient(145deg,#06132233,rgba(var(--tint-rgb),0.031)); }
-.mobile-nav { background:linear-gradient(115deg,rgba(var(--tint-rgb),.10),rgba(255,255,255,.025) 48%,rgba(var(--secondary-rgb),.08));box-shadow:none; }
 .modal,.sheet { background:linear-gradient(135deg,#1c293477,#08122399) padding-box,linear-gradient(135deg,rgba(var(--tint-rgb),0.333),rgba(var(--tint-rgb),0.082)) border-box; }
 .modal-backdrop,.sheet-backdrop { background:#03071066;backdrop-filter:blur(3px); }
 
@@ -88,7 +87,6 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
  .deck-rail { gap:20px;padding-left:30px;padding-right:30px;min-height:420px; }
 }
 @media(max-width:650px) {
- .settings-fab { display:none; }
  .settings-menu { position:fixed;right:0;bottom:0;top:auto;transform:none;width:calc(100vw - 32px);padding:18px;max-height:calc(100dvh - 110px);overflow:auto; }
  .settings-menu nav :is(button,a) { min-height:102px;font-size:10px; }
  .search-dock.hero { max-width:100%; }
@@ -131,7 +129,7 @@ html[data-glass="webgl"] .results-section { background:#060c1422; }
 .deck-tools { width:min(420px,calc(100% - 48px)); }
 .deck-search { max-width:none; }
 .is-dragging,.is-dragging button { cursor:grabbing!important; }
-.app-shell.is-choosing :is(.main,.settings-fab-wrap,.mobile-nav,.compare-tray) { visibility:hidden; }
+.app-shell.is-choosing :is(.main,.settings-fab-wrap,.compare-tray) { visibility:hidden; }
 /* The menu is a single unframed card row, independent of the floating button. */
 .settings-menu { position:fixed;inset:0;z-index:80;transform:none;width:100%;height:100dvh;max-height:none;padding:40px 0;overflow-y:auto;border:0;border-radius:0;background:linear-gradient(180deg,#050b1477,#050b14b8 50%,#050b1499);backdrop-filter:blur(12px);box-shadow:none;display:flex;flex-direction:column;justify-content:center;animation:deck-open .3s ease both; }
 .settings-deck-header { width:min(1080px,calc(100% - 64px));margin:0 auto 24px;display:flex;align-items:center;justify-content:center;position:relative; }
@@ -303,7 +301,6 @@ html[data-glass="webgl"] .filter-dropdown.is-liquid-glass { background:transpare
 .mod-card .card-author,.mod-card .card-meta { font-size:12px; }
 .mod-card .tags>span { font-size:11px;height:25px;line-height:17px; }
 .mod-card .tags { max-height:55px; }
-.mobile-nav button { font-size:12px; }
 @media(max-width:650px) {
  .search-row .search-box input,.search-dock.hero .search-box input { font-size:14px; }
  .search-row .search-box .search-submit { font-size:13px; }

@@ -69,6 +69,12 @@
   .deck-card img,.deck-card>svg:not(.sort-selection),.settings-menu nav .picker-grid :is(button,a) svg { width:44px;height:44px; }
   .collection-stage:has(>.history-list) .collection-brand { display:none; }
 }
+/* Narrow desktop windows keep an accessible settings button without a bottom bar. */
+@media (max-width:1400px) {
+  .app-shell .settings-fab-wrap,.app-shell.has-results .settings-fab-wrap { display:block;top:16px;right:16px;transform:none; }
+  .settings-fab-wrap>.settings-fab { display:grid;width:48px;height:48px; }
+}
+
 /* Keep these changes on touch-based mobile devices, including landscape. */
 @media (hover:none) and (pointer:coarse) {
   .app-shell { --mobile-header-height:120px; }
