@@ -1,0 +1,930 @@
+
+html,
+body {
+  margin: 0;
+  background: var(--stage-bg, #000);
+}
+
+/* 2. Standalone: fill the window and center the 16:9 box */
+body {
+  min-height: 100vh;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+}
+
+/* 3. Deck viewport: JS sets explicit px width/height (scaled 16:9).
+      position:relative — never position:fixed. */
+.deck-viewport {
+  position: relative;
+  overflow: hidden;
+  background: var(--stage-bg, #000);
+}
+
+/* 4. Fixed 16:9 design canvas.
+      JS sets transform: scale(...) only; centering comes from body flex. */
+.deck-stage {
+  position: absolute;
+  left: 0;
+  top: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  transform-origin: 0 0;
+  background: var(--slide-bg, #fff);
+}
+
+/* 5. Slides stack inside the fixed stage.
+   Content must be laid out at 1920×1080, not reflowed per device. */
+.slide {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  overflow: hidden;
+  display: block;
+  visibility: hidden;
+  opacity: 0;
+  pointer-events: none;
+  background: var(--slide-bg, #fff);
+}
+
+.slide.active,
+.slide.visible {
+  visibility: visible;
+  opacity: 1;
+  pointer-events: auto;
+  z-index: 1;
+}
+
+/* 6. Keep media inside authored slide bounds */
+img,
+video,
+canvas,
+svg {
+  max-width: 100%;
+  max-height: 100%;
+}
+
+/* 7. Presentation chrome (controls, counter, nav dots) lives INSIDE
+      .deck-stage, placed AFTER the slides in the DOM, and is authored
+      at 1920×1080 sizes — so it scales with the deck. Chrome kept
+      outside the stage does not scale in iframes and overlaps content
+      when the deck shrinks. */
+
+/* 8. Embedded (iframe): drop every height base so the document takes
+      its natural 16:9 height. The stage-scaling JS adds .embed on
+      <html> when window.self !== window.top. */
+html.embed,
+html.embed body {
+  height: auto;
+  min-height: 0;
+  overflow: visible;
+}
+html.embed body {
+  display: block;
+}
+html.embed .deck-viewport {
+  margin: 0 auto;
+}
+
+/* 9. Print one fixed-size slide per page (neutralize JS inline sizes) */
+@media print {
+  html,
+  body {
+    width: 1920px;
+    height: auto;
+    overflow: visible;
+    background: #fff;
+    display: block;
+  }
+
+  .deck-viewport {
+    position: static;
+    overflow: visible;
+    background: #fff;
+    width: auto !important;
+    height: auto !important;
+  }
+
+  .deck-stage {
+    position: static;
+    width: auto;
+    height: auto;
+    transform: none !important;
+    background: none;
+  }
+
+  .slide {
+    position: relative;
+    display: block !important;
+    visibility: visible !important;
+    opacity: 1 !important;
+    pointer-events: auto !important;
+    width: 1920px;
+    height: 1080px;
+    break-after: page;
+    page-break-after: always;
+  }
+
+  .slide:last-child {
+    break-after: auto;
+    page-break-after: auto;
+  }
+}
+
+/* 10. Reduced motion */
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.2s !important;
+  }
+}
+
+/* === IDENTITY & TYPOGRAPHY === */
+:root {
+  --stage-bg: #080c0e;
+  --slide-bg: transparent;
+  --ink: #edf3f2;
+  --muted: #bbaab4;
+  --accent: #f564a1;
+  --secondary: #ff9d6d;
+  --grad: linear-gradient(135deg, #f564a1, #ff9d6d);
+  --line: #573644;
+}
+* {
+  box-sizing: border-box;
+}
+body {
+  color: var(--ink);
+  font-family: "Manrope", "Noto Sans KR", sans-serif;
+}
+button,
+a {
+  -webkit-tap-highlight-color: transparent;
+}
+button {
+  font: inherit;
+}
+h1,
+h2,
+h3,
+p {
+  margin: 0;
+}
+h1,
+h2 {
+  font-weight: 600;
+  letter-spacing: -5px;
+  line-height: 1.2;
+}
+h1,
+h2 {
+  padding-bottom: 0.15em;
+}
+h1 {
+  font-size: 124px;
+}
+h2 {
+  font-size: 92px;
+}
+h3 {
+  font-size: 34px;
+  font-weight: 500;
+  letter-spacing: -1px;
+}
+p {
+  font-size: 28px;
+  line-height: 1.8;
+  color: var(--muted);
+}
+em {
+  font-style: normal;
+  color: var(--accent);
+}
+.deck-stage {
+  background: #0b1113;
+}
+.slide {
+  padding: 160px 112px 120px;
+  background: transparent;
+}
+.slide.active {
+  z-index: 2;
+}
+.eyebrow {
+  font-size: 19px;
+  font-weight: 600;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--accent);
+  margin-bottom: 36px;
+}
+.lede {
+  margin-top: 36px;
+  font-size: 30px;
+}
+.brand {
+  position: absolute;
+  top: 66px;
+  left: 112px;
+  z-index: 5;
+  font-size: 25px;
+  font-weight: 700;
+  letter-spacing: -1px;
+  display: flex;
+  align-items: center;
+  gap: 15px;
+}
+.brand svg {
+  width: 28px;
+  height: 28px;
+}
+.rule {
+  height: 1px;
+  background: var(--line);
+  margin: 48px 0;
+}
+.muted {
+  color: var(--muted);
+}
+.reveal {
+  opacity: 0;
+  transform: translateY(22px);
+  transition:
+    opacity 0.7s ease,
+    transform 0.7s cubic-bezier(0.2, 0.7, 0.1, 1);
+}
+.active .reveal {
+  opacity: 1;
+  transform: translateY(0);
+}
+.reveal:nth-child(2) {
+  transition-delay: 0.08s;
+}
+.reveal:nth-child(3) {
+  transition-delay: 0.16s;
+}
+.reveal:nth-child(4) {
+  transition-delay: 0.24s;
+}
+/* === SHARED WEBGL SCENE === */
+.shade {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background: linear-gradient(
+    90deg,
+    rgba(11, 17, 19, 0.92),
+    rgba(11, 17, 19, 0.7) 32%,
+    transparent 72%
+  );
+}
+.deck-stage[data-slide="2"] .shade,
+.deck-stage[data-slide="5"] .shade,
+.deck-stage[data-slide="6"] .shade {
+  background: rgba(11, 17, 19, 0.78);
+}
+.deck-stage[data-slide="3"] .shade {
+  background: linear-gradient(
+    90deg,
+    #0b1113 0%,
+    #0b1113ed 42%,
+    #0b1113bb 58%,
+    transparent 80%
+  );
+}
+/* === SLIDE COMPOSITIONS === */
+.hero {
+  padding-top: 265px;
+}
+.hero .lede {
+  max-width: 850px;
+}
+.source-layout {
+  display: grid;
+  grid-template-columns: 650px 1fr;
+  gap: 140px;
+  margin-top: 30px;
+}
+.source-layout h2 {
+  font-size: 82px;
+}
+.sources {
+  padding-top: 12px;
+}
+.source-row {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--line);
+  padding: 21px 0;
+  font-size: 32px;
+}
+.source-row span:last-child {
+  font-size: 21px;
+  color: var(--muted);
+}
+.small-note {
+  font-size: 21px;
+  margin-top: 28px;
+  line-height: 1.7;
+}
+.journey {
+  display: flex;
+  gap: 54px;
+  margin-top: 80px;
+  width: 1100px;
+}
+.step {
+  width: 320px;
+  border-top: 1px solid #f564a166;
+  padding-top: 24px;
+}
+.step .verb {
+  font-size: 22px;
+  color: var(--accent);
+  margin-bottom: 30px;
+}
+.step h3 {
+  font-size: 34px;
+  margin-bottom: 18px;
+}
+.step p {
+  font-size: 24px;
+  line-height: 1.7;
+}
+.architecture {
+  display: grid;
+  grid-template-columns: 1fr 90px 1.2fr 90px 1fr;
+  align-items: center;
+  margin-top: 80px;
+}
+.architecture .block {
+  border-top: 1px solid var(--accent);
+  padding-top: 30px;
+  min-height: 244px;
+}
+.architecture h3 {
+  font-size: 38px;
+  margin: 20px 0;
+}
+.architecture .tag {
+  color: var(--accent);
+  font-size: 21px;
+  letter-spacing: 2px;
+}
+.architecture p {
+  font-size: 26px;
+}
+.arrow {
+  font-size: 36px;
+  text-align: center;
+  color: var(--accent);
+}
+.tech-foot {
+  margin-top: 68px;
+  padding-top: 28px;
+  border-top: 1px solid var(--line);
+  display: flex;
+  gap: 80px;
+  font-size: 23px;
+  color: var(--muted);
+}
+.tech-foot strong {
+  font-weight: 500;
+  color: var(--ink);
+}
+.platforms {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 120px;
+  margin-top: 68px;
+}
+.platform {
+  border-top: 1px solid var(--accent);
+  padding-top: 32px;
+}
+.platform h3 {
+  font-size: 56px;
+  letter-spacing: -2px;
+  margin-bottom: 20px;
+}
+.platform p {
+  font-size: 28px;
+}
+.platform .storage {
+  margin-top: 40px;
+  font-size: 24px;
+  color: var(--accent);
+}
+.closer {
+  padding-top: 265px;
+}
+.closer h2 {
+  font-size: 108px;
+  max-width: 1200px;
+}
+.cta {
+  display: inline-flex;
+  align-items: center;
+  gap: 50px;
+  margin-top: 55px;
+  color: var(--ink);
+  text-decoration: none;
+  font-size: 28px;
+  border-bottom: 1px solid var(--accent);
+  padding-bottom: 16px;
+}
+.cta:hover {
+  color: var(--accent);
+}
+/* === MINIMAL NAVIGATION & ACCESSIBILITY === */
+a:focus-visible,
+button:focus-visible {
+  outline: 3px solid var(--accent);
+  outline-offset: 8px;
+}
+.sr-only {
+  position: absolute;
+  width: 1px;
+  height: 1px;
+  padding: 0;
+  margin: -1px;
+  overflow: hidden;
+  clip: rect(0, 0, 0, 0);
+  white-space: nowrap;
+}
+.editing [data-edit] {
+  outline: 1px dashed #f564a188;
+  outline-offset: 8px;
+}
+.edit-toggle {
+  position: absolute;
+  top: 55px;
+  right: 100px;
+  z-index: 10;
+  background: #0b1113;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 21px;
+  padding: 14px 24px;
+  opacity: 0;
+  pointer-events: none;
+}
+.edit-toggle:focus-visible,
+.edit-toggle.show,
+.editing .edit-toggle {
+  opacity: 1;
+  pointer-events: auto;
+}
+.edit-hotzone {
+  position: absolute;
+  top: 20px;
+  right: 60px;
+  width: 230px;
+  height: 100px;
+  z-index: 8;
+}
+.deck-stage {
+  touch-action: pan-y;
+}
+@media print {
+  .shade,
+  .brand,
+  .edit-toggle,
+  .edit-hotzone {
+    display: none;
+  }
+  .slide {
+    background: #0b1113 !important;
+    print-color-adjust: exact;
+  }
+  .reveal {
+    opacity: 1;
+    transform: none;
+  }
+  @page {
+    size: 1920px 1080px;
+    margin: 0;
+  }
+}
+/* === PHOTO BACKGROUND & ORIGINAL PROJECT INTRO === */
+.photo {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  object-fit: cover;
+  pointer-events: none;
+}
+.intro-playing .slide .reveal {
+  opacity: 0;
+  transform: translateY(22px);
+}
+.entry-content {
+  display: contents;
+}
+.entry-intro {
+  --entry-duration: 3.2s;
+  position: absolute;
+  inset: 0;
+  z-index: 10000;
+  overflow: hidden;
+  touch-action: none;
+  animation: entry-intro-dismiss var(--entry-duration) linear both;
+}
+.entry-intro-black {
+  position: absolute;
+  inset: 0;
+  background: #000;
+  animation: entry-black-dismiss var(--entry-duration) linear both;
+}
+.entry-intro-curtain {
+  position: absolute;
+  width: 100%;
+  height: 100%;
+  inset: 0;
+}
+.entry-intro-spread {
+  animation: entry-paint-spread var(--entry-duration)
+    cubic-bezier(0.22, 0.75, 0.25, 1) both;
+}
+.entry-intro-paint {
+  transform-box: view-box;
+  animation: entry-paint-left var(--entry-duration) cubic-bezier(0.5, 0, 0.2, 1)
+    both;
+  will-change: transform;
+}
+.entry-intro-right {
+  animation-name: entry-paint-right;
+}
+.entry-intro-paint-edge {
+  animation: entry-edge-appear var(--entry-duration) linear both;
+}
+.entry-intro-seam {
+  stroke-dasharray: 1;
+  animation: entry-seam-draw var(--entry-duration) ease both;
+}
+.entry-intro-logo {
+  position: absolute;
+  width: 340px;
+  height: auto;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  animation: entry-logo-dismiss var(--entry-duration) ease both;
+}
+@keyframes entry-paint-spread {
+  0%,
+  34% {
+    stroke-width: 0;
+  }
+  66%,
+  100% {
+    stroke-width: 2200;
+  }
+}
+@keyframes entry-paint-left {
+  0%,
+  73% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(-95%);
+  }
+}
+@keyframes entry-paint-right {
+  0%,
+  73% {
+    transform: translateX(0);
+  }
+  100% {
+    transform: translateX(95%);
+  }
+}
+@keyframes entry-edge-appear {
+  0%,
+  72% {
+    opacity: 0;
+  }
+  79%,
+  100% {
+    opacity: 1;
+  }
+}
+@keyframes entry-seam-draw {
+  0%,
+  20% {
+    stroke-dashoffset: 1;
+    opacity: 1;
+  }
+  34% {
+    stroke-dashoffset: 0;
+    opacity: 1;
+  }
+  42%,
+  100% {
+    stroke-dashoffset: 0;
+    opacity: 0;
+  }
+}
+@keyframes entry-logo-dismiss {
+  0%,
+  36% {
+    fill: url(#introTheme);
+    opacity: 1;
+  }
+  46%,
+  74% {
+    fill: #210d17;
+    opacity: 1;
+  }
+  93%,
+  100% {
+    fill: #210d17;
+    opacity: 0;
+  }
+}
+@keyframes entry-black-dismiss {
+  0%,
+  68% {
+    opacity: 1;
+  }
+  72%,
+  100% {
+    opacity: 0;
+  }
+}
+@keyframes entry-intro-dismiss {
+  0%,
+  80% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+@media (prefers-reduced-motion: reduce) {
+  .entry-intro {
+    display: none;
+  }
+  .entry-intro,
+  .entry-intro * {
+    animation: none;
+  }
+}
+
+@media print {
+  .photo,
+  .entry-intro {
+    display: none;
+  }
+}
+/* === GAME SCENE LAYOUT === */
+#game-art {
+  position: absolute;
+  inset: 0;
+  width: 1920px;
+  height: 1080px;
+  z-index: 1;
+  pointer-events: none;
+}
+.source-layout {
+  grid-template-columns: 1fr;
+  gap: 15px;
+  width: 1030px;
+  margin-top: 0;
+}
+.source-layout h2 {
+  font-size: 74px;
+}
+.source-layout h2 br {
+  display: none;
+}
+.source-layout .lede {
+  font-size: 27px;
+  margin-top: 12px;
+}
+.source-layout .lede br {
+  display: none;
+}
+.sources {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0 48px;
+}
+.source-row {
+  font-size: 28px;
+  padding: 24px 0;
+  gap: 15px;
+}
+.source-row span:last-child {
+  font-size: 18px;
+}
+.sources .small-note {
+  grid-column: 1/-1;
+  margin-top: 24px;
+}
+.journey {
+  width: 1070px;
+  gap: 42px;
+}
+.step {
+  width: 325px;
+}
+/* === DARK, MYSTERIOUS SCREENSHOT TREATMENT === */
+.photo {
+  filter: brightness(0.25) saturate(0.55);
+}
+#game-art {
+  filter: drop-shadow(0 0 17px #f564a122);
+}
+.deck-stage[data-art="junimo"] #game-art {
+  filter: drop-shadow(0 0 28px #47cb1b20);
+}
+/* === WEBGL APPEARS ONLY ON SLIDES WITH A GAME SYMBOL === */
+.deck-stage:not([data-art]) #game-art,
+.deck-stage[data-art=""] #game-art {
+  display: none;
+}
+/* === MAGENTA THEME: EXACT PROJECT GRADIENT === */
+em,
+.eyebrow,
+.step .verb,
+.architecture .tag,
+.platform .storage,
+.arrow {
+  background-image: var(--grad);
+  background-clip: text;
+  -webkit-background-clip: text;
+  color: transparent;
+}
+.eyebrow,
+.step .verb,
+.architecture .tag,
+.platform .storage {
+  width: fit-content;
+}
+.step,
+.architecture .block,
+.platform,
+.cta {
+  border-image: var(--grad) 1;
+}
+.rule {
+  background: var(--grad);
+  opacity: 0.35;
+}
+/* === CONTENTS & COMPACT TECHNOLOGY CHOICES === */
+.deck-stage[data-slide="1"] .shade,
+.deck-stage[data-slide="4"] .shade {
+  background: rgba(11, 17, 19, 0.78);
+}
+.agenda-layout {
+  display: grid;
+  grid-template-columns: 650px 1fr;
+  gap: 130px;
+  margin-top: 65px;
+}
+.agenda {
+  padding-top: 0;
+}
+.agenda a {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 30px 0;
+  border-bottom: 1px solid var(--line);
+  color: var(--ink);
+  font-size: 38px;
+  letter-spacing: -1px;
+  text-decoration: none;
+}
+.agenda a span:last-child {
+  background: var(--grad);
+  background-clip: text;
+  color: transparent;
+}
+.agenda a:hover {
+  color: var(--secondary);
+}
+.stack-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 32px 85px;
+  margin-top: 52px;
+}
+.stack-item {
+  display: grid;
+  grid-template-columns: 195px 1fr;
+  align-items: center;
+  gap: 22px;
+  min-height: 104px;
+  border-top: 1px solid;
+  border-image: var(--grad) 1;
+  padding: 25px 0 16px;
+}
+.stack-item h3 {
+  font-size: 34px;
+  font-weight: 600;
+  letter-spacing: -1px;
+}
+.stack-item p {
+  font-size: 25px;
+  line-height: 1.6;
+  word-break: keep-all;
+}
+
+/* === STORY PRESENTATION: EXISTING THEME AND STEVE PRESERVED === */
+.story-slide h2 { max-width: 1550px; }
+.story-copy { margin-top: 46px; max-width: 1350px; font-size: 34px; line-height: 1.8; }
+.story-copy strong { color: var(--ink); font-weight: 600; }
+/* 2장: 기존 왼쪽 여백을 유지한 채 제목과 설명 묶음을 세로 중앙 정렬. */
+.story-slide[aria-labelledby="story-2"] {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  justify-content: center;
+  padding-top: 120px;
+  padding-bottom: 120px;
+  text-align: left;
+}
+.story-slide[aria-labelledby="story-2"] h2,
+.story-slide[aria-labelledby="story-2"] .story-copy {
+  max-width: 1040px;
+}
+.mod-value { margin-top: 58px; width: 1250px; gap: 80px; }
+.mod-value .step { width: 560px; }
+.mod-value .step h3 { margin-bottom: 18px; }
+.story-sources .story-copy { margin-top: 32px; }
+.story-sources .sources { width: 1160px; grid-template-columns: 1fr; margin-top: 32px; }
+.story-sources .source-row { padding: 23px 0; font-size: 32px; }
+.story-sources .source-row span:last-child { font-size: 28px; }
+.product-slide { padding-top: 180px; }
+.product-layout { display: grid; grid-template-columns: 470px minmax(0, 1fr); gap: 64px; align-items: center; }
+.product-layout h2 { font-size: 78px; letter-spacing: -3px; line-height: 1.25; }
+.product-copy { margin-top: 34px; font-size: 30px; line-height: 1.8; }
+.product-shot { position: relative; display: block; width: 100%; aspect-ratio: 16 / 9; }
+.product-shot > img { display: block; width: 100%; height: auto; }
+/* 페이드 후에도 사진 안쪽의 네 변을 별도 레이어로 그립니다. */
+.product-shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  pointer-events: none;
+  background:
+    var(--grad) top / 100% 2px no-repeat,
+    var(--grad) bottom / 100% 2px no-repeat,
+    var(--grad) left / 2px 100% no-repeat,
+    var(--grad) right / 2px 100% no-repeat;
+}
+.screenshot-focus { position: relative; aspect-ratio: 16 / 9; overflow: hidden; }
+.screenshot-focus img { position: absolute; display: block; width: 225%; max-width: none; max-height: none; height: auto; left: 50%; top: 50%; transform: translate(-50%, -50%); }
+.ranking-focus img { top: 35%; }
+.follow-up { width: 1360px; gap: 100px; margin-top: 68px; }
+.follow-up .step { width: 560px; }
+.follow-up .step h3 { font-size: 42px; }
+.follow-up .step p { font-size: 30px; }
+.flow-note { margin-top: 55px; font-size: 27px; }
+.story-slide .cta { margin-top: 35px; }
+.technical-slide h2 { font-size: 86px; }
+.technical-slide .architecture { margin-top: 70px; }
+.technical-slide .architecture h3 { font-size: 35px; }
+.technical-slide .architecture p { font-size: 28px; }
+.technical-foot { margin-top: 68px; padding-top: 28px; border-top: 1px solid var(--line); font-size: 29px; }
+.scope-slide { display: flex; flex-direction: column; justify-content: center; padding-top: 0; padding-bottom: 0; }
+.scope-lines { margin-top: 48px; width: 1180px; display: grid; gap: 28px; }
+.scope-lines p { margin: 0; border: 0; padding: 0; font-size: 42px; }
+.scope-lines .scope-detail { margin-top: 10px; font-size: 29px; line-height: 1.65; }
+.scope-lines strong { font-weight: 600; color: var(--ink); }
+.scope-slide .story-copy { font-size: 29px; }
+.closer h2 { font-size: 100px; max-width: 1660px; }
+.stack-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 42px 76px; margin-top: 58px; }
+.stack-grid h3 { color: var(--accent); font-size: 28px; margin-bottom: 12px; }
+.stack-grid p { color: var(--ink); font-size: 32px; line-height: 1.6; }
+.thank-you { display: flex; align-items: center; justify-content: center; padding: 0; }
+.thank-you h2 { font-size: 140px; text-align: center; }
+.deck-stage[data-slide="14"] .brand { visibility: hidden; }
+.deck-stage[data-slide="14"] .shade { background: rgba(11, 17, 19, 0.78); }
+.deck-stage[data-slide="2"] .shade, .deck-stage[data-slide="3"] .shade, .deck-stage[data-slide="4"] .shade, .deck-stage[data-slide="5"] .shade, .deck-stage[data-slide="6"] .shade, .deck-stage[data-slide="7"] .shade, .deck-stage[data-slide="8"] .shade, .deck-stage[data-slide="9"] .shade, .deck-stage[data-slide="10"] .shade, .deck-stage[data-slide="11"] .shade, .deck-stage[data-slide="12"] .shade { background: rgba(11, 17, 19, 0.78); }
+
+/* Actual JourneyMap screenshot: zoom into its icon, title and Korean tooltip. */
+.description-slide h2 { font-size: 78px; letter-spacing: -3px; }
+.description-closeup { position: absolute; left: 112px; top: 390px; width: 1696px; height: 444px; aspect-ratio: auto; overflow: hidden; }
+.description-closeup > img { position: absolute; width: 8115.44px; max-width: none; max-height: none; height: auto; left: -3487.1px; top: -1902.06px; }
+
+/* One genuine fifth-revision capture per slide, including the genre header and cards. */
+.genre-slide h2 { font-size: 78px; letter-spacing: -3px; }
+.genre-slide h2 em, .genre-off { margin-left: 28px; font-weight: 800; letter-spacing: 0; }
+.genre-off { color: var(--muted); }
+.deck-stage.instant-genre .genre-slide .reveal { transition: none; }
+.genre-shots { position: absolute; left: 112px; top: 330px; width: 1696px; }
+.genre-shot { height: 650px; aspect-ratio: auto; overflow: hidden; }
+.genre-shot > img { position: absolute; width: 2412.09px; max-width: none; max-height: none; height: auto; left: -358.04px; top: -358.04px; }
+

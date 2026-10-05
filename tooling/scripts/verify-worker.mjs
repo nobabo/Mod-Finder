@@ -73,7 +73,25 @@ try {
   assert.equal(asset.headers.get('x-content-type-options'), 'nosniff');
   assert.match(asset.headers.get('content-security-policy'), /img-src 'self' https: data:;/);
   await asset.text();
+  const presentation = await mf.dispatchFetch('http://localhost/presentation', { redirect: 'manual' });
+  assert.equal(presentation.status, 200, 'Presentation must open without a redirect');
+  assert.equal(presentation.headers.get('location'), null);
+  assert.match(presentation.headers.get('x-robots-tag'), /noindex/);
+  const presentationHtml = await presentation.text();
+  assert.match(presentationHtml, /name="robots" content="noindex/);
+  assert.ok(presentationHtml.includes('감사합니다'));
+  assert.ok(!/<script>/.test(presentationHtml), 'Presentation must respect the existing script CSP');
+  const resources = [...presentationHtml.matchAll(/(?:src|href)="(\/presentation-assets\/[^\"]+)"/g)].map(match => match[1]);
+  assert.ok(resources.length > 5, 'Presentation resources must be included');
+  for (const path of new Set(resources)) {
+    const response = await mf.dispatchFetch(`http://localhost${path}`);
+    assert.equal(response.status, 200, `Missing presentation resource: ${path}`);
+    await response.arrayBuffer();
+  }
+  const robots = await mf.dispatchFetch('http://localhost/robots.txt');
+  assert.match(await robots.text(), /Disallow: \/presentation/);
   const index = readFileSync('output/web/index.html', 'utf8');
+  assert.ok(!index.includes('/presentation'), 'Do not add presentation links to the application');
   const scriptPath = index.match(/src="(\/assets\/[^\"]+\.js)"/)[1];
   const script = await mf.dispatchFetch(`http://localhost${scriptPath}`);
   assert.equal(script.status, 200);

@@ -1,0 +1,3 @@
+User-agent: *
+Disallow: /presentation
+Disallow: /presentation-assets/
