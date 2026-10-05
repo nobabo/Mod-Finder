@@ -245,7 +245,7 @@ select option{background:#1a1433;color:#eae6ff}
 .modal-heading{display:flex;align-items:center;justify-content:space-between;gap:10px;margin-bottom:20px}
 .modal h2{font-family:var(--kr);font-size:19px;letter-spacing:-.5px;margin:0;font-weight:700;color:#f4f2ff}
 .modal-intro{font-family:var(--kr);font-size:11.5px;line-height:1.9;color:var(--muted);margin-bottom:22px}
-.modal-actions{display:flex;gap:10px;justify-content:flex-end;margin-top:23px}
+.modal-actions{display:flex;gap:20px;justify-content:flex-end;margin-top:23px}
 .comparison-scroll{overflow:auto}
 .comparison-table{width:100%;border-collapse:collapse;font-family:var(--kr);font-size:11.5px}
 .comparison-table th,.comparison-table td{text-align:left;vertical-align:top;padding:16px 13px;border-bottom:1px solid var(--line);line-height:1.9;min-width:145px;
