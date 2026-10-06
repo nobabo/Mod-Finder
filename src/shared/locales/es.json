@@ -232,5 +232,17 @@
   "다음 페이지": "Página siguiente",
   "메인 화면으로 이동": "Ir al inicio",
   "메인 화면으로 돌아가시겠습니까?": "¿Volver a la pantalla de inicio?",
-  "확인": "Confirmar"
+  "확인": "Confirmar",
+  "즐겨찾기 그룹": "Grupos de favoritos",
+  "새 그룹": "Nuevo grupo",
+  "그룹 편집": "Editar grupo",
+  "그룹 삭제": "Eliminar grupo",
+  "그룹 삭제 · 모드는 미분류로 이동": "Eliminar grupo · mover mods a sin clasificar",
+  "그룹명을 입력하세요.": "Introduce un nombre de grupo.",
+  "같은 이름의 그룹이 있어요.": "Ya existe un grupo con ese nombre.",
+  "그룹명": "Nombre del grupo",
+  "그룹으로 이동": "Mover a grupo",
+  "메인 화면 바로가기": "Accesos directos en inicio",
+  "바로가기": "Accesos directos",
+  "메인 메뉴": "Menú principal"
 }

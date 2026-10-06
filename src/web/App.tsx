@@ -6,7 +6,7 @@ import { GENRES, gamesInScope, getGame } from '../shared/games';
 import { SOURCE_NAMES, type Filters, type Listing, type Sort } from '../shared/types';
 import { dateLabel, GameLogo, ModCard, ModIcon, Modal, Sheet, SourceMark } from './components';
 import { useSearch } from './lib/search';
-import { emptyLocalData, loadLocalData, saveLocalData, toggleFavorite, type LocalData } from './lib/storage';
+import { emptyLocalData, loadLocalData, saveLocalData, shortcutFavorites, toggleFavorite, type LocalData } from './lib/storage';
 import { FolderBar, MoveFavorite } from './Favorites';
 import { Rankings } from './Rankings';
 import { openExternal } from './lib/platform';
@@ -29,6 +29,14 @@ const FILTER_NAMES: Record<string, string> = { version: t("게임 버전"), load
 const THEMES = PALETTES.map(theme => ({ ...theme, name:locale === 'ko' ? theme.ko : theme.en }));
 export default function App() {
   const mobileLayout = useMobileLayout();
+  const [headerScrolled, setHeaderScrolled] = useState(() => window.scrollY > 24);
+  useEffect(() => {
+    if (!mobileLayout) return;
+    const sync = () => setHeaderScrolled(window.scrollY > 24);
+    sync();
+    window.addEventListener('scroll', sync, { passive: true });
+    return () => window.removeEventListener('scroll', sync);
+  }, [mobileLayout]);
   const { state: navigation, navigate, restoration, detailKey, openDetail, closeDetail } = useNavigation();
   const { page, gameId, genre, query, submitted, filters, categories: selectedCategories, sort, folder: selectedFolder } = navigation;
   const [input, setInput] = useState(query);
@@ -95,6 +103,7 @@ export default function App() {
   const go = (target: Page) => { navigate({ page: target }); setMenuOpen(false); };
   const heroSearch = page === 'discover' && !hasSearch;
   const visible = local.favorites.filter(item => selectedFolder === 'all' || (selectedFolder === 'unfiled' ? !local.folders.some(folder => folder.keys.includes(item.key)) : local.folders.find(folder => folder.id === selectedFolder)?.keys.includes(item.key)));
+  const shortcuts = shortcutFavorites(local);
   const groups = page === 'favorites' ? local.favorites.map(item => ({ id: item.key, listings: [item] })) : search.groups;
 
   const completed = Object.values(search.buckets).filter(b => b?.result && ['success', 'empty'].includes(b.result.status)).length;
@@ -123,13 +132,17 @@ export default function App() {
         <button type="button" onClick={() => go('recent')}><History size={34} /><span>{t("최근 기록")}</span></button>
       </SettingsMenu>}
     </div>
-    {mobileLayout && <header className="mobile-header">{settingsControl}{heroSearch ? <div className="page-brand" role="img" aria-label="Mod Finder"><BrandLogo size={96}/></div> : <button type="button" className="page-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={96}/></button>}{filterControl}</header>}
+    {mobileLayout && <header className={`mobile-header ${headerScrolled ? 'is-scrolled' : ''}`}>
+      {headerScrolled && <div className="mobile-nav-glass" aria-hidden="true"/>}
+      <nav className="mobile-nav" aria-label={t('메인 메뉴')}>{settingsControl}<button type="button" className="page-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={96}/></button>{filterControl}</nav>
+    </header>}
     <main className="main">
       <div className={`content ${page !== 'discover' ? 'collection-content' : ''}`}><div className={page !== 'discover' ? 'collection-stage' : 'discover-stage'}>
       {!mobileLayout && page === 'discover' && hasSearch && <button type="button" className="results-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={96} /></button>}
       <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
       <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row">{!mobileLayout && page !== 'discover' && <button type="button" className="collection-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={76}/></button>}{!mobileLayout && heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160}/></div>}<form className="search-box" onSubmit={e => { e.preventDefault(); if (window.matchMedia("(pointer: coarse), (max-width: 850px)").matches) inputRef.current?.blur(); submit(); }}><button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" type="search" inputMode="search" enterKeyHint="search" name="q" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit" aria-label={t("모드 검색")}><ArrowRight size={18} aria-hidden="true" /></button></form>{!mobileLayout && filterControl}</div>
+      {heroSearch && hydrated && shortcuts.length > 0 && <nav className="home-shortcuts" aria-label={t('메인 화면 바로가기')}>{shortcuts.map(item => <a key={item.key} href={item.url} target="_blank" rel="noopener noreferrer" title={listingText(item, locale).title} onClick={event => { event.preventDefault(); void visit(item.url); }}><ModIcon item={item}/><span>{listingText(item, locale).title}</span></a>)}</nav>}
       {heroSearch && <Rankings key={gameId} gameId={gameId} card={rankedCard} searchMod={entry => submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined, true)}/>}
       </div>
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>

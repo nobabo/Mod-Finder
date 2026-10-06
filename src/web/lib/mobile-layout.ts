@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
-// A narrow desktop window still uses the desktop layout.
-export const MOBILE_LAYOUT_QUERY = '(hover: none) and (pointer: coarse)';
+// Match the responsive mobile styles regardless of the input device.
+export const MOBILE_LAYOUT_QUERY = '(max-width: 850px)';
 
 export function useMobileLayout() {
   const [mobile, setMobile] = useState(() => window.matchMedia(MOBILE_LAYOUT_QUERY).matches);

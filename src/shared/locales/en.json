@@ -232,5 +232,17 @@
   "다음 페이지": "Next page",
   "메인 화면으로 이동": "Go to home",
   "메인 화면으로 돌아가시겠습니까?": "Return to the home screen?",
-  "확인": "Confirm"
+  "확인": "Confirm",
+  "즐겨찾기 그룹": "Favorite groups",
+  "새 그룹": "New group",
+  "그룹 편집": "Edit group",
+  "그룹 삭제": "Delete group",
+  "그룹 삭제 · 모드는 미분류로 이동": "Delete group · move mods to unfiled",
+  "그룹명을 입력하세요.": "Enter a group name.",
+  "같은 이름의 그룹이 있어요.": "A group with that name already exists.",
+  "그룹명": "Group name",
+  "그룹으로 이동": "Move to group",
+  "메인 화면 바로가기": "Home screen shortcuts",
+  "바로가기": "Shortcuts",
+  "메인 메뉴": "Main menu"
 }

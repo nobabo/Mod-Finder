@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { emptyLocalData, moveFavorite, parseLocalData, toggleFavorite } from '../../src/web/lib/storage';
+import { deleteFavoriteFolder, emptyLocalData, moveFavorite, parseLocalData, setShortcutFolder, shortcutFavorites, toggleFavorite } from '../../src/web/lib/storage';
 import { mapModrinth } from '../../src/server/adapters';
 import { getGame } from '../../src/shared/games';
 import { appendStable, groupResults, prioritizeCategories, sortResultGroups } from '../../src/shared/ranking';
@@ -10,6 +10,28 @@ import snapshot from '../../src/shared/data/community-ranking.json';
 const item = mapModrinth({ project_id: 'favorite', title: 'Favorite', downloads: 1 }, getGame('minecraft-java')!, 1);
 const categories = ['modrinth:adventure', 'modrinth:magic'];
 describe('favorite folders', () => {
+  it('keeps one shortcut group and persists its selection across reloads', () => {
+    const data = { ...emptyLocalData(), favorites: [item], folders: [{ id: 'one', name: 'One', keys: [item.key] }, { id: 'two', name: 'Two', keys: [] }] };
+    const first = parseLocalData(JSON.stringify(setShortcutFolder(data, 'one', true)));
+    expect(shortcutFavorites(first)).toEqual([item]);
+    const second = setShortcutFolder(first, 'two', true);
+    expect(second.shortcutFolderId).toBe('two');
+    expect(shortcutFavorites(second)).toEqual([]);
+    expect(setShortcutFolder(second, 'one', false).shortcutFolderId).toBe('two');
+    expect(setShortcutFolder(second, 'missing', true)).toBe(second);
+    expect(setShortcutFolder(second, 'two', false).shortcutFolderId).toBeUndefined();
+  });
+  it('keeps favorites when deleting groups and clears stale shortcuts', () => {
+    const data = { ...emptyLocalData(), favorites: [item], shortcutFolderId: 'one', folders: [{ id: 'one', name: 'One', keys: [item.key] }, { id: 'two', name: 'Two', keys: [] }] };
+    expect(deleteFavoriteFolder(data, 'two').shortcutFolderId).toBe('one');
+    const deleted = deleteFavoriteFolder(data, 'one');
+    expect(deleted.favorites).toEqual([item]);
+    expect(deleted.shortcutFolderId).toBeUndefined();
+    expect(shortcutFavorites(deleted)).toEqual([]);
+    expect(parseLocalData(JSON.stringify({ ...data, shortcutFolderId: 'missing' })).shortcutFolderId).toBeUndefined();
+    expect(shortcutFavorites(toggleFavorite(data, item))).toEqual([]);
+    expect(shortcutFavorites(moveFavorite(data, item.key, 'two'))).toEqual([]);
+  });
   it('migrates existing favorites without requiring a reset', () => {
     const { folders: _, ...legacy } = { ...emptyLocalData(), favorites: [item] };
     expect(parseLocalData(JSON.stringify(legacy))).toEqual({ ...legacy, folders: [] });

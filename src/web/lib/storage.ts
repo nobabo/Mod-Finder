@@ -4,7 +4,7 @@ import { GENRES, getGame } from '../../shared/games';
 import { safeExternalUrl } from '../../shared/links';
 import { isNative } from './platform';
 export interface FavoriteFolder { id: string; name: string; keys: string[] }
-export interface LocalData { favorites: Listing[]; folders: FavoriteFolder[]; compared: Listing[]; favoriteGames: string[]; history: { gameId: string; query: string; genre?: string; category?: string; categories?: string[] }[] }
+export interface LocalData { favorites: Listing[]; folders: FavoriteFolder[]; shortcutFolderId?: string; compared: Listing[]; favoriteGames: string[]; history: { gameId: string; query: string; genre?: string; category?: string; categories?: string[] }[] }
 export const emptyLocalData = (): LocalData => ({ favorites: [], folders: [], compared: [], favoriteGames: ['minecraft-java'], history: [] });
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
@@ -51,7 +51,21 @@ export function parseLocalData(raw: string): LocalData {
   const used = new Set<string>();
   const folders = data.folders ?? [];
   if (!Array.isArray(folders) || folders.some(folder => !folder || typeof folder.id !== 'string' || !folder.id || folder.id.length > 80 || typeof folder.name !== 'string' || !folder.name.trim() || folder.name.trim().length > 40 || !strings(folder.keys)) || new Set(folders.map(folder => folder.id)).size !== folders.length) throw new Error('invalid_local_data');
-  return { favorites: retained, folders: folders.map(folder => ({ id: folder.id, name: folder.name.trim(), keys: folder.keys.filter(key => keys.has(key) && !used.has(key) && !!used.add(key)) })), favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.filter(canPersistListing).slice(0, 3) };
+  return { favorites: retained, ...(folders.some(folder => folder.id === data.shortcutFolderId) ? { shortcutFolderId: data.shortcutFolderId } : {}), folders: folders.map(folder => ({ id: folder.id, name: folder.name.trim(), keys: folder.keys.filter(key => keys.has(key) && !used.has(key) && !!used.add(key)) })), favoriteGames: data.favoriteGames, history: data.history.slice(0, 20), compared: compared.filter(canPersistListing).slice(0, 3) };
+}
+
+export function deleteFavoriteFolder(data: LocalData, id: string): LocalData {
+  return { ...data, folders: data.folders.filter(folder => folder.id !== id), shortcutFolderId: data.shortcutFolderId === id ? undefined : data.shortcutFolderId };
+}
+
+export function setShortcutFolder(data: LocalData, id: string, checked: boolean): LocalData {
+  if (!data.folders.some(folder => folder.id === id)) return data;
+  return { ...data, shortcutFolderId: checked ? id : data.shortcutFolderId === id ? undefined : data.shortcutFolderId };
+}
+
+export function shortcutFavorites(data: LocalData): Listing[] {
+  const keys = new Set(data.folders.find(folder => folder.id === data.shortcutFolderId)?.keys ?? []);
+  return data.favorites.filter(item => keys.has(item.key));
 }
 
 export function toggleFavorite(data: LocalData, item: Listing): LocalData {

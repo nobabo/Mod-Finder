@@ -6,6 +6,16 @@
 .folder-rail button span{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .folder-rail button[aria-pressed=true],.ranking-tabs button[aria-pressed=true],.ranking-providers button[aria-pressed=true]{border-color:var(--accent);background:rgba(var(--tint-rgb),.16);color:var(--accent)}
 .folder-actions{flex:none;gap:4px}
+.shortcut-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text-soft)}
+.shortcut-toggle input,.folder-form .shortcut-toggle input{width:18px;height:18px;padding:0;margin:0;accent-color:var(--accent);flex:none}
+.folder-actions .shortcut-toggle{margin-inline:6px}
+.home-shortcuts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:min(680px,100%);margin:20px auto}
+.home-shortcuts a{display:flex;flex-direction:column;align-items:center;gap:10px;width:104px;padding:14px 8px;border:1px solid transparent;border-radius:16px;color:var(--text);text-decoration:none}
+.home-shortcuts a:hover,.home-shortcuts a:focus-visible{background:rgba(var(--tint-rgb),.12);border-color:var(--accent);outline:none}
+.home-shortcuts .mod-icon{width:52px;height:52px;border-radius:50%;background:rgba(var(--tint-rgb),.12);overflow:hidden;display:grid;place-items:center}
+.home-shortcuts .mod-icon img{width:100%;height:100%;object-fit:cover}
+.home-shortcuts a>span{width:100%;font-size:12px;text-align:center;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+@media(max-width:650px){.folder-toolbar{flex-wrap:wrap}.folder-rail{flex-basis:100%}.folder-actions{margin-left:auto}.home-shortcuts a{width:88px}}
 .folder-actions .icon-button{width:38px;height:38px}
 .folder-form{display:grid;gap:12px}
 .folder-form input{width:100%;border:1px solid var(--accent);background:var(--surface-deep);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit}
