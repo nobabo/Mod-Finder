@@ -18,7 +18,7 @@
 .home-collections{position:absolute;top:calc(100% + 20px);left:max(0px,calc(50% - 310px));width:min(548px,calc(100% - 72px));padding-bottom:80px}
 .search-dock.hero .home-collections>.ranking-panel{position:relative;top:auto;left:0;width:100%;margin:0}
 .home-collections>.ranking-panel::after{display:none}
-@media(max-width:850px){.home-collections{position:relative;top:auto;left:0;width:100%;margin-top:16px;padding-bottom:0}}
+@media(max-width:1400px){.home-collections{position:relative;top:auto;left:0;width:100%;margin-top:16px;padding-bottom:0}}
 @media(max-width:650px){.folder-toolbar{flex-wrap:wrap}.folder-rail{flex-basis:100%}.folder-actions{margin-left:auto}.home-shortcuts a{width:88px}}
 .folder-actions .icon-button{width:38px;height:38px}
 .folder-form{display:grid;gap:12px}

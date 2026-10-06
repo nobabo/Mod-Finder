@@ -370,8 +370,8 @@ html[data-glass="webgl"] .filter-dropdown.is-liquid-glass { background:transpare
  .settings-rail { padding-top:20px;padding-bottom:20px; }
 }
 
-/* Narrow screens use a separate search row and a simple results panel. */
-@media(max-width:650px) {
+/* Compact navigation uses a separate search row and a rectangular results panel. */
+@media(max-width:1400px) {
  .search-results-panel { padding:0; }
  .search-results-panel > .result-panel-outline { display:none; }
  .search-results-panel > .search-dock { width:100%;max-width:100%;margin:0 auto 20px; }

@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react';
 
 // Match the responsive mobile styles regardless of the input device.
-export const MOBILE_LAYOUT_QUERY = '(max-width: 850px)';
+export const MOBILE_LAYOUT_QUERY = '(max-width: 1400px)';
 
 export function useMobileLayout() {
   const [mobile, setMobile] = useState(() => window.matchMedia(MOBILE_LAYOUT_QUERY).matches);
