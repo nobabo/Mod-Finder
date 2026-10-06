@@ -374,7 +374,7 @@ html[data-glass="webgl"] .filter-dropdown.is-liquid-glass { background:transpare
 @media(max-width:1400px) {
  .search-results-panel { padding:0; }
  .search-results-panel > .result-panel-outline { display:none; }
- .search-results-panel > .search-dock { width:100%;max-width:100%;margin:0 auto 20px; }
+ .search-results-panel > .search-dock { width:100%;max-width:600px;margin:0 auto 20px; }
  .search-results-panel > .results-content { min-width:0;padding:20px 10px;border:1px solid rgba(var(--tint-rgb),.5);border-radius:22px;background:linear-gradient(140deg,rgba(var(--tint-rgb),.06),rgba(var(--secondary-rgb),.025)); }
 }
 
