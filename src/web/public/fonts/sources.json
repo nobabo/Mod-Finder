@@ -1,0 +1,2961 @@
+{
+  "source": "https://fonts.googleapis.com/css2?family=Chiron+GoRound+TC:wght@200..900&family=Noto+Sans+KR:wght@400..800&family=Kulim+Park:wght@400;600;700&family=Noto+Sans+JP:wght@400..800&family=Noto+Sans+SC:wght@400..800&display=swap",
+  "fonts": [
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.116.woff2",
+      "file": "002e502515bee8b9efa1.woff2",
+      "sha256": "002e502515bee8b9efa1b17abf7e52b51d4cfa20538ae2b2bd82ac52e1153f5e",
+      "bytes": 52796
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.104.woff2",
+      "file": "00386be024448b786bec.woff2",
+      "sha256": "00386be024448b786bec7250e6cdd4e4ca4dbce55ea81020f1deb9dcb46fd6a7",
+      "bytes": 29096
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRIIKIyQ4.woff2",
+      "file": "0049f7154dcc3fa0d585.woff2",
+      "sha256": "0049f7154dcc3fa0d585f80383b232cb9e497084ee77e10519747d668db3cb55",
+      "bytes": 8128
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.88.woff2",
+      "file": "008f38db74bc1c346ba8.woff2",
+      "sha256": "008f38db74bc1c346ba8f4d6065dd41d0fe33a4ed2f9909cb880b81c5a3f9334",
+      "bytes": 7228
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.71.woff2",
+      "file": "023ee46bad2b51b02413.woff2",
+      "sha256": "023ee46bad2b51b02413090070af160b7e1f6a12bf2bcaed9888298bd5465bbc",
+      "bytes": 57164
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.14.woff2",
+      "file": "02e10aba49039befb812.woff2",
+      "sha256": "02e10aba49039befb81229d989d4c51feffaaab976ba195d86d0392ecf088401",
+      "bytes": 74236
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.33.woff2",
+      "file": "02fd273486d8e0c876b3.woff2",
+      "sha256": "02fd273486d8e0c876b3b5d2c3c131b9ce85058196ee3ed77c7d38a7a10e139c",
+      "bytes": 47332
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.113.woff2",
+      "file": "030dfa6fc4f0b364ea1a.woff2",
+      "sha256": "030dfa6fc4f0b364ea1a0eb7142f5d9139bea82c77b0c355d6005871f0f5be95",
+      "bytes": 16488
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.88.woff2",
+      "file": "031476ff358dc72190bd.woff2",
+      "sha256": "031476ff358dc72190bdaf3fdc78de6009ca6fccb9410cc93e92dd686102c796",
+      "bytes": 19776
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.50.woff2",
+      "file": "050cbf86904880158835.woff2",
+      "sha256": "050cbf869048801588356d05f1145c601ddb9063a9e9fd241bbd0997a5ca263f",
+      "bytes": 45724
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.59.woff2",
+      "file": "0557109d55c77ff9c9b5.woff2",
+      "sha256": "0557109d55c77ff9c9b5c9732d732c5328bd0b61038cffe611d9d62b26ded420",
+      "bytes": 47504
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.77.woff2",
+      "file": "0576573ee39bf32a3746.woff2",
+      "sha256": "0576573ee39bf32a3746449eb2d74d53b4c7373c41ffb59eaf7d59d7aaa7061c",
+      "bytes": 19732
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.0.ttf",
+      "file": "057a18706248634f5dde.woff2",
+      "sha256": "057a18706248634f5ddeeb87f24f2fd5a779e07f57821c729caa3c091a4f6a00",
+      "bytes": 80944,
+      "originalSha256": "8173637c039a79514f6aa5766dbdbdcd7819bf0232227951ef78c29a75c74f58"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.11.woff2",
+      "file": "058485e0c972ccbb1350.woff2",
+      "sha256": "058485e0c972ccbb1350a6612fa752a6626f89f5e8a48b5f173d544d44644678",
+      "bytes": 19992
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.69.woff2",
+      "file": "060df0b3ff95ba4f6cef.woff2",
+      "sha256": "060df0b3ff95ba4f6cef3b77d5721bdd6098dbeedea598738b203928b761b881",
+      "bytes": 20956
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.55.woff2",
+      "file": "06257a3de86a35670c0b.woff2",
+      "sha256": "06257a3de86a35670c0b16f1c4a063805477fc632be3e050ce0a606ac1b4a8db",
+      "bytes": 20504
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/kulimpark/v15/fdN49secq3hflz1Uu3IwjOIJ8alQZA.woff2",
+      "file": "067581d9a7dbce81db60.woff2",
+      "sha256": "067581d9a7dbce81db603b65e21825e040a280e9b557444c437ad2dff51d8034",
+      "bytes": 16644
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.60.ttf",
+      "file": "070f0e59ba6c5e0e9b25.woff2",
+      "sha256": "070f0e59ba6c5e0e9b25e3fd467095b8886e1ff5faf4f3d6170b0452a6c2916c",
+      "bytes": 93672,
+      "originalSha256": "99df8992400d8c50c4506497033490b9d4d76d04c289fd7512e173f918e93f39"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.25.woff2",
+      "file": "074e6162a8ba4f9cf258.woff2",
+      "sha256": "074e6162a8ba4f9cf25881da25ce522bb949c1e2516142746daf85471bc48a9c",
+      "bytes": 58224
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.10.woff2",
+      "file": "078448a0cce934a71bf3.woff2",
+      "sha256": "078448a0cce934a71bf3201953cfd3454ede7a161d0c0d5a3208fa10f4dd67c8",
+      "bytes": 77916
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.65.woff2",
+      "file": "086958b9f441a2ba9fca.woff2",
+      "sha256": "086958b9f441a2ba9fca76e9ac4924bc4acb60559bd5620d348c707ff154ee83",
+      "bytes": 41392
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.63.woff2",
+      "file": "0897654d316342cdf37b.woff2",
+      "sha256": "0897654d316342cdf37bb3d16fcf1a51fdcc38fcf1fb39880b5d3f17e87bf7de",
+      "bytes": 49052
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.5.woff2",
+      "file": "08f7b17fb6a88382277d.woff2",
+      "sha256": "08f7b17fb6a88382277dfa1b6969f1f0b73a1f87819713849bb9e1ff6017088e",
+      "bytes": 20044
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.118.woff2",
+      "file": "099e7ffea8d6d95de481.woff2",
+      "sha256": "099e7ffea8d6d95de481f078370d72c22d4cd225607bd9f4acd9bf682424ef40",
+      "bytes": 14564
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.119.woff2",
+      "file": "09b9fa5a9521fbeccb82.woff2",
+      "sha256": "09b9fa5a9521fbeccb8267a5abe7443c83cbe25b32eb15b00de316d913235525",
+      "bytes": 76324
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.99.woff2",
+      "file": "0a1957b6479b991b28e7.woff2",
+      "sha256": "0a1957b6479b991b28e7d13e20651813836772029bc9b2be5c7f872938f8a75d",
+      "bytes": 16924
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.83.ttf",
+      "file": "0a8690a4e6f3a75892ac.woff2",
+      "sha256": "0a8690a4e6f3a75892acc1f2c02d7668c631574d78100f790189e81002381aa0",
+      "bytes": 53456,
+      "originalSha256": "22393e0d22b1fffdb0a809afa2e84517b0d5a520991a9afc30cad83dc325f14f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.72.woff2",
+      "file": "0b183634ac332ebea742.woff2",
+      "sha256": "0b183634ac332ebea7421b4d7c262e00c7bf9d0fb9db3081c1b69f2848dbf5dd",
+      "bytes": 22912
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.21.woff2",
+      "file": "0c5afc8752b151a444cc.woff2",
+      "sha256": "0c5afc8752b151a444ccb3b21d740cc8e429347ea52bd4cf9d22b73937624bbf",
+      "bytes": 11276
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.107.woff2",
+      "file": "0d27a2a224e4caae421c.woff2",
+      "sha256": "0d27a2a224e4caae421ce9f3f7a28af5def8750d37b5b12cf6cf496dd60add3e",
+      "bytes": 18392
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.61.woff2",
+      "file": "0d41d2c757611d16f94d.woff2",
+      "sha256": "0d41d2c757611d16f94de5522cba7cb9046df4da901b7719deabea03f5335530",
+      "bytes": 21896
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.112.ttf",
+      "file": "0db84f3c86a1e33edb28.woff2",
+      "sha256": "0db84f3c86a1e33edb287a0911361e17fa9cc9626920074d80990d0a0f194cdb",
+      "bytes": 129160,
+      "originalSha256": "19fe7c338c2f93cda2c9b5a445da0a22140bb2a8aaed53ed2198c258e3c91748"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.67.woff2",
+      "file": "0deff73ff4c2c0fec1a5.woff2",
+      "sha256": "0deff73ff4c2c0fec1a56145ca7943f92bbe1858ba1023774915aff801a6b8ab",
+      "bytes": 19436
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.86.woff2",
+      "file": "0e6e03d20727710f0ad3.woff2",
+      "sha256": "0e6e03d20727710f0ad345aec3b5cabeb3b1b6a5f9fc2fa849586b65e8c725e0",
+      "bytes": 19256
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.103.woff2",
+      "file": "0fb1365f11f4192357ff.woff2",
+      "sha256": "0fb1365f11f4192357ffdb086684021e48cfe0101b4f38b0a7d29d15dadffe1a",
+      "bytes": 18524
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.71.ttf",
+      "file": "0ffebf045cb5e8888520.woff2",
+      "sha256": "0ffebf045cb5e8888520be89449bf8ead3ef48392eb1cbac4348940846f992bd",
+      "bytes": 70224,
+      "originalSha256": "87150467df63ac1dc6421205fabe51bc1d6408185933457d8b4abb67b17e572c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.60.woff2",
+      "file": "105d09095364787b4eef.woff2",
+      "sha256": "105d09095364787b4eef08ecd4faa975d66ad3ce2be43bb968dd37b9285e6667",
+      "bytes": 41300
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.1.woff2",
+      "file": "10a4c7cc49065eaf78a3.woff2",
+      "sha256": "10a4c7cc49065eaf78a3d94cf0955691b76b2f52858143bf4023c7da6a25ccae",
+      "bytes": 56020
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.105.ttf",
+      "file": "12196ef0ff05d7e9fee6.woff2",
+      "sha256": "12196ef0ff05d7e9fee68b980471148902da0fbae525c565fd29bf79182468b5",
+      "bytes": 125276,
+      "originalSha256": "14066283f85ee06d69b57086b8d74f0bb6d2efb33ccf4b8b84f4b4e0463f1fcf"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6mlQ-9cQPg.ttf",
+      "file": "12924d90e28bf47a9e92.woff2",
+      "sha256": "12924d90e28bf47a9e92f91fdd91adcfbb7ca293b5fd92f72eadfbd067293869",
+      "bytes": 24104,
+      "originalSha256": "a459f0e12aa983b25c7abe8efddbbb5917b0d2bf48a014314d7c8a52caaa6de7"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.30.woff2",
+      "file": "12acd771479c93c76f06.woff2",
+      "sha256": "12acd771479c93c76f064a81447266c349d6a33d2f1893d5413c6303b1156fef",
+      "bytes": 54416
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.61.ttf",
+      "file": "12d0501d7b1ef7e0c5b1.woff2",
+      "sha256": "12d0501d7b1ef7e0c5b1cdfd6c84a7f4fa3664f1d9b8c7a0e64b0f313df3b1dd",
+      "bytes": 91220,
+      "originalSha256": "1c6c485ca9d8c9388dfaf3363628cefe7bcac1ef17fe3025a6a342de042e8d51"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.108.woff2",
+      "file": "12fcc1175cb6370acb05.woff2",
+      "sha256": "12fcc1175cb6370acb056743f4fea7fdde85b6376ada2f15dfbab59f02b45988",
+      "bytes": 64340
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.1.ttf",
+      "file": "135fad8e08340a3703a8.woff2",
+      "sha256": "135fad8e08340a3703a82d79c1255193975826677593477fa3cb56a623ff1b48",
+      "bytes": 89068,
+      "originalSha256": "48c529bb6878310b3c934da4a80cfd4efefd7d933d0daa3fec8e5f6efbeda79a"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.34.woff2",
+      "file": "13a18e443a4bf6557e25.woff2",
+      "sha256": "13a18e443a4bf6557e252a63061914ce19c4be018c9b16eaf5c75842ee88baf5",
+      "bytes": 46748
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.53.woff2",
+      "file": "13b6821eb6534f1ac72a.woff2",
+      "sha256": "13b6821eb6534f1ac72a4bab506de7012bec7fe0b9bb0a73733d5c798dd45e29",
+      "bytes": 43284
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.3.woff2",
+      "file": "13d842f33907345f6112.woff2",
+      "sha256": "13d842f33907345f6112c6b61d1d7e4b478400c8b4d8d4b58f60a5b772cbcd18",
+      "bytes": 43404
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.96.woff2",
+      "file": "1471d3a42dc1116312c4.woff2",
+      "sha256": "1471d3a42dc1116312c4a8f1337e72d1df056795fd528ebb1e2ec25cdaac4730",
+      "bytes": 21124
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.50.ttf",
+      "file": "1618a767eb9cfd21b5ea.woff2",
+      "sha256": "1618a767eb9cfd21b5eae76449bcf30314694f4bfa66b8e91d329dcadac30d51",
+      "bytes": 95748,
+      "originalSha256": "c6e601dfc41d373b0a24b1b7d6f6501f93587ad1c37114be984157ff954df355"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.62.woff2",
+      "file": "16aa9414e54ffc85cc0a.woff2",
+      "sha256": "16aa9414e54ffc85cc0a74960fa48fde7a7298c36cda688a9a630134dcfc768e",
+      "bytes": 21500
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.90.ttf",
+      "file": "16bbc3a7584aa71e8ddd.woff2",
+      "sha256": "16bbc3a7584aa71e8ddd87998152ff436ecc44e85ac85c1d02fc43282aeab849",
+      "bytes": 17324,
+      "originalSha256": "0a646f590d76941f927bcfcdf072089a45296623b245d50ac658c5aa7b6d7e5c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.57.woff2",
+      "file": "16cb780078894b647fc4.woff2",
+      "sha256": "16cb780078894b647fc4554e22c97cb7b260f865c8b83399971aa6df89b18617",
+      "bytes": 10500
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.47.ttf",
+      "file": "18565af850b6666a37d0.woff2",
+      "sha256": "18565af850b6666a37d0c62f7c2dbc8fc448df40e52b56eee28c53dabb49c077",
+      "bytes": 75584,
+      "originalSha256": "80e4a8c5a61904407129676fa2b92b10afb3b5938d4fcfc58a33f7593590c8e6"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.119.woff2",
+      "file": "18e5aa97a223c7b5f624.woff2",
+      "sha256": "18e5aa97a223c7b5f62403bb20bffec9ebd2097a83fbaad5ec356eb563c89598",
+      "bytes": 16568
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.45.woff2",
+      "file": "199bf26682ac8c3bde3e.woff2",
+      "sha256": "199bf26682ac8c3bde3ebd8beb45b6a2b4402e679bc2008ea9d4b9f4213c1bcc",
+      "bytes": 19472
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.112.woff2",
+      "file": "1a41a1e026f03712cf0b.woff2",
+      "sha256": "1a41a1e026f03712cf0bcd3f80e24eb3cdbeec72e6fad8eed8b25f1bdb8628a2",
+      "bytes": 17372
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.53.woff2",
+      "file": "1a6a654c4300c519a125.woff2",
+      "sha256": "1a6a654c4300c519a1258e589aede861dfc1e4740e5692cfe0cafb3b08c9c07e",
+      "bytes": 38300
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.18.woff2",
+      "file": "1a6c6fd22ae04d76c2fe.woff2",
+      "sha256": "1a6c6fd22ae04d76c2fecca37e955a4bff5e6cf984e737ff6773fe0e04adb5db",
+      "bytes": 21564
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.67.woff2",
+      "file": "1acfbc603177c98f692a.woff2",
+      "sha256": "1acfbc603177c98f692a04cc03e669c29af45cf401f2109ccca8e8bbc57e58cf",
+      "bytes": 48192
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.103.woff2",
+      "file": "1bfdb1f001006c624345.woff2",
+      "sha256": "1bfdb1f001006c62434577b60064c3ec0562e4a68191acbc7feeba4b303bf095",
+      "bytes": 63732
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.39.woff2",
+      "file": "1c4f030d4a923cce7ff9.woff2",
+      "sha256": "1c4f030d4a923cce7ff907ddf8118a174fa2a8b8f9c4428df162b828fb09c2a9",
+      "bytes": 75600
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.104.woff2",
+      "file": "1e716b78655e39607580.woff2",
+      "sha256": "1e716b78655e396075808be52a9e749df1b6b5d17bd0ccedc6dcb89586903737",
+      "bytes": 61404
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.20.ttf",
+      "file": "202e353e79b642ad7842.woff2",
+      "sha256": "202e353e79b642ad7842b5fbd2942711dc5019d1b6e66a5bde79c41dff8a8880",
+      "bytes": 24204,
+      "originalSha256": "1186d3296eb69b6ea7b2b29d1de241fec378e805eb45f0f234a6dd8d53f5e1a3"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.57.ttf",
+      "file": "20f5239f9a9110c23b61.woff2",
+      "sha256": "20f5239f9a9110c23b61111821a4fc5f8b9cc664b5483ee67e769a3af967c5b9",
+      "bytes": 68728,
+      "originalSha256": "9e0ac6d08544afd6419a889c464aa45bdfaf95975de749985be7e67a9c1cf08f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.91.ttf",
+      "file": "20f5bd4b91ada1c80395.woff2",
+      "sha256": "20f5bd4b91ada1c8039560f594217bffb498901a6054bea97a4d2474549ea12b",
+      "bytes": 7228,
+      "originalSha256": "ad68350c7f3d9c4c220df885a518de1eaf12211a03cdf059e186a160e4702191"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.82.woff2",
+      "file": "2129264ef35c203e3a2c.woff2",
+      "sha256": "2129264ef35c203e3a2c2bc16abc437c110c57006d108ff107ad775dc7ea1e39",
+      "bytes": 46008
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.59.ttf",
+      "file": "215c353ab8ffb02a0e8a.woff2",
+      "sha256": "215c353ab8ffb02a0e8abad062a5aa946b5b0002b0cbc39d88197f54d2718241",
+      "bytes": 90200,
+      "originalSha256": "389a581a1216812a5b245cda782be27f69f59f56418e98880574aef20f4ea652"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.30.woff2",
+      "file": "21627d29241595cc9aa5.woff2",
+      "sha256": "21627d29241595cc9aa5d2ff9af1a89c8e9b46fd7cec7226fca029ef2c3a77a0",
+      "bytes": 23356
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.75.woff2",
+      "file": "216c1c94ee016db46f8d.woff2",
+      "sha256": "216c1c94ee016db46f8d1dc5c51f402215dbf9013fbf9f60f3db3901f9a3b035",
+      "bytes": 43824
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.36.woff2",
+      "file": "21b841e271833161fe5f.woff2",
+      "sha256": "21b841e271833161fe5f70a2052399e79faac029667abdcdffe81f260f2ce6b5",
+      "bytes": 41692
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.61.woff2",
+      "file": "21c21d2375925f742573.woff2",
+      "sha256": "21c21d2375925f742573edc50e3bca85a63350bf1d5d566d2d762f8ce2b259d9",
+      "bytes": 45096
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.35.woff2",
+      "file": "222e1ff40b6870caea4c.woff2",
+      "sha256": "222e1ff40b6870caea4ca4542662c88dae8dcb25081a5b2f599eb4f3db0d83e2",
+      "bytes": 73572
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.8.woff2",
+      "file": "234189f7c6a13e5431ec.woff2",
+      "sha256": "234189f7c6a13e5431ec16547a35eb47acd71d927746bf1bd34dbeac3e36c2fe",
+      "bytes": 19580
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.94.woff2",
+      "file": "2346031bda22a84fad4d.woff2",
+      "sha256": "2346031bda22a84fad4dbdb7c3cfa5e5c6e3527d6f7a907e3eb8600f4485f6b2",
+      "bytes": 19256
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.123.ttf",
+      "file": "234a00d4d6b3b03cc2b8.woff2",
+      "sha256": "234a00d4d6b3b03cc2b8cf0ee42a7bf529f0a95e5f9bfb4dd69e62a3e8c4b8c6",
+      "bytes": 58684,
+      "originalSha256": "69da4c696ee94471b531ad52e167d31b2b8d4ad9c6becb3ac0a005d8c7b011c5"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.42.woff2",
+      "file": "237118f3c6ba41b827b3.woff2",
+      "sha256": "237118f3c6ba41b827b32a61dc7887fa9d44338534dd2c68affc91a476d27094",
+      "bytes": 20020
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.15.woff2",
+      "file": "23b20d4d0f55ad7df6b4.woff2",
+      "sha256": "23b20d4d0f55ad7df6b41e4538c2295fb2c0f7374495e901384337b636191b8d",
+      "bytes": 82496
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.118.ttf",
+      "file": "24094a2d077a8eea1dbe.woff2",
+      "sha256": "24094a2d077a8eea1dbe60ef8b7933f0b235e112564e5083250578d328d278bc",
+      "bytes": 124968,
+      "originalSha256": "82eb1e8ad26be0c31f4e519f203d42204f5981da003a7f8435340c708c3a2dda"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.49.woff2",
+      "file": "2418a76f14f6299b160a.woff2",
+      "sha256": "2418a76f14f6299b160af41cd283ed529b0030e2448b2ec11895ea5009561e25",
+      "bytes": 52768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.83.woff2",
+      "file": "24a037cbb07cb4de1f92.woff2",
+      "sha256": "24a037cbb07cb4de1f92993a9ceda16ba4483f1d63f6f529ea26ae44f01243fd",
+      "bytes": 43356
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.21.woff2",
+      "file": "25340e23c990b0d026b0.woff2",
+      "sha256": "25340e23c990b0d026b08fdee6e4c9d7d1c0c98989a68f519f7794a9cadf890c",
+      "bytes": 22004
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.67.ttf",
+      "file": "25e4a190add9a53e672e.woff2",
+      "sha256": "25e4a190add9a53e672e96707e5ced4bf36eebdbb42bd06feac48f1829b44524",
+      "bytes": 64112,
+      "originalSha256": "c50982d83bf9d3beeb6b59047edc76ecb3ac3daf79af8e0da24ed24ad96024dc"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.78.woff2",
+      "file": "26210c38ccee9b531944.woff2",
+      "sha256": "26210c38ccee9b53194481bed1dfc1aa4f74810d5672b2e7ed6a2e44b169835d",
+      "bytes": 48916
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.82.woff2",
+      "file": "263774ad3def3e73b618.woff2",
+      "sha256": "263774ad3def3e73b618d39792f9bc1ec49bfec476febcb32c450fda33e561da",
+      "bytes": 50768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.37.ttf",
+      "file": "2684c6b09b5ff82fbde7.woff2",
+      "sha256": "2684c6b09b5ff82fbde7d6b25660353dcddd323c1b63aea2e7c3c3415a6aa93d",
+      "bytes": 71460,
+      "originalSha256": "a7779f36bbfc188aa47bdfb5174031ace2a23d6e6ee48ab43211319f9b5dee3b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.21.woff2",
+      "file": "280c11f5758638c1afc8.woff2",
+      "sha256": "280c11f5758638c1afc8f6265eef580f14046b656e7383a6834f81783b0884f7",
+      "bytes": 74584
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.51.ttf",
+      "file": "28d10720d1112de826cd.woff2",
+      "sha256": "28d10720d1112de826cdfc58b36e9e1ad47469ea7c55bc963f544ccaf12376ee",
+      "bytes": 83016,
+      "originalSha256": "c16e7f91a8095bb6667837b27e0c2af52b4bf2bf16e2ba6cd6cdef064906418b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.119.ttf",
+      "file": "28e0f8a9c1f6c57ede2b.woff2",
+      "sha256": "28e0f8a9c1f6c57ede2b574054268fca15af25699867ef9918e2c0063c2f4004",
+      "bytes": 128248,
+      "originalSha256": "4413b12c7b34e05a98e35962d90d98a66b539ae07bba0e015841e49bb26fdd8c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.35.woff2",
+      "file": "2912380dfd7bc04dd0d7.woff2",
+      "sha256": "2912380dfd7bc04dd0d77a80407961eb9df37f04da53c092ad8119ea8c4a78a6",
+      "bytes": 21224
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.4.woff2",
+      "file": "29634170d5eb07f460a9.woff2",
+      "sha256": "29634170d5eb07f460a9eb1b2d0ef126ad0b5ef705e4c25191fd5794dc930d4d",
+      "bytes": 3764
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.44.ttf",
+      "file": "2ad44f313928559371ab.woff2",
+      "sha256": "2ad44f313928559371abbeea5f87aa2b83448eea6208617aedb4d517ae670e13",
+      "bytes": 69836,
+      "originalSha256": "5745e80bd9dc6fd874a20fa1c1c0b8451ab3512b16dddcc4beb678ae428e6098"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.73.woff2",
+      "file": "2b3b3bf563e3c8add1a9.woff2",
+      "sha256": "2b3b3bf563e3c8add1a9da14ba9132ca030d742b5bf0f557bad774974e7fe869",
+      "bytes": 50272
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.54.ttf",
+      "file": "2bfb24ba53dad040e1ba.woff2",
+      "sha256": "2bfb24ba53dad040e1ba051fb9ed4a6195b7cf8a6f62641a7b23ce5810337b64",
+      "bytes": 62888,
+      "originalSha256": "dffeefe094ea3cde1a7856380423e5374546b1b99a34a5c0d871e833dab1d259"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.119.woff2",
+      "file": "2c0a698f3f840c00421a.woff2",
+      "sha256": "2c0a698f3f840c00421ab992d6415841bc551258e3bfe227b30145a886f6ef42",
+      "bytes": 79064
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.55.ttf",
+      "file": "2c370d136b3333fc30c6.woff2",
+      "sha256": "2c370d136b3333fc30c6a335916bffad9507a67d9915afba4dbf3a82e0708208",
+      "bytes": 81400,
+      "originalSha256": "3ae5e7050fbb63333a88a153ed6d7800ea0f89ff10a22edcc23d5243e003695d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.100.woff2",
+      "file": "2c5ddf9cdfad73afb523.woff2",
+      "sha256": "2c5ddf9cdfad73afb5235e06bc8ed3b5c627849200d673978148700c78f84160",
+      "bytes": 64376
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.35.ttf",
+      "file": "2cf9fd9e3e6e396fb352.woff2",
+      "sha256": "2cf9fd9e3e6e396fb352d8d7a0dc16bb24d01ba5fa50a132dd9d57292e6ad468",
+      "bytes": 79156,
+      "originalSha256": "56e07de713c21fbf2a662ae3cfcf58d1e72d9474fd56adf1c0e891f8a2176bde"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.23.woff2",
+      "file": "2d00400319fa4e4a38d2.woff2",
+      "sha256": "2d00400319fa4e4a38d286c0427e23a9f058244da134af4608c09ab7aac2d9ef",
+      "bytes": 23920
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.32.woff2",
+      "file": "2d884d1cfd97c6f72518.woff2",
+      "sha256": "2d884d1cfd97c6f72518a2d690573e4130b0b707423f25963d7cc975388adf3e",
+      "bytes": 52368
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.33.woff2",
+      "file": "2edf30aab177c3866ffc.woff2",
+      "sha256": "2edf30aab177c3866ffcce22ff437da2f1f2a550565627fe7a4047d35660a226",
+      "bytes": 24960
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.39.woff2",
+      "file": "2ef1384fc3ea74e39bce.woff2",
+      "sha256": "2ef1384fc3ea74e39bcef4f7e975030e26e078ed5a694ab43e244070acada3cb",
+      "bytes": 21192
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.40.woff2",
+      "file": "2f186187cfd9a546d199.woff2",
+      "sha256": "2f186187cfd9a546d199aac41fbaed1241a47a7d5aad1804f98127506af80340",
+      "bytes": 46432
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.116.woff2",
+      "file": "30425125bb740642a2e2.woff2",
+      "sha256": "30425125bb740642a2e23f4eafc507988e7005f2a3de2efd70b2c4d6d44e2fe2",
+      "bytes": 17320
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRIYKIyQ4.woff2",
+      "file": "310e65da63933201c338.woff2",
+      "sha256": "310e65da63933201c3381173106418442de6441742594001290b4056abbc9ed8",
+      "bytes": 8976
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.5.woff2",
+      "file": "313ea6564bdf6b2c828e.woff2",
+      "sha256": "313ea6564bdf6b2c828e11c349fd0bb1c20584843780bcc8e8df970a94ac9bda",
+      "bytes": 90632
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.40.ttf",
+      "file": "318e68c71daed1a39377.woff2",
+      "sha256": "318e68c71daed1a39377e2c10a474a5ce9b4890f18ff8a5cec8649a17954c05f",
+      "bytes": 83704,
+      "originalSha256": "d4e78751c17ad2c0903e081d48e5c8ccf2211fc663db2364bf7156da329d52d9"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.37.woff2",
+      "file": "319379894f6a04c3eff7.woff2",
+      "sha256": "319379894f6a04c3eff76245419a6e2f4cd6cda0ff014d03b16a06d91511b498",
+      "bytes": 21100
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.28.woff2",
+      "file": "31bb7facf7a62ee18902.woff2",
+      "sha256": "31bb7facf7a62ee189026f7ff725b9c4639c712762036394c2996db140549746",
+      "bytes": 50016
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.81.ttf",
+      "file": "3208eb96342620736955.woff2",
+      "sha256": "3208eb96342620736955bc66255ca45bf66f0d005a22fe1496782fda26ef4d9d",
+      "bytes": 68128,
+      "originalSha256": "75e7986bdf9d5b2e2e17ae0ef8994e1263ae483aa74ee581262c2a712dc2f57d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.117.ttf",
+      "file": "3280d54922b3dd63cf11.woff2",
+      "sha256": "3280d54922b3dd63cf115e84b58fb03958b0fb27d9ed0be92d8c6eda0e246a7b",
+      "bytes": 123392,
+      "originalSha256": "dcad96ee5c2c5717d54ddaf9f26da7f5ed3181b7d382e07ace162efdc6a051be"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.112.woff2",
+      "file": "34e76675ceffd89824fb.woff2",
+      "sha256": "34e76675ceffd89824fb130d7649dc92df9e57843a73b9996d405baa2ff9ecff",
+      "bytes": 57460
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.84.woff2",
+      "file": "34f9bb1519473eaf6b0b.woff2",
+      "sha256": "34f9bb1519473eaf6b0b7af3278dd057d238e2da348137a03e42548f39e7bb79",
+      "bytes": 21112
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.21.ttf",
+      "file": "352cc0dfb22761af9a39.woff2",
+      "sha256": "352cc0dfb22761af9a39e0c28d24b3eb852ef4cd417d77101ca496322708b765",
+      "bytes": 27344,
+      "originalSha256": "a66c44c15ed452e6e7610c869cba920e2d157ec3afdc8f5dc02e5c230da063c2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.105.woff2",
+      "file": "35735498a219c4868aad.woff2",
+      "sha256": "35735498a219c4868aadec66825918b38c09ce38695a755b7e2e4be04feb072b",
+      "bytes": 18960
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.62.woff2",
+      "file": "3588ff46b0defe775f0f.woff2",
+      "sha256": "3588ff46b0defe775f0f348ef84c2838d88906140455304dc247c16083229013",
+      "bytes": 21788
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.82.woff2",
+      "file": "38bdce46b9ca712c3121.woff2",
+      "sha256": "38bdce46b9ca712c3121aacd47b1f8566247800f25fe3b3dfc0385eb3c879530",
+      "bytes": 21616
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.19.ttf",
+      "file": "3901edb09ebeac2ee7ae.woff2",
+      "sha256": "3901edb09ebeac2ee7aee59b62ef8f24eb6d26367874907689913b547e10f46f",
+      "bytes": 29188,
+      "originalSha256": "eedceea67336d1de8cd8486c589ab47d38a647c5b545113f880fa42c3633338b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5CgmG3n7t0JM.woff2",
+      "file": "392c6900582a57497a2c.woff2",
+      "sha256": "392c6900582a57497a2c91806bd0898767585af14accb0256ca9bf78b5f356d1",
+      "bytes": 9040
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.24.woff2",
+      "file": "3a37acdabd50b348ad0e.woff2",
+      "sha256": "3a37acdabd50b348ad0e0065ebda5c22c2d15718786e65d9610aa26f16bbd132",
+      "bytes": 85072
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.57.woff2",
+      "file": "3a4bddf6442271be8983.woff2",
+      "sha256": "3a4bddf6442271be898390e29e344183f5f10a97eefa04595c9537f535f34927",
+      "bytes": 55348
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.43.ttf",
+      "file": "3ae5b5a586760b2726a1.woff2",
+      "sha256": "3ae5b5a586760b2726a104bd5277aea160341d6853b7d184ed87f743e6433d83",
+      "bytes": 92832,
+      "originalSha256": "733dc8c24378d3c3a20c13f22d246710f4aa2512a60531d4665aca6b900cd8c9"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.30.ttf",
+      "file": "3bb33300f7c81020b1ff.woff2",
+      "sha256": "3bb33300f7c81020b1ff71e1658a244e984da5bede4f2db1dddd01ac50690ec3",
+      "bytes": 65492,
+      "originalSha256": "85c7a8377d677e728850bba565ed881d55d861e84e6228b6fd935be1a6467d81"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.61.woff2",
+      "file": "3bbbd150a9d00c08a093.woff2",
+      "sha256": "3bbbd150a9d00c08a093a354adb8060b0201a4c5ccf6577700c7ab40e0edf1c0",
+      "bytes": 23672
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.76.ttf",
+      "file": "3bce162a2b0aa07e4fd4.woff2",
+      "sha256": "3bce162a2b0aa07e4fd413aab06d5e9374fbba6e4bde03c024a4dcb47b6b3bd8",
+      "bytes": 74164,
+      "originalSha256": "2b63eea23feb62c2ccd1921a10f354e20814b635a52ec7b1cf4163a075c3da60"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.18.ttf",
+      "file": "3bd0d70891e97b32e261.woff2",
+      "sha256": "3bd0d70891e97b32e261d472ddb5d1ad412104aef0d3f2e3ffab4caec5c547d7",
+      "bytes": 32720,
+      "originalSha256": "5d3a93d2a8693110451d7c858503080b057f5ae660df27a9a87da1ceaf99a1d3"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.117.woff2",
+      "file": "3d7ced7101c03dfa9bf0.woff2",
+      "sha256": "3d7ced7101c03dfa9bf0e60460a1b91fc6f1166fb33f718506e8110bb12e74a7",
+      "bytes": 52228
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.97.woff2",
+      "file": "3e772734414c51dd5d90.woff2",
+      "sha256": "3e772734414c51dd5d901c80c8370256546a12370035409289e8cc6953fe770e",
+      "bytes": 14032
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.66.woff2",
+      "file": "3ea2cac8c3d7b8f57a89.woff2",
+      "sha256": "3ea2cac8c3d7b8f57a898511b050f5dd9a6c14938e149ef7a8692f78f28048bf",
+      "bytes": 55880
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.68.woff2",
+      "file": "3ed406ceb43b6f73a6a4.woff2",
+      "sha256": "3ed406ceb43b6f73a6a42ad9e8b2a9aab96fd6603bab5b73a908ca53f0d354a8",
+      "bytes": 41380
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.92.woff2",
+      "file": "3fa3bb4676169eb81dd1.woff2",
+      "sha256": "3fa3bb4676169eb81dd1cb9a5f5fe8023c1764b5f96c04d60735cc2075c8002e",
+      "bytes": 42492
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.113.woff2",
+      "file": "40290d98d5c121bdbb19.woff2",
+      "sha256": "40290d98d5c121bdbb1909e39c9c0242eae3a5a88f1bbe302857e525b90056df",
+      "bytes": 58428
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.87.woff2",
+      "file": "40292a14f8f52accb052.woff2",
+      "sha256": "40292a14f8f52accb05252b7ec7c68e00f35781d2a726223bec1685eee6312b5",
+      "bytes": 7956
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.85.ttf",
+      "file": "403c52372832c640b493.woff2",
+      "sha256": "403c52372832c640b4932267827db553735a3b5301473fdf6b6dda1be10a1e4d",
+      "bytes": 64732,
+      "originalSha256": "794d0282413b82bab8e741905ecfe39467c524f6385cf74a763f5a312f0cb08b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.106.woff2",
+      "file": "40f74eafa4ab5b031e8e.woff2",
+      "sha256": "40f74eafa4ab5b031e8ea319799c2d5582b1c4a26a430035821ea94aab71320b",
+      "bytes": 24736
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFYzwgP6lY.woff2",
+      "file": "413b7b8ab51aacac486c.woff2",
+      "sha256": "413b7b8ab51aacac486c73d9095881b724cbee415004c1b0807323fc79f6960e",
+      "bytes": 8172
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.101.woff2",
+      "file": "42fdd16baa93a8678b35.woff2",
+      "sha256": "42fdd16baa93a8678b35077efa2466e414369442344eb7e50272c9d39ab62dcd",
+      "bytes": 26060
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.16.woff2",
+      "file": "4318300fb26af0bd958f.woff2",
+      "sha256": "4318300fb26af0bd958f84197cf817149d09af7ed53848897d86c7709643e196",
+      "bytes": 21420
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.70.woff2",
+      "file": "4357f1ced5e89060b783.woff2",
+      "sha256": "4357f1ced5e89060b783067f9ca90a065c6be9a0460db34247f1bc0fc7b2ba11",
+      "bytes": 21668
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.40.woff2",
+      "file": "43aeb94b27c5ade036be.woff2",
+      "sha256": "43aeb94b27c5ade036be9553777d4a47c2c1e3f44b7789b23282609d621d55d6",
+      "bytes": 20768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.47.woff2",
+      "file": "443406f979e49cdc2bd6.woff2",
+      "sha256": "443406f979e49cdc2bd60f5fc77e635a835ebbccc8e976346624e6ed2f1f32f9",
+      "bytes": 22004
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.108.woff2",
+      "file": "46dfea3f360d34de0c6b.woff2",
+      "sha256": "46dfea3f360d34de0c6b543a17646608b7bef3beaef532747b39b27650fe29e9",
+      "bytes": 19700
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.42.woff2",
+      "file": "4742534144fae58cd494.woff2",
+      "sha256": "4742534144fae58cd49471117bcbec6df46612b226d8f30df576d9bc4c7dac9f",
+      "bytes": 65904
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.43.woff2",
+      "file": "4790a1da4ef215b289d3.woff2",
+      "sha256": "4790a1da4ef215b289d36745414c82ed4e9727c4560030a55a889dbea617a32f",
+      "bytes": 21292
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6mlS-9cQPg.ttf",
+      "file": "48347ebd7ac070e5e8d5.woff2",
+      "sha256": "48347ebd7ac070e5e8d50aead4b4c226dcecd78b9cf6f2d913c4a4a605c7f731",
+      "bytes": 14336,
+      "originalSha256": "2d0a1371ce68625390152e466a96678842ecb416cf59aba58118ee864eb14176"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.51.woff2",
+      "file": "48810df68807cb9a0605.woff2",
+      "sha256": "48810df68807cb9a06052daa52495183575373dc1f3294cce7739a6f37ff25cf",
+      "bytes": 41476
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.72.ttf",
+      "file": "48fd6ba0113596427b5e.woff2",
+      "sha256": "48fd6ba0113596427b5e840313d6f2377193c1cce718eb7ce3ebc5c0cb4a520b",
+      "bytes": 67012,
+      "originalSha256": "3aa395d6c378121f75791a298014b488544e77a8626c001478298418852a3b9d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.4.woff2",
+      "file": "490d0b9712d8a54aeacc.woff2",
+      "sha256": "490d0b9712d8a54aeacc9b22782625a9188b42f7fa9f345fce6ce34385b1b67b",
+      "bytes": 76904
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.108.ttf",
+      "file": "49c7e36aeec57a4d674a.woff2",
+      "sha256": "49c7e36aeec57a4d674ae1033784134927af588a075a4cd5c52aebd4000a51b6",
+      "bytes": 129308,
+      "originalSha256": "ea9a73c02b2c07d2c13e739a982deb7a4c34dbf243cdc50047522f84adb29dac"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.89.woff2",
+      "file": "49ce40b325dc2be957cc.woff2",
+      "sha256": "49ce40b325dc2be957cc079f2ab1a4c7f864d59a96381d50f1cc71e88c1580ea",
+      "bytes": 20248
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/kulimpark/v15/fdN49secq3hflz1Uu3IwjOIJ8adQZIUv.woff2",
+      "file": "4a097f537fbc93a4d6cf.woff2",
+      "sha256": "4a097f537fbc93a4d6cf74ab1981c152f702746dc7c0ed4737b8666b803dfa16",
+      "bytes": 9000
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.16.woff2",
+      "file": "4b39a064fab7979c908c.woff2",
+      "sha256": "4b39a064fab7979c908c8a2b2ff2ac99f7066a78c365a9029ea06c4c108f854a",
+      "bytes": 71096
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.96.ttf",
+      "file": "4d7a060e6be5db2877e6.woff2",
+      "sha256": "4d7a060e6be5db2877e62ef465ae3753af0fd5aac97dfc1598e2f1d75d539888",
+      "bytes": 7304,
+      "originalSha256": "fa1250cd9715111724f48d44c004e4e33ddbc86926225d075ec65b4c2660d2a2"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.28.woff2",
+      "file": "4dd132bfc5d812bf615e.woff2",
+      "sha256": "4dd132bfc5d812bf615ea51e4fd1a40881b0f9e35df42d9a689cb235b102d659",
+      "bytes": 21788
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.27.woff2",
+      "file": "4e0dafaa26d924f5612a.woff2",
+      "sha256": "4e0dafaa26d924f5612a138a34a817aa06b8f72bad9798fe64d221fb13001d31",
+      "bytes": 47324
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.102.woff2",
+      "file": "4ea85e144cb385ce086b.woff2",
+      "sha256": "4ea85e144cb385ce086b21b307730d3fdb70a587aaf350b12d0c4c2f13e66d27",
+      "bytes": 60516
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.45.woff2",
+      "file": "4ed87893d252fd7ed9fd.woff2",
+      "sha256": "4ed87893d252fd7ed9fdf20d0e46f1e2899c3b83d46a9fd12d2267e9aa2f7b10",
+      "bytes": 69120
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.33.ttf",
+      "file": "4fa7efbe98e1e9791a94.woff2",
+      "sha256": "4fa7efbe98e1e9791a94250c87014a9af610d3ba31ded19461bf3275741e0601",
+      "bytes": 69300,
+      "originalSha256": "b449d43a9ad7ec2fa3bcd31ad800a2f81b114c668b16897f506418218d7c1d1f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.52.woff2",
+      "file": "4fe778dad741964e96f7.woff2",
+      "sha256": "4fe778dad741964e96f71b25877f468514ec6e08ad1c7ce8dd7aa8e6fdbc326f",
+      "bytes": 74704
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.27.ttf",
+      "file": "50812f36609788216fdb.woff2",
+      "sha256": "50812f36609788216fdbfefa9fc2c6c7a54a99996a58867270e35c952e661838",
+      "bytes": 100832,
+      "originalSha256": "c52e26f04d87d834e6952f4c1d7592c6bd98353dc1890dc092a95f702d290bd4"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.87.ttf",
+      "file": "5095a7e84ea6f89253e3.woff2",
+      "sha256": "5095a7e84ea6f89253e35a1599cc22e9d25305ca950ec5be53e333f296716deb",
+      "bytes": 53524,
+      "originalSha256": "773ecfcf2398a3fbcc31d11209da6060b21341258ff4a1aa37c22c23c14f6f4f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.66.woff2",
+      "file": "50c8a455f282618211da.woff2",
+      "sha256": "50c8a455f282618211dacd6a0a30c1dee510d6d46eea9be79937b24e69cb0353",
+      "bytes": 52620
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.110.woff2",
+      "file": "51785f4a4d2a011d8770.woff2",
+      "sha256": "51785f4a4d2a011d877052cab1bc4c36cabcc4e186ed0176214061c174b7f024",
+      "bytes": 61188
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.84.woff2",
+      "file": "5464b5ea691f67f5fb47.woff2",
+      "sha256": "5464b5ea691f67f5fb47a397c3dc594eca550e92a41b5949fc22bc818a453e9e",
+      "bytes": 54324
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.9.woff2",
+      "file": "54b90fa517e383dab3fb.woff2",
+      "sha256": "54b90fa517e383dab3fb341d4b57742605d62492232ea9a0b39bda77372da01e",
+      "bytes": 78196
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.67.woff2",
+      "file": "54fc8c9eca1c929480b2.woff2",
+      "sha256": "54fc8c9eca1c929480b2c090907dfd9d42875cec49989b0737af2b6a60097f29",
+      "bytes": 52464
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.116.woff2",
+      "file": "554faa6e9030be693d06.woff2",
+      "sha256": "554faa6e9030be693d0663e14170d38125f2dc47ab11eed86ab2cb3b8347be1a",
+      "bytes": 16116
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.24.ttf",
+      "file": "5584463eeb58e2f534a7.woff2",
+      "sha256": "5584463eeb58e2f534a7c91ec8c66af520a6b9b3ace2391314286defacc720ab",
+      "bytes": 113396,
+      "originalSha256": "bbf335f963662a8e50efdd954294d743dc8d81411c398cdc527b615c00b27067"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.69.woff2",
+      "file": "5587fd9193a24f22e926.woff2",
+      "sha256": "5587fd9193a24f22e9266789c950ed2eff16c641560d5f3c42257d2167b57985",
+      "bytes": 48236
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.0.woff2",
+      "file": "55f978b3ad6634344733.woff2",
+      "sha256": "55f978b3ad66343447335495698654e983af082360fbb8068c9bebf139de6830",
+      "bytes": 83448
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.86.woff2",
+      "file": "55fd1a42ab8ace744691.woff2",
+      "sha256": "55fd1a42ab8ace744691b59c535499ad22b22c7c98b1d69a22fe101a2cd9b0e9",
+      "bytes": 33428
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.10.woff2",
+      "file": "562bef4f4aa557553d60.woff2",
+      "sha256": "562bef4f4aa557553d60ff3a9d94180debb6d8730b81b4232f60fb0fff48ea33",
+      "bytes": 20280
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFYzggP6lY.woff2",
+      "file": "577779334e2df09e505f.woff2",
+      "sha256": "577779334e2df09e505fd97caa6f3d1e7e30de9eed52ab1e95af7e74816d6aac",
+      "bytes": 9024
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5CgmG1X7t0JM.woff2",
+      "file": "5790c8b257e580d2147e.woff2",
+      "sha256": "5790c8b257e580d2147e0c92acba849f362217423c792613cb982afbe8746144",
+      "bytes": 9896
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.38.woff2",
+      "file": "57a5b026ac57608831d8.woff2",
+      "sha256": "57a5b026ac57608831d8152db35c18f8a632918c44061b20124df6fa91809218",
+      "bytes": 16496
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.25.woff2",
+      "file": "59109fe93cb16d7c8cd5.woff2",
+      "sha256": "59109fe93cb16d7c8cd59f086cfd2e5031c60497997c3b3e0b41386f7e203da6",
+      "bytes": 81820
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.115.woff2",
+      "file": "5a2b7c813f0122dc0180.woff2",
+      "sha256": "5a2b7c813f0122dc0180fd0752420cec278fa663158691458666bd987a7e241a",
+      "bytes": 19744
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.4.ttf",
+      "file": "5c7d335dba45d7671565.woff2",
+      "sha256": "5c7d335dba45d76715657b39bd89f74069fde39a6fe838fcc1405d9c56f2a9c2",
+      "bytes": 15108,
+      "originalSha256": "146629ba797ad69a5adcaf37197ee9f9fb8a761cc32ffb25f5a1d0409ff3e721"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.74.woff2",
+      "file": "5c8faf77fe0277b9e599.woff2",
+      "sha256": "5c8faf77fe0277b9e59904396fdf3fe24088bcb2decfc5729895b279c53754f6",
+      "bytes": 56260
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.49.ttf",
+      "file": "5cca2d71fb1933c84d2b.woff2",
+      "sha256": "5cca2d71fb1933c84d2bd6a0cb8fab8f8097f88f3df34f3bde797f33efcf359d",
+      "bytes": 105892,
+      "originalSha256": "7e71d5d1fcc578dbb0f9cf9e2d4c0a8839291224b484195db0f272bbb4cb28a3"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.58.woff2",
+      "file": "5d0685f08acf2143a54b.woff2",
+      "sha256": "5d0685f08acf2143a54bbeb1acf40d636c649180540eda65b643583c085c62bf",
+      "bytes": 25144
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.74.woff2",
+      "file": "5d7d5d55029636a2ad6c.woff2",
+      "sha256": "5d7d5d55029636a2ad6c03f638c1c85ac0d2fca53e03c6ae0c11553c81b53bac",
+      "bytes": 20788
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.20.woff2",
+      "file": "5eec399a438926ec363c.woff2",
+      "sha256": "5eec399a438926ec363c34428881520a1495ff8be9fe882c2d78b15b07fa1966",
+      "bytes": 64320
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5CgmG337t0JM.woff2",
+      "file": "602c3ac6954b05484518.woff2",
+      "sha256": "602c3ac6954b05484518f81083b332384ba1e72b9bca349d1d4eccd692c8e693",
+      "bytes": 8308
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.88.woff2",
+      "file": "60577355f788c18e8372.woff2",
+      "sha256": "60577355f788c18e83721a248378c4dc2a194dcdf9723f6466fff38c05d48045",
+      "bytes": 46292
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.98.woff2",
+      "file": "606cdec94b2e48044579.woff2",
+      "sha256": "606cdec94b2e48044579accc72c4fad8e35dcea1b2c0daa9c978563d2f9c7f68",
+      "bytes": 20976
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.29.woff2",
+      "file": "610684c7d54177a0a030.woff2",
+      "sha256": "610684c7d54177a0a03045acf04e4af0129d41227bcb9d37221f5a2be9d9876a",
+      "bytes": 79524
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.83.woff2",
+      "file": "616b08ede9949cf21604.woff2",
+      "sha256": "616b08ede9949cf216043aad6aedc237ae474bd9a716f1c90a7847d1f85d209d",
+      "bytes": 41500
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.89.woff2",
+      "file": "6193f754c6e020b33e3b.woff2",
+      "sha256": "6193f754c6e020b33e3b53710b917a595d4445d9b8b50cadd9a4fd88f7f07b3c",
+      "bytes": 45320
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.38.ttf",
+      "file": "62dbd06372071f7d40e5.woff2",
+      "sha256": "62dbd06372071f7d40e5e2961f88db5547dfddcc16063777d6026011128441c7",
+      "bytes": 71356,
+      "originalSha256": "86073118c083c8a6317646ce6a442303f7b9513cc1002f25f5f6e0bee3f177a3"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.68.woff2",
+      "file": "630a119c5ed8bb76c433.woff2",
+      "sha256": "630a119c5ed8bb76c43371b20e1cefd82863727a7bba3e3f53e5d7055f915ed6",
+      "bytes": 51696
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.48.woff2",
+      "file": "64007b2be6df970972a0.woff2",
+      "sha256": "64007b2be6df970972a0b7c4574a2dd959afb65f858a2cee308be1e0a7d1ec97",
+      "bytes": 21248
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.43.woff2",
+      "file": "6588d64e637a54d3b0b8.woff2",
+      "sha256": "6588d64e637a54d3b0b86772121d6fa2ffc441e271e597bf0ad4522c0bc5a127",
+      "bytes": 72172
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.88.ttf",
+      "file": "6602ebb7be262860f454.woff2",
+      "sha256": "6602ebb7be262860f45416b9be32ca6b60feb7abeecae73a933237a4b6b98ad0",
+      "bytes": 49532,
+      "originalSha256": "9c0ae4700a46df324cf93cdb70557e55292d493a403c96e206c47a5853781c9a"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.64.ttf",
+      "file": "661a1f4bd472283abdef.woff2",
+      "sha256": "661a1f4bd472283abdef8b248ddd2c04a4456419317e63d82a111d6017cb6f21",
+      "bytes": 64152,
+      "originalSha256": "b636b1408551bb027cc5be742e56f6ace12ab210575e3b34068771ee63d7dc5c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.110.ttf",
+      "file": "670237c7df976aaa3636.woff2",
+      "sha256": "670237c7df976aaa363666fb861c2f0d32df2dbbb60cf2ac01006ca7e3311bca",
+      "bytes": 136092,
+      "originalSha256": "68f02c96b11f8cdc3f7e9e28f502acc444dca55136c4e4acfc4336a945b09ca4"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.6.woff2",
+      "file": "675ff09731b49aeff903.woff2",
+      "sha256": "675ff09731b49aeff9031c6d8edb3d54766aec64e4c6c699be5766729e4dad98",
+      "bytes": 11388
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.97.ttf",
+      "file": "67ae89da389077df77a1.woff2",
+      "sha256": "67ae89da389077df77a1ae6390da3a50eee384cdd7b166098a85dc4ae508b136",
+      "bytes": 37252,
+      "originalSha256": "e1e3c0c8d478e66ee4cb7bcd5a5131185f6fff0b03b00f1d2fdd2d4f63e0cf64"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.29.woff2",
+      "file": "67d137f738bc8294a036.woff2",
+      "sha256": "67d137f738bc8294a0365f60661e31b33a6e534d56d7e5ed6982d5e6ffa5663c",
+      "bytes": 53848
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.121.ttf",
+      "file": "67f0d6bb9202ad5575f0.woff2",
+      "sha256": "67f0d6bb9202ad5575f02e4d12c2c5ba043d69203d41f2b0615eb080f4f02ba8",
+      "bytes": 116844,
+      "originalSha256": "a0e1dd2b7ef485304a966faa5bcf946182361460052444285a0581bae2602ef9"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.26.woff2",
+      "file": "68074245ba1ea9745cad.woff2",
+      "sha256": "68074245ba1ea9745cad9cf3780b69c9def3568891296e44d60e070e45df7b7a",
+      "bytes": 50744
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.35.woff2",
+      "file": "68413e3f3e5b912efd25.woff2",
+      "sha256": "68413e3f3e5b912efd25702281aae9acb37c9920bb7bb941404506ab520add49",
+      "bytes": 50464
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.46.woff2",
+      "file": "6a2383f69ea1c2a73783.woff2",
+      "sha256": "6a2383f69ea1c2a737836dc7ad18cd778c388716890d54926754015fa5dc3fc1",
+      "bytes": 60008
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.11.woff2",
+      "file": "6b17a02d81b4f47eec80.woff2",
+      "sha256": "6b17a02d81b4f47eec8002d7c56529fa18d4ce87fdaf428cc324b0bc6d6fdc81",
+      "bytes": 76936
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.99.woff2",
+      "file": "6b2d1065f737c8360808.woff2",
+      "sha256": "6b2d1065f737c83608088c2e241c605683d94c6160121ca976496507ebc6cc94",
+      "bytes": 9696
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.66.woff2",
+      "file": "6b9b03a5f1c7fca919b6.woff2",
+      "sha256": "6b9b03a5f1c7fca919b6c4ec6fbb93f4707f9f207299aaa7f12bdaa639a11566",
+      "bytes": 20932
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.115.woff2",
+      "file": "6c0cda055b31066fb600.woff2",
+      "sha256": "6c0cda055b31066fb60058ac30ede37f6f9ca02265c2e1a84aee81175f567fa8",
+      "bytes": 56264
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/kulimpark/v15/fdN79secq3hflz1Uu3IwhFcs5JZx.woff2",
+      "file": "6ce73568e77a9f2d120a.woff2",
+      "sha256": "6ce73568e77a9f2d120a8eda3804e9e19825609f674aaa328dd87760b816d8d9",
+      "bytes": 8928
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.69.ttf",
+      "file": "6d0830456353f3203922.woff2",
+      "sha256": "6d0830456353f3203922cebd61b5c41faab97eadc20161f529fcfcddbb016ac0",
+      "bytes": 63976,
+      "originalSha256": "d627bcdd6cd3456ec39c90a8eb7e0964fdaa415dfb5388a999e246d3b442cb40"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.24.woff2",
+      "file": "6d9c5bcd8853a3c2c271.woff2",
+      "sha256": "6d9c5bcd8853a3c2c271e1de49ed50ca40931f4caca002ce06942e68f5c422f0",
+      "bytes": 25372
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.99.woff2",
+      "file": "6e7ef59f4b5e50828a96.woff2",
+      "sha256": "6e7ef59f4b5e50828a96d13dce0027cba640e40bfc34971f6f6b0b7050e7bcd3",
+      "bytes": 21592
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5CgmG0X7t.woff2",
+      "file": "6ecf7205a09aea30481e.woff2",
+      "sha256": "6ecf7205a09aea30481edc34156d1beba7be11f72d03e80bdb6bbf592594ba15",
+      "bytes": 25880
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.44.woff2",
+      "file": "6ff484457c3f66f17ec4.woff2",
+      "sha256": "6ff484457c3f66f17ec43983632b6217fe72bd92454b71059af73e0188b9aeb0",
+      "bytes": 74376
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.55.woff2",
+      "file": "70105493871b78298135.woff2",
+      "sha256": "70105493871b782981352a0cf696487afc098a69a4708d87a7931607fe15a128",
+      "bytes": 47948
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.12.woff2",
+      "file": "702f1784ef87567508a9.woff2",
+      "sha256": "702f1784ef87567508a9ec026169b5873bfe9186f587de9be6cef5b1d9c73764",
+      "bytes": 69908
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.115.ttf",
+      "file": "718fbd1ffc84fc2cb925.woff2",
+      "sha256": "718fbd1ffc84fc2cb925916a7adf6c229aa61aecce39d93fdc98eac47665edc0",
+      "bytes": 135224,
+      "originalSha256": "55af8fc01df5933f87b80a0208eb66096bf25b0f10f8e55ad54f10d149bad998"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.72.woff2",
+      "file": "71d3da5b2d0e05b8899e.woff2",
+      "sha256": "71d3da5b2d0e05b8899e271aaa49982fa73a589168be26a8350ff6f79f20bfd7",
+      "bytes": 46916
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.29.ttf",
+      "file": "73435c9ed47e6bb4da2e.woff2",
+      "sha256": "73435c9ed47e6bb4da2ed566e4ab0ddd11ab8d38207330d3e37312847773b7f8",
+      "bytes": 83012,
+      "originalSha256": "aba19c56a83f8e7dbf908760b723297cb137f15f018655047a4bc921a307c3f6"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.71.woff2",
+      "file": "734da1dcc260ca6cc29c.woff2",
+      "sha256": "734da1dcc260ca6cc29c9e42078125ae8e4583fbc1f7cc76d82572a73767f04d",
+      "bytes": 47768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.89.woff2",
+      "file": "74a75243aa93eb61367a.woff2",
+      "sha256": "74a75243aa93eb61367a28d217ce82b76c6cf9e86d0f23fd96708bfd91b68f46",
+      "bytes": 10792
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.100.woff2",
+      "file": "75b716ea45a402efa4bb.woff2",
+      "sha256": "75b716ea45a402efa4bb7eb84afbea3c6e77c8c9bf55764a39eca7528014bd10",
+      "bytes": 26300
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.11.ttf",
+      "file": "75e19ab04ffb81efa661.woff2",
+      "sha256": "75e19ab04ffb81efa6613a8c8f798b812ac23583ba26611913fe750e9578deaa",
+      "bytes": 24540,
+      "originalSha256": "b928efd45b9716b85b0e51fe26a7c354d9a64c078bd522e3631ab8842789502b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.17.woff2",
+      "file": "75ebe7b943901ce15da3.woff2",
+      "sha256": "75ebe7b943901ce15da3af3491711a14ff46510de8a793e29842d4780ab14a76",
+      "bytes": 85452
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.32.woff2",
+      "file": "76062a935f0eaa917094.woff2",
+      "sha256": "76062a935f0eaa917094803adb5f1123396806846110db3465f343912f2b7c50",
+      "bytes": 76488
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.97.woff2",
+      "file": "7671f7b32d4c5c11ba72.woff2",
+      "sha256": "7671f7b32d4c5c11ba72df9e6b9a18a6441f863aade2623ac0562ebd34b82bc7",
+      "bytes": 2072
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.79.woff2",
+      "file": "7712cca201e92ae62319.woff2",
+      "sha256": "7712cca201e92ae6231957e68d792e05942a4a9ade9c2cad7ece72c994184621",
+      "bytes": 60660
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.105.woff2",
+      "file": "77b99af17900815d9a6c.woff2",
+      "sha256": "77b99af17900815d9a6c187f4fdf842300191183f79b8c9133973a165534121c",
+      "bytes": 25312
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.2.woff2",
+      "file": "7813bea8ff5334f30fcc.woff2",
+      "sha256": "7813bea8ff5334f30fcc8a757822e5d1e373cd4981b3d6a2a2fad7574b6a07e8",
+      "bytes": 32024
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.63.woff2",
+      "file": "78a6d1597caec21f2e6a.woff2",
+      "sha256": "78a6d1597caec21f2e6aa2105c080c83eec3d2331adbb8be6f1c9569e83664a4",
+      "bytes": 21084
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.39.ttf",
+      "file": "78e4f862141d48e2ab83.woff2",
+      "sha256": "78e4f862141d48e2ab837e8695400708840ecfc9f871f22a22e3b8fa1039cae3",
+      "bytes": 73432,
+      "originalSha256": "94892de8b10d9fd45c04bd1617c8a3b041909a9ca8bc7208b00ec66340d991c1"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.68.ttf",
+      "file": "792fa3e2575cb36c39c0.woff2",
+      "sha256": "792fa3e2575cb36c39c0660477a8b01deee67fa2a6d21765e6ed067b27926160",
+      "bytes": 59992,
+      "originalSha256": "d83767cc03d8a386d8728322ede3fadbe011d467a56554cba8df33844c70205a"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.56.woff2",
+      "file": "7984e5951fadbca7bf30.woff2",
+      "sha256": "7984e5951fadbca7bf30912f353acf02d57d23499f97f7cb002ac0830b03eb95",
+      "bytes": 37332
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.3.ttf",
+      "file": "79b605c5fbbc2e490570.woff2",
+      "sha256": "79b605c5fbbc2e490570c8f89a01cf4f0e00a3a142a5f85c01e9599b0c4b2285",
+      "bytes": 18916,
+      "originalSha256": "a984489cfd7ceb51a077f43b2eb7860b5b54f8f4967792776d5d1883fdd3f037"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.27.woff2",
+      "file": "7a2e5a857cecfd865efb.woff2",
+      "sha256": "7a2e5a857cecfd865efbc98c1ed990b37feda47b7b5712a3d2457974a5e9590e",
+      "bytes": 24308
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.78.woff2",
+      "file": "7bbb9124201e6aaefe81.woff2",
+      "sha256": "7bbb9124201e6aaefe814ac7b87e426908890e5f1d3e175ad2762c6548059c0c",
+      "bytes": 23100
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.91.woff2",
+      "file": "7bf857d9d1285675fe57.woff2",
+      "sha256": "7bf857d9d1285675fe572e64f968ae1f3213da7654ffd335633fb5b39493c057",
+      "bytes": 8616
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.59.woff2",
+      "file": "7d29d9f583882cb5f3dc.woff2",
+      "sha256": "7d29d9f583882cb5f3dc9e944d58aa1575cef5b4f884177673944394bcf6f858",
+      "bytes": 19732
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.15.woff2",
+      "file": "7e0af82b79aabc25814d.woff2",
+      "sha256": "7e0af82b79aabc25814d54c3a8785218768262649a43d33fb6ffeee5f718ab78",
+      "bytes": 22596
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.41.woff2",
+      "file": "7e2a21f95e969165ff32.woff2",
+      "sha256": "7e2a21f95e969165ff32e2fdab8422b489d2c7b0f899f69bfc83d71872cde2af",
+      "bytes": 36284
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.65.ttf",
+      "file": "7e34a977bcaae09f48c5.woff2",
+      "sha256": "7e34a977bcaae09f48c56a8477cb0c6a3152afbe9f3f4b3b1705a31811270c03",
+      "bytes": 93624,
+      "originalSha256": "0af4202ce133cced5d5bdaa09619f2091ee7247bdc38277a26057c592b3cad9d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.8.woff2",
+      "file": "7e73274091d31a4606fc.woff2",
+      "sha256": "7e73274091d31a4606fc5d117bef91073f4afa353f54bd6ab92a234225721d69",
+      "bytes": 81380
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.73.woff2",
+      "file": "7eb20e03471bdb537d9d.woff2",
+      "sha256": "7eb20e03471bdb537d9dce7d93f076733dedab4b77941e74523ce3a4c3ccf333",
+      "bytes": 21888
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.101.woff2",
+      "file": "7f678d4883427c763479.woff2",
+      "sha256": "7f678d4883427c76347935c7b4bd28abbcab44d3e30040c42594575de02e89bf",
+      "bytes": 18324
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.90.woff2",
+      "file": "80d51f95afbebcbed0cc.woff2",
+      "sha256": "80d51f95afbebcbed0cc53985fbce43eec3a37c8ec88b08d316c56a32aa77843",
+      "bytes": 9224
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRKoKIyQ4.woff2",
+      "file": "811e869a2b23ff46086e.woff2",
+      "sha256": "811e869a2b23ff46086eeff6fa59185bb1aa982f5bcd8d34db51e10ea8e5f7e1",
+      "bytes": 9896
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.93.woff2",
+      "file": "814636ff75c8a68fa6dd.woff2",
+      "sha256": "814636ff75c8a68fa6dd317bcea34ea440a22d795cd78653f161caed3af275a3",
+      "bytes": 19544
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.46.ttf",
+      "file": "824e17bc2757e0e64724.woff2",
+      "sha256": "824e17bc2757e0e64724569c23a8538ce977c6849ab9830868d055e85142d365",
+      "bytes": 82384,
+      "originalSha256": "1bcfcbbf58336764cafd6d253723bfe4963979e66701e4812b76bec6cdeaa37b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.56.woff2",
+      "file": "827a99438e3082a852d0.woff2",
+      "sha256": "827a99438e3082a852d08b2aeec5c0d1ac9d3ba4e0ad4d46c51a191b379ff4e1",
+      "bytes": 21252
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.28.woff2",
+      "file": "829fb1c25f56f28b3564.woff2",
+      "sha256": "829fb1c25f56f28b3564c869a4285f5163b653916fd50b0be65e63c2decf63c2",
+      "bytes": 72800
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.120.ttf",
+      "file": "83383b45fc227e7ff722.woff2",
+      "sha256": "83383b45fc227e7ff722883210c553476ec89a0933501c47ab0aa5d206b59834",
+      "bytes": 128284,
+      "originalSha256": "561f7cd18e7a5bcd01b824d6ac7e63e64169c2bd8c01209ba438d3f315fad676"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.106.woff2",
+      "file": "835b976dad277177ff04.woff2",
+      "sha256": "835b976dad277177ff042d8aa3cc6c1645c9297afa0b8b53dfc8abeb363e8b74",
+      "bytes": 23808
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.80.woff2",
+      "file": "835eeaa05c54bf9cc44b.woff2",
+      "sha256": "835eeaa05c54bf9cc44ba80a13ab80b5a744216874b282f55073f1e5245e0f51",
+      "bytes": 50796
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.50.woff2",
+      "file": "84258d7398d09d1bbdcd.woff2",
+      "sha256": "84258d7398d09d1bbdcd235f599cf103efb3850f993cd0d51f7d8c98a1c01c85",
+      "bytes": 21316
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.33.woff2",
+      "file": "846c117fb7d2d2093c14.woff2",
+      "sha256": "846c117fb7d2d2093c14c9a60c1e82642f2a0224d8e107e60756a0f3304e7431",
+      "bytes": 66088
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.70.woff2",
+      "file": "8474823a5264bfdee208.woff2",
+      "sha256": "8474823a5264bfdee208fd16e2e5f3fe689e8eb18941446678426dc5f1264d19",
+      "bytes": 42080
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.65.woff2",
+      "file": "84c8d4810d7722e29e91.woff2",
+      "sha256": "84c8d4810d7722e29e91cdeb6c78e71ca1928a1be4f419feb37b43fe8103440b",
+      "bytes": 64796
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.114.ttf",
+      "file": "852994872f3dd9f275f7.woff2",
+      "sha256": "852994872f3dd9f275f72425c1f05809c6b3581170c35e53b9035c85f3a2c837",
+      "bytes": 143192,
+      "originalSha256": "8b5a763ec945957f8c5b135ec1059578039293dbbe08d6e424ff7d8a19c24cff"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.109.woff2",
+      "file": "85ebc9985c665dd55346.woff2",
+      "sha256": "85ebc9985c665dd55346ebc78b93f8d8ef6ff972d78afc288b75d697a242d780",
+      "bytes": 60208
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.101.ttf",
+      "file": "86e251d8ea183047b3cf.woff2",
+      "sha256": "86e251d8ea183047b3cfd5ad06b3b0757575b1d8e0472f18e59268a16d7206db",
+      "bytes": 4716,
+      "originalSha256": "6b4ec20c533bf58fee6bf2597641785bae784b4d1d228645f514c6712f65c940"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.106.ttf",
+      "file": "8828ae8717bdf10291c6.woff2",
+      "sha256": "8828ae8717bdf10291c6b8813149e0dd29a1299298061098581f0c471b42575c",
+      "bytes": 125000,
+      "originalSha256": "471877389e964fb1f9108b6cca3ab105c6672e304f4fcc7af834e2e132b41686"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.75.woff2",
+      "file": "886a9fe77b9057b09424.woff2",
+      "sha256": "886a9fe77b9057b09424ef9d9cdd0bc5f943b78023ed649618815faf256b5122",
+      "bytes": 21724
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.29.woff2",
+      "file": "886e3d96ac2210d7037c.woff2",
+      "sha256": "886e3d96ac2210d7037cbe4a1add2664e35b10534a48e7cc11b9b5ef8c8c56e9",
+      "bytes": 22992
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.81.woff2",
+      "file": "889c6ad4919a6fd9b761.woff2",
+      "sha256": "889c6ad4919a6fd9b76100280c156dfd11d0df920fef897442dd54208ddb1e4b",
+      "bytes": 47888
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.41.woff2",
+      "file": "88da9ec72f051b28c2df.woff2",
+      "sha256": "88da9ec72f051b28c2dfec8ae3554093637ab4f5da64a48d621000b26fc0de5c",
+      "bytes": 17984
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.4.woff2",
+      "file": "89a9d9b241b6e5e16636.woff2",
+      "sha256": "89a9d9b241b6e5e1663661fc37f3af8c4091c09525caf3ac7aec2a578640cbdc",
+      "bytes": 23104
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.76.woff2",
+      "file": "8a31272bf31f93407478.woff2",
+      "sha256": "8a31272bf31f9340747866ad1a59ff6073bf92fe802e2ba5a531f6a8aac2a42b",
+      "bytes": 48240
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.16.ttf",
+      "file": "8c29364f8ff1c3f92b5e.woff2",
+      "sha256": "8c29364f8ff1c3f92b5ebd9e2a48d7a981cf7aedc63a7807249949ff0d155206",
+      "bytes": 15492,
+      "originalSha256": "c0820d03116fc0cb9f872a3290dfad37159d741435b9ace8587776736049339f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.1.woff2",
+      "file": "8d0c49e497eb628d5f68.woff2",
+      "sha256": "8d0c49e497eb628d5f68c5bb1b7c0363f97d0c87cccdc87e4bc07f20843de0de",
+      "bytes": 70756
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.30.woff2",
+      "file": "8d13e9fa3e3f8af4e937.woff2",
+      "sha256": "8d13e9fa3e3f8af4e9374895bc3c724f7d6f7062bdc65ab00ec7ac3534d698e5",
+      "bytes": 82796
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.115.woff2",
+      "file": "8d152cfefe1ebc859d46.woff2",
+      "sha256": "8d152cfefe1ebc859d46e6d6020af7e4b712974ae07bdb143c1b4f9e9c57ac9f",
+      "bytes": 16204
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.26.woff2",
+      "file": "8e25fc2ff893012ad4c1.woff2",
+      "sha256": "8e25fc2ff893012ad4c11f28e4580e6f05982b753fc0147d963b098ff043bd01",
+      "bytes": 25412
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.109.ttf",
+      "file": "8e2e9a631f0fed03b751.woff2",
+      "sha256": "8e2e9a631f0fed03b751042eee60c55aac89addc1ff3fbfe57fbe514e9cabf11",
+      "bytes": 126288,
+      "originalSha256": "9f4b3446da7c0f4550cb3afd5a054cc5435ac29878e5cf062fb5a4dc68486813"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.22.ttf",
+      "file": "8fc80aa039effff2d0bb.woff2",
+      "sha256": "8fc80aa039effff2d0bbd84c4a99607b006bbcc155a6340779d2bbf1a8232d72",
+      "bytes": 30592,
+      "originalSha256": "8c9797d03f29c76efc11956cfca0ddab938fb4b644d25dc3b73f43afa0e41b7c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.17.woff2",
+      "file": "9043ae7e7aee92e1ebec.woff2",
+      "sha256": "9043ae7e7aee92e1ebecd646a9db4716350f025f22bfff55e2d1aa6281599369",
+      "bytes": 23408
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.0.woff2",
+      "file": "91aa276cc90e2b1a4d0a.woff2",
+      "sha256": "91aa276cc90e2b1a4d0a3f5a46e2f4004d6f42c6dfe2ed271643dbfd2e1cae3c",
+      "bytes": 34708
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFYxQgP6lY.woff2",
+      "file": "91e663eb94782da1c973.woff2",
+      "sha256": "91e663eb94782da1c9737d270b75e781135a79ad582a04bbbdc443aa11cc9a93",
+      "bytes": 9916
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.31.ttf",
+      "file": "925da107f5cad83d3446.woff2",
+      "sha256": "925da107f5cad83d3446304d4042541b1c01ac87a4dac122254bac61b2b70360",
+      "bytes": 78164,
+      "originalSha256": "47eb603f8369c90f9337bf2a5a2a428cfe75f90c293e388bed844d9f3405a297"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.34.woff2",
+      "file": "92a60ee6d7ad2fd3cf0f.woff2",
+      "sha256": "92a60ee6d7ad2fd3cf0f1362c0291dbd4f84e83e9e2d7d82c1bb903f79a327a6",
+      "bytes": 88292
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.9.woff2",
+      "file": "92d216b5c91ae5bdf7ab.woff2",
+      "sha256": "92d216b5c91ae5bdf7abd62cdb2e01fc825976da70c1f10275b750c2b75760a9",
+      "bytes": 22196
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.73.woff2",
+      "file": "92f8b99dc1a79089d18b.woff2",
+      "sha256": "92f8b99dc1a79089d18b1684447e31ef62abf48de736555cf5840b781aeb9d56",
+      "bytes": 39096
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.91.woff2",
+      "file": "937b565bc345c6adb8a8.woff2",
+      "sha256": "937b565bc345c6adb8a87234b0b8a54d414c891e3c48a09c0f1daf67f16487ce",
+      "bytes": 45240
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.26.woff2",
+      "file": "93c6541a290f68c1043f.woff2",
+      "sha256": "93c6541a290f68c1043f84dcc5ba6d6de9852555b3a6f6702dae60edb87ab532",
+      "bytes": 69724
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.60.woff2",
+      "file": "94e4aba73af7a4301955.woff2",
+      "sha256": "94e4aba73af7a43019551796c67a6b3f60e5da03413288236a9d4b7ad983d1d2",
+      "bytes": 24340
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.98.woff2",
+      "file": "94e55b60e87bfb909709.woff2",
+      "sha256": "94e55b60e87bfb909709592144002c0b10a4214612ea512b38bb719c9ef45c49",
+      "bytes": 3412
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6mlT-9cQPg.ttf",
+      "file": "94f1933da65c6acc7e09.woff2",
+      "sha256": "94f1933da65c6acc7e09087fdb2c4352b9b45d52e58f105c2021ff849fae3946",
+      "bytes": 40968,
+      "originalSha256": "5051b48e85ae834d669fa09421d2a4b038be04c0c2df84569301eee4feb38720"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.85.woff2",
+      "file": "9555ca3c3e95bdbf0d1c.woff2",
+      "sha256": "9555ca3c3e95bdbf0d1cfa1a831d296176385f9ef9e4eb7943ed56ecacad1343",
+      "bytes": 19164
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.75.ttf",
+      "file": "95d956cabc8fbc108e02.woff2",
+      "sha256": "95d956cabc8fbc108e02011d3dec9cf923994bd84684983ca7dc4a0ceb6255ea",
+      "bytes": 74016,
+      "originalSha256": "e7aa858704f7ea6ab5facdfadeac7187a7bad26d0868696853c72a5f3e5cefba"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.63.woff2",
+      "file": "964bd2faa27132a7a26a.woff2",
+      "sha256": "964bd2faa27132a7a26a28eeeb912b58bae9017422637a643040ed15d34b08c0",
+      "bytes": 20896
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.19.woff2",
+      "file": "96bc94582bd8f4aa6b21.woff2",
+      "sha256": "96bc94582bd8f4aa6b214caf5e74b663ac9fe7c7fa194125325657dcceea17ec",
+      "bytes": 89364
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.13.woff2",
+      "file": "972c3edac08421e88cac.woff2",
+      "sha256": "972c3edac08421e88cac88664912d3ca1faba69d70b545bb30a8830bb4838cce",
+      "bytes": 75792
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.36.woff2",
+      "file": "97e25fc68412ffb6d66e.woff2",
+      "sha256": "97e25fc68412ffb6d66e7a91d4f6ab1e1fdab6cbd51cce1bc4a740d0eaebe4bd",
+      "bytes": 21164
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.37.woff2",
+      "file": "9830cb8ed9aebed1e79a.woff2",
+      "sha256": "9830cb8ed9aebed1e79ae87ca770a3735503ba33ba902e7caf1a7f301ee3839a",
+      "bytes": 76296
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.90.woff2",
+      "file": "98e1708d126eec4f6aab.woff2",
+      "sha256": "98e1708d126eec4f6aabad038cd7774341e738f8826a5e27f3c903b788442eaf",
+      "bytes": 22120
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.81.woff2",
+      "file": "9958d614924fa54de4f6.woff2",
+      "sha256": "9958d614924fa54de4f661febd02c1de787ef640d58970e4d928e1ecd7c17990",
+      "bytes": 47504
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.110.woff2",
+      "file": "9a71279b4e52c6b3edff.woff2",
+      "sha256": "9a71279b4e52c6b3edff0b577f79c121b92a9e0134ab0221a1654940145a26af",
+      "bytes": 17464
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.77.woff2",
+      "file": "9ae8fd2772d7f4a5696a.woff2",
+      "sha256": "9ae8fd2772d7f4a5696ad7ef3d65bb61a1283bb3d9a11b0272822de1acb24152",
+      "bytes": 52860
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.20.woff2",
+      "file": "9bb66ead8a0b281f1d4f.woff2",
+      "sha256": "9bb66ead8a0b281f1d4f6d3ce9c5c8bbe9d76cabf9646213c560e351aafd4071",
+      "bytes": 25772
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.56.ttf",
+      "file": "9bf74eac4992fd388fae.woff2",
+      "sha256": "9bf74eac4992fd388faefd1950bed6f2b5645b2cd90c797088a4cd149780bee4",
+      "bytes": 77420,
+      "originalSha256": "e60a01953b9d9bbfa14e58b5447a317b2925e5db2d3ae72e46bb0486cae654e4"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.83.woff2",
+      "file": "9d07de3c886aaabc811e.woff2",
+      "sha256": "9d07de3c886aaabc811ec1f7a0a2eb3138de7611984c48d3f41ddeba8d567dc1",
+      "bytes": 21280
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.53.ttf",
+      "file": "9d1cc793f616d7edec7f.woff2",
+      "sha256": "9d1cc793f616d7edec7f323f943c41744446a9387aec556480903802c6fddee0",
+      "bytes": 71552,
+      "originalSha256": "e002a5b9209033f769c395ee256eda2982a164e6fca2db7f3f5e07f4fb8d894f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.112.woff2",
+      "file": "9d2429a42f2f25d96fe8.woff2",
+      "sha256": "9d2429a42f2f25d96fe8c367af405b8853d98a9d97e7ca7073ea33b267363715",
+      "bytes": 16360
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.108.woff2",
+      "file": "9e288e859248aa2c18a7.woff2",
+      "sha256": "9e288e859248aa2c18a79d137a530b6dbc970286b4c41bf68e03e533cc5d89a8",
+      "bytes": 21484
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.81.woff2",
+      "file": "9e6b8f448697c1edf980.woff2",
+      "sha256": "9e6b8f448697c1edf980822a1e5258d559b6dd16e384e77bde5a430bf854cb63",
+      "bytes": 20056
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.38.woff2",
+      "file": "9fed33a68aaa37c3712c.woff2",
+      "sha256": "9fed33a68aaa37c3712c0f94656f92661b1485dec920727dc48b9bf3417fe869",
+      "bytes": 70356
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.84.ttf",
+      "file": "a03c38951bd77aa1637c.woff2",
+      "sha256": "a03c38951bd77aa1637c3974a933a2ba8a4c847c01f458e789d8ffe94ca61bc9",
+      "bytes": 53776,
+      "originalSha256": "5f2152456ee73bbe4f2dc4b7cdf803e58925c77faf6b40d9df7d44a54b4f9cdd"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.102.woff2",
+      "file": "a1392a57c52e3f13f71d.woff2",
+      "sha256": "a1392a57c52e3f13f71d1f8881addb2bc46d24723d1f9644b9b19ad3dd40064a",
+      "bytes": 26336
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.114.woff2",
+      "file": "a181067ee87266ad19b0.woff2",
+      "sha256": "a181067ee87266ad19b00287f7e2dbeac8d3c55a8581a95d8aa33b953bec71bc",
+      "bytes": 16096
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.68.woff2",
+      "file": "a251b0975a8a072d638c.woff2",
+      "sha256": "a251b0975a8a072d638c3ec37187ec5a319ca54697daf65e249cb2d694fb9baf",
+      "bytes": 23404
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.85.woff2",
+      "file": "a2d7b856c06f9f0dc5e0.woff2",
+      "sha256": "a2d7b856c06f9f0dc5e037426efed0f7d7475c2e44eef0871152d0414685189d",
+      "bytes": 52412
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.101.woff2",
+      "file": "a33308bf652e64ac2884.woff2",
+      "sha256": "a33308bf652e64ac2884bfe830996e933322b939b915bb823fd47383580664ad",
+      "bytes": 58028
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.117.woff2",
+      "file": "a4cb052e82a4e5b2bdbd.woff2",
+      "sha256": "a4cb052e82a4e5b2bdbd73a24771971e46013e76adb24c433ada6d20782702be",
+      "bytes": 13084
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.64.woff2",
+      "file": "a54d82ae227a38509fc9.woff2",
+      "sha256": "a54d82ae227a38509fc903198f74e278a9b389fe6c9e7533d02bc5f9aa3dfba8",
+      "bytes": 18384
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.32.ttf",
+      "file": "a5ab5490a68a8d6241e7.woff2",
+      "sha256": "a5ab5490a68a8d6241e7edd2d8c353e16f3714cdf9dcd2875b8b7c7461b6a2ad",
+      "bytes": 86032,
+      "originalSha256": "0075b7b09203391b69d2b88d90d59135175f13e55cb2ebd6cc8213716f933489"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.95.woff2",
+      "file": "a5d77d839af33d7a6525.woff2",
+      "sha256": "a5d77d839af33d7a6525369988d9eb7e681fa73de4d68adb04a5bd507ea3c824",
+      "bytes": 20296
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.86.ttf",
+      "file": "a5e73fd8155f76805693.woff2",
+      "sha256": "a5e73fd8155f76805693e36c046c7d5ea1fa6913d9a8655ed57cc9ce3bbc1306",
+      "bytes": 78620,
+      "originalSha256": "0e62ac0ec9d0109950356266cd36c714d67d05312cd5a3f04aa7b7752e1649bd"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.14.woff2",
+      "file": "a6a04edd5d80b8a80e19.woff2",
+      "sha256": "a6a04edd5d80b8a80e19c7426f6ebbc703b212dcaeb66506f8f3e74fd6ccd3d9",
+      "bytes": 21932
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.78.ttf",
+      "file": "a8b51d37c7172e1b904d.woff2",
+      "sha256": "a8b51d37c7172e1b904d76a5081bd25ef718b93671b194f029ba3c0adb688ba7",
+      "bytes": 89496,
+      "originalSha256": "5a04251b0bbfca85c4ba19e073551b8028d5645408de4ba7ff83557d732ec494"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.122.ttf",
+      "file": "a8f3dad64979128d708d.woff2",
+      "sha256": "a8f3dad64979128d708d916d0e608fe7989f3ffdf85ea6dd17da6d283f450607",
+      "bytes": 105408,
+      "originalSha256": "9472810851d7be2703b091d28537261548a6d19955da8fe4f358c672d642cc5b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.23.woff2",
+      "file": "a8f6664d83439cd5d329.woff2",
+      "sha256": "a8f6664d83439cd5d329e9b35a54fb4d9d3786e80d3eaebbaeac24e3acf950fc",
+      "bytes": 56700
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.43.woff2",
+      "file": "a98ffa0839e353eb7e76.woff2",
+      "sha256": "a98ffa0839e353eb7e768084e27892596616f6a3d8bb65c94202898bccb1fd68",
+      "bytes": 46488
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.51.woff2",
+      "file": "a9eee4ca3df5f8b2d95a.woff2",
+      "sha256": "a9eee4ca3df5f8b2d95a829d534bbd215391a5bf7fcc74beb975cc0d91c4333c",
+      "bytes": 19576
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.44.woff2",
+      "file": "aa1a541dfacfcad0c66f.woff2",
+      "sha256": "aa1a541dfacfcad0c66fb7f9dd4f9c12ce729d98311336c634702d066aabbbc2",
+      "bytes": 54096
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.44.woff2",
+      "file": "aa5d6865fa63aae6f496.woff2",
+      "sha256": "aa5d6865fa63aae6f496c76c28221a4f7b10f45389cac2a8d1535bea7cec089c",
+      "bytes": 18300
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.111.woff2",
+      "file": "aaa67a70f5e8b351c558.woff2",
+      "sha256": "aaa67a70f5e8b351c558e32345093fdfd86f089726b3b86d84b58de6a2475104",
+      "bytes": 62400
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.27.woff2",
+      "file": "ac2d565c655e567b88df.woff2",
+      "sha256": "ac2d565c655e567b88df81e8834fec61f7a0944062f8ee51b70aa77a797b3702",
+      "bytes": 65452
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.94.ttf",
+      "file": "ac779e3c23456c45278f.woff2",
+      "sha256": "ac779e3c23456c45278ff3b497b6910888a497f97b7cf12b33449ea68522dae3",
+      "bytes": 14396,
+      "originalSha256": "4f90db632db32e305b83c87c2e0de1c3cc914a0525db8c59f8d71a0bf13b960d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.111.woff2",
+      "file": "add77686e5062903172d.woff2",
+      "sha256": "add77686e5062903172d2ecbfa58a30c5bc3fabe23c7ea23723a5ded26353e45",
+      "bytes": 18860
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.105.woff2",
+      "file": "ade910a27a4bd65baed5.woff2",
+      "sha256": "ade910a27a4bd65baed59a8a86a3a6a80f6083daa7123bb9ff32da15e56fda9d",
+      "bytes": 61612
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.55.woff2",
+      "file": "ae90d39c8e98aae88879.woff2",
+      "sha256": "ae90d39c8e98aae88879a98c2465a1ceedfebafdc6737d581c7d0cb04d083834",
+      "bytes": 42160
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.53.woff2",
+      "file": "aed6a1a55810a8ebdef0.woff2",
+      "sha256": "aed6a1a55810a8ebdef01a3e0d9080add23a8b1d9542c9caab1d7245ae07e316",
+      "bytes": 20984
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.22.woff2",
+      "file": "b15b23e18f7b765bd08d.woff2",
+      "sha256": "b15b23e18f7b765bd08d12d13210c0af8d32bee34712bc3152d0b386d043ec04",
+      "bytes": 65220
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.34.woff2",
+      "file": "b16bdb65765f0a5be535.woff2",
+      "sha256": "b16bdb65765f0a5be535ae3191835bf92c79281c5edfbcaa547127d3e343ce04",
+      "bytes": 21384
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.80.woff2",
+      "file": "b1e3bcfae9dbe224eef0.woff2",
+      "sha256": "b1e3bcfae9dbe224eef09e63c0993b95a2dd2cc779b1008651179cc59b260ccc",
+      "bytes": 20428
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.22.woff2",
+      "file": "b280302e970c4cb6bcab.woff2",
+      "sha256": "b280302e970c4cb6bcabdb2dada1d6d8512cea821fb339b0dd388048c1043f5b",
+      "bytes": 23380
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFYwQgP.woff2",
+      "file": "b3f23a841571a12f26a2.woff2",
+      "sha256": "b3f23a841571a12f26a2611c0a54503b29db4a861ed23070f97279dd0d8debba",
+      "bytes": 24624
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.2.ttf",
+      "file": "b464572649a8619c1aaf.woff2",
+      "sha256": "b464572649a8619c1aaf2bc40f6d36b85dda5802eeecb3834ef4aaa2290b6393",
+      "bytes": 96736,
+      "originalSha256": "80e5688a287d7f7e6ff793139cb48a88c5f5bf113905e5fc75f0c169bc27728c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.58.woff2",
+      "file": "b4a952b513ca0e1b594a.woff2",
+      "sha256": "b4a952b513ca0e1b594a856e5398d1e40d69b0bf220825210955fde747faa8d0",
+      "bytes": 57468
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.94.woff2",
+      "file": "b4cdf020339037cc8a67.woff2",
+      "sha256": "b4cdf020339037cc8a67e059752b5bb5fdb23ff0a67213631e4056d4e85bf2b3",
+      "bytes": 22116
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.41.ttf",
+      "file": "b55415e43fe67961faea.woff2",
+      "sha256": "b55415e43fe67961faea8824972fd09a06b0902dec4afa22fa84df431b91ff01",
+      "bytes": 91656,
+      "originalSha256": "89f708ad1081099909448b34e8a314aa23008afbdaf3e7f59199656b279e430b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.80.ttf",
+      "file": "b7babb8a277e2921c6d3.woff2",
+      "sha256": "b7babb8a277e2921c6d34e05ae2846ccf3f380c778855ba526278dfd59e914c0",
+      "bytes": 71272,
+      "originalSha256": "cf676b91334983267d3c2229230e90b0cb3ceb04e76d499f987e7883d3f09715"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.58.woff2",
+      "file": "b7f6f9483f1dafe7f14b.woff2",
+      "sha256": "b7f6f9483f1dafe7f14bc3c68af40b2f4f7b1d963a587aea2eebf42f961e9de0",
+      "bytes": 21904
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.113.ttf",
+      "file": "b8c86da2ec8c9139ba1f.woff2",
+      "sha256": "b8c86da2ec8c9139ba1f97eb499cf912c2788abbd5ebee0aaaacf242796c94e8",
+      "bytes": 130124,
+      "originalSha256": "dfd678b7818b81ec40d5535be6c556c646f2a7940aa4ce0d065a029d1e6e51a1"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.87.woff2",
+      "file": "b95cee9ae53563a52cd5.woff2",
+      "sha256": "b95cee9ae53563a52cd5334d7d493c37bebd92e5b55766c6631837dcd6157179",
+      "bytes": 22160
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.103.woff2",
+      "file": "ba28061072aa52d90e4e.woff2",
+      "sha256": "ba28061072aa52d90e4e59047002ca690096f05761dc8c39e25e391382940452",
+      "bytes": 24540
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.70.woff2",
+      "file": "bb63ef23f89e85edf50d.woff2",
+      "sha256": "bb63ef23f89e85edf50db0056700089f79f0068e77c4e43859613df4daf5c558",
+      "bytes": 47984
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.36.woff2",
+      "file": "bbd7bab88d38291e16b4.woff2",
+      "sha256": "bbd7bab88d38291e16b44cb5393200f6bbc26dda1277d86508488163f4e3247f",
+      "bytes": 65712
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.77.woff2",
+      "file": "bc249f82f40ec61d6ec0.woff2",
+      "sha256": "bc249f82f40ec61d6ec096c748603fdb4e946adaf659392b06c6810169e81513",
+      "bytes": 36664
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.40.woff2",
+      "file": "bc56053748906bdee297.woff2",
+      "sha256": "bc56053748906bdee2971a3b68452bff41b049dfb8374c99d1cf21f255e21e1c",
+      "bytes": 65716
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.71.woff2",
+      "file": "bc67dedf5473be5cdf05.woff2",
+      "sha256": "bc67dedf5473be5cdf05a28d669a0a2ada8951cfbe385d249b05602e123e7178",
+      "bytes": 22188
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.10.ttf",
+      "file": "bc6f4719bd68c35948e8.woff2",
+      "sha256": "bc6f4719bd68c35948e865e8956c48ef9380ad34ed90ecdb38e506109bce39ff",
+      "bytes": 21612,
+      "originalSha256": "13ecc33e0f25c1612c70445df2ffd3d4c2052bb334f7d89445b9f4136ff1523e"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.59.woff2",
+      "file": "bc77d2fe7bc7644bcb96.woff2",
+      "sha256": "bc77d2fe7bc7644bcb9632e5bb71a387fb8f3289367eb9a51c33348bcb3f133d",
+      "bytes": 25076
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.37.woff2",
+      "file": "bcbdf5fd7899c7ed192a.woff2",
+      "sha256": "bcbdf5fd7899c7ed192a0c89de9c6c92477be74b8c2343e74914359bfd32a10f",
+      "bytes": 53356
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.36.ttf",
+      "file": "bd950e9c0d20ef7a2a20.woff2",
+      "sha256": "bd950e9c0d20ef7a2a20f5acdbf8d5080b459e049cbd27406359798bc225f352",
+      "bytes": 87212,
+      "originalSha256": "a76cf61f450dcb22de6fb34abe3454592367fe46616576ef9a387f258a2cd0e8"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.104.woff2",
+      "file": "bf2d4809fe1a35222dae.woff2",
+      "sha256": "bf2d4809fe1a35222dae76bd03837f8e2f7ac88886b2641c2ac3c10bdb39422a",
+      "bytes": 19988
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.52.woff2",
+      "file": "bf40713c12d0ae841b4c.woff2",
+      "sha256": "bf40713c12d0ae841b4cbe9d487724e4ee780fdb84844a96ba8ebae6b79a3191",
+      "bytes": 51772
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.52.woff2",
+      "file": "bf46a73423af3e90d9a3.woff2",
+      "sha256": "bf46a73423af3e90d9a3c98dd739ad0390b992241fff9770db316bcd5b5a0ce4",
+      "bytes": 22072
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.97.woff2",
+      "file": "bf6a8fd77c9286c9e465.woff2",
+      "sha256": "bf6a8fd77c9286c9e4659e63f1ff99bc4122a931e3af28087759c560cef2de33",
+      "bytes": 19920
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.5.woff2",
+      "file": "bfb61f5704c50cfb4acc.woff2",
+      "sha256": "bfb61f5704c50cfb4acce0597a566e77b4c2b9cca51536c40998addde6c0084e",
+      "bytes": 20664
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.111.woff2",
+      "file": "c098d730dbc3ed4266ce.woff2",
+      "sha256": "c098d730dbc3ed4266ce154084d915cf73f27d56d8cf1cff267231aaa6d12d42",
+      "bytes": 17392
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.7.woff2",
+      "file": "c0aa2daa7efe28430628.woff2",
+      "sha256": "c0aa2daa7efe28430628439d1f927d698fd9b98fce4ce8068a7251e34e75237e",
+      "bytes": 20856
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.34.ttf",
+      "file": "c0d54f7604418cab4ae3.woff2",
+      "sha256": "c0d54f7604418cab4ae36f2ddf60489166b8e9aa08845633f2603ec75f093da9",
+      "bytes": 81248,
+      "originalSha256": "7ad6ad91603aa5394599fe20f0957ce8232b4a943453826797af2413404be57b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.90.woff2",
+      "file": "c127e770573e3f240dcb.woff2",
+      "sha256": "c127e770573e3f240dcb3bf4448e2ee1763926875b7369a4243e0bfbc0ed26aa",
+      "bytes": 41768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.12.ttf",
+      "file": "c3de5f6fdf3d63ec0abf.woff2",
+      "sha256": "c3de5f6fdf3d63ec0abf1f55aa0285f0e52666838f442b696dca9dbed926b45e",
+      "bytes": 61304,
+      "originalSha256": "aa1f8cf7753a98da2d1877a065041a0a11e733e9cb7f7e3077190ef6182e6f4b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.107.woff2",
+      "file": "c41523b6bb431cbeea77.woff2",
+      "sha256": "c41523b6bb431cbeea7721009dc07164a9b06a7f3b57934d40ee00326ec3e341",
+      "bytes": 18784
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.114.woff2",
+      "file": "c49b2eb658a0c2d76de9.woff2",
+      "sha256": "c49b2eb658a0c2d76de9a279945de30bf32acd8fdd6d56cf84aea9c6b14aacae",
+      "bytes": 57740
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.77.ttf",
+      "file": "c4e0836f46873a3632d9.woff2",
+      "sha256": "c4e0836f46873a3632d97654c1f0a59e9262168cf15838a62ed17d64d82bd7e0",
+      "bytes": 59188,
+      "originalSha256": "8aec2edd0e46045df8d390223c51fcd7e1ccaa2984a44eaa5d9ec120c18975f5"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.48.woff2",
+      "file": "c4f53f8b05fa6350ac20.woff2",
+      "sha256": "c4f53f8b05fa6350ac20f8a12b550f9634ed31b084dc50b1263f2080e392b9f7",
+      "bytes": 50616
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.42.woff2",
+      "file": "c53279f786dde3590baf.woff2",
+      "sha256": "c53279f786dde3590baf0343d080fad8c7bd976e9dccecd2adea893cfad2f99a",
+      "bytes": 45432
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.31.woff2",
+      "file": "c5c0f181c992642b9dbd.woff2",
+      "sha256": "c5c0f181c992642b9dbd8f4a0933387390c53db8205ca3b793a114ba35d04b87",
+      "bytes": 23436
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.76.woff2",
+      "file": "c676893087a2ab759dbc.woff2",
+      "sha256": "c676893087a2ab759dbc479b3bbb9a612d6cf52904ed53457d3ae791d69c4396",
+      "bytes": 20528
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.95.woff2",
+      "file": "c6b6b101cc6e1dd5de4a.woff2",
+      "sha256": "c6b6b101cc6e1dd5de4a9f0957b60a3ecb53ac441e218a883f13bb010bfc4ed1",
+      "bytes": 53704
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.28.ttf",
+      "file": "c782760c562024e0c8f8.woff2",
+      "sha256": "c782760c562024e0c8f8eba96bf12e18adb9648f30e97eb4f3bd4d6faf7ef367",
+      "bytes": 88620,
+      "originalSha256": "9d8dce6f36a40c55ddef9a5cd8856533e4b0e01150e12c5f8434faeebd9182bb"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.69.woff2",
+      "file": "c7d1f5b0f95f358dee4c.woff2",
+      "sha256": "c7d1f5b0f95f358dee4cf9e76eda5c0465eb9d0f4e21a13ef39d0cf8761e5b9d",
+      "bytes": 55520
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.66.ttf",
+      "file": "c804f7d4de753b07319d.woff2",
+      "sha256": "c804f7d4de753b07319d37b5c42708701444049d84a64017d045bd538e72aa0a",
+      "bytes": 77200,
+      "originalSha256": "61d8ac56b96e445132e6fbe1852e73041992eb57fdc575f957af96094f3c4e77"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.25.ttf",
+      "file": "c908bef60b215ed540ef.woff2",
+      "sha256": "c908bef60b215ed540ef13fdad44fda8421ed216385a34d58c2b1b586554e915",
+      "bytes": 93024,
+      "originalSha256": "73a8916274f4c28ae39816966fbc9c0fff1b01503abd79f8e719cfc42888357b"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.80.woff2",
+      "file": "c9ce6e0654379a2dd291.woff2",
+      "sha256": "c9ce6e0654379a2dd291a6f29323ff2d7f06156389ffb3e4d087a9d211887a6b",
+      "bytes": 32448
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.38.woff2",
+      "file": "ca375e4a6ecc23033365.woff2",
+      "sha256": "ca375e4a6ecc230333656ad11081b26e6b8f3240f4160e22f75150d4fdddcc9f",
+      "bytes": 54424
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.45.ttf",
+      "file": "cbd175f993038630273b.woff2",
+      "sha256": "cbd175f993038630273ba6f5aef881a2cb15189f781fa20e94cc8e348c3865e5",
+      "bytes": 53272,
+      "originalSha256": "5750b90da1536065d56fe8364ee689b81cfae1102398cba22efaabfc74036b6d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.102.woff2",
+      "file": "cc20c986d54a91c49740.woff2",
+      "sha256": "cc20c986d54a91c49740e274693030fe0fa34f060113f36f6735afad2c53c77c",
+      "bytes": 20824
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.98.woff2",
+      "file": "cc4ea982856185c8a23b.woff2",
+      "sha256": "cc4ea982856185c8a23b1bd32c7fd508a382cd844d61be143630e260d75cf44c",
+      "bytes": 12196
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.50.woff2",
+      "file": "cc5454ba0e72d0920aef.woff2",
+      "sha256": "cc5454ba0e72d0920aefea4d776d6569ad1efacdece506b049a38f17e1fe1ceb",
+      "bytes": 60672
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.41.woff2",
+      "file": "cc55968d557c21f986e3.woff2",
+      "sha256": "cc55968d557c21f986e3f07139af37b2bf4b3520306e1329107accaddf0e2817",
+      "bytes": 79272
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.56.woff2",
+      "file": "cc5fe9a6dedd91e7b954.woff2",
+      "sha256": "cc5fe9a6dedd91e7b95482713b12c84d99a04f90d5124e50db3efa9f2450923f",
+      "bytes": 53332
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.85.woff2",
+      "file": "cce97c39b9304c87e55e.woff2",
+      "sha256": "cce97c39b9304c87e55ed84d511d479afd3343b91c04b3ac7bdc5beb9ecf709d",
+      "bytes": 26768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.96.woff2",
+      "file": "ccf139ce62b0e9aa0dc6.woff2",
+      "sha256": "ccf139ce62b0e9aa0dc62ac5631d00119143bfb6947308e67f868ed66a9af47f",
+      "bytes": 22124
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.114.woff2",
+      "file": "ce324843172afe1f1fd3.woff2",
+      "sha256": "ce324843172afe1f1fd37760edd73c97e5c5611fe985402735b91e1f5341e859",
+      "bytes": 16632
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.25.woff2",
+      "file": "cebdef12870a7f513643.woff2",
+      "sha256": "cebdef12870a7f51364375872a94fbf513df518cfa53b8f60d316030b4b174b8",
+      "bytes": 19672
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.73.ttf",
+      "file": "cecb0b57e2a2174ac52b.woff2",
+      "sha256": "cecb0b57e2a2174ac52b31e2aa7ebb4a34eee3cbf863e399183af48cc932b703",
+      "bytes": 82044,
+      "originalSha256": "a9cf1888988375e3d21b5a10b3db05f86e61879a50515cd0a563913dc10ea2bd"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.102.ttf",
+      "file": "cece68f550bfc928ac2e.woff2",
+      "sha256": "cece68f550bfc928ac2e62543e9b7800be25b9b552712fbe1f6d07824927fb4b",
+      "bytes": 8744,
+      "originalSha256": "48b3c591134daa78e1293dc8f37aa2146dd71b0aa8da300b36a5963118102ae5"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALRLoKI.woff2",
+      "file": "cf5346b0747cd71123c8.woff2",
+      "sha256": "cf5346b0747cd71123c8f74da0ad41fc0f63eda07b9d8e0382e00882ae743733",
+      "bytes": 24880
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.18.woff2",
+      "file": "d0c7657351e2464343bc.woff2",
+      "sha256": "d0c7657351e2464343bc75a8b1b24b69a5cd856fe90e18f655cddd1e0694fa85",
+      "bytes": 80760
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.78.woff2",
+      "file": "d0ee3df1144c38df3747.woff2",
+      "sha256": "d0ee3df1144c38df3747d3c1b1cae12cc8eb9831d1289d6fea1d70ebdb3b4866",
+      "bytes": 48300
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.2.woff2",
+      "file": "d141c4cae5604c6fa073.woff2",
+      "sha256": "d141c4cae5604c6fa073a2ceb2dbd7e6058392fd7d997466d43b9df9d60e9bea",
+      "bytes": 35768
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.12.woff2",
+      "file": "d1f61454a6542a100e5d.woff2",
+      "sha256": "d1f61454a6542a100e5da343908a4a97bfcefa4eb7b4f1d3a0d424ccddae1ec8",
+      "bytes": 22572
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.110.woff2",
+      "file": "d264b7fb4eb86901d080.woff2",
+      "sha256": "d264b7fb4eb86901d0800d80d069b6940b6686f9929dd14909354d39d47205ad",
+      "bytes": 17796
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.106.woff2",
+      "file": "d31c838eb0e43043109b.woff2",
+      "sha256": "d31c838eb0e43043109bd6ddc23c295c340fc50f9a2f2381076ae8c0fa7f980b",
+      "bytes": 62444
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.79.ttf",
+      "file": "d458711154367897a169.woff2",
+      "sha256": "d458711154367897a16935ac91a967c3e2fc3aae98e1aff7bbd7a80cd88e126a",
+      "bytes": 66908,
+      "originalSha256": "ad48f6f33aa72c43c77594686fd2def3478403b7437a3fc147943377a1b44bbd"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.64.woff2",
+      "file": "d490960a491521936b84.woff2",
+      "sha256": "d490960a491521936b84a4be078a9570444960a2dc73c584b802d2c9c8fba1c1",
+      "bytes": 41408
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.46.woff2",
+      "file": "d4a75aa10eb4487dcd94.woff2",
+      "sha256": "d4a75aa10eb4487dcd94ff2009ef0f185d35f0e3264fa87532887c5c1517c816",
+      "bytes": 57520
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.62.woff2",
+      "file": "d532c89a0da063c68ce8.woff2",
+      "sha256": "d532c89a0da063c68ce871a7f85fa75448efc3089335e012f107d80618512fd4",
+      "bytes": 58956
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.47.woff2",
+      "file": "d5c48bd3b5502918adf2.woff2",
+      "sha256": "d5c48bd3b5502918adf253c96909f27be4eda7653fc0254a6564557b516cb2e1",
+      "bytes": 55972
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.117.woff2",
+      "file": "d602fe02018943163f91.woff2",
+      "sha256": "d602fe02018943163f91e7418a82c71b6fbb37882d4089fbdb543534b4fb8c2e",
+      "bytes": 14296
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/kulimpark/v15/fdN49secq3hflz1Uu3IwjIYI8alQZA.woff2",
+      "file": "d7363fce0ff808a655a1.woff2",
+      "sha256": "d7363fce0ff808a655a16719968c83dcd2fc94e299e5cb8e9773007ca8ecdeec",
+      "bytes": 16940
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.87.woff2",
+      "file": "d77c4521e11e3638bb0a.woff2",
+      "sha256": "d77c4521e11e3638bb0ac5260dd5dcad1eca3bd3dfe7f507ab56cd444c8a919c",
+      "bytes": 44752
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.52.ttf",
+      "file": "d7b1f43ac3b48d471653.woff2",
+      "sha256": "d7b1f43ac3b48d4716533a29db52f2e9b8ed11b368692de896943301a2b8a8fb",
+      "bytes": 79148,
+      "originalSha256": "fb7d6c57209986f9e8f77a9f2a9992add98a281be8167a1c9d123416fe03f92c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.48.woff2",
+      "file": "d7b4a8e4ea5396f4150f.woff2",
+      "sha256": "d7b4a8e4ea5396f4150fe1b5dd938c36f2b0b623fc2bb16e4ce78a89abd2aa3b",
+      "bytes": 74976
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.107.woff2",
+      "file": "d8d9b5fd2b266fdf3f68.woff2",
+      "sha256": "d8d9b5fd2b266fdf3f6855444e7769e54f39806e48994e7fe5e0c4ace9553c81",
+      "bytes": 60828
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.51.woff2",
+      "file": "d978ffe7cda0c73bba55.woff2",
+      "sha256": "d978ffe7cda0c73bba55ccaec085da12ce7f0d6cf8a380fb10fce2256d4faef0",
+      "bytes": 57624
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6mlZ-9cQPg.ttf",
+      "file": "d97f67693d67860c69fc.woff2",
+      "sha256": "d97f67693d67860c69fc96a2c3f5c3cc19448397428017b26f8c1768e234f482",
+      "bytes": 17616,
+      "originalSha256": "0526985a4656fe5e2a858e4df1f72269db6bd96f01645c9c9e1064a40da65959"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.111.ttf",
+      "file": "da106dd3a92b7d75e20e.woff2",
+      "sha256": "da106dd3a92b7d75e20eb6a5fd90734ce77a290ac5ed096f915a433754edf926",
+      "bytes": 134688,
+      "originalSha256": "9d8bea829d2021a01877c0a1a2160c9ae86486473d8a6aba315e922ce57336b9"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.7.woff2",
+      "file": "da52221302eb4c831009.woff2",
+      "sha256": "da52221302eb4c831009eb0c5cc343b5e8a1c925a09778ae84c3f80ddb206088",
+      "bytes": 86508
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.19.woff2",
+      "file": "da54aa4e260c3cd81ff1.woff2",
+      "sha256": "da54aa4e260c3cd81ff1b44fc9af08d79dfa51723fd242d7d2008c2b177f766a",
+      "bytes": 24932
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.57.woff2",
+      "file": "da955ad6276b6a85ba46.woff2",
+      "sha256": "da955ad6276b6a85ba46cf8cbf244dc079c79d13c5fceddf4309618c7380a51f",
+      "bytes": 21116
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.54.woff2",
+      "file": "db60ee4c755151c03600.woff2",
+      "sha256": "db60ee4c755151c036004e39bde39fa9676c6a9d1753d9842ae1a7b2e5899b83",
+      "bytes": 51816
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.79.woff2",
+      "file": "db79df334235f3d72cc0.woff2",
+      "sha256": "db79df334235f3d72cc0a7e625bfee1c3d6a76104af15e0814c4926ceee6188e",
+      "bytes": 41064
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.6.woff2",
+      "file": "dc12bd2a7d73cee082d5.woff2",
+      "sha256": "dc12bd2a7d73cee082d5435d7608626b845d2f65dfdfef298a29229c0d77d535",
+      "bytes": 92752
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6mld-9c.ttf",
+      "file": "dd282c2124ff5e37cd80.woff2",
+      "sha256": "dd282c2124ff5e37cd80b934d95e9d0e4984ef19a37e39fa625ca33818117df2",
+      "bytes": 38236,
+      "originalSha256": "f04b08cb9113171560a9db35442154ee7a94fcf3a78c1066389bbff44cd22c43"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.63.ttf",
+      "file": "dd9dcf9f9c8db587c230.woff2",
+      "sha256": "dd9dcf9f9c8db587c230ba6024d7eae2a6b2288c9b035acd72b79f30785efcd6",
+      "bytes": 63776,
+      "originalSha256": "3b2f17f04e19ccfe3932c2fdeb75f14499cc846adc53cd61ea3d85a13111a848"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.93.ttf",
+      "file": "de9c676615339d6a8ef1.woff2",
+      "sha256": "de9c676615339d6a8ef1278ffc91f6799a23327598cb610b9fcb2d1f2cd2b714",
+      "bytes": 14252,
+      "originalSha256": "2c7a56073f1a6b57dd61dbdcb068fc7cd67c0d7629792d003721170fc7b8eb9d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.31.woff2",
+      "file": "def5793483c7abc922de.woff2",
+      "sha256": "def5793483c7abc922de654bc16262646c9ae263819e663990b52fd56a3d5d69",
+      "bytes": 47084
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.118.woff2",
+      "file": "df20f01d9fa1c1d10485.woff2",
+      "sha256": "df20f01d9fa1c1d10485d4a6aea5dba2c9601c9c4cf6d7c4419c34da7ba7e463",
+      "bytes": 18372
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.54.woff2",
+      "file": "e005a153e14c3cbee359.woff2",
+      "sha256": "e005a153e14c3cbee35946ab1c04d38027201599fa9792cfb537f730a2765f1c",
+      "bytes": 20876
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.47.woff2",
+      "file": "e08eeaee07af79b1a0e1.woff2",
+      "sha256": "e08eeaee07af79b1a0e13fb6a792be3a9aabe7c1aa012e6b8413e1b6b7171982",
+      "bytes": 70804
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.89.ttf",
+      "file": "e172dc669160b684b16c.woff2",
+      "sha256": "e172dc669160b684b16c0c8fe64e50448c2279468d7dacad1cc7a2b08de4006c",
+      "bytes": 58628,
+      "originalSha256": "ee03ed5cda3d1d6f5e20a0679253e235d736659a4d7a9960eb50d9259f0ac1c6"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.3.woff2",
+      "file": "e192c11911121d576547.woff2",
+      "sha256": "e192c11911121d5765478da4f949b97b3186d9db9ec73e2f2331763352c36047",
+      "bytes": 24668
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.84.woff2",
+      "file": "e1b9b9aee81a74fc4ec1.woff2",
+      "sha256": "e1b9b9aee81a74fc4ec19e1709c64a0042d9d898a2f00f6c3b2012564b6a4783",
+      "bytes": 32516
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.109.woff2",
+      "file": "e1be5f30719497b34604.woff2",
+      "sha256": "e1be5f30719497b3460457d611fa8645149930e0b1755e259b7238503d1a23cd",
+      "bytes": 17912
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.91.woff2",
+      "file": "e1fd8dda3c24bce06821.woff2",
+      "sha256": "e1fd8dda3c24bce06821ae3c2c689b3b4342e7de53d43d5141db3e5db9ff2391",
+      "bytes": 21932
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.62.ttf",
+      "file": "e2a28623fcd0e6e48fe0.woff2",
+      "sha256": "e2a28623fcd0e6e48fe0a9d66e3773c15e1c488cc7b411d766dc325cf72d24b8",
+      "bytes": 77068,
+      "originalSha256": "065583a7f0f4f9543c4272eb98e9dac18c2e60e33dc82f20d6bbf5142d25176d"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.64.woff2",
+      "file": "e2d4027723fa4b57bfd3.woff2",
+      "sha256": "e2d4027723fa4b57bfd3fe39103ae76b8070f39dd055b22f743b971aea07c1ef",
+      "bytes": 27260
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.54.woff2",
+      "file": "e3989740a8776e342dcb.woff2",
+      "sha256": "e3989740a8776e342dcb2b32689c29db3766204ca2328ca0f0e2dc8453c72376",
+      "bytes": 31060
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.22.woff2",
+      "file": "e3c47107b84fa9ade38b.woff2",
+      "sha256": "e3c47107b84fa9ade38b11bc22a54510e387487df9df000921492e08034cdaf6",
+      "bytes": 79644
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.107.ttf",
+      "file": "e3f520c4cc628bceee1a.woff2",
+      "sha256": "e3f520c4cc628bceee1a6e263803de6e625209a5f0f0b59b96e60c4f7a0cddd4",
+      "bytes": 131108,
+      "originalSha256": "503db022bcc98632c4c4b9a2f65d371e5daea5b951069f0c579a1f7e1705790f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.75.woff2",
+      "file": "e4317b377de03f06c1dc.woff2",
+      "sha256": "e4317b377de03f06c1dc7433c938254f6c27c42e408703711c216259c45052e6",
+      "bytes": 56660
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.113.woff2",
+      "file": "e432f58c6b07476e1eb4.woff2",
+      "sha256": "e432f58c6b07476e1eb4edb9c55726aeb2fa361b5b494047f6670e92cee93cc5",
+      "bytes": 16380
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.104.ttf",
+      "file": "e60989357a704c5fc666.woff2",
+      "sha256": "e60989357a704c5fc6668b49292a069a879a1140c7214da2967ffae0e6c1d83f",
+      "bytes": 123488,
+      "originalSha256": "0d5e6d2df008e56837873db434a3af42c739abf6eab2a4ca8da863f77cb91121"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.17.ttf",
+      "file": "e60aa0998aea2e9d778d.woff2",
+      "sha256": "e60aa0998aea2e9d778d7d0e9dc02e791b330ea3dc50c443ffec86f4b6443cb6",
+      "bytes": 26900,
+      "originalSha256": "22b2f862b998df34af229bc8fac8bf8ba1ec737e6f607a1b3ee88b0ca3f38ba6"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.76.woff2",
+      "file": "e6a952c208a5c5096aa6.woff2",
+      "sha256": "e6a952c208a5c5096aa65cce48a9f0f014a777fcc1804aefe47bc642da313bf8",
+      "bytes": 48420
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.70.ttf",
+      "file": "e6e364e003fc8fe835e4.woff2",
+      "sha256": "e6e364e003fc8fe835e4d275b869296c1a0f6e309acf7654e485c97d33ed6633",
+      "bytes": 93876,
+      "originalSha256": "d68dd2f37529732921ee555805313a822057710595b4b13ded3073ee069cc449"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.39.woff2",
+      "file": "e73a947fa1fb1a7385e9.woff2",
+      "sha256": "e73a947fa1fb1a7385e9d654fa0fe7dd8a2241e9b73282f67941c650c94de326",
+      "bytes": 51616
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.31.woff2",
+      "file": "e85e928c6b709b9f987e.woff2",
+      "sha256": "e85e928c6b709b9f987e664bc604d493ab5b9476e9d33f88c2dac117d4751f49",
+      "bytes": 89176
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.60.woff2",
+      "file": "e9155b6c04982ce0e84b.woff2",
+      "sha256": "e9155b6c04982ce0e84b31cd26c2434bd682e5d20f8b122a6e0cb62c9d9d5952",
+      "bytes": 25344
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.32.woff2",
+      "file": "e9208c7e17742428baae.woff2",
+      "sha256": "e9208c7e17742428baaeadb229da09043ccf4339c2b3b74b474513ace7900e07",
+      "bytes": 26184
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.79.woff2",
+      "file": "e92af94fb5167ac274bf.woff2",
+      "sha256": "e92af94fb5167ac274bfbb2d4aef5f101313f6fd34cd26273bf9cc3b2a1e6fe8",
+      "bytes": 22284
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.26.ttf",
+      "file": "e99db21b0e3c74117ec7.woff2",
+      "sha256": "e99db21b0e3c74117ec78974a9d230e59f9f002b709df6ce7c15dcce2da3c332",
+      "bytes": 88880,
+      "originalSha256": "50b1ed9c907323bfddaf7521ea19d741f5929e6c6b5e7b4d0713359283aa576c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.74.woff2",
+      "file": "e9fb4398da6c2a84c47d.woff2",
+      "sha256": "e9fb4398da6c2a84c47d7112c368cc41028a51321a1474f9a3f9c66eed0064d9",
+      "bytes": 54260
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.45.woff2",
+      "file": "ea12aaa5635e53eaf742.woff2",
+      "sha256": "ea12aaa5635e53eaf7429500be57e9e8a6030e0906f985426412a1303761f77f",
+      "bytes": 67436
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.116.ttf",
+      "file": "ea1537b7d95d977ca385.woff2",
+      "sha256": "ea1537b7d95d977ca38544f009a5fd416315da2cac275ca8bf260cc7999c35ad",
+      "bytes": 129668,
+      "originalSha256": "76edcf87450f4a1ee0572e3e83d0d10aca1818e055f17fb9287acd6ee83df989"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.65.woff2",
+      "file": "eab9d56485fcd7cb1553.woff2",
+      "sha256": "eab9d56485fcd7cb1553e00d36b79641b0fd1534de0a96895ef426a1b01b01da",
+      "bytes": 22184
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.74.ttf",
+      "file": "eba50d9fde5d0c4c9de3.woff2",
+      "sha256": "eba50d9fde5d0c4c9de30fd2172be114a3794ba704828b9238b04e218ae632e3",
+      "bytes": 60864,
+      "originalSha256": "cc518397b5924ad0f3b0bf4f6e55d3564bfe7c3da3fc0c55dc754f7d2fb5c0d6"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.92.ttf",
+      "file": "eba6d35cde4dcf480556.woff2",
+      "sha256": "eba6d35cde4dcf480556c19bde0a1a0a3e384aaa473a0064f65ae5557a5f4383",
+      "bytes": 9200,
+      "originalSha256": "017b677696067d6a9046864dd303d804c06218e7bb2d36110a0f1d77d81e1d00"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.100.woff2",
+      "file": "ebd0b58e4285446db646.woff2",
+      "sha256": "ebd0b58e4285446db646c1e0844338128ca992419a48f2e78ff69ecbff26c788",
+      "bytes": 22876
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.42.ttf",
+      "file": "ecc0b5cfdc1b4d6f3c8b.woff2",
+      "sha256": "ecc0b5cfdc1b4d6f3c8bb9f63b3c58c7ce003a28dc40c9d9fad754f27380ffee",
+      "bytes": 86696,
+      "originalSha256": "a54838cbbae0bf564f56322e8ecb5f70d9787856ce341a3cedd845276dc0d63f"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.72.woff2",
+      "file": "ed7c93bdb8040c438b48.woff2",
+      "sha256": "ed7c93bdb8040c438b481bf5536e5f1fc6d630205b2c3ca2d05dc4e8b6cbd9a6",
+      "bytes": 45580
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/kulimpark/v15/fdN49secq3hflz1Uu3IwjIYI8adQZIUv.woff2",
+      "file": "ee41cf317aaa963108c3.woff2",
+      "sha256": "ee41cf317aaa963108c31ba39aeccc63bbf12c630e20e2c5911c07b875d0ca40",
+      "bytes": 8964
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.93.woff2",
+      "file": "ee4e09ca8eed2c610455.woff2",
+      "sha256": "ee4e09ca8eed2c6104556ac196d930942a84f120b9a63a396197ffd465bdaf95",
+      "bytes": 28936
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.23.ttf",
+      "file": "ef94b2ff90743b9f95c3.woff2",
+      "sha256": "ef94b2ff90743b9f95c3c746f0d45c2d1b3715aa54d3a9ccace936d6f20cb8d2",
+      "bytes": 76520,
+      "originalSha256": "1e21d3611b8566a90485483c6466871a5f4a081014c7400de0a42a946fc56249"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.6.woff2",
+      "file": "f056efc8518d4a9c6261.woff2",
+      "sha256": "f056efc8518d4a9c6261be4b1adbf3bf19f6d3a642c32e3545d3a5e9ea263507",
+      "bytes": 20420
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.13.woff2",
+      "file": "f0ce22495d9d09da6cd8.woff2",
+      "sha256": "f0ce22495d9d09da6cd8e5781bd0468117a63c8d8325f46dad2432f74695d5cd",
+      "bytes": 22452
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.23.woff2",
+      "file": "f1fbf7a5a012b41a2b10.woff2",
+      "sha256": "f1fbf7a5a012b41a2b10f943cd88a9aed44a61bc58f6be79538417f504e175c1",
+      "bytes": 80124
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.118.woff2",
+      "file": "f26330ce4056382832c0.woff2",
+      "sha256": "f26330ce4056382832c0f2a0d7f411e0b4140fc87937e8865d91664410cfb98c",
+      "bytes": 45992
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.46.woff2",
+      "file": "f26c4f0c361f03094a7b.woff2",
+      "sha256": "f26c4f0c361f03094a7b5d55747873e2474c65d36a7ffc3383d86ca9c3328b18",
+      "bytes": 20792
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.95.ttf",
+      "file": "f3191e223e0c08942e73.woff2",
+      "sha256": "f3191e223e0c08942e739e75ac3f7b9803c01950bc185ed59cfce840ab29c711",
+      "bytes": 17328,
+      "originalSha256": "1029b12b196d3419132227d59e1654a311a9e442fd7fd325032a3abe89799ad5"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.109.woff2",
+      "file": "f5861b584d084262ffbc.woff2",
+      "sha256": "f5861b584d084262ffbca3f362a9c3b5b27b477e3e33f1de340ca61fa4f624b1",
+      "bytes": 16552
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.86.woff2",
+      "file": "f62d69028625acc5a1c0.woff2",
+      "sha256": "f62d69028625acc5a1c0ccca24734b0f3f05a381e0fea992e9d15174300a705d",
+      "bytes": 51472
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.82.ttf",
+      "file": "f66d9a6732a2795ddfaf.woff2",
+      "sha256": "f66d9a6732a2795ddfafa6699d116906d2349597a0ebc5f1651f8c46619ade89",
+      "bytes": 74708,
+      "originalSha256": "8e00bcceebc064b61f0881af4f7c463a5c98a56262a2948b8f31b90dedcd9804"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.58.ttf",
+      "file": "f78c02d886bef3ec75ec.woff2",
+      "sha256": "f78c02d886bef3ec75ec19b9c8791daabf637abd9931887f9affd5a14aa860b4",
+      "bytes": 76052,
+      "originalSha256": "664b3c3a7ede0fcd6ce355517bec6d6effa7a557c36dc4b6903340f6c5a96e16"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.92.woff2",
+      "file": "f8c808a6d9f73fb7ada3.woff2",
+      "sha256": "f8c808a6d9f73fb7ada3239f23a249f23e2b448797fce83592d48aecb75ff7ad",
+      "bytes": 21048
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanskr/v40/PbykFmXiEBPT4ITbgNA5Cgm20xz64px_1hVWr0wuPNGmlQNMEfD4.49.woff2",
+      "file": "f9064e2791af6e50738d.woff2",
+      "sha256": "f9064e2791af6e50738de7889591c4ed543dbaf28a68389f5e7f35c62524a8e2",
+      "bytes": 22752
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.48.ttf",
+      "file": "f983cf01259ed897d4ed.woff2",
+      "sha256": "f983cf01259ed897d4ed70580ba805465f52dce81632d3abf2a5fa6ef6a03c68",
+      "bytes": 77556,
+      "originalSha256": "2dcbbcede9cd4baa150fd1509679da32a3aa9df308cf58c296dcb45e1375515c"
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosanssc/v41/k3kXo84MPvpLmixcA63oeALhLOCT-xWNm8Hqd37g1OkDRZe7lR4sg1IzSy-MNbE9VH8V.24.woff2",
+      "file": "fc59757db66129052cd8.woff2",
+      "sha256": "fc59757db66129052cd8e4248045f92f8273b37f719be2a058a55859de190a0e",
+      "bytes": 62552
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/kulimpark/v15/fdN79secq3hflz1Uu3IwhFks5A.woff2",
+      "file": "fca595b2fe191f2e76fc.woff2",
+      "sha256": "fca595b2fe191f2e76fc527b369b89d0ac612f224d7d658d0cada96e4102802a",
+      "bytes": 16892
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/notosansjp/v57/-F62fjtqLzI2JPCgQBnw7HFow2oe2EcP5pp0erwTqsSWs9Jezazjcb4.49.woff2",
+      "file": "fe62957e56664b562153.woff2",
+      "sha256": "fe62957e56664b562153beb1cf3d9a8badbee6c9d41b8eda273df93c52f1e8e7",
+      "bytes": 62512
+    },
+    {
+      "url": "https://fonts.gstatic.com/s/chirongoroundtc/v5/tss3AopDbiwZ4xauFDX3yQ3Ywoaj6llamcgiJGwdhXbD0DDGckRPxUXxvfrnfmZAtsig93tBcEdw.103.ttf",
+      "file": "ff0091069c599f3b3d9e.woff2",
+      "sha256": "ff0091069c599f3b3d9eca81bdb98644215a044bec1789bbc265b0ad45404d9e",
+      "bytes": 17612,
+      "originalSha256": "c7344e1e49c1903c628190bbbcb9a01d5a0e3ac6a846f5c6925ea1a70c313ee0"
+    }
+  ]
+}

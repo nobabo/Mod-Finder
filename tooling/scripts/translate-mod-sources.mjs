@@ -1,6 +1,7 @@
 import { readFile, writeFile, mkdir } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
+import { validateCatalogText, readTranslationResponse } from '../lib/catalog-text.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const sourceDir = join(root, 'output/mod-translation-source');
@@ -39,8 +40,7 @@ async function fetchGoogleTranslate(query) {
         signal: AbortSignal.timeout(15000)
       });
       if (res.ok) {
-        const data = await res.json();
-        return data[0].map(item => item[0]).filter(Boolean).join('');
+        return await readTranslationResponse(res);
       }
       if (res.status === 429 || res.status >= 500) {
         console.warn(`[HTTP ${res.status}] Retrying after pause... (attempt ${attempt + 1})`);
@@ -60,7 +60,7 @@ async function translateSingle(text) {
   if (!text || !text.trim()) return text;
   try {
     const result = await fetchGoogleTranslate(text);
-    return result.trim();
+    return validateCatalogText(result.trim(), 'translation');
   } catch (err) {
     console.error('Failed single translation:', err.message);
     return text;
@@ -94,7 +94,7 @@ async function translateBatch(items) {
       const contentStart = startIdx + currentToken.length;
       const endIdx = i < items.length - 1 ? trans.indexOf(nextToken, contentStart) : trans.length;
       const part = endIdx !== -1 ? trans.slice(contentStart, endIdx).trim() : trans.slice(contentStart).trim();
-      results.push(part);
+      results.push(validateCatalogText(part, 'translation'));
     }
 
     if (!hasMissing && results.length === items.length) {
@@ -132,7 +132,8 @@ async function processGame(gameId) {
   // Find keys that need translation
   const toTranslate = [];
   for (const key of keys) {
-    const val = original[key];
+    const val = validateCatalogText(original[key], 'original', 1800);
+    if (existing[key] !== undefined) validateCatalogText(existing[key], 'existing translation');
     if (!val || !val.trim()) {
       existing[key] = val; // Empty or whitespace
     } else if (existing[key] && existing[key].trim()) {

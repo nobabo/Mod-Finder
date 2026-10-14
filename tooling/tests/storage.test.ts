@@ -4,6 +4,24 @@ import { mapModrinth } from '../../src/server/adapters';
 import { GAMES } from '../../src/shared/games';
 const item = mapModrinth({ project_id: 'saved', title: 'Saved', categories: [] }, GAMES[0], 1);
 describe('persisted data boundary', () => {
+  it('requires opt-in for Thunderstore payloads while preserving bookmark identities and folders', async () => {
+    vi.stubEnv('VITE_ALLOW_THUNDERSTORE_PERSISTENCE', 'false');
+    const thunder = { ...item, source: 'thunderstore' as const, gameId: 'valheim', scope: 'valheim', id: '900719925474099312345', key: 'thunderstore:valheim:900719925474099312345', title: 'Live API title', summary: 'Live API summary', url: 'https://thunderstore.io/c/valheim/p/Author/Mod/' };
+    const data = { ...emptyLocalData(), favorites: [thunder], compared: [thunder], folders: [{ id: 'one', name: 'One', keys: [thunder.key] }] };
+    const setItem = vi.fn(); vi.stubGlobal('window', {}); vi.stubGlobal('localStorage', { setItem });
+    try {
+      await saveLocalData(data);
+      const raw = setItem.mock.calls[0][1];
+      expect(raw).not.toContain(thunder.title); expect(raw).not.toContain(thunder.summary);
+      const restored = parseLocalData(raw);
+      expect(restored.favorites[0]).toMatchObject({ key: thunder.key, id: thunder.id, versions: null, metrics: [] });
+      expect(restored.folders[0].keys).toEqual([thunder.key]); expect(restored.compared).toEqual([]);
+      expect((await refreshFavoriteReferences(restored, async () => thunder)).favorites).toEqual([thunder]);
+      vi.stubEnv('VITE_ALLOW_THUNDERSTORE_PERSISTENCE', 'true');
+      expect(parseLocalData(JSON.stringify(data)).favorites).toEqual([thunder]);
+      expect(parseLocalData(JSON.stringify(data)).compared).toEqual([thunder]);
+    } finally { vi.unstubAllGlobals(); vi.unstubAllEnvs(); }
+  });
   it('stores CurseForge bookmarks as references and restores their folder membership', async () => {
     const cf = { ...item, source: 'curseforge' as const, scope: '432', id: '123', key: 'curseforge:432:123', title: 'Private API title', summary: 'API description', url: 'https://www.curseforge.com/minecraft/mc-mods/example' };
     const data = moveFavorite(toggleFavorite({ ...emptyLocalData(), folders: [{ id: 'one', name: 'One', keys: [] }] }, cf), cf.key, 'one');

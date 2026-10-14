@@ -43,6 +43,19 @@ export function correctedQueries(query: string, scope?: Pick<SearchSpec, 'gameId
 
 export interface SearchOutcome { hasItems: boolean; empty: boolean }
 
+// Native clients consume the same localization, inflection and fuzzy rules as the web.
+// These are requests, never fabricated listings; clients run fallbacks only for empty sources.
+export function nativeSearchPlan(spec: SearchSpec) {
+  const original = searchPlan(spec);
+  const sources = [...new Map(original.map(request => [sourceBucketKey(request), request])).values()];
+  return {
+    original,
+    corrections: correctedQueries(spec.query, spec).map(query => searchPlan({ ...spec, query })),
+    fuzzy: sources.flatMap(request => fuzzyQueries(spec.query, request.gameId, request.source).flatMap(query =>
+      searchPlan({ ...spec, gameId: request.gameId, selectedSource: request.source, categories: undefined, filters: request.filters, query }))),
+  };
+}
+
 // Retry only sources that actually finished empty, after the entire original search.
 export async function runSearchWithCorrections(
   spec: SearchSpec,

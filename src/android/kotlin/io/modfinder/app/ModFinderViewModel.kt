@@ -95,7 +95,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
         runSearch()
     }
     fun filters(filters: Map<String, String>, categories: Set<String>, sort: String, genre: String) {
-        mutable.update { it.copy(spec = it.spec.copy(filters = filters.filterValues { value -> value.isNotBlank() }, categories = categories, sort = sort, genre = genre), overlay = null, submitted = it.submitted || categories.isNotEmpty()) }
+        mutable.update { it.copy(spec = it.spec.copy(filters = filters.filterValues { value -> value.isNotBlank() }, categories = categories, sort = sort, genre = genre), overlay = null, submitted = it.submitted || categories.isNotEmpty() || filters.values.any { value -> value.isNotBlank() } || sort != it.spec.sort || (it.spec.gameId == "all" && genre != "all")) }
         if (state.value.submitted) runSearch() else loadRanking()
     }
     fun rankingTab(tab: String) { mutable.update { it.copy(rankingTab = tab) }; loadRanking() }
@@ -152,25 +152,40 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
         mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = true) }
         searchJob = viewModelScope.launch {
             try {
-                var eligible: Set<String>? = null
-                val tried = mutableSetOf<SearchRequest>()
-                for (query in listOf(spec.query) + catalog.correctedQueries(spec)) {
-                    val requests = catalog.searchPlan(spec.copy(query = query)).filter { (eligible == null || it.bucket in eligible!!) && tried.add(it) }
-                    if (requests.isEmpty()) break
-                    withContext(Dispatchers.IO) { requests.map { it.gameId }.distinct().forEach { catalog.loadSummaries(it) } }
+                val plan = api.plan(spec, state.value.locale) ?: SearchPlan(catalog.searchPlan(spec), catalog.correctedQueries(spec).map { catalog.searchPlan(spec.copy(query = it)) }, emptyList())
+                val eligible = plan.original.map { it.sourceBucket }.toMutableSet()
+                val tried = mutableSetOf<String>()
+                suspend fun round(candidates: List<SearchRequest>): Boolean {
+                    val requests = candidates.filter { it.sourceBucket in eligible && tried.add(it.bucket) }
+                    if (requests.isEmpty()) return false
+                    if (state.value.locale == "ko") withContext(Dispatchers.IO) { requests.map { it.gameId }.distinct().forEach { catalog.loadSummaries(it) } }
                     mutable.update { it.copy(buckets = it.buckets + requests.associate { request -> request.bucket to Bucket(request) }) }
                     val permits = Semaphore(4)
-                    coroutineScope { requests.map { request -> launch { permits.withPermit { runRequest(request, spec, run) } } }.joinAll() }
-                    if (state.value.items.isNotEmpty()) break
-                    eligible = requests.filter { state.value.buckets[it.bucket]?.result?.status in listOf("success", "empty") }.map { it.bucket }.toSet()
+                    val outcomes = coroutineScope { requests.map { request -> async { permits.withPermit { request to runRequest(request, spec, run) } } }.awaitAll() }
+                    for ((request, result) in outcomes) {
+                        if (result == null || result.status !in listOf("success", "empty") || result.items.isNotEmpty() || result.nextCursor != null) eligible.remove(request.sourceBucket)
+                    }
+                    return outcomes.any { it.second?.items?.isNotEmpty() == true }
                 }
-            } finally { if (generation == run) mutable.update { it.copy(loading = false) } }
+                var hasItems = round(plan.original)
+                for (requests in plan.corrections) {
+                    if (hasItems || eligible.isEmpty()) break
+                    hasItems = round(requests)
+                }
+                if (eligible.isNotEmpty()) round(plan.fuzzy)
+            } catch (cancelled: CancellationException) { throw cancelled }
+            catch (_: Exception) { if (generation == run) notice("검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.") }
+            finally { if (generation == run) mutable.update { it.copy(loading = false) } }
         }
     }
-    private suspend fun runRequest(request: SearchRequest, spec: SearchSpec, run: Int) {
+    private suspend fun runRequest(request: SearchRequest, spec: SearchSpec, run: Int): SearchResult? {
         var result = try { api.search(request, state.value.locale) } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { SearchResult("error", emptyList(), null, null, "검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.") }
         currentCoroutineContext().ensureActive()
-        if (generation != run) return
+        if (generation != run) return null
+        if (result.status !in listOf("success", "empty") && request.cursor != null) {
+            val previous = state.value.buckets[request.bucket]?.result
+            result = result.copy(items = previous?.items.orEmpty(), nextCursor = request.cursor)
+        }
         val seen = cursors.getOrPut(request.bucket) { mutableSetOf() }
         if (result.status == "success" && result.nextCursor != null && (result.nextCursor == request.cursor || !seen.add(result.nextCursor!!))) result = result.copy(nextCursor = null)
         links = links + result.verifiedLinks
@@ -178,6 +193,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
             val items = mergeListings(previous.items, result.items)
             previous.copy(items = items, groups = groupListings(items, links, spec), buckets = previous.buckets + (request.bucket to Bucket(request.copy(cursor = null), false, result)))
         }
+        return result
     }
     fun loadMore() {
         val current = state.value

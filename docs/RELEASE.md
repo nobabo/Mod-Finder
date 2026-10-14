@@ -12,7 +12,7 @@ For native apps or the optional standalone Node backend, before a public release
 2. No server database or cache service is required. Thunderstore and Nexus search anonymously on demand.
 3. Store operator keys as server secrets. Connect providers only after the integration ledger requirements are fulfilled.
 4. Set allowed CORS origins to the app's actual origin and any intended browser deployment. Public proxies must block `/internal/*`, redact query strings and apply request/rate limits.
-5. Set `VITE_API_BASE_URL` for Windows and `MODFINDER_API_URL` for Kotlin Android to the real HTTPS origin, run checks and rebuild. Narrow Windows `connect-src` to that host for public release. Android builds reject loopback and cleartext endpoints.
+5. Set `VITE_API_BASE_URL` for Windows and `MODFINDER_API_URL` for Kotlin Android to the real HTTPS origin, run checks and rebuild. The Windows launcher limits `connect-src` to that origin; both launchers reject loopback and cleartext release endpoints.
 6. Supply publisher signing credentials for Windows and Android. No production signing keys are included in this repository.
 7. Test on a Windows 11 device and an Android 10+ device, including favorites after restart, external browser return and offline behavior.
 8. Distribute the signed Windows installer and signed Android APK. Galaxy Store accepts an APK through Seller Portal. Complete its seller registration, listing, privacy policy, screenshots and review requirements before publication. This project does not currently generate a Google Play AAB.
@@ -37,9 +37,13 @@ Use `Build-Windows.bat --check` or `Build-Android.bat --check` to check paths an
 
 ## Website downloads
 
-The web settings cards download through `/downloads/windows` and `/downloads/android` on the Worker. The Worker streams fixed, public GitHub release files and supplies attachment filenames; it supports HEAD and resumed downloads. It never forwards browser cookies or authorization headers to GitHub. File metadata and SHA-256 values are in `src/shared/app-downloads.ts`.
+The web settings cards download through `/downloads/windows` and `/downloads/android` on the Worker. The Worker streams fixed, public GitHub release files and supplies attachment filenames; it supports HEAD and resumed downloads. It never forwards browser cookies or authorization headers to GitHub. Published versions, filenames and expected SHA-256 values are in `src/shared/data/app-downloads.json`, independently for Windows and Android. Local build versions may be newer than the published files.
 
-To publish rebuilt installers, upload the generated files and `SHA256SUMS.txt` to the intended GitHub release, update that metadata to match, then run the standard project release. Verify the full downloaded files against the generated checksums. GitHub stores the originals because the APK exceeds the [25 MiB Workers static asset limit](https://developers.cloudflare.com/workers/platform/limits/#static-assets).
+To publish rebuilt installers, upload the generated files and `SHA256SUMS.txt` to the intended GitHub release. Run `node tooling/scripts/sync-downloads.mjs windows` or `android` for each platform, then run the standard project release. The synchronizer uses the builder's filename rule and checks the complete public file against the local artifact before updating metadata. Production verification also hashes both full downloaded files. The Worker does not claim to verify each streamed response and does not emit a checksum header. GitHub stores the originals because the APK exceeds the [25 MiB Workers static asset limit](https://developers.cloudflare.com/workers/platform/limits/#static-assets).
+
+Windows stores favorites in the existing `modfinder.db` / `local_state` record. The webview can call only `load_local_state` and `save_local_state`, with fixed SQL and no caller-selected database path. The native web build excludes `presentation.html` and `presentation-assets/`. Web deployments retain the presentation and its indexing restrictions.
+
+UI fonts are licensed local WOFF2 subsets under `src/web/public/fonts/`; only subsets needed by displayed text are requested. To refresh them, install `tooling/fonts-requirements.txt` in Python and run `node tooling/scripts/vendor-fonts.mjs`. `MODFINDER_FONT_PYTHON` may select that Python executable. Font licenses, source URLs and checksums are included with the assets. Normal application builds do not need Python.
 
 ## Local Android API
 

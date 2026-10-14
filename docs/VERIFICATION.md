@@ -21,7 +21,7 @@ npx --package @playwright/cli playwright-cli -s=mod-finder-check run-code --file
 npx --package @playwright/cli playwright-cli -s=mod-finder-check close
 ```
 
-스크립트는 검색 응답을 통제해 결과 정렬·자동 페이지 추가·필터·원본 링크·상세·즐겨찾기 저장·설정·모바일 넘침을 확인합니다. 테스트 전용 브라우저 세션에서 사용하세요. 캡처는 `output/playwright/`에 저장합니다.
+스크립트는 검색 응답을 통제해 결과 정렬·더 보기·필터·원본 링크·상세·즐겨찾기 저장·설정·모바일 넘침을 확인합니다. `verify-review-fixes.js`는 HTTP·출처 오류 후 같은 페이지 재시도, 비교 선택 상한, 언어 변경 시 입력 유지, 모바일 미분류, 필터만 사용하는 검색과 대기 중 프레임 예약도 검사합니다. 테스트 전용 브라우저 세션에서 사용하세요. 캡처는 `output/playwright/`에 저장합니다.
 
 ## API와 Workers
 

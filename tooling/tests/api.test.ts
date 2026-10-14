@@ -3,6 +3,7 @@ import type { FastifyInstance } from 'fastify';
 import { createApp } from '../../src/server/app';
 import { readConfig } from '../../src/server/config';
 import { UpstreamClient } from '../../src/server/http';
+import type { SearchRequest } from '../../src/shared/types';
 let app: FastifyInstance;
 afterEach(async () => { await app?.close(); });
 function fakeHttp(body: unknown, status = 200, headers: Record<string, string> = {}) {
@@ -11,6 +12,24 @@ function fakeHttp(body: unknown, status = 200, headers: Record<string, string> =
 }
 const path = '/v1/search?gameId=minecraft-java&source=modrinth&query=Sodium';
 describe('search API', () => {
+  it('shares partial Korean, number and fuzzy search plans with native clients without upstream requests', async () => {
+    const { http, fetcher } = fakeHttp({});
+    app = await createApp({ config: readConfig({}), http });
+    const korean = (await app.inject('/v1/search-plan?gameId=stardew-valley&query=' + encodeURIComponent('대확장'))).json();
+    expect(korean.original).toEqual(expect.arrayContaining([expect.objectContaining({ source: 'nexus', query: 'Stardew Valley Expanded' })]));
+    const numbers = (await app.inject('/v1/search-plan?gameId=minecraft-java&query=zombie&loader=fabric')).json();
+    expect(numbers.original).toEqual(expect.arrayContaining(['zombie', 'zombies'].map(query => expect.objectContaining({ source: 'modrinth', query, filters: { loader: 'fabric' } }))));
+    const fuzzy = (await app.inject('/v1/search-plan?gameId=all&query=' + encodeURIComponent('소듕'))).json();
+    expect(fuzzy.fuzzy).toEqual(expect.arrayContaining([expect.objectContaining({ gameId: 'minecraft-java', source: 'modrinth', query: 'Sodium' })]));
+    expect(fuzzy.fuzzy.every((request: SearchRequest) => request.gameId === 'minecraft-java')).toBe(true);
+    expect(fetcher).not.toHaveBeenCalled();
+  });
+  it('rejects unbounded or invalid native search-plan scopes', async () => {
+    app = await createApp({ config: readConfig({}), ...fakeHttp({}) });
+    for (const query of ['gameId=minecraft-java&categories=invalid', 'gameId=all&categories=%5B%22modrinth:magic%22%5D', 'gameId=all&genre=invalid', 'gameId=all&source=modrinth', 'gameId=all&query=' + 'x'.repeat(201)]) {
+      expect((await app.inject('/v1/search-plan?' + query)).statusCode).toBe(400);
+    }
+  });
   it('offers release version cards from the upstream catalog in date order', async () => {
     const { http, fetcher } = fakeHttp([
       { version: '1.20.1', version_type: 'release', date: '2023-06-12T00:00:00Z' },

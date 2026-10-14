@@ -49,7 +49,7 @@ export default {
         const asset = await env.ASSETS.fetch(new Request(new URL('/', url), { method: 'GET' }));
         if (!asset.ok) return finish(asset);
         const response = new HTMLRewriter()
-          .on('html', { element(element) { element.setAttribute('lang', locale); element.setAttribute('data-locale', locale); } })
+          .on('html', { element(element) { element.setAttribute('lang', locale); element.setAttribute('data-locale', locale); element.setAttribute('data-default-locale', resolveLocale(request.cf?.country, null)); } })
           .on('title', { element(element) { element.setInnerContent('Mod Finder'); } })
           .on('meta[name="description"]', { element(element) { element.setAttribute('content', locale === 'ko' ? '여러 모드 사이트를 한곳에서 검색하고 비교하세요.' : 'Search, compare and save mods from multiple sources.'); } })
           .transform(asset);
@@ -58,7 +58,7 @@ export default {
         response.headers.set('Vary', 'Cookie');
         return finish(response);
       }
-      return env.ASSETS.fetch(request);
+      return finish(await env.ASSETS.fetch(request));
     } catch {
       // Do not log URLs, queries, credentials or personal data.
       console.error(JSON.stringify({ event: 'request_failed', route: isApi ? 'api' : 'assets' }));

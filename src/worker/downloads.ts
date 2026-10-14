@@ -1,4 +1,4 @@
-import { APP_DOWNLOADS, APP_RELEASE } from '../shared/app-downloads';
+import { APP_DOWNLOADS } from '../shared/app-downloads';
 
 export async function downloadInstaller(request: Request): Promise<Response> {
   const path = new URL(request.url).pathname;
@@ -9,8 +9,7 @@ export async function downloadInstaller(request: Request): Promise<Response> {
     return new Response('Method not allowed', { status: 405, headers: { Allow: 'GET, HEAD' } });
   }
   // Only fixed public release files are reachable. Never forward cookies or credentials.
-  const url = new URL(`https://github.com/nobabo/Mod-Finder/releases/download/${APP_RELEASE}/${artifact.fileName}`);
-  url.searchParams.set('sha256', artifact.sha256);
+  const url = new URL(`https://github.com/nobabo/Mod-Finder/releases/download/${artifact.release}/${artifact.fileName}`);
   const headers = new Headers({ Accept: 'application/octet-stream', 'Accept-Encoding': 'identity', 'User-Agent': 'ModFinder-Downloads' });
   for (const name of ['Range', 'If-Range']) {
     const value = request.headers.get(name);
@@ -34,7 +33,6 @@ export async function downloadInstaller(request: Request): Promise<Response> {
       'Content-Type': artifact.contentType,
       'Content-Disposition': `attachment; filename="${artifact.fileName}"`,
       'Cache-Control': 'public, max-age=300',
-      'X-Checksum-SHA256': artifact.sha256,
     });
     for (const name of ['Content-Length', 'Content-Range', 'Content-Encoding', 'Accept-Ranges', 'ETag', 'Last-Modified']) {
       const value = upstream.headers.get(name);

@@ -5,6 +5,7 @@ import { homedir } from 'node:os';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runAndroid } from './android.mjs';
+import { nativeArtifactName } from '../lib/native-artifact.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const [platform, ...options] = process.argv.slice(2);
@@ -76,8 +77,7 @@ try {
   const config = JSON.parse(readFileSync(join(root, 'src/native/tauri.conf.json'), 'utf8'));
   const version = platform === 'android' ? JSON.parse(readFileSync(join(root, 'tooling/config/android.json'), 'utf8')).version : config.version;
   const destination = join(root, 'output/releases', `v${version}`);
-  const fileName = platform === 'windows'
-    ? `ModFinder-${version}-Windows-x64-setup.exe` : `ModFinder-${version}-Android.apk`;
+  const fileName = nativeArtifactName(platform, version);
   const android = platform === 'android' ? configureAndroid() : null;
   console.log(`[Mod Finder] ${platform === 'windows' ? 'Windows NSIS 설치파일' : 'Kotlin 네이티브 Android APK'} 생성`);
   console.log(`[Mod Finder] API: ${new URL(android ? env.MODFINDER_API_URL || env.VITE_API_BASE_URL : env.VITE_API_BASE_URL).origin}`);

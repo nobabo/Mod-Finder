@@ -84,23 +84,33 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   }, [openFilter]);
   useEffect(() => {
     if (mobile) return;
+    const el = rail.current;
+    if (!el) return;
     let frame = 0;
     const animate = () => {
-      const el = rail.current;
-      if (!el) return;
+      frame = 0;
       const velocity = autoSpeed.current;
       const box = el.getBoundingClientRect();
-      for (const card of el.querySelectorAll<HTMLElement>('.deck-card')) {
+      const positions = [...el.querySelectorAll<HTMLElement>('.deck-card')].map(card => {
         const r = card.getBoundingClientRect();
         const offset = Math.max(-1, Math.min(1, (r.left + r.width / 2 - box.left - box.width / 2) / (box.width / 2)));
+        return { card, offset };
+      });
+      for (const { card, offset } of positions) {
         card.style.setProperty('--card-turn', `${reduced.current ? 0 : offset * -15 + velocity / 180}deg`);
         card.style.setProperty('--card-drop', `${reduced.current ? 0 : Math.abs(offset) * 18}px`);
       }
-      frame = requestAnimationFrame(animate);
     };
-    frame = requestAnimationFrame(animate);
-    return () => cancelAnimationFrame(frame);
-  }, [mobile]);
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(animate); };
+    const observer = new ResizeObserver(schedule);
+    observer.observe(el);
+    for (const card of el.querySelectorAll('.deck-card')) observer.observe(card);
+    const media = matchMedia('(prefers-reduced-motion: reduce)');
+    el.addEventListener('scroll', schedule, { passive: true });
+    media.addEventListener('change', schedule);
+    schedule();
+    return () => { cancelAnimationFrame(frame); observer.disconnect(); el.removeEventListener('scroll', schedule); media.removeEventListener('change', schedule); };
+  }, [mobile, view, query, locale]);
   const animateFilterPick = (card: HTMLButtonElement) => {
     for (const animation of card.getAnimations()) {
       if (animation.id === 'filter-card-pick') animation.cancel();

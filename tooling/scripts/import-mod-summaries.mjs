@@ -1,6 +1,7 @@
 import { readFile, mkdir, writeFile, rename } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, resolve, join } from 'node:path';
+import { validateCatalogText } from '../lib/catalog-text.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const input = join(root, 'output/mod-translation-source');
@@ -29,12 +30,14 @@ for (const game of [...games, { id: 'curseforge/minecraft-mods', target: 'minecr
   const skippedEmptyOriginal = [];
   for (const [key, original] of Object.entries(source)) {
     const korean = translated[key];
-    if (typeof original !== 'string') throw new Error(`${game.id}: invalid original for ${key}`);
+    validateCatalogText(original, `${game.id}: original`, 1800);
+    validateCatalogText(korean, `${game.id}: translation`);
     if (!original.trim()) { skippedEmptyOriginal.push(key); continue; }
     // Duplicate titles in the export carry their source-scoped identity explicitly.
     const identity = key.match(/^(.*) \[((?:modrinth|curseforge|thunderstore|nexus|steam):[^\]]+)\]$/s);
     const manifestItem = identities.get(key);
-    rows.push([manifestItem?.name ?? identity?.[1] ?? key, original.trim(), korean.trim(), manifestItem?.listingKey ?? identity?.[2] ?? null]);
+    const title = validateCatalogText(manifestItem?.name ?? identity?.[1] ?? key, `${game.id}: title`, 512);
+    rows.push([title, original.trim(), korean.trim(), manifestItem?.listingKey ?? identity?.[2] ?? null]);
   }
   const target = game.target ?? game.id;
   catalogs.set(target, [...(catalogs.get(target) ?? []), ...rows]);

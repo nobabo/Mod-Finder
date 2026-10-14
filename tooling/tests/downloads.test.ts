@@ -14,11 +14,12 @@ describe('installer downloads', () => {
     expect(response.status).toBe(200);
     expect(response.body).toBe(upstream.body);
     expect(response.headers.get('Content-Disposition')).toBe(`attachment; filename="${APP_DOWNLOADS[platform].fileName}"`);
-    expect(response.headers.get('X-Checksum-SHA256')).toBe(APP_DOWNLOADS[platform].sha256);
+    expect(response.headers.has('X-Checksum-SHA256')).toBe(false);
     expect(response.headers.get('Content-Length')).toBe('14');
     const [url, options] = fetchFile.mock.calls[0];
     expect(url.origin).toBe('https://github.com');
-    expect(url.pathname).toContain(`/releases/download/v0.1.0/${APP_DOWNLOADS[platform].fileName}`);
+    expect(url.pathname).toContain(`/releases/download/${APP_DOWNLOADS[platform].release}/${APP_DOWNLOADS[platform].fileName}`);
+    expect(url.searchParams.has('sha256')).toBe(false);
     expect(options.headers.has('Cookie')).toBe(false);
     expect(options.headers.has('Authorization')).toBe(false);
     expect(await response.text()).toBe('binary fixture');

@@ -80,6 +80,7 @@ export function ModDescription({ summary, children }: { summary: string; childre
     let frame = 0;
     const revealFrame = requestAnimationFrame(() => { if (openWanted.current) setVisible(true); });
     const update = () => {
+      frame = 0;
       if (!card.current || !tooltip.current) return;
       const logo = card.current.querySelector('.mod-logo-link');
       const anchor = (logo?.getClientRects().length ? logo : card.current).getBoundingClientRect();
@@ -87,7 +88,7 @@ export function ModDescription({ summary, children }: { summary: string; childre
       const leftSpace = anchor.left - 16;
       const side: Side = rightSpace >= 240 ? 'left' : leftSpace >= 240 ? 'right' : 'top';
       const width = Math.min(344, side === 'left' ? rightSpace : side === 'right' ? leftSpace : window.innerWidth - 24);
-      tooltip.current.style.width = `${width}px`;
+      if (tooltip.current.style.width !== `${width}px`) tooltip.current.style.width = `${width}px`;
       const box = tooltip.current.getBoundingClientRect();
       const centerX = anchor.left + anchor.width / 2;
       const centerY = anchor.top + anchor.height / 2;
@@ -98,8 +99,15 @@ export function ModDescription({ summary, children }: { summary: string; childre
       const arrow = tail === 'left' || tail === 'right' ? clamp(centerY - top, 40, box.height - 40) : clamp(centerX - left, 40, width - 40);
       const path = bubblePath(width, box.height, tail, arrow);
       setPosition(previous => previous.left === left && previous.top === top && previous.width === width && previous.path === path ? previous : { left, top, width, path });
-      frame = requestAnimationFrame(update);
     };
+    const schedule = () => { if (!frame) frame = requestAnimationFrame(update); };
+    const observer = new ResizeObserver(schedule);
+    if (card.current) observer.observe(card.current);
+    if (tooltip.current) observer.observe(tooltip.current);
+    window.addEventListener('scroll', schedule, { passive: true, capture: true });
+    window.addEventListener('resize', schedule);
+    window.visualViewport?.addEventListener('resize', schedule);
+    window.visualViewport?.addEventListener('scroll', schedule);
     const dismiss = (event: KeyboardEvent) => { if (event.key === 'Escape') close(); };
     const dismissOutside = (event: PointerEvent) => {
       if (touchPinned.current && !card.current?.contains(event.target as Node) && !tooltip.current?.contains(event.target as Node)) close();
@@ -110,6 +118,11 @@ export function ModDescription({ summary, children }: { summary: string; childre
     return () => {
       cancelAnimationFrame(frame);
       cancelAnimationFrame(revealFrame);
+      observer.disconnect();
+      window.removeEventListener('scroll', schedule, true);
+      window.removeEventListener('resize', schedule);
+      window.visualViewport?.removeEventListener('resize', schedule);
+      window.visualViewport?.removeEventListener('scroll', schedule);
       window.removeEventListener('keydown', dismiss);
       document.removeEventListener('pointerdown', dismissOutside, true);
     };

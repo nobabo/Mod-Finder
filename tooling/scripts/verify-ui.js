@@ -18,8 +18,10 @@ async (page) => {
     await page.reload();
     await page.locator('#mod-query').fill('magic');
     await page.locator('#mod-query').press('Enter');
+    await page.waitForFunction(() => document.querySelectorAll('.mod-card').length === 2);
+    await page.getByRole('button', { name: '모드 더 보기', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.mod-card').length === 3);
-    assert((await page.locator('.title-button').allTextContents()).join('|') === 'Magic Tools|Magic|Utilities', 'Priority across automatic pages');
+    assert((await page.locator('.title-button').allTextContents()).join('|') === 'Magic Tools|Magic|Utilities', 'Priority after explicit pagination');
     assert(await page.locator('.source-tabs,.results-heading,.card-bottom').count() === 0, 'Obsolete UI returned');
     await page.getByRole('button', { name: '검색 필터', exact: true }).click();
     assert(await page.getByRole('button', { name: '초기화', exact: true }).count() === 0, 'Filter reset removed');
@@ -30,6 +32,8 @@ async (page) => {
     await page.getByRole('button', { name: '모드 로더', exact: true }).click();
     await page.getByRole('button', { name: 'Fabric', exact: true }).click();
     await page.getByRole('button', { name: '닫기', exact: true }).click();
+    await page.waitForFunction(() => document.querySelectorAll('.mod-card').length === 2);
+    await page.getByRole('button', { name: '모드 더 보기', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.mod-card').length === 3);
     await page.evaluate(() => { window.__originalOpen = window.open; window.open = url => { window.__openedUrl = url; return null; }; });
     await page.locator('.mod-logo-link').first().click();
@@ -47,7 +51,6 @@ async (page) => {
     await page.getByRole('button', { name: '웹 / 앱 다운로드', exact: true }).click();
     assert(await page.getByRole('link', { name: 'Windows', exact: true }).getAttribute('href') === 'https://modfinder.pages.dev/downloads/windows', 'Windows download');
     assert(await page.getByRole('link', { name: 'Android', exact: true }).getAttribute('href') === 'https://modfinder.pages.dev/downloads/android', 'Android download');
-    assert(await page.getByRole('link', { name: '웹에서 열기', exact: true }).getAttribute('href') === 'https://modfinder.pages.dev', 'Web address');
     await page.screenshot({ path: 'output/playwright/downloads-desktop.png' });
     await page.getByRole('button', { name: '뒤로', exact: true }).click();
     await page.keyboard.press('Escape');
@@ -62,6 +65,8 @@ async (page) => {
     await page.setViewportSize({ width: 390, height: 844 });
     await page.locator('#mod-query').fill('magic');
     await page.locator('#mod-query').press('Enter');
+    await page.waitForFunction(() => document.querySelectorAll('.mod-card').length === 2);
+    await page.getByRole('button', { name: '모드 더 보기', exact: true }).click();
     await page.waitForFunction(() => document.querySelectorAll('.mod-card').length === 3);
     assert(await page.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Mobile overflow');
     await page.screenshot({ path: 'output/playwright/clean-results-mobile.png' });

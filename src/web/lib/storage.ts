@@ -10,8 +10,9 @@ export const emptyLocalData = (): LocalData => ({ favorites: [], folders: [], co
 const strings = (value: unknown): value is string[] => Array.isArray(value) && value.every(item => typeof item === 'string');
 const nullableText = (value: unknown) => value === null || typeof value === 'string';
 const fromRetiredSource = (value: unknown) => !!value && typeof value === 'object' && (value as { source?: unknown }).source === 'atlauncher';
-// Persist user bookmark references for CurseForge, never its API payload.
-export const canPersistListing = (item: Pick<Listing, 'source'>) => item.source !== 'curseforge';
+// Keep restricted providers as user bookmark references, never persisted API payloads.
+export const canPersistListing = (item: Pick<Listing, 'source'>) => item.source !== 'curseforge'
+  && (item.source !== 'thunderstore' || import.meta.env.VITE_ALLOW_THUNDERSTORE_PERSISTENCE === 'true');
 type FavoriteReference = Pick<Listing, 'source' | 'scope' | 'id' | 'key' | 'gameId'> & { referenceOnly: true };
 function reference(item: Pick<Listing, 'source' | 'scope' | 'id' | 'key' | 'gameId'>): FavoriteReference {
   return { source: item.source, scope: item.scope, id: item.id, key: item.key, gameId: item.gameId, referenceOnly: true };
@@ -19,8 +20,11 @@ function reference(item: Pick<Listing, 'source' | 'scope' | 'id' | 'key' | 'game
 function restoreReference(value: unknown): unknown {
   if (!value || typeof value !== 'object' || !(value as FavoriteReference).referenceOnly) return value;
   const item = value as FavoriteReference;
-  if (item.source !== 'curseforge' || typeof item.id !== 'string' || !/^\d+$/.test(item.id) || getGame(item.gameId)?.sources.curseforge?.scope !== item.scope || item.key !== listingKey(item.source, item.scope, item.id)) throw new Error('invalid_local_data');
-  return { ...reference(item), title: item.key, summary: '', author: null, url: 'https://www.curseforge.com/projects/' + item.id, iconUrl: null, updatedAt: null, versions: null, loaders: null, kind: null, metrics: [], tags: [], rank: 0, fetchedAt: '' } satisfies Listing & { referenceOnly: true };
+  if (!['curseforge', 'thunderstore'].includes(item.source) || typeof item.id !== 'string' || !item.id || item.id.length > 200
+    || (item.source === 'curseforge' && !/^\d+$/.test(item.id)) || getGame(item.gameId)?.sources[item.source]?.scope !== item.scope
+    || item.key !== listingKey(item.source, item.scope, item.id)) throw new Error('invalid_local_data');
+  const url = item.source === 'curseforge' ? 'https://www.curseforge.com/projects/' + item.id : `https://thunderstore.io/c/${item.scope}/`;
+  return { ...reference(item), title: item.key, summary: '', author: null, url, iconUrl: null, updatedAt: null, versions: null, loaders: null, kind: null, metrics: [], tags: [], rank: 0, fetchedAt: '' } satisfies Listing & { referenceOnly: true };
 }
 export function validListing(value: unknown): value is Listing {
   if (!value || typeof value !== 'object') return false;
@@ -79,17 +83,8 @@ export function moveFavorite(data: LocalData, key: string, folderId: string | nu
   if (!data.favorites.some(item => item.key === key) || (folderId !== null && !data.folders.some(folder => folder.id === folderId))) return data;
   return { ...data, folders: data.folders.map(folder => ({ ...folder, keys: [...folder.keys.filter(value => value !== key), ...(folder.id === folderId ? [key] : [])] })) };
 }
-let database: Promise<import('@tauri-apps/plugin-sql').default> | undefined;
-async function db() {
-  database ??= import('@tauri-apps/plugin-sql').then(async ({ default: Database }) => {
-    const connection = await Database.load('sqlite:modfinder.db');
-    await connection.execute('CREATE TABLE IF NOT EXISTS local_state (id INTEGER PRIMARY KEY CHECK(id=1), data TEXT NOT NULL)');
-    return connection;
-  });
-  return database;
-}
 export async function loadLocalData(): Promise<LocalData> {
-  const raw = isNative() ? (await (await db()).select<{ data: string }[]>('SELECT data FROM local_state WHERE id=1'))[0]?.data : localStorage.getItem('modfinder:local:v1');
+  const raw = isNative() ? await (await import('@tauri-apps/api/core')).invoke<string | null>('load_local_state') : localStorage.getItem('modfinder:local:v1');
   if (!raw) return emptyLocalData();
   const data = parseLocalData(raw);
   const { favoriteDetails } = await import('./api');
@@ -101,7 +96,7 @@ export async function refreshFavoriteReferences(data: LocalData, resolve: (item:
   await Promise.all(Array.from({ length: Math.min(4, favorites.length) }, async () => {
     while (cursor < favorites.length) {
       const index = cursor++; const item = favorites[index];
-      if (canPersistListing(item)) continue;
+      if (canPersistListing(item) && !(item as Listing & { referenceOnly?: boolean }).referenceOnly) continue;
       try { const fresh = await resolve(item); if (validListing(fresh) && fresh.key === item.key && fresh.gameId === item.gameId) favorites[index] = fresh; } catch { /* Keep the bookmark and folder membership available offline. */ }
     }
   }));
@@ -112,7 +107,7 @@ export function saveLocalData(data: LocalData): Promise<void> {
   const normalized = parseLocalData(JSON.stringify(data));
   const serialized = JSON.stringify({ ...normalized, favorites: normalized.favorites.map(item => canPersistListing(item) ? item : reference(item)) });
   const next = pendingWrite.catch(() => {}).then(async () => {
-    if (isNative()) await (await db()).execute('INSERT INTO local_state(id,data) VALUES(1,$1) ON CONFLICT(id) DO UPDATE SET data=$1', [serialized]);
+    if (isNative()) await (await import('@tauri-apps/api/core')).invoke('save_local_state', { data: serialized });
     else localStorage.setItem('modfinder:local:v1', serialized);
   });
   pendingWrite = next; return next;

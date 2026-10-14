@@ -6,6 +6,17 @@ import org.junit.Assert.*
 import org.junit.Test
 
 class ModelsTest {
+    @Test fun searchVariantsKeepIndependentPaginationAndShareSourceEligibility() {
+        val row = JSONObject().put("gameId", "minecraft-java").put("source", "modrinth").put("query", "zombie").put("sort", "downloads").put("filters", JSONObject().put("loader", "fabric"))
+        val variants = JSONArray().put(row).put(JSONObject(row.toString()).put("query", "zombies"))
+        val json = JSONObject().put("original", variants).put("corrections", JSONArray()).put("fuzzy", JSONArray())
+        val plan = parseSearchPlan(json)
+        assertEquals(2, plan.original.map { it.bucket }.toSet().size)
+        assertEquals(1, plan.original.map { it.sourceBucket }.toSet().size)
+        assertEquals("fabric", plan.original[1].filters["loader"])
+        row.put("source", "unknown")
+        assertThrows(Exception::class.java) { parseSearchPlan(json) }
+    }
     private fun listing(source: String = "modrinth", id: String = "900719925474099312345", game: String = "minecraft-java", title: String = "Identical title"): Listing {
         val host = when (source) { "curseforge" -> "www.curseforge.com"; "thunderstore" -> "thunderstore.io"; else -> "modrinth.com" }
         return Listing.parse(JSONObject().put("source", source).put("scope", "minecraft").put("id", id).put("key", "$source:minecraft:$id").put("gameId", game)

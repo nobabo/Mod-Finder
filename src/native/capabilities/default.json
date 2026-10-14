@@ -4,7 +4,7 @@
   "description": "Local state and allowlisted source links only. No filesystem or shell access.",
   "windows": ["main"],
   "permissions": [
-    "core:default", "sql:default", "sql:allow-execute",
+    "core:default", "local-state",
     { "identifier": "opener:allow-open-url", "allow": [
       { "url": "https://modrinth.com/*" },
       { "url": "https://www.curseforge.com/*" },

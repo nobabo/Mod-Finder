@@ -153,7 +153,9 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const observed = new Set<HTMLElement>();
   const rects = new Float32Array(32); const radii = new Float32Array(8);
   const lensRect = new Float32Array(4); const lensRadius = new Float32Array(1);
-  const controlLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D }>();
+  const controlLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D; signature?: string }>();
+  let sceneRevision = 0;
+  let backgroundSignature = '';
   let pointer = [0,0];
   let backgroundOffset = [0,0];
   const media = matchMedia('(prefers-reduced-motion: reduce)');
@@ -169,7 +171,14 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   };
   const controlSelector = '.search-box, .filter-orb, .mobile-header .settings-fab, .mobile-nav-glass, .deck-search, .filter-dropdown.is-liquid-glass, .filter-dropdown-search, .ranking-panel, .folder-modal, .folder-input-glass';
   const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal, .sheet`;
-  const observer = new MutationObserver(() => { panelDirty = true; schedule(); });
+  const observer = new MutationObserver(records => {
+    const nodes = records.flatMap(record => [...record.addedNodes, ...record.removedNodes]);
+    // Our own lens surfaces cannot change layout or the panel inventory.
+    if (nodes.length && nodes.every(node => node instanceof Element && node.matches('.glass-control-surface'))) return;
+    if (nodes.some(node => node instanceof Element && (node.matches(selector) || node.querySelector(selector)))) panelDirty = true;
+    geometryDirty = true;
+    schedule();
+  });
   observer.observe(document.body, { childList: true, subtree: true });
   const resize = () => { panelDirty = true; schedule(); };
   // Scrolling changes positions, not the set of panels or their corner styles.
@@ -207,6 +216,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; sceneDirty = true; geometryDirty = true; }
     const updateScene = sceneDirty || sceneDue;
     if (updateScene) {
+      sceneRevision++;
       const delta = !paused && !reduced && lastSceneFrame ? Math.min(now - lastSceneFrame, 100) : 0;
       elapsed += delta;
       if (blending) blendElapsed += delta;
@@ -229,6 +239,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       for (const element of panelElements) geometry.get(element)!.rect = element.getBoundingClientRect();
       geometryDirty = false;
     }
+    let drewLens = false;
     for (const [element, lens] of controlLenses) {
       if (!panelElements.includes(element)) { lens.canvas.remove(); controlLenses.delete(element); }
     }
@@ -271,17 +282,21 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform1i(uniforms.uScene,2); gl!.uniform1i(uniforms.uUseScene,0);
     gl!.activeTexture(gl!.TEXTURE2);
     if (sceneCache && updateScene) {
+      // The softened scene needs fewer pixels than the crisp lens edges.
+      const cacheWidth = Math.max(1, Math.round(width / 2));
+      const cacheHeight = Math.max(1, Math.round(height / 2));
       gl!.bindTexture(gl!.TEXTURE_2D,sceneTexture);
       gl!.bindFramebuffer(gl!.FRAMEBUFFER,sceneTarget);
-      if (sceneWidth !== width || sceneHeight !== height) {
-        gl!.texImage2D(gl!.TEXTURE_2D,0,gl!.RGBA,width,height,0,gl!.RGBA,gl!.UNSIGNED_BYTE,null);
+      if (sceneWidth !== cacheWidth || sceneHeight !== cacheHeight) {
+        gl!.texImage2D(gl!.TEXTURE_2D,0,gl!.RGBA,cacheWidth,cacheHeight,0,gl!.RGBA,gl!.UNSIGNED_BYTE,null);
         gl!.framebufferTexture2D(gl!.FRAMEBUFFER,gl!.COLOR_ATTACHMENT0,gl!.TEXTURE_2D,sceneTexture,0);
         sceneCache = gl!.checkFramebufferStatus(gl!.FRAMEBUFFER) === gl!.FRAMEBUFFER_COMPLETE;
-        sceneWidth = width; sceneHeight = height;
+        sceneWidth = cacheWidth; sceneHeight = cacheHeight;
       }
       // Never sample a texture while it is attached to the active render target.
       gl!.bindTexture(gl!.TEXTURE_2D,front);
       if (sceneCache) {
+        gl!.viewport(0,0,cacheWidth,cacheHeight);
         gl!.uniform4f(uniforms.uView,0,0,viewWidth,viewHeight);
         gl!.uniform1i(uniforms.uCount,0);
         gl!.drawArrays(gl!.TRIANGLES,0,6);
@@ -297,6 +312,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       if (!rect.width || !rect.height || rect.bottom <= 0 || rect.top >= innerHeight) continue;
       const lensWidth = Math.min(width, Math.max(1, Math.round(rect.width * ratio)));
       const lensHeight = Math.min(height, Math.max(1, Math.round(rect.height * ratio)));
+      const signature = [sceneRevision, width, height, rect.left, rect.top, rect.width, rect.height, radius].join(':');
+      if (lens.signature === signature) continue;
       if (lens.canvas.width !== lensWidth || lens.canvas.height !== lensHeight) {
         lens.canvas.width = lensWidth; lens.canvas.height = lensHeight;
       }
@@ -308,12 +325,18 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       gl!.uniform1i(uniforms.uCount,1);
       gl!.drawArrays(gl!.TRIANGLES,0,6);
       lens.context.drawImage(canvas,0,height - lensHeight,lensWidth,lensHeight,0,0,lensWidth,lensHeight);
+      lens.signature = signature;
+      drewLens = true;
     }
     // Replace the temporary lens renders with the full background scene.
     gl!.viewport(0,0,width,height);
     gl!.uniform4f(uniforms.uView,0,0,viewWidth,viewHeight);
     gl!.uniform4fv(uniforms.uPanels,rects); gl!.uniform1fv(uniforms.uRadii,radii); gl!.uniform1i(uniforms.uCount,count);
-    gl!.drawArrays(gl!.TRIANGLES,0,6);
+    const nextBackgroundSignature = [sceneRevision, width, height, count, ...rects, ...radii].join(':');
+    // A lens render overwrites the shared framebuffer even when the scene is unchanged.
+    // Always restore after lens work; otherwise skip duplicate layout notifications.
+    if (backgroundSignature !== nextBackgroundSignature || drewLens) gl!.drawArrays(gl!.TRIANGLES,0,6);
+    backgroundSignature = nextBackgroundSignature;
 
     if (!paused && !reduced) schedule();
   }

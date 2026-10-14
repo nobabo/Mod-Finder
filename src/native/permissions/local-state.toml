@@ -1,0 +1,4 @@
+[[permission]]
+identifier = "local-state"
+description = "Read and replace the app's single local-state record. No caller-supplied SQL or paths."
+commands.allow = ["load_local_state", "save_local_state"]

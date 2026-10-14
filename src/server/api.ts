@@ -1,6 +1,7 @@
 import { z } from 'zod';
 import { getCategory } from '../shared/categories';
-import { findGames, GAMES, getGame } from '../shared/games';
+import { findGames, GAMES, GENRES, getGame } from '../shared/games';
+import { nativeSearchPlan } from '../shared/search-corrections';
 import { SOURCES, type SearchRequest, type Source } from '../shared/types';
 import { translate } from '../shared/translations';
 import type { Locale } from '../shared/locale';
@@ -15,6 +16,9 @@ const querySchema = z.object({
   kind: z.enum(['mod', 'modpack', 'resourcepack', 'shader']).optional(), sort: z.enum(['relevance', 'downloads', 'popular', 'updated']).default('relevance'), cursor: z.string().max(1500).optional(),
 }).strict();
 const gamesQuerySchema = z.object({ query: z.string().max(100).optional() }).strict();
+const planQuerySchema = querySchema.omit({ source: true, cursor: true, category: true }).extend({
+  genre: z.string().max(80).default('all'), categories: z.string().max(6000).default('[]'),
+});
 export function jsonResponse(body: unknown, status = 200): Response {
   return Response.json(body, { status, headers: { 'Cache-Control': 'no-store', 'X-Content-Type-Options': 'nosniff' } });
 }
@@ -50,6 +54,19 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
         const caps = adapters[source].getCapabilities(game);
         return { ...caps, message: translate(locale, caps.message) };
       }) }) : jsonResponse({ error: 'game_not_found' }, 404);
+    }
+    if (url.pathname === '/v1/search-plan') {
+      const parsed = planQuerySchema.safeParse(Object.fromEntries(url.searchParams));
+      if (!parsed.success) return jsonResponse({ error: 'invalid_search' }, 400);
+      const { gameId, genre, query, sort, version, loader, kind } = parsed.data;
+      if (gameId !== 'all' && !getGame(gameId)) return jsonResponse({ error: 'game_not_found' }, 404);
+      if (genre !== 'all' && !GENRES.some(value => value.id === genre)) return jsonResponse({ error: 'invalid_genre' }, 400);
+      let categories: string[];
+      try { categories = z.array(z.string().max(160)).max(32).parse(JSON.parse(parsed.data.categories)); }
+      catch { return jsonResponse({ error: 'invalid_category' }, 400); }
+      if (categories.some(id => !getCategory(gameId, id))) return jsonResponse({ error: 'invalid_category' }, 400);
+      return jsonResponse(nativeSearchPlan({ gameId, genre, query, sort, categories, selectedSource: 'all',
+        filters: { ...(version ? { version } : {}), ...(loader ? { loader } : {}), ...(kind ? { kind } : {}) } }));
     }
     if (url.pathname === '/v1/search') {
       const parsed = querySchema.safeParse(Object.fromEntries(url.searchParams));

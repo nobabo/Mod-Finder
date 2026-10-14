@@ -26,9 +26,13 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
     const motion = window.matchMedia('(prefers-reduced-motion: reduce)');
     const update = () => {
       const box = element.getBoundingClientRect();
-      for (const card of element.querySelectorAll<HTMLElement>('nav button,nav a')) {
-        const cardCenter = nav.getBoundingClientRect().left + card.offsetLeft + card.offsetWidth / 2;
+      const left = nav.getBoundingClientRect().left;
+      const positions = [...element.querySelectorAll<HTMLElement>('nav button,nav a')].map(card => {
+        const cardCenter = left + card.offsetLeft + card.offsetWidth / 2;
         const offset = Math.max(-1, Math.min(1, (cardCenter - box.left - box.width / 2) / (box.width / 2)));
+        return { card, offset };
+      });
+      for (const { card, offset } of positions) {
         card.style.setProperty('--card-drop', (motion.matches ? 0 : Math.abs(offset) * 18) + 'px');
         card.style.setProperty('--card-turn', (motion.matches ? 0 : offset * -15) + 'deg');
       }

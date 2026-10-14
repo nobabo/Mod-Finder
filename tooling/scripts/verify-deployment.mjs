@@ -1,12 +1,14 @@
 import assert from 'node:assert/strict';
-import { writeFileSync, mkdirSync } from 'node:fs';
+import { readFileSync, writeFileSync, mkdirSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+const downloads = JSON.parse(readFileSync(new URL('../../src/shared/data/app-downloads.json', import.meta.url), 'utf8'));
 
 const base = process.argv[2];
 assert.ok(base && new URL(base).protocol === 'https:', 'Supply the deployed HTTPS origin');
 const checks = [];
-async function request(path, options = {}) {
+async function request(path, options = {}, timeout = 15000) {
   const started = performance.now();
-  const response = await fetch(new URL(path, base), { ...options, signal: AbortSignal.timeout(15000) });
+  const response = await fetch(new URL(path, base), { ...options, signal: AbortSignal.timeout(timeout) });
   checks.push({ path: path.startsWith('/v1/listings/') ? '/v1/listings/:source/:scope/:id' : path.split('?')[0], status: response.status, milliseconds: Math.round(performance.now() - started) });
   return response;
 }
@@ -18,7 +20,7 @@ for (const [platform, signature] of [['windows', 'MZ'], ['android', 'PK']]) {
   const head = await request(path, { method: 'HEAD' });
   assert.equal(head.status, 200, `${platform} download HEAD`);
   assert.match(head.headers.get('content-disposition'), /^attachment; filename="ModFinder-/);
-  assert.match(head.headers.get('x-checksum-sha256'), /^[a-f0-9]{64}$/);
+  assert.equal(head.headers.get('x-checksum-sha256'), null, 'Do not claim per-request checksum verification');
   assert.ok(Number(head.headers.get('content-length')) > 0);
   const partial = await request(path, { headers: { Range: 'bytes=0-3' } });
   assert.equal(partial.status, 206, `${platform} resumed download`);
@@ -26,7 +28,17 @@ for (const [platform, signature] of [['windows', 'MZ'], ['android', 'PK']]) {
   const bytes = Buffer.from(await partial.arrayBuffer());
   assert.equal(bytes.length, 4);
   assert.equal(bytes.subarray(0, 2).toString(), signature);
+  const full = await request(path, {}, 120000);
+  assert.equal(full.status, 200);
+  const hash = createHash('sha256');
+  let length = 0;
+  for await (const chunk of full.body) { hash.update(chunk); length += chunk.length; assert.ok(length <= Number(head.headers.get('content-length'))); }
+  assert.equal(length, Number(head.headers.get('content-length')));
+  assert.equal(hash.digest('hex'), downloads[platform].sha256, `${platform} public artifact checksum`);
 }
+const plan = await request('/v1/search-plan?gameId=minecraft-java&query=소듕&loader=fabric');
+assert.equal(plan.status, 200);
+assert.ok((await plan.json()).fuzzy.some(request => request.source === 'modrinth' && request.query === 'Sodium' && request.filters.loader === 'fabric'));
 for (const language of ['ko', 'en']) {
   const response = await request('/', { headers: { Cookie: `mf-language=${language}` } });
   assert.equal(response.status, 200);

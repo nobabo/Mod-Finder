@@ -68,8 +68,10 @@ fun bookmarkJson(item: Listing, thunderstoreOptIn: Boolean): JSONObject = if (it
     .put("key", item.key).put("source", item.source).put("scope", item.scope).put("id", item.id).put("gameId", item.gameId).put("referenceOnly", true)
 data class SearchSpec(val gameId: String = "minecraft-java", val genre: String = "all", val query: String = "", val filters: Map<String, String> = emptyMap(), val categories: Set<String> = emptySet(), val sort: String = "downloads")
 data class SearchRequest(val gameId: String, val source: String, val query: String, val filters: Map<String, String>, val sort: String, val cursor: String? = null) {
-    val bucket get() = "$gameId:$source:${filters["category"].orEmpty()}"
+    val sourceBucket get() = "$gameId:$source:${filters["category"].orEmpty()}"
+    val bucket get() = JSONArray(listOf(sourceBucket, query)).toString()
 }
+data class SearchPlan(val original: List<SearchRequest>, val corrections: List<List<SearchRequest>>, val fuzzy: List<SearchRequest>)
 data class SearchResult(val status: String, val items: List<Listing>, val nextCursor: String?, val externalUrl: String?, val message: String, val unsupportedFilters: List<String> = emptyList(), val verifiedLinks: List<VerifiedLink> = emptyList())
 data class VerifiedLink(val keys: List<String>, val evidence: String)
 data class ResultGroup(val id: String, val listings: List<Listing>) { val item get() = listings.first() }

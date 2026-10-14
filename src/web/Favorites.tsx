@@ -15,7 +15,7 @@ export function FolderBar({ data, update, selected, select, mobileLayout }: { da
   return <>
     <div className="folder-toolbar">
       <nav className="folder-rail" aria-label={t('즐겨찾기 그룹')}>
-        {[{ id: 'all', name: t('전체'), Icon: Bookmark }, ...(mobileLayout ? [] : [{ id: 'unfiled', name: t('미분류'), Icon: Folder }]), ...data.folders.map(item => ({ ...item, Icon: Folder }))].map(item =>
+        {[{ id: 'all', name: t('전체'), Icon: Bookmark }, { id: 'unfiled', name: t('미분류'), Icon: Folder }, ...data.folders.map(item => ({ ...item, Icon: Folder }))].map(item =>
           <button type="button" key={item.id} aria-pressed={selected === item.id} onClick={() => select(item.id)}><item.Icon size={18}/><span>{item.name}</span>{data.shortcutFolderId === item.id && <Check size={16} aria-label={t('메인 화면 바로가기')}/>}</button>)}
       </nav>
       <div className="folder-actions">

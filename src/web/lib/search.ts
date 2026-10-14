@@ -21,19 +21,25 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
   const controller = useRef<AbortController | null>(null);
   const busy = useRef(false);
   const forceFresh = useRef(false);
+  const seenCursors = useRef(new Map<string, Set<string>>());
   const key = JSON.stringify(spec);
   const run = useCallback(async (request: SearchRequest, gen: number, signal: AbortSignal, fresh = false) => {
     const id = bucketKey(request);
     try {
-      const seen = new Set<string>();
-      let nextRequest = request;
-      let received = 0;
-      let empty = false;
-      for (let page = 0; page < 5; page++) {
-      const result = await searchSource(nextRequest, signal, fresh);
-      received += result.items.length;
-      empty = (result.status === 'empty' || result.status === 'success') && !result.nextCursor && received === 0;
-      const more = !!result.nextCursor && !seen.has(result.nextCursor) && result.status === 'success' && received < 100 && page < 4;
+      const received = await searchSource(request, signal, fresh);
+      if (generation.current !== gen || signal.aborted) return;
+      const seen = seenCursors.current.get(id) ?? new Set<string>();
+      seenCursors.current.set(id, seen);
+      // A search or explicit load-more action fetches one page per bucket.
+      // Discard repeated cursors so a broken upstream cannot loop forever.
+      const result = received.nextCursor && (received.nextCursor === request.cursor || seen.has(received.nextCursor)) ? { ...received, nextCursor: null } : received;
+      if (result.status === 'success' && result.nextCursor) seen.add(result.nextCursor);
+      if (request.cursor && !['success', 'empty'].includes(result.status)) {
+        setBuckets(previous => ({ ...previous, [id]: { request, loading: false, result: { ...result, items: previous[id]?.result?.items ?? [], nextCursor: request.cursor! } } }));
+        return { hasItems: false, empty: false };
+      }
+      if (result.status === 'error') throw new Error('search_failed');
+      const empty = (result.status === 'empty' || result.status === 'success') && !result.nextCursor && result.items.length === 0;
       if (generation.current !== gen || signal.aborted) return;
       const items = result.items.map(item => ({ ...item, matchedCategories: [...new Set([
         ...(result.appliedFilters.category ? [result.appliedFilters.category] : []),
@@ -44,22 +50,19 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       ])] }));
       setItems(previous => appendStable(previous, orderSearchPage(items, request.query, request.sort)));
       if (result.verifiedLinks?.length) setLinks(previous => [...previous, ...result.verifiedLinks!]);
-      setBuckets(previous => ({ ...previous, [id]: { request, loading: more, result } }));
-      if (!more) break;
-      seen.add(result.nextCursor!);
-      nextRequest = { ...request, cursor:result.nextCursor! };
-      }
-      return { hasItems: received > 0, empty };
+      setBuckets(previous => ({ ...previous, [id]: { request, loading: false, result } }));
+      return { hasItems: result.items.length > 0, empty };
     } catch {
       if (generation.current !== gen || signal.aborted) return;
       const link = externalSearch(getGame(request.gameId)!, request.source, request.query, request.filters);
-      setBuckets(previous => ({ ...previous, [id]: { request, loading: false, result: { source: request.source, status: 'error', message: t('검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.'), items: [], nextCursor: request.cursor ?? null, total: null, fetchedAt: new Date().toISOString(), cached: false, appliedFilters: {}, unsupportedFilters: [], externalUrl: link.url, queryForwarded: link.queryForwarded } } }));
+      setBuckets(previous => ({ ...previous, [id]: { request, loading: false, result: { source: request.source, items: [], total: null, fetchedAt: new Date().toISOString(), cached: false, appliedFilters: {}, unsupportedFilters: [], externalUrl: link.url, queryForwarded: link.queryForwarded, ...previous[id]?.result, status: 'error', message: t('검색에 연결하지 못했어요. 잠시 후 다시 시도해 주세요.'), nextCursor: request.cursor ?? null } } }));
     }
   }, [JSON.stringify(spec.categories)]);
   useEffect(() => {
     controller.current?.abort();
     const current = new AbortController(); controller.current = current;
     const gen = ++generation.current;
+    seenCursors.current.clear();
     const fresh = forceFresh.current; forceFresh.current = false;
     const requests = enabled ? searchPlan(spec) : [];
     busy.current = requests.length > 0;
