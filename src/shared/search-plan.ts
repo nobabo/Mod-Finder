@@ -7,6 +7,8 @@ export interface SearchSpec { gameId: string; genre?: string; query: string; fil
 export const sourceBucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
 export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source' | 'query'> & { filters?: Filters }) => JSON.stringify([sourceBucketKey(request), request.query]);
 export function searchPlan(spec: SearchSpec): SearchRequest[] {
+  // Categories belong to a single game's provider taxonomy.
+  if (spec.gameId === 'all' && (spec.categories?.length || spec.filters.category)) return [];
   if (spec.categories?.length) {
     return [...new Set(spec.categories)].flatMap(category => searchPlan({ ...spec, categories: undefined, filters: { ...spec.filters, category } }));
   }

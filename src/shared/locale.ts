@@ -9,6 +9,18 @@ export function browserLocale(language: string): Locale {
   const base = language.toLowerCase().split('-')[0];
   return base === 'zh' ? 'zh-CN' : isLocale(base) ? base : 'en';
 }
+export function requestLocale(header: string | null): Locale | undefined {
+  return header?.split(',').map((part, index) => {
+    const [tag, ...parameters] = part.trim().split(';');
+    const weight = parameters.find(value => value.trim().startsWith('q='))?.trim().slice(2);
+    const quality = weight === undefined ? 1 : Number(weight);
+    const base = tag.toLowerCase().split('-')[0];
+    const locale = LANGUAGES.find(value => value.id.toLowerCase() === tag.toLowerCase())?.id
+      ?? (base === 'zh' ? 'zh-CN' : isLocale(base) ? base : undefined);
+    return { locale, quality, index };
+  }).filter(value => value.locale && Number.isFinite(value.quality) && value.quality > 0 && value.quality <= 1)
+    .sort((a, b) => b.quality - a.quality || a.index - b.index)[0]?.locale;
+}
 export function cookieLocale(cookie: string | null): Locale | undefined {
   const value = cookie?.split(';').map(part => part.trim()).find(part => part.startsWith('mf-language='))?.slice('mf-language='.length);
   return isLocale(value) ? value : undefined;

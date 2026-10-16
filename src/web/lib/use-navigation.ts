@@ -14,7 +14,7 @@ const historyData = (value: HistoryEntry) => ({ ...window.history.state, modFind
 export function useNavigation() {
   const [state, setState] = useState(() => readNavigation(new URL(location.href)));
   const current = useRef(state);
-  const [detailKey, setDetailKey] = useState<string | null>(null);
+  const [detailKey, setDetailKey] = useState<string | null>(() => entry().detail);
   const [restoration, setRestoration] = useState(0);
   const [transition, setTransition] = useState(0);
   const scrollTarget = useRef<number | null>(entry().scrollY);
@@ -26,8 +26,7 @@ export function useNavigation() {
   useEffect(() => {
     const previous = window.history.scrollRestoration;
     window.history.scrollRestoration = 'manual';
-    // Detail payloads stay in memory; never persist provider responses in history.
-    window.history.replaceState(historyData({ ...entry(), detail: null }), '', location.href);
+    // Only the scoped reference lives in history. Restore payloads through the API.
     const restore = () => {
       const next = readNavigation(new URL(location.href));
       current.current = next;
@@ -38,6 +37,7 @@ export function useNavigation() {
       setTransition(value => value + 1);
     };
     window.addEventListener('popstate', restore);
+    restore();
     window.addEventListener('pagehide', rememberScroll);
     window.addEventListener('beforeunload', rememberScroll);
     return () => {
@@ -102,6 +102,10 @@ export function useNavigation() {
     if (entry().detail) window.history.back();
     else setDetailKey(null);
   }, []);
+  const discardDetail = useCallback(() => {
+    window.history.replaceState(historyData({ ...entry(), detail: null }), '', location.href);
+    setDetailKey(null);
+  }, []);
 
-  return { state, navigate, restoration, detailKey, openDetail, closeDetail };
+  return { state, navigate, restoration, detailKey, openDetail, closeDetail, discardDetail };
 }

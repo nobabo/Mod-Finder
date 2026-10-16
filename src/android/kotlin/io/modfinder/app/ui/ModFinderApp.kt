@@ -306,16 +306,25 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 }
 
 @Composable private fun Rankings(state: AppState, vm: ModFinderViewModel) {
-    val t = LocalStrings.current; val catalog = state.catalog!!
-    if (catalog.game(state.spec.gameId) == null) {
-        Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(t("게임을 선택하세요."), color = Color.White.copy(alpha = .65f)) }
-        return
-    }
+    val t = LocalStrings.current; val catalog = state.catalog!!; val context = LocalContext.current
+    val game = catalog.game(state.spec.gameId)
     Column(Modifier.fillMaxSize().padding(top = 22.dp)) {
-        if (catalog.game(state.spec.gameId) != null) Row(Modifier.padding(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+        Row(Modifier.padding(horizontal = 20.dp).horizontalScroll(rememberScrollState()), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            FilterChip(state.rankingTab == "recommended", { vm.rankingTab("recommended") }, { Text(t("맞춤 추천")) })
             if (catalog.hasCommunityRanking(state.spec.gameId)) FilterChip(state.rankingTab == "search", { vm.rankingTab("search") }, { Text(t("검색 순위")) })
-            FilterChip(state.rankingTab == "downloads" || !catalog.hasCommunityRanking(state.spec.gameId), { vm.rankingTab("downloads") }, { Text(t(if (catalog.game(state.spec.gameId)?.providers?.containsKey("steam") == true) "구독 순위" else "다운로드 순위")) })
-            if (state.rankingTab == "downloads" || !catalog.hasCommunityRanking(state.spec.gameId)) SmallIcon(Icons.Outlined.Refresh, t("새로고침"), vm::retry, enabled = !state.loading)
+            FilterChip(state.rankingTab == "downloads", { vm.rankingTab("downloads") }, { Text(t(if (game?.providers?.containsKey("steam") == true) "구독 순위" else "다운로드 순위")) }, enabled = game != null)
+            if (state.rankingTab != "search") SmallIcon(Icons.Outlined.Refresh, t("새로고침"), vm::retry, enabled = !state.loading)
+        }
+        val shortcuts = shortcutFavorites(state.local)
+        if (shortcuts.isNotEmpty()) LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
+            items(shortcuts, key = { it.key }) { item -> Column(Modifier.width(88.dp).clickable { openSource(context, item.url, vm, item) }.padding(8.dp), horizontalAlignment = Alignment.CenterHorizontally) {
+                AsyncImage(item.iconUrl, null, Modifier.size(44.dp), contentScale = ContentScale.Fit)
+                Text(catalog.listingText(item, state.locale).first, maxLines = 1, overflow = TextOverflow.Ellipsis, fontSize = 11.sp)
+            } }
+        }
+        if (game == null && (state.rankingTab != "recommended" || preferredGame(state.local.interests) == null)) {
+            Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) { Text(t("게임을 선택하세요."), color = Color.White.copy(alpha = .65f)) }
+            return@Column
         }
         if (catalog.hasCommunityRanking(state.spec.gameId) && state.rankingTab == "search") {
             LazyColumn(contentPadding = PaddingValues(horizontal = 20.dp, vertical = 12.dp), verticalArrangement = Arrangement.spacedBy(2.dp)) {
@@ -340,7 +349,7 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
         snapshotFlow { scroll.layoutInfo.visibleItemsInfo.lastOrNull()?.index ?: -1 }.distinctUntilChanged().collect { last -> if (state.groups.isNotEmpty() && last >= state.groups.size - 2 && state.hasMore && !state.loading) vm.loadMore() }
     }
     LazyColumn(Modifier.fillMaxSize().testTag("results-list"), scroll, contentPadding = PaddingValues(horizontal = 16.dp, vertical = 18.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
-        itemsIndexed(state.groups, key = { _, group -> group.id }) { index, group -> ModRow(group.item, state, vm, group.listings, rank = if (ranking) index + 1 else null) }
+        itemsIndexed(state.groups, key = { _, group -> group.id }) { index, group -> ModRow(group.item, state, vm, group.listings, rank = if (ranking && state.rankingTab != "recommended") index + 1 else null) }
         if (state.loading) item { Box(Modifier.fillMaxWidth().padding(20.dp), contentAlignment = Alignment.Center) { CircularProgressIndicator(Modifier.size(26.dp), strokeWidth = 2.dp) } }
         if (!state.loading && state.groups.isEmpty()) item {
             Column(Modifier.fillMaxWidth().padding(vertical = 36.dp), horizontalAlignment = Alignment.CenterHorizontally) {
@@ -362,10 +371,10 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
 @Composable private fun ModRow(item: Listing, state: AppState, vm: ModFinderViewModel, alternatives: List<Listing> = listOf(item), move: (() -> Unit)? = null, rank: Int? = null) {
     val t = LocalStrings.current; val context = LocalContext.current
     val text = state.catalog!!.listingText(item, state.locale)
-    val candidate = alternatives.firstOrNull()
-    val saved = state.local.favorites.any { it.key == candidate?.key }
+    val candidate = favoriteCandidate(item, alternatives, state.local.favorites)
+    val saved = state.local.favorites.any { it.key == candidate.key }
     Row(Modifier.fillMaxWidth().clip(RoundedCornerShape(24.dp)).background(Color(0x660B1220)).border(1.dp, LocalGlass.current.primary.copy(alpha = .25f), RoundedCornerShape(24.dp)).padding(14.dp), verticalAlignment = Alignment.Top) {
-        AsyncImage(item.iconUrl, text.first, Modifier.size(54.dp).clip(RoundedCornerShape(15.dp)).background(LocalGlass.current.primary.copy(alpha = .10f)).clickable { openSource(context, item.url, vm) }, contentScale = ContentScale.Fit)
+        AsyncImage(item.iconUrl, text.first, Modifier.size(54.dp).clip(RoundedCornerShape(15.dp)).background(LocalGlass.current.primary.copy(alpha = .10f)).clickable { openSource(context, item.url, vm, item) }, contentScale = ContentScale.Fit)
         Spacer(Modifier.width(13.dp))
         Column(Modifier.weight(1f).clickable { vm.detail(item) }.padding(vertical = 3.dp)) {
             if (rank != null) Text(rank.toString().padStart(2, '0'), fontSize = 11.sp, color = LocalGlass.current.primary)
@@ -373,17 +382,17 @@ val LocalStrings = staticCompositionLocalOf { UiStrings(null, "ko") }
             if (text.second.isNotEmpty()) { Spacer(Modifier.height(7.dp)); Text(text.second, fontSize = 12.sp, lineHeight = 18.sp, color = Color.White.copy(alpha = .65f), maxLines = 3, overflow = TextOverflow.Ellipsis) }
         }
         Column {
-            if (candidate != null) SmallIcon(if (saved) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, t(if (saved) "저장 해제" else "즐겨찾기"), { vm.toggleFavorite(candidate) }, if (saved) LocalGlass.current.primary else Color.White.copy(alpha = .6f), state.hydrated)
+            SmallIcon(if (saved) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, t(if (saved) "저장 해제" else "즐겨찾기"), { vm.toggleFavorite(candidate) }, if (saved) LocalGlass.current.primary else Color.White.copy(alpha = .6f), state.hydrated)
             if (move != null) SmallIcon(Icons.Outlined.FolderOpen, t("폴더로 이동"), move)
         }
     }
 }
 
 private const val PRIVACY_URL = "https://modfinder.pages.dev/privacy/"
-private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
+private fun openSource(context: Context, url: String, vm: ModFinderViewModel, item: Listing? = null) {
     val safe = if (url == PRIVACY_URL) url else safeExternalUrl(url)
     if (safe == null) { vm.notice("링크를 열지 못했어요. 주소를 확인해 주세요."); return }
-    try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(safe)).addCategory(Intent.CATEGORY_BROWSABLE)) }
+    try { context.startActivity(Intent(Intent.ACTION_VIEW, Uri.parse(safe)).addCategory(Intent.CATEGORY_BROWSABLE)); if (item != null) vm.recordVisit(item) }
     catch (_: ActivityNotFoundException) { vm.notice("링크를 열지 못했어요. 주소를 확인해 주세요.") }
 }
 
@@ -403,6 +412,10 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
         LazyRow(contentPadding = PaddingValues(horizontal = 20.dp), horizontalArrangement = Arrangement.spacedBy(8.dp)) {
             items(listOf("all" to t("전체"), "unfiled" to t("미분류")) + state.local.folders.map { it.id to it.name }) { (id, name) -> FilterChip(state.selectedFolder == id, { vm.folder(id) }, { Text(name) }) }
         }
+        if (selected != null) Row(Modifier.padding(horizontal = 16.dp), verticalAlignment = Alignment.CenterVertically) {
+            Checkbox(state.local.shortcutFolderId == selected.id, { vm.shortcutFolder(selected.id, it) }, enabled = state.hydrated)
+            Text(t("메인 화면 바로가기"), fontSize = 12.sp)
+        }
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(visible, key = { it.key }) { item -> ModRow(item, state, vm, move = { moving = item.key }) }
             if (visible.isEmpty()) item { Box(Modifier.fillMaxWidth().padding(60.dp), contentAlignment = Alignment.Center) { Icon(Icons.Outlined.BookmarkBorder, t("아직 저장한 모드가 없어요"), Modifier.size(36.dp), tint = LocalGlass.current.primary) } }
@@ -417,7 +430,7 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
     Column {
         Row(Modifier.fillMaxWidth().padding(start = 20.dp, top = 18.dp, end = 12.dp), verticalAlignment = Alignment.CenterVertically) {
             Text(t("최근 검색"), Modifier.weight(1f), style = MaterialTheme.typography.titleLarge)
-            if (state.local.history.isNotEmpty()) SmallIcon(Icons.Outlined.DeleteOutline, t("검색 기록 지우기"), vm::clearHistory)
+            if (state.local.history.isNotEmpty() || state.local.interests.isNotEmpty()) SmallIcon(Icons.Outlined.DeleteOutline, t("검색 기록 지우기"), vm::clearHistory)
         }
         LazyColumn(contentPadding = PaddingValues(16.dp), verticalArrangement = Arrangement.spacedBy(12.dp)) {
             items(state.local.history) { entry -> GlassSurface(Modifier.fillMaxWidth(), onClick = { vm.submit(entry.query, entry.gameId, entry.genre, entry.categories) }) {
@@ -432,11 +445,13 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
     val t = LocalStrings.current; val context = LocalContext.current; val catalog = state.catalog!!
     val text = catalog.listingText(item, state.locale)
     var original by remember(item.key) { mutableStateOf(false) }
-    val saved = state.local.favorites.any { it.key == item.key }
+    val alternatives = state.groups.find { group -> group.listings.any { it.key == item.key } }?.listings.orEmpty()
+    val candidate = favoriteCandidate(item, alternatives, state.local.favorites)
+    val saved = state.local.favorites.any { it.key == candidate.key }
     Box(Modifier.fillMaxSize().background(Color.Black.copy(alpha = .55f)).clickable { vm.detail(null) }) {
         GlassSurface(Modifier.align(Alignment.BottomCenter).fillMaxWidth().fillMaxHeight(.88f).navigationBarsPadding().clickable { }, radius = 28.dp) {
             Column(Modifier.fillMaxSize()) {
-                OverlayHeader(text.first, { vm.detail(null) })
+                OverlayHeader(if (original) item.title else text.first, { vm.detail(null) })
                 Column(Modifier.weight(1f).verticalScroll(rememberScrollState()).padding(horizontal = 24.dp, vertical = 10.dp)) {
                     Row(verticalAlignment = Alignment.CenterVertically) {
                         AsyncImage(item.iconUrl, null, Modifier.size(72.dp).clip(RoundedCornerShape(20.dp)), contentScale = ContentScale.Fit)
@@ -444,7 +459,7 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
                     }
                     Spacer(Modifier.height(24.dp))
                     Text(if (original) item.summary else text.second.ifEmpty { t("원본 사이트에서 자세한 설명을 확인해 주세요.") }, fontSize = 14.sp, lineHeight = 23.sp)
-                    if (text.second != item.summary) TextButton(onClick = { original = !original }) { Text(t("원문 보기")) }
+                    if (text.first != item.title || text.second != item.summary) TextButton(onClick = { original = !original }) { Text(t("원문 보기")) }
                     Spacer(Modifier.height(18.dp))
                     DetailValue(t("게임"), catalog.game(item.gameId)?.label(state.locale) ?: t("정보 없음"))
                     DetailValue(t("게임 버전"), item.versions?.joinToString(", ")?.ifEmpty { null } ?: t("정보 없음"))
@@ -456,8 +471,8 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
                     if (item.canPersist(BuildConfig.THUNDERSTORE_PERSISTENCE)) TextButton(onClick = { vm.compare(item) }, enabled = state.hydrated && (state.local.compared.size < 3 || state.local.compared.any { it.key == item.key })) { Icon(Icons.AutoMirrored.Outlined.CompareArrows, null); Spacer(Modifier.width(8.dp)); Text(t("비교하기")); if (state.local.compared.any { it.key == item.key }) Icon(Icons.Outlined.Check, null) }
                 }
                 Row(Modifier.fillMaxWidth().padding(18.dp), horizontalArrangement = Arrangement.spacedBy(12.dp)) {
-                    OutlinedButton(onClick = { vm.toggleFavorite(item) }, enabled = state.hydrated) { Icon(if (saved) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, t("즐겨찾기")) }
-                    Button(onClick = { openSource(context, item.url, vm) }, modifier = Modifier.weight(1f)) { Text(t("원본 사이트에서 보기"), maxLines = 1); Spacer(Modifier.width(8.dp)); Icon(Icons.AutoMirrored.Outlined.OpenInNew, null, Modifier.size(16.dp)) }
+                    OutlinedButton(onClick = { vm.toggleFavorite(candidate) }, enabled = state.hydrated) { Icon(if (saved) Icons.Outlined.Bookmark else Icons.Outlined.BookmarkBorder, t("즐겨찾기")) }
+                    Button(onClick = { openSource(context, item.url, vm, item) }, modifier = Modifier.weight(1f)) { Text(t("원본 사이트에서 보기"), maxLines = 1); Spacer(Modifier.width(8.dp)); Icon(Icons.AutoMirrored.Outlined.OpenInNew, null, Modifier.size(16.dp)) }
                 }
             }
         }
@@ -478,7 +493,7 @@ private fun openSource(context: Context, url: String, vm: ModFinderViewModel) {
                     DetailValue(t("출처"), sourceNames[item.source].orEmpty())
                     DetailValue(t("게임 버전"), item.versions?.joinToString(", ") ?: t("정보 없음"))
                     DetailValue(t("로더"), item.loaders?.joinToString(", ") ?: t("정보 없음"))
-                    DetailValue(t("다운로드"), item.downloads?.let { NumberFormat.getNumberInstance().format(it) } ?: t("정보 없음"))
+                    DetailValue(t(if (item.source == "steam") "누적 구독자" else "다운로드"), item.downloads?.let { NumberFormat.getNumberInstance().format(it) } ?: t("정보 없음"))
                     TextButton(onClick = { vm.detail(item) }) { Text(t("자세히 보기")) }
                 }
             } }

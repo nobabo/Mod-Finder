@@ -8,6 +8,7 @@ import type { Locale } from '../shared/locale';
 import type { Config } from './config';
 import { createAdapters, readCursor } from './adapters';
 import { UpstreamClient } from './http';
+import { APP_VERSION } from '../shared/version';
 
 const querySchema = z.object({
   category: z.string().min(1).max(160).optional(),
@@ -32,7 +33,7 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
       response.headers.set('Allow', 'GET, HEAD');
       return response;
     }
-    if (url.pathname === '/health') return jsonResponse({ ok: true, version: '0.1.0' });
+    if (url.pathname === '/health') return jsonResponse({ ok: true, version: APP_VERSION });
     if (url.pathname === '/v1/games') {
       const parsed = gamesQuerySchema.safeParse(Object.fromEntries(url.searchParams));
       return parsed.success ? jsonResponse({ games: findGames(parsed.data.query) }) : jsonResponse({ error: 'invalid_query' }, 400);
@@ -49,7 +50,9 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
     }
     const sourcePath = url.pathname.match(/^\/v1\/games\/([^/]+)\/sources$/);
     if (sourcePath) {
-      const game = getGame(sourcePath[1]);
+      let gameId: string;
+      try { gameId = decodeURIComponent(sourcePath[1]); } catch { return jsonResponse({ error: 'invalid_reference' }, 400); }
+      const game = getGame(gameId);
       return game ? jsonResponse({ sources: SOURCES.map(source => {
         const caps = adapters[source].getCapabilities(game);
         return { ...caps, message: translate(locale, caps.message) };
@@ -81,8 +84,9 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
     }
     const detailPath = url.pathname.match(/^\/v1\/listings\/([^/]+)\/([^/]+)\/([^/]+)$/);
     if (detailPath) {
-      const [, source, scope, id] = detailPath;
-      if (!SOURCES.includes(source as Source) || id.length > 128 || scope.length > 128) return jsonResponse({ error: 'invalid_reference' }, 400);
+      let source: string, scope: string, id: string;
+      try { [source, scope, id] = detailPath.slice(1).map(decodeURIComponent); } catch { return jsonResponse({ error: 'invalid_reference' }, 400); }
+      if (!SOURCES.includes(source as Source) || !id || id.length > 257 || scope.length > 128 || [scope, id].some(value => /[\/\\\u0000-\u001f]/.test(value))) return jsonResponse({ error: 'invalid_reference' }, 400);
       const key = source as Source;
       const game = GAMES.find(g => g.sources[key]?.scope === scope);
       if (!game) return jsonResponse({ error: 'game_not_found' }, 404);
@@ -91,7 +95,7 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
         return listing ? jsonResponse({ listing }) : jsonResponse({ error: 'listing_unavailable' }, 404);
       } catch { return jsonResponse({ error: 'source_unavailable' }, 502); }
     }
-    if (url.pathname === '/v1/service-status') return jsonResponse({ version: '0.1.0', sources: SOURCES.map(source => ({ source, status: adapters[source].getCapabilities(GAMES.find(g => g.sources[source])!).status })), checkedAt: new Date().toISOString() });
+    if (url.pathname === '/v1/service-status') return jsonResponse({ version: APP_VERSION, sources: SOURCES.map(source => ({ source, status: adapters[source].getCapabilities(GAMES.find(g => g.sources[source])!).status })), checkedAt: new Date().toISOString() });
     return jsonResponse({ error: 'not_found' }, 404);
   };
 }

@@ -75,7 +75,7 @@ try {
   if (process.platform !== 'win32' || process.arch !== 'x64') throw new Error('이 생성기는 Windows x64에서 실행하세요.');
   requireFile(join(root, 'node_modules/tsx/dist/cli.mjs'), '먼저 프로젝트 루트에서 npm ci를 실행하세요.');
   const config = JSON.parse(readFileSync(join(root, 'src/native/tauri.conf.json'), 'utf8'));
-  const version = platform === 'android' ? JSON.parse(readFileSync(join(root, 'tooling/config/android.json'), 'utf8')).version : config.version;
+  const version = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
   const destination = join(root, 'output/releases', `v${version}`);
   const fileName = nativeArtifactName(platform, version);
   const android = platform === 'android' ? configureAndroid() : null;

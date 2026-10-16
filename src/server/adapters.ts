@@ -16,7 +16,7 @@ const icon = (v: unknown): string | null => { try { const u = new URL(text(v)); 
 // Bound work before regex stripping; long malformed markup must not monopolize Worker CPU.
 const plain = (v: unknown) => text(v).slice(0, 1800).replace(/<[^>]*>/g, '').replace(/\[\/?[a-z][^\]]*\]/gi, '');
 const record = z.record(z.string(), z.unknown());
-const cursorSchema = z.object({ binding: z.string(), value: z.union([z.string().max(500), z.number().int().min(0).max(100000)]) });
+const cursorSchema = z.object({ binding: z.string(), value: z.union([z.string().max(500), z.number().int().min(0).max(100000)]), offset: z.number().int().min(0).max(100000).optional() });
 const modrinthSearchSchema = z.object({ hits: z.array(record).max(20), total_hits: z.number().nonnegative() });
 const curseforgeSearchSchema = z.object({ data: z.array(record).max(20), pagination: z.object({ totalCount: z.number().nonnegative() }) });
 const steamSearchSchema = z.object({ response: z.object({ total: z.number().optional(), next_cursor: z.string().optional(), publishedfiledetails: z.array(record).max(20).optional(), result: z.number().optional() }) });
@@ -30,7 +30,7 @@ const thunderstorePackageSchema = z.object({
 });
 const thunderstoreSearchSchema = z.object({ count: z.number().int().nonnegative(), next: z.string().max(2048).nullable(), results: z.array(thunderstorePackageSchema).max(20) });
 const fingerprint = (req: SearchRequest) => createHash('sha256').update(JSON.stringify([req.gameId, req.source, req.query, req.sort, req.filters])).digest('hex').slice(0, 16);
-export function cursorFor(req: SearchRequest, value: string | number) { return Buffer.from(JSON.stringify({ binding: fingerprint(req), value })).toString('base64url'); }
+export function cursorFor(req: SearchRequest, value: string | number, offset?: number) { return Buffer.from(JSON.stringify({ binding: fingerprint(req), value, ...(offset === undefined ? {} : { offset }) })).toString('base64url'); }
 export function readCursor(req: SearchRequest): string | number | undefined {
   if (!req.cursor) return undefined;
   try {
@@ -186,6 +186,7 @@ export class Adapter implements SourceAdapter {
         // Never follow provider-supplied URLs; reconstruct the next request on our fixed host.
         result.nextCursor = data.next && data.results.length === 20 && page * 20 < data.count && page < 5000 ? cursorFor(req, page + 1) : null;
       } else if (this.source === 'steam') {
+        const pageOffset = req.cursor ? cursorSchema.parse(JSON.parse(Buffer.from(req.cursor, 'base64url').toString())).offset ?? 20 : 0;
         const input = { appid: Number(game.sources.steam!.scope), search_text: req.query, cursor: typeof rawCursor === 'string' ? rawCursor : '*', numperpage: 20,
           ...(category ? { requiredtags: [category.value] } : {}),
           query_type: (req.sort === 'popular' || req.sort === 'downloads') ? 9 : req.sort === 'updated' ? 21 : req.query ? 12 : 9, return_tags: true, return_short_description: true, return_vote_data: true, filetype: 0 };
@@ -193,10 +194,10 @@ export class Adapter implements SourceAdapter {
         if (data.response.result && data.response.result !== 1) throw new UpstreamError('unavailable');
         const hits = (data.response.publishedfiledetails ?? []).filter(item => item.result === undefined || item.result === 1);
         const authors = await this.steamAuthors(hits);
-        result.items = hits.map((hit, i) => mapSteam(hit, game, i + 1, authors));
+        result.items = hits.map((hit, i) => mapSteam(hit, game, pageOffset + i + 1, authors));
         result.total = data.response.total ?? null;
         const next = data.response.next_cursor;
-        result.nextCursor = result.items.length && next && next !== rawCursor && next !== '*' ? cursorFor(req, next) : null;
+        result.nextCursor = result.items.length && next && next !== rawCursor && next !== '*' && pageOffset + hits.length < 100000 ? cursorFor(req, next, pageOffset + (data.response.publishedfiledetails?.length ?? 0)) : null;
 
       }
       return { ...result, status: result.items.length ? 'success' : 'empty', message: result.items.length ? '검색 완료' : '검색 결과가 없어요' };
@@ -209,6 +210,13 @@ export class Adapter implements SourceAdapter {
   }
   async getDetails(game: Game, id: string): Promise<Listing | null> {
     if (this.getCapabilities(game).status !== 'ready') return null;
+    if (this.source === 'thunderstore') {
+      const parts = id.match(/^([A-Za-z0-9_-]{1,128})-([A-Za-z0-9_]{1,128})$/);
+      if (!parts) return null;
+      const raw = record.parse(await this.http.json(`https://thunderstore.io/api/cyberstorm/listing/${encodeURIComponent(game.sources.thunderstore!.scope)}/${encodeURIComponent(parts[1])}/${encodeURIComponent(parts[2])}/`));
+      const listing = mapThunderstore({ ...raw, last_updated: raw.version_created ?? raw.last_updated }, game, 1);
+      return listing.id === id ? listing : null;
+    }
     if (this.source === 'modrinth') {
       const raw = record.parse(await this.http.json(`https://api.modrinth.com/v2/project/${encodeURIComponent(id)}`));
       const listing = mapModrinth({ ...raw, versions: raw.game_versions }, game, 1);

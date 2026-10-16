@@ -1,3 +1,4 @@
+import { APP_VERSION } from '../shared/version';
 import { z } from 'zod';
 import { getCategory } from '../shared/categories';
 import { listingKey, type Game, type Listing, type SearchRequest } from '../shared/types';
@@ -25,7 +26,7 @@ export async function searchNexusPage(game: Game, req: SearchRequest, offset: nu
   const scope = game.sources.nexus!.scope;
   const category = getCategory(game.id, req.filters.category);
   const raw = await http.json('https://api.nexusmods.com/v2/graphql', {
-    method: 'POST', credentials: 'omit', headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': '0.1.0' },
+    method: 'POST', credentials: 'omit', headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': APP_VERSION },
     body: JSON.stringify({ query, variables: {
       filter: { op: 'AND', filter: [
         { gameDomainName: [{ value: scope, op: 'EQUALS' }] },

@@ -22,13 +22,21 @@ export function readInterests(value: unknown, now = Date.now()): Interest[] {
     Number.isFinite(e.at) && e.at <= now && e.at > now - 90 * 86400000).slice(-200);
 }
 export function recordInterest(events: Interest[] = [], gameId: string, query = '', item?: Listing, now = Date.now()): Interest[] {
-  const event: Interest = { gameId, query: query.slice(0, 200), topics: topicIds(item ? item.tags.join(' ') : query), weight: item ? 4 : query ? 2 : 1, at: now };
+  const event: Interest = { gameId, query: query.slice(0, 200), topics: topicIds(item ? [item.title, item.summary, ...item.tags].join(' ') : query), weight: item ? 4 : query ? 2 : 1, at: now };
   const valid = readInterests(events, now);
   const last = valid.at(-1);
   if (last && now - last.at < 30000 && last.gameId === event.gameId && last.query === event.query && last.weight === event.weight && last.topics.join() === event.topics.join()) return valid;
   return [...valid, event].slice(-200);
 }
 const strength = (e: Interest, now: number) => e.weight * Math.pow(0.5, (now - e.at) / (14 * 86400000));
+export function recommendationQueries(events: Interest[], gameId: string, now = Date.now()): string[] {
+  const scores = new Map<string, number>();
+  for (const event of readInterests(events, now)) {
+    if (event.gameId !== 'all' && event.gameId !== gameId) continue;
+    for (const query of [...new Set([event.query.trim(), ...event.topics.map(topic => topics[topic][0])])].filter(Boolean)) scores.set(query, (scores.get(query) ?? 0) + strength(event, now));
+  }
+  return [...scores].sort((a, b) => b[1] - a[1]).slice(0, 3).map(([query]) => query);
+}
 export function preferredGame(events: Interest[] = [], now = Date.now()): string | undefined {
   const scores = new Map<string, number>();
   for (const e of readInterests(events, now)) if (e.gameId !== 'all') scores.set(e.gameId, (scores.get(e.gameId) ?? 0) + strength(e, now));

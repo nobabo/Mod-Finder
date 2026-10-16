@@ -3,6 +3,7 @@ import { existsSync } from 'node:fs';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { setTimeout as delay } from 'node:timers/promises';
+import { APP_VERSION } from '../lib/version.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 process.chdir(root);
@@ -86,7 +87,7 @@ try {
     if (!existsSync(resolve(root, file))) throw new Error('Dependencies are missing. Run npm ci in the project folder first.');
   }
   await ensure('API', `${api}/health`, async r => {
-    const data = await r.json(); return data.ok === true && data.version === '0.1.0';
+    const data = await r.json(); return data.ok === true && data.version === APP_VERSION;
   }, 'node_modules/tsx/dist/cli.mjs', ['watch', 'src/server/main.ts'], { HOST: '127.0.0.1', PORT: '4318' });
   await ensure('Web UI', web, async r => (await r.text()).includes('<title>Mod Finder'),
     'node_modules/vite/bin/vite.js', ['--config', 'tooling/config/vite.config.ts', '--host', '127.0.0.1', '--port', '1420', '--strictPort'], { VITE_API_BASE_URL: api });

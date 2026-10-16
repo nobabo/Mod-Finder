@@ -24,7 +24,10 @@ fun parseLocalState(raw: String, validGames: Set<String>, thunderstoreOptIn: Boo
     val history = value.getJSONArray("history").objects().filter { it.text("gameId") in validGames + "all" }.map {
         HistoryEntry(it.getString("gameId"), it.getString("query").take(200), it.text("genre") ?: "all", (it.stringList("categories") ?: listOfNotNull(it.text("category"))).toSet())
     }.take(20)
-    return LocalState(favorites, folders, listings("compared").filter { it.canPersist(thunderstoreOptIn) }.take(3), value.stringList("favoriteGames").orEmpty().filter { it in validGames }, history, value.text("theme") ?: "magenta", value.text("language") ?: "auto")
+    val interests = validInterests(value.optJSONArray("interests")?.objects()?.mapNotNull { event -> runCatching {
+        Interest(event.getString("gameId"), event.getJSONArray("topics").strings(), event.getString("query"), event.getInt("weight"), event.getLong("at"))
+    }.getOrNull() }?.filter { it.gameId == "all" || it.gameId in validGames }.orEmpty())
+    return LocalState(favorites, folders, listings("compared").filter { it.canPersist(thunderstoreOptIn) }.take(3), value.stringList("favoriteGames").orEmpty().filter { it in validGames }, history, value.text("theme") ?: "magenta", value.text("language") ?: "auto", interests, value.text("shortcutFolderId")?.takeIf { id -> folders.any { it.id == id } })
 }
 fun serializeLocalState(state: LocalState, thunderstoreOptIn: Boolean): String {
     val favorites = state.favorites
@@ -34,6 +37,8 @@ fun serializeLocalState(state: LocalState, thunderstoreOptIn: Boolean): String {
         .put("compared", JSONArray(state.compared.filter { it.canPersist(thunderstoreOptIn) }.take(3).map { JSONObject(it.raw) }))
         .put("favoriteGames", JSONArray(state.favoriteGames))
         .put("history", JSONArray(state.history.take(20).map { JSONObject().put("gameId", it.gameId).put("query", it.query).put("genre", it.genre).put("categories", JSONArray(it.categories.toList())) }))
+        .put("interests", JSONArray(validInterests(state.interests).map { JSONObject().put("gameId", it.gameId).put("topics", JSONArray(it.topics)).put("query", it.query).put("weight", it.weight).put("at", it.at) }))
+        .put("shortcutFolderId", state.shortcutFolderId?.takeIf { id -> state.folders.any { it.id == id } })
         .put("theme", state.theme).put("language", state.language).toString()
 }
 

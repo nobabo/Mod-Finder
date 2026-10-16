@@ -1,3 +1,4 @@
+import { APP_VERSION } from '../lib/version.mjs';
 import { readFile, mkdir, writeFile } from 'node:fs/promises';
 import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -76,7 +77,7 @@ for (const game of games.filter(item => item.sources.nexus)) {
   while (offset < 1000) {
     const data = await json('https://api.nexusmods.com/v2/graphql', {
       method: 'POST', credentials: 'omit',
-      headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': '0.1.0' },
+      headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': APP_VERSION },
       body: JSON.stringify({ query: nexusQuery, variables: {
         filter: { gameDomainName: [{ value: scope, op: 'EQUALS' }] },
         sort: [{ downloads: { direction: 'DESC' } }, { name: { direction: 'ASC' } }, { createdAt: { direction: 'ASC' } }],

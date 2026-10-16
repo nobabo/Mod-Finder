@@ -46,6 +46,9 @@ try {
     status: 'external', items: [], total: null, message: 'Search integration pending · visit the original site',
   });
   const downloadPost = await mf.dispatchFetch('http://localhost/downloads/windows', { method: 'POST' });
+  const regional = await mf.dispatchFetch('http://localhost/v1/games', { cf: { country: 'US' }, headers: { 'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8' } });
+  assert.equal(regional.headers.get('content-language'), 'ko');
+  await regional.text();
   assert.equal(downloadPost.status, 405);
   assert.equal(downloadPost.headers.get('allow'), 'GET, HEAD');
   await downloadPost.text();

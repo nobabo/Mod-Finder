@@ -24,6 +24,7 @@ data class AppState(
     val versions: List<String> = emptyList(), val versionsLoading: Boolean = false,
     val selectedFolder: String = "all", val notice: String? = null,
     val rankingTab: String = "search",
+    val translationRevision: Int = 0,
 ) { val hasMore get() = buckets.values.any { it.result?.nextCursor != null }; val locale get() = catalog?.locale(local.language) ?: "ko" }
 
 class ModFinderViewModel @JvmOverloads constructor(application: Application, private val saved: SavedStateHandle, private val api: ModRepository = ModApi()) : AndroidViewModel(application) {
@@ -84,14 +85,15 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     fun chooseGame(id: String) {
         if (id != "all" && state.value.catalog?.game(id) == null) return
         saved["game"] = id
-        mutable.update { it.copy(spec = it.spec.copy(gameId = id, genre = "all", filters = emptyMap(), categories = emptySet()), page = "discover", overlay = null, rankingTab = if (it.catalog?.hasCommunityRanking(id) == true) "search" else "downloads") }
+        updateLocal { it.copy(interests = recordInterest(it.interests, id)) }
+        mutable.update { it.copy(spec = it.spec.copy(gameId = id, genre = "all", filters = emptyMap(), categories = emptySet()), page = "discover", overlay = null, rankingTab = if (it.rankingTab == "recommended") "recommended" else if (it.catalog?.hasCommunityRanking(id) == true) "search" else "downloads") }
         if (state.value.submitted) runSearch() else loadRanking()
     }
     fun submit(value: String = state.value.input, gameId: String = state.value.spec.gameId, genre: String = state.value.spec.genre, categories: Set<String> = state.value.spec.categories, kind: String? = null) {
         val query = value.trim().take(200)
         input(query); saved["game"] = gameId
         mutable.update { it.copy(spec = it.spec.copy(gameId = gameId, genre = genre, query = query, categories = categories, filters = if (kind != null) mapOf("kind" to kind) else if (gameId != it.spec.gameId) emptyMap() else it.spec.filters), submitted = true, page = "discover", overlay = null) }
-        if (query.isNotEmpty()) updateLocal { local -> val entry = HistoryEntry(gameId, query, genre, categories); local.copy(history = (listOf(entry) + local.history.filter { it != entry }).take(20)) }
+        if (query.isNotEmpty()) updateLocal { local -> val entry = HistoryEntry(gameId, query, genre, categories); local.copy(history = (listOf(entry) + local.history.filter { it != entry }).take(20), interests = recordInterest(local.interests, gameId, query)) }
         runSearch()
     }
     fun filters(filters: Map<String, String>, categories: Set<String>, sort: String, genre: String) {
@@ -102,6 +104,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
     private fun loadRanking() {
         val current = state.value
         val catalog = current.catalog ?: return
+        if (current.rankingTab == "recommended") { loadRecommendations(); return }
         searchJob?.cancel(); val run = ++generation
         val game = catalog.game(current.spec.gameId)
         mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = false) }
@@ -137,7 +140,37 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
                 if (generation == run) {
                     val items = mergeListings(emptyList(), batches.flatMap { it.result!!.items })
                     val verified = catalog.verifiedLinks + batches.flatMap { it.result!!.verifiedLinks }
-                    mutable.update { it.copy(items = items, groups = groupListings(items, verified, spec).take(30), buckets = batches.associateBy { it.request.bucket }) }
+                    mutable.update { it.copy(items = items, groups = groupListings(items, verified, spec) { item -> catalog.rankingHints(item, spec.query) }.take(30), buckets = batches.associateBy { it.request.bucket }) }
+                }
+            } finally { if (generation == run) mutable.update { it.copy(loading = false) } }
+        }
+    }
+    private fun loadRecommendations() {
+        val current = state.value
+        val catalog = current.catalog ?: return
+        searchJob?.cancel(); val run = ++generation
+        val selected = if (current.spec.gameId == "all") preferredGame(current.local.interests) else current.spec.gameId
+        mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = selected != null) }
+        if (selected == null || catalog.game(selected) == null) return
+        val spec = SearchSpec(gameId = selected, sort = "relevance")
+        searchJob = viewModelScope.launch {
+            try {
+                withContext(Dispatchers.IO) { catalog.loadSummaries(selected) }
+                val requests = (listOf("") + recommendationQueries(current.local.interests, selected)).flatMap { query ->
+                    val candidate = spec.copy(query = query)
+                    val plan = try { api.plan(candidate, state.value.locale) } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { null }
+                    plan?.original ?: catalog.searchPlan(candidate)
+                }.distinctBy { it.bucket }
+                val permits = Semaphore(4)
+                val batches = coroutineScope { requests.map { request -> async { permits.withPermit {
+                    val result = try { api.search(request, state.value.locale) } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { SearchResult("error", emptyList(), null, null, "순위를 불러오지 못했어요.") }
+                    Bucket(request, false, result.copy(nextCursor = null))
+                } } }.awaitAll() }
+                currentCoroutineContext().ensureActive()
+                if (generation == run) {
+                    val items = mergeListings(emptyList(), batches.flatMap { it.result!!.items })
+                    val verified = catalog.verifiedLinks + batches.flatMap { it.result!!.verifiedLinks }
+                    mutable.update { it.copy(items = items, groups = recommend(groupListings(items, verified, spec), it.local.interests).take(10), buckets = batches.associateBy { it.request.bucket }) }
                 }
             } finally { if (generation == run) mutable.update { it.copy(loading = false) } }
         }
@@ -152,7 +185,8 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
         mutable.update { it.copy(items = emptyList(), groups = emptyList(), buckets = emptyMap(), loading = true) }
         searchJob = viewModelScope.launch {
             try {
-                val plan = api.plan(spec, state.value.locale) ?: SearchPlan(catalog.searchPlan(spec), catalog.correctedQueries(spec).map { catalog.searchPlan(spec.copy(query = it)) }, emptyList())
+                val remotePlan = try { api.plan(spec, state.value.locale) } catch (cancelled: CancellationException) { throw cancelled } catch (_: Exception) { null }
+                val plan = remotePlan ?: SearchPlan(catalog.searchPlan(spec), catalog.correctedQueries(spec).map { catalog.searchPlan(spec.copy(query = it)) }, emptyList())
                 val eligible = plan.original.map { it.sourceBucket }.toMutableSet()
                 val tried = mutableSetOf<String>()
                 suspend fun round(candidates: List<SearchRequest>): Boolean {
@@ -191,7 +225,7 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
         links = links + result.verifiedLinks
         mutable.update { previous ->
             val items = mergeListings(previous.items, result.items)
-            previous.copy(items = items, groups = groupListings(items, links, spec), buckets = previous.buckets + (request.bucket to Bucket(request.copy(cursor = null), false, result)))
+            previous.copy(items = items, groups = groupListings(items, links, spec) { item -> state.value.catalog!!.rankingHints(item, spec.query) }, buckets = previous.buckets + (request.bucket to Bucket(request.copy(cursor = null), false, result)))
         }
         return result
     }
@@ -224,11 +258,20 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
         writes.trySend(state.value.local)
     }
     fun theme(id: String) { updateLocal { it.copy(theme = id) } }
-    fun language(id: String) { updateLocal { it.copy(language = id) } }
-    fun toggleFavorite(item: Listing) {
-        updateLocal { local -> val exists = local.favorites.any { it.key == item.key }; local.copy(favorites = if (exists) local.favorites.filter { it.key != item.key } else listOf(item) + local.favorites, folders = if (exists) local.folders.map { it.copy(keys = it.keys - item.key) } else local.folders) }
+    fun language(id: String) {
+        updateLocal { it.copy(language = id) }
+        if (state.value.locale == "ko") viewModelScope.launch {
+            val current = state.value; val catalog = current.catalog ?: return@launch
+            val games = (current.items + current.local.favorites + current.local.compared + listOfNotNull(current.detail)).map { it.gameId }.distinct()
+            withContext(Dispatchers.IO) { games.forEach(catalog::loadSummaries) }
+            mutable.update { it.copy(translationRevision = it.translationRevision + 1) }
+        }
     }
-    fun clearHistory() { updateLocal { it.copy(history = emptyList()) } }
+    fun recordVisit(item: Listing) { updateLocal { it.copy(interests = recordInterest(it.interests, item.gameId, item = item)) } }
+    fun toggleFavorite(item: Listing) {
+        updateLocal { local -> val exists = local.favorites.any { it.key == item.key }; local.copy(favorites = if (exists) local.favorites.filter { it.key != item.key } else listOf(item) + local.favorites, folders = if (exists) local.folders.map { it.copy(keys = it.keys - item.key) } else local.folders, interests = if (exists) local.interests else recordInterest(local.interests, item.gameId, item = item)) }
+    }
+    fun clearHistory() { updateLocal { it.copy(history = emptyList(), interests = emptyList()) }; if (!state.value.submitted && state.value.rankingTab == "recommended") loadRanking() }
     fun folder(id: String) { mutable.update { it.copy(selectedFolder = id) } }
     fun saveFolder(id: String?, name: String): Boolean {
         val trimmed = name.trim().take(40)
@@ -237,7 +280,8 @@ class ModFinderViewModel @JvmOverloads constructor(application: Application, pri
         updateLocal { local -> local.copy(folders = if (id == null) local.folders + Folder("folder-${UUID.randomUUID()}", trimmed, emptyList()) else local.folders.map { if (it.id == id) it.copy(name = trimmed) else it }) }
         return true
     }
-    fun deleteFolder(id: String) { updateLocal { it.copy(folders = it.folders.filter { folder -> folder.id != id }) }; folder("unfiled") }
+    fun deleteFolder(id: String) { updateLocal { it.copy(folders = it.folders.filter { folder -> folder.id != id }, shortcutFolderId = it.shortcutFolderId?.takeUnless { selected -> selected == id }) }; folder("unfiled") }
+    fun shortcutFolder(id: String, enabled: Boolean) { updateLocal { local -> if (local.folders.none { it.id == id }) local else local.copy(shortcutFolderId = if (enabled) id else local.shortcutFolderId?.takeUnless { it == id }) } }
     fun moveFavorite(key: String, id: String?) { updateLocal { local -> local.copy(folders = local.folders.map { it.copy(keys = (it.keys - key) + if (it.id == id) listOf(key) else emptyList()) }) } }
     fun compare(item: Listing) { updateLocal { val exists = it.compared.any { other -> other.key == item.key }; it.copy(compared = if (exists) it.compared.filter { other -> other.key != item.key } else (it.compared + item).take(3)) } }
     fun clearComparison() { updateLocal { it.copy(compared = emptyList()) } }

@@ -175,7 +175,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     const nodes = records.flatMap(record => [...record.addedNodes, ...record.removedNodes]);
     // Our own lens surfaces cannot change layout or the panel inventory.
     if (nodes.length && nodes.every(node => node instanceof Element && node.matches('.glass-control-surface'))) return;
-    if (nodes.some(node => node instanceof Element && (node.matches(selector) || node.querySelector(selector)))) panelDirty = true;
+    if (nodes.some(node => node instanceof Element && (node.matches(`${selector}, .game-deck`) || node.querySelector(`${selector}, .game-deck`)))) panelDirty = true;
     geometryDirty = true;
     schedule();
   });

@@ -4,13 +4,13 @@ import { spawnSync } from 'node:child_process';
 import { dirname, resolve, join } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { nativeArtifactName } from '../lib/native-artifact.mjs';
+import { APP_VERSION } from '../lib/version.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const platform = process.argv[2];
 if (!['windows', 'android'].includes(platform) || process.argv.length !== 3) throw new Error('Usage: node tooling/scripts/sync-downloads.mjs windows|android');
-const config = JSON.parse(await readFile(join(root, platform === 'windows' ? 'src/native/tauri.conf.json' : 'tooling/config/android.json'), 'utf8'));
-const release = `v${config.version}`;
-const fileName = nativeArtifactName(platform, config.version);
+const release = `v${APP_VERSION}`;
+const fileName = nativeArtifactName(platform, APP_VERSION);
 const local = await readFile(join(root, 'output/releases', release, fileName));
 const sha256 = createHash('sha256').update(local).digest('hex');
 const result = spawnSync('gh', ['release', 'view', release, '--repo', 'nobabo/Mod-Finder', '--json', 'isDraft,assets'], { encoding: 'utf8', shell: false, windowsHide: true });

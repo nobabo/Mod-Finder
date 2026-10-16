@@ -9,6 +9,7 @@ plugins {
 
 val workspace = rootDir.resolve("../..").canonicalFile
 val release = JsonSlurper().parse(workspace.resolve("tooling/config/android.json")) as Map<*, *>
+val manifest = JsonSlurper().parse(workspace.resolve("package.json")) as Map<*, *>
 layout.buildDirectory.set(workspace.resolve("output/android/gradle/app"))
 val endpoint = System.getenv("MODFINDER_API_URL") ?: "https://modfinder.pages.dev"
 val api = URI(endpoint)
@@ -29,7 +30,7 @@ android {
         minSdk = 29
         targetSdk = 36
         versionCode = (release["versionCode"] as Number).toInt()
-        versionName = release["version"] as String
+        versionName = manifest["version"] as String
         buildConfigField("String", "API_BASE", "\"${api.toASCIIString().trimEnd('/')}\"")
         buildConfigField("boolean", "THUNDERSTORE_PERSISTENCE", (System.getenv("MODFINDER_ALLOW_THUNDERSTORE_PERSISTENCE") == "true").toString())
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
@@ -66,6 +67,7 @@ android {
     buildFeatures { compose = true; buildConfig = true }
     packaging { resources.excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1") }
     lint { abortOnError = true; checkReleaseBuilds = true }
+    testOptions { unitTests.all { it.systemProperty("modfinder.catalog", workspace.resolve("output/android/assets/catalog.json").path) } }
 }
 
 val prepareAssets by tasks.registering(Exec::class) {

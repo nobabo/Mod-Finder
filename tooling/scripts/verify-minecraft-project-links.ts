@@ -1,3 +1,4 @@
+import { APP_VERSION } from '../../src/shared/version';
 import { readFile } from 'node:fs/promises';
 import { dirname, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
@@ -38,7 +39,7 @@ async function main() {
   const destination = resolve(root, 'src/shared/data/verified-projects.json');
   const existing: VerifiedProjectLink[] = JSON.parse(await readFile(destination, 'utf8'));
   const collected: VerifiedProjectLink[] = [];
-  const headers = { 'User-Agent': 'ModFinder/0.1.0 (https://github.com/nobabo/Mod-Finder)' };
+  const headers = { 'User-Agent': `ModFinder/${APP_VERSION} (https://github.com/nobabo/Mod-Finder)` };
   for (const kind of ['mod', 'modpack']) {
     const candidates: Candidate[] = JSON.parse(await readFile(resolve(root, `output/mod-translation-source/curseforge/minecraft-${kind}s.manifest.json`), 'utf8')).items;
     for (let offset = 0; offset < 1000; offset += 100) {

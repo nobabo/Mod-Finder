@@ -77,7 +77,13 @@ data class VerifiedLink(val keys: List<String>, val evidence: String)
 data class ResultGroup(val id: String, val listings: List<Listing>) { val item get() = listings.first() }
 data class Folder(val id: String, val name: String, val keys: List<String>)
 data class HistoryEntry(val gameId: String, val query: String, val genre: String = "all", val categories: Set<String> = emptySet())
-data class LocalState(val favorites: List<Listing> = emptyList(), val folders: List<Folder> = emptyList(), val compared: List<Listing> = emptyList(), val favoriteGames: List<String> = listOf("minecraft-java"), val history: List<HistoryEntry> = emptyList(), val theme: String = "magenta", val language: String = "auto")
+data class LocalState(val favorites: List<Listing> = emptyList(), val folders: List<Folder> = emptyList(), val compared: List<Listing> = emptyList(), val favoriteGames: List<String> = listOf("minecraft-java"), val history: List<HistoryEntry> = emptyList(), val theme: String = "magenta", val language: String = "auto", val interests: List<Interest> = emptyList(), val shortcutFolderId: String? = null)
+fun favoriteCandidate(item: Listing, alternatives: List<Listing>, favorites: List<Listing>) = favorites.find { saved -> saved.key == item.key || alternatives.any { it.key == saved.key } } ?: item
+fun shortcutFavorites(local: LocalState): List<Listing> {
+    val keys = local.folders.find { it.id == local.shortcutFolderId }?.keys.orEmpty().toSet()
+    return local.favorites.filter { it.key in keys }
+}
+data class RankingHints(val terms: List<String>, val title: String = "", val summary: String = "")
 
 fun mergeListings(current: List<Listing>, incoming: List<Listing>): List<Listing> {
     val map = LinkedHashMap<String, Listing>()
@@ -85,7 +91,7 @@ fun mergeListings(current: List<Listing>, incoming: List<Listing>): List<Listing
     return map.values.toList()
 }
 
-fun groupListings(items: List<Listing>, links: List<VerifiedLink>, spec: SearchSpec): List<ResultGroup> {
+fun groupListings(items: List<Listing>, links: List<VerifiedLink>, spec: SearchSpec, hints: (Listing) -> RankingHints = { RankingHints(listOf(spec.query)) }): List<ResultGroup> {
     val parents = mutableMapOf<String, String>()
     fun root(key: String): String { val parent = parents[key] ?: return key; return root(parent).also { parents[key] = it } }
     links.filter { it.evidence.startsWith("https://") && it.keys.isNotEmpty() }.forEach { link ->
@@ -93,21 +99,28 @@ fun groupListings(items: List<Listing>, links: List<VerifiedLink>, spec: SearchS
     }
     val query = normalized(spec.query)
     fun match(item: Listing): Int {
-        if (query.isEmpty()) return 3
-        val title = normalized(item.title).contains(query)
-        val summary = normalized(item.summary).contains(query)
+        val localized = hints(item)
+        val terms = (listOf(spec.query) + localized.terms).map(::normalized).filter { it.isNotEmpty() }.distinct()
+        if (terms.isEmpty()) return 3
+        val titles = listOf(item.title, localized.title).map(::normalized)
+        val summaries = listOf(item.summary, localized.summary).map(::normalized)
+        val description = JSONObject(item.raw).optJSONObject("searchMatch")
+        val title = terms.any { term -> titles.any { term in it } }
+        val summary = terms.any { term -> summaries.any { term in it } } || (description?.optBoolean("description") == true && normalized(description.optString("query")) in terms)
         return if (title && summary) 0 else if (title) 1 else if (summary) 2 else 3
     }
     val groups = items.distinctBy { it.key }.groupBy { "${it.gameId}:${root(it.key)}" }.map { (key, values) ->
         ResultGroup(key, values.sortedWith(compareByDescending<Listing> { it.downloads ?: -1.0 }.thenBy { it.key }))
     }
+    val priorities = groups.associate { group -> group.id to group.listings.minOf(::match) }
+    val scores = groups.associate { group -> group.id to (group.listings.sumOf { 1.0 / (60 + it.rank) } + if (query.isNotEmpty() && group.listings.any { normalized(it.title) == query }) 10 else 0) }
     return groups.sortedWith { a, b ->
         val category = b.listings.maxOf { it.categories.intersect(spec.categories).size }.compareTo(a.listings.maxOf { it.categories.intersect(spec.categories).size })
         if (category != 0) category else when (spec.sort) {
             "downloads" -> (b.item.downloads ?: -1.0).compareTo(a.item.downloads ?: -1.0)
             "updated" -> b.item.updatedAt.orEmpty().compareTo(a.item.updatedAt.orEmpty())
             "popular" -> a.item.rank.compareTo(b.item.rank)
-            else -> a.listings.minOf(::match).compareTo(b.listings.minOf(::match))
+            else -> priorities.getValue(a.id).compareTo(priorities.getValue(b.id)).takeIf { it != 0 } ?: scores.getValue(b.id).compareTo(scores.getValue(a.id))
         }.takeIf { it != 0 } ?: a.id.compareTo(b.id)
     }
 }

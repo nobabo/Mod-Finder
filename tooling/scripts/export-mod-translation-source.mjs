@@ -1,3 +1,4 @@
+import { APP_VERSION } from '../lib/version.mjs';
 import { readFile, mkdir, writeFile, rename } from 'node:fs/promises';
 import { fileURLToPath } from 'node:url';
 import { dirname, join, resolve } from 'node:path';
@@ -47,7 +48,7 @@ async function modrinth(game) {
   let total = null;
   for (let offset = 0; offset < limit; offset += 100) {
     const params = new URLSearchParams({ query: '', facets: '[]', index: 'downloads', offset: String(offset), limit: '100' });
-    const data = await getJson(`https://api.modrinth.com/v2/search?${params}`, { headers: { 'User-Agent': process.env.UPSTREAM_USER_AGENT || 'ModFinder/0.1.0' } });
+    const data = await getJson(`https://api.modrinth.com/v2/search?${params}`, { headers: { 'User-Agent': process.env.UPSTREAM_USER_AGENT || `ModFinder/${APP_VERSION}` } });
     if (!Array.isArray(data.hits) || !Number.isInteger(data.total_hits)) throw new Error('Invalid Modrinth response');
     total = data.total_hits;
     if (probe) return { count: data.hits.length, total };
@@ -132,7 +133,7 @@ async function nexus(game) {
   for (let offset = 0; offset < 1200; offset += 20) {
     const data = await getJson('https://api.nexusmods.com/v2/graphql', {
       method: 'POST', credentials: 'omit',
-      headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': '0.1.0' },
+      headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': APP_VERSION },
       body: JSON.stringify({ query, variables: {
         filter: { gameDomainName: [{ value: scope, op: 'EQUALS' }] },
         sort: [{ downloads: { direction: 'DESC' } }, { name: { direction: 'ASC' } }, { createdAt: { direction: 'ASC' } }],

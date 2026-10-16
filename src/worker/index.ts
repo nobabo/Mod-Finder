@@ -1,17 +1,21 @@
 import { createApi, jsonResponse } from '../server/api';
 import { readConfig } from '../server/config';
-import { isLocale, resolveLocale } from '../shared/locale';
+import { requestLocale, resolveLocale } from '../shared/locale';
+import { UpstreamClient } from '../server/http';
+import { APP_VERSION } from '../shared/version';
 import { translate } from '../shared/translations';
 import { SECURITY_HEADERS } from './security';
 import { downloadInstaller } from './downloads';
 
+// Only bounded per-host timestamps are shared; requests, credentials and I/O stay local.
+const upstreamCooldowns = new Map<string, number>();
 export default {
   async fetch(request, env): Promise<Response> {
     const url = new URL(request.url);
     // Country is trusted Cloudflare metadata, never a client-supplied header.
     const requestedLanguage = request.headers.get('Accept-Language');
-    const locale = url.pathname.startsWith('/v1/') && isLocale(requestedLanguage) ? requestedLanguage : resolveLocale(request.cf?.country, request.headers.get('Cookie'));
-    const config = readConfig({ CURSEFORGE_API_KEY: env.CURSEFORGE_API_KEY, STEAM_API_KEY: env.STEAM_API_KEY, DISABLED_SOURCES: env.DISABLED_SOURCES, CORS_ORIGINS: env.CORS_ORIGINS, UPSTREAM_USER_AGENT: `ModFinder/0.1.0 (+${url.origin}/)` });
+    const locale = (url.pathname.startsWith('/v1/') ? requestLocale(requestedLanguage) : undefined) ?? resolveLocale(request.cf?.country, request.headers.get('Cookie'));
+    const config = readConfig({ CURSEFORGE_API_KEY: env.CURSEFORGE_API_KEY, STEAM_API_KEY: env.STEAM_API_KEY, DISABLED_SOURCES: env.DISABLED_SOURCES, CORS_ORIGINS: env.CORS_ORIGINS, UPSTREAM_USER_AGENT: `ModFinder/${APP_VERSION} (+${url.origin}/)` });
     const origin = request.headers.get('Origin');
     const allowedOrigin = origin && (origin === url.origin || config.origins.includes(origin)) ? origin : null;
     const isApi = url.pathname === '/health' || /^\/(v1|internal)(\/|$)/.test(url.pathname);
@@ -42,7 +46,7 @@ export default {
           return finish(response);
         }
         // No fetch promises or credentials are shared between invocations.
-        return finish(await createApi(config)(request, locale));
+        return finish(await createApi(config, new UpstreamClient(config.UPSTREAM_USER_AGENT, undefined, upstreamCooldowns))(request, locale));
       }
       if (url.pathname === '/' || url.pathname === '/index.html') {
         if (request.method !== 'GET' && request.method !== 'HEAD') return finish(jsonResponse({ error: 'method_not_allowed' }, 405));

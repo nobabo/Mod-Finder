@@ -10,6 +10,7 @@ import type { CommunityEntry } from '../shared/community-ranking';
 import { searchSource } from './lib/api';
 import { downloadRanking, rankingSources } from './lib/rankings';
 import { locale, t } from './lib/i18n';
+import { useModSummaries } from './lib/mod-summaries';
 
 export function Rankings({ gameId, card, searchMod, interests = [] }: { interests?: Interest[]; gameId: string; card: (item: Listing, alternatives: Listing[]) => ReactNode; searchMod: (entry: CommunityEntry) => void }) {
   const game = getGame(gameId);
@@ -21,6 +22,7 @@ export function Rankings({ gameId, card, searchMod, interests = [] }: { interest
   const [page, setPage] = useState(0);
   const [status, setStatus] = useState<'loading' | 'ready' | 'error'>('loading');
   const [refresh, setRefresh] = useState(0);
+  useModSummaries(items.flatMap(group => group.listings.map(item => item.gameId)), locale === 'ko');
   useEffect(() => {
     if (activeTab !== 'downloads' || !game) return;
     const controller = new AbortController();
@@ -31,7 +33,7 @@ export function Rankings({ gameId, card, searchMod, interests = [] }: { interest
       setStatus(result.status);
     }).catch(() => { if (!controller.signal.aborted) setStatus('error'); });
     return () => controller.abort();
-  }, [gameId, activeTab, refresh]);
+  }, [gameId, activeTab, refresh, locale]);
   return <section className="collection-panel ranking-panel">
     <>
       <div className="ranking-tabs" role="group" aria-label={t('순위 종류')}>

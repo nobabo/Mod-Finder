@@ -1,3 +1,4 @@
+import { APP_VERSION } from '../../src/shared/version';
 import { mkdir, rename, writeFile } from 'node:fs/promises';
 import { COMMUNITY_GALLERIES, COMMUNITY_SAMPLE_SIZE } from '../../src/shared/community-ranking';
 import { collectionPosts, galleryPageUrl, parseCommunityPage, parseCommunityPagination, validateCollection, type CommunityCollection, type CommunityPage } from '../lib/community-pages';
@@ -10,7 +11,7 @@ for (const [gameId, gallery] of Object.entries(COMMUNITY_GALLERIES)) {
     const headPages: CommunityPage[] = [];
     for (let page = 1; page <= 15; page++) {
       const url = galleryPageUrl(gameId, head.id, page);
-      const response = await fetch(url, { headers: { 'User-Agent': 'ModFinder/0.1.0' }, signal: AbortSignal.timeout(20000) });
+      const response = await fetch(url, { headers: { 'User-Agent': `ModFinder/${APP_VERSION}` }, signal: AbortSignal.timeout(20000) });
       if (!response.ok) throw Error(`${gameId}/${head.id}/${page}: HTTP ${response.status}`);
       const html = await response.text();
       const titles = parseCommunityPage(html, gameId, head.id);

@@ -2,7 +2,7 @@ import pluralize from 'pluralize';
 
 // Pluralize knows inflection rules, not whether a word is a mod's proper name.
 // Only reviewed game-search nouns are eligible; titles and unknown words stay literal.
-const nouns = new Set(`
+export const SEARCH_NOUNS = `
   zombie enemy boss monster creature animal pet companion follower colonist settler
   villager pawn survivor character weapon gun sword spell skill perk ability class
   subclass race trait artifact item relic potion quest mission dungeon building
@@ -14,7 +14,8 @@ const nouns = new Set(`
   battery factory machine engine robot turret wall fence door window bridge tower
   dragon fox horse dog cat bird fish sheep deer mouse goose tooth foot shelf berry
   accessory resource modpack
-`.trim().split(/\s+/));
+`.trim().split(/\s+/);
+const nouns = new Set(SEARCH_NOUNS);
 
 export function numberQueries(query: string): string[] {
   const key = query.trim().toLowerCase();

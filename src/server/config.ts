@@ -1,10 +1,11 @@
 import { z } from 'zod';
 import { SOURCES, type Source } from '../shared/types';
+import { APP_VERSION } from '../shared/version';
 const envSchema = z.object({
   HOST: z.string().default('127.0.0.1'), PORT: z.coerce.number().int().min(1).max(65535).default(4318),
   CURSEFORGE_API_KEY: z.string().default(''), STEAM_API_KEY: z.string().default(''),
   DISABLED_SOURCES: z.string().default(''),
-  UPSTREAM_USER_AGENT: z.string().default('ModFinder/0.1.0'),
+  UPSTREAM_USER_AGENT: z.string().default(`ModFinder/${APP_VERSION}`),
   CORS_ORIGINS: z.string().default('http://localhost:1420,http://127.0.0.1:1420,http://tauri.localhost,https://tauri.localhost,tauri://localhost'),
 });
 export function readConfig(env: Record<string, string | undefined> = {}) {

@@ -4,8 +4,57 @@ import org.json.JSONArray
 import org.json.JSONObject
 import org.junit.Assert.*
 import org.junit.Test
+import java.io.File
 
 class ModelsTest {
+    @Test fun relevanceUsesProviderRanksAndLocalizedTerms() {
+        val early = listing(id = "zzz", title = "Magic tools").copy(rank = 1)
+        val late = listing(id = "aaa", title = "Magic items").copy(rank = 40)
+        assertEquals(early.key, groupListings(listOf(late, early), emptyList(), SearchSpec(query = "Magic", sort = "relevance")).first().item.key)
+        val exact = late.copy(title = "Magic")
+        assertEquals(exact.key, groupListings(listOf(early, exact), emptyList(), SearchSpec(query = "Magic", sort = "relevance")).first().item.key)
+        val sodium = late.copy(title = "Sodium")
+        val localized = groupListings(listOf(early, sodium), emptyList(), SearchSpec(query = "소듐", sort = "relevance")) { RankingHints(listOf("Sodium")) }
+        assertEquals(sodium.key, localized.first().item.key)
+    }
+    @Test fun offlinePlannerSharesKoreanSpacingCommunityNamesAndNumberVariants() {
+        val catalog = Catalog(JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()))
+        val minecraft = catalog.game("minecraft-java")!!
+        val stardew = catalog.game("stardew-valley")!!
+        assertEquals("Sodium", catalog.providerQuery("소 듐", minecraft, "modrinth"))
+        assertEquals("Stardew Valley Expanded", catalog.providerQuery("대 확장", stardew, "nexus"))
+        assertEquals(listOf("zombie", "zombies"), catalog.providerQueries("zombie", minecraft, "modrinth"))
+        assertEquals(listOf("wolves", "wolf"), catalog.providerQueries("wolves", minecraft, "modrinth"))
+        assertEquals(listOf("Sodium"), catalog.providerQueries("Sodium", minecraft, "modrinth"))
+        val requests = catalog.searchPlan(SearchSpec(query = "zombie"))
+        assertTrue(requests.any { it.source == "modrinth" && it.query == "zombies" })
+        val data = JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText())
+        val community = data.getJSONObject("communityMods").getJSONArray("minecraft-java").objects().first { !it.text("koreanName").isNullOrEmpty() }
+        assertTrue(catalog.providerQueries(community.getString("koreanName"), minecraft, "modrinth").contains(community.getString("name")))
+    }
+    @Test fun mergedBookmarksAndShortcutFoldersSurvivePersistence() {
+        val first = listing(id = "first"); val saved = listing("curseforge", "22")
+        assertEquals(saved, favoriteCandidate(first, listOf(first, saved), listOf(saved)))
+        val local = LocalState(favorites = listOf(saved), folders = listOf(Folder("f", "Folder", listOf(saved.key))), shortcutFolderId = "f")
+        val restored = parseLocalState(serializeLocalState(local, false), setOf("minecraft-java"), false)
+        assertEquals("f", restored.shortcutFolderId)
+        assertEquals(listOf(saved.key), shortcutFavorites(restored).map { it.key })
+    }
+    @Test fun recommendationsExtractTopicsAndKeepSignalsBoundedWithoutProviderPayloads() {
+        val item = listing(title = "Magic spells").copy(summary = "Adventure dungeons", tags = emptyList())
+        val now = System.currentTimeMillis()
+        val events = recordInterest(emptyList(), item.gameId, item = item, now = now)
+        assertEquals(listOf("magic", "exploration"), events.single().topics)
+        assertEquals(listOf("magic", "adventure"), recommendationQueries(events, item.gameId, now))
+        assertEquals(events, recordInterest(events, item.gameId, item = item, now = now + 10))
+        assertEquals(200, validInterests(List(250) { events.single() }, now).size)
+        assertTrue(validInterests(events, now + 91L * 86400000).isEmpty())
+        val local = LocalState(favorites = listOf(listing("curseforge", title = "Magic spells").copy(summary = "Adventure dungeons")), interests = events)
+        val raw = serializeLocalState(local, false)
+        assertFalse(raw.contains("Magic spells")); assertFalse(raw.contains("Adventure dungeons"))
+        assertEquals(events, parseLocalState(raw, setOf(item.gameId), false).interests)
+        assertTrue(parseLocalState(serializeLocalState(local.copy(interests = emptyList()), false), setOf(item.gameId), false).interests.isEmpty())
+    }
     @Test fun searchVariantsKeepIndependentPaginationAndShareSourceEligibility() {
         val row = JSONObject().put("gameId", "minecraft-java").put("source", "modrinth").put("query", "zombie").put("sort", "downloads").put("filters", JSONObject().put("loader", "fabric"))
         val variants = JSONArray().put(row).put(JSONObject(row.toString()).put("query", "zombies"))

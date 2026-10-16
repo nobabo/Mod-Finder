@@ -30,11 +30,11 @@ export async function searchSource(request: SearchRequest, signal: AbortSignal, 
   return fresh ? fetchResult(signal) : searchCache.search(request, { endpoint: API_BASE, locale }, fetchResult, signal);
 }
 
-export async function favoriteDetails(item: Listing): Promise<Listing> {
+export async function favoriteDetails(item: Pick<Listing, 'source' | 'scope' | 'id'>, parent?: AbortSignal): Promise<Listing> {
   if (!API_BASE) throw new Error('server_not_configured');
   return withRequestTimeout(async signal => {
     const response = await fetch(API_BASE + '/v1/listings/' + [item.source, item.scope, item.id].map(encodeURIComponent).join('/'), { signal, credentials: 'same-origin', headers: { 'Accept-Language': locale } });
     if (!response.ok) throw new Error('listing_unavailable');
     const result = await response.json() as { listing: Listing }; return result.listing;
-  });
+  }, parent);
 }

@@ -9,6 +9,9 @@ import { THEMES } from '../../src/web/lib/themes';
 import { LANGUAGES } from '../../src/shared/locale';
 import { dictionaries } from '../../src/shared/translations';
 import { withReviewedSummaries, type SummaryTranslation } from '../../src/shared/mod-summaries';
+import { communityMods } from '../../src/shared/community-ranking';
+import { communityRanking } from '../../src/shared/community-snapshots';
+import { numberQueries, SEARCH_NOUNS } from '../../src/shared/search-number-variants';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (path: string) => JSON.parse(readFileSync(resolve(root, path), 'utf8'));
 export function prepareAndroidAssets(output = resolve(root, 'output/android/assets')) {
@@ -28,6 +31,12 @@ export function prepareAndroidAssets(output = resolve(root, 'output/android/asse
     if (existsSync(previousCopy)) unlinkSync(previousCopy);
   }
   save('catalog.json', { games: GAMES, genres: GENRES, categories: GAME_CATEGORIES, themes: THEMES, languages: LANGUAGES,
+    communityMods: Object.fromEntries(GAMES.map(game => {
+      const entries = new Map(communityMods(game.id).map(entry => [entry.id, entry]));
+      for (const entry of communityRanking(game.id)?.entries ?? []) entries.set(entry.id, { ...entries.get(entry.id), ...entry, pattern: '' });
+      return [game.id, [...entries.values()].map(entry => ({ id: entry.id, name: entry.name, koreanName: entry.koreanName ?? (game.id === 'minecraft-java' ? read('src/shared/data/community-pack-names.ko.json')[entry.id] : undefined) }))];
+    })),
+    numberVariants: Object.fromEntries(SEARCH_NOUNS.flatMap(noun => numberQueries(noun)).map(word => [word, numberQueries(word)])),
     backgrounds: BACKGROUNDS, logos, assetRevisions, dictionaries, verifiedLinks: read('src/shared/data/verified-projects.json'),
     rankings: read('src/shared/data/community-rankings.json'), packNames: read('src/shared/data/community-pack-names.ko.json'),
     mods: read('src/shared/locales/mods.ko.json'), search: read('src/shared/locales/search.ko.json'),

@@ -6,7 +6,8 @@ Android 0.2.0부터 화면은 Kotlin과 Jetpack Compose로 구현합니다. Andr
 
 - `src/android/`: Activity, Compose 화면, AGSL 유리 재질, 검색·저장 코드와 Android 리소스.
 - `tooling/android/`: 독립 Gradle 프로젝트와 고정 버전의 Gradle Wrapper.
-- `tooling/config/android.json`: Android 버전과 증가하는 versionCode.
+- `package.json`: 웹·API·Windows·Android에서 공통으로 읽는 앱 버전.
+- `tooling/config/android.json`: Android 업데이트 설치에 필요한 증가하는 versionCode.
 - `tooling/scripts/prepare-android.ts`: 공통 게임·카테고리·언어·한글 검색 사전·검수된 번역·게임별 순위표를 Android 에셋으로 준비. 배경·로고·게임 아이콘은 경로와 내용 해시만 기록.
 - `tooling/tests/android/`: JVM 회귀 테스트와 기기에서 실행하는 Compose 테스트.
 - `output/android/`: 빌드 결과, 준비한 에셋, 검사 보고서.
@@ -29,6 +30,8 @@ Android 0.2.1부터 게임 이미지 103개는 APK에 포함하지 않고 운영
 
 Android 0.2.2부터 `/v1/search-plan`으로 웹과 같은 한국어 부분 일치·단복수·자모 기반 오타 교정 계획을 받습니다. 먼저 원래 검색을 실행하고, 결과가 없는 출처에만 보정 검색을 적용합니다. 검색어 변형별 페이지 위치를 별도로 보관하며, 다음 페이지 요청 실패 시 이전 결과와 재시도 위치를 유지합니다. 홈에서 버전·로더·종류·정렬·장르를 선택해도 검색을 시작합니다.
 
+0.2.3에서는 관련도 정렬에 한국어 이름·검색어 변형·출처별 순위를 함께 반영합니다. 검색 계획 API를 사용할 수 없을 때도 동봉한 한국어 띄어쓰기·커뮤니티 이름·검수된 단복수 사전을 사용합니다. 맞춤 추천은 최근 관심 키워드로 후보를 추가 검색하고 기기 안에서 가중치와 시간 감쇠를 적용해 정렬합니다. 모드 링크 열기와 즐겨찾기 추가도 관심 신호에 반영하며, 검색 기록을 지우면 관심 신호도 함께 삭제합니다. 선택한 즐겨찾기 폴더는 홈 바로가기로 지정할 수 있습니다.
+
 모든 출처에서 즐겨찾기 참조를 남길 수 있습니다. CurseForge는 식별자만 저장하며 API 응답은 저장하지 않습니다. Thunderstore도 기본적으로 식별자만 남깁니다. 정책 검토 후 `MODFINDER_ALLOW_THUNDERSTORE_PERSISTENCE=true`로 빌드한 경우에만 상세 데이터 저장을 허용합니다. 참조는 실행 시 API에서 다시 읽고, 오프라인에서는 식별자와 원본 사이트 링크를 유지합니다. 공용 검색 캐시와 모드 제공자 아이콘의 디스크 캐시는 사용하지 않습니다.
 
 즐겨찾기·폴더·최근 검색·비교·테마·언어는 한 파일의 완전한 스냅샷으로 직렬화하고 Android AtomicFile로 교체합니다. 기존 Tauri 앱의 `modfinder.db`와 `local_state`를 읽어 첫 실행 때 가져옵니다. 기존 DB는 변경하지 않습니다. 데이터가 손상된 경우 오류를 표시하고 빈 상태로 덮어쓰지 않습니다. 웹뷰에만 저장된 테마·언어 설정은 Android 첫 실행에서 기본값을 사용합니다.
@@ -46,7 +49,7 @@ npm run android:build
 
 `android:check`는 Kotlin 테스트·Android Lint·debug APK 빌드를 실행합니다. `android:test:device`는 연결된 테스트 기기 또는 에뮬레이터에서 실행합니다. 테스트는 별도 debug 앱에서 고정 응답으로 검색·페이지 추가·취소·필터·즐겨찾기·화면 전환과 실제 AGSL 컴파일을 검사합니다.
 
-`Build-Android.bat`와 `android:build`는 release 테스트·Lint를 거쳐 기존 서명키로 설치용 APK를 생성하고 서명과 16KB 정렬을 확인합니다. 원격 게임 이미지가 APK 에셋에 들어 있으면 빌드를 실패 처리합니다. 결과는 `output/releases/v0.2.1/ModFinder-0.2.1-Android.apk`입니다. 기존 정식 앱 ID와 서명키를 유지하고 versionCode를 2001로 올려 업데이트 설치를 지원합니다. Android 서명 환경변수와 개인 서명 설정은 [배포 절차](RELEASE.md)를 따릅니다.
+`Build-Android.bat`와 `android:build`는 release 테스트·Lint를 거쳐 기존 서명키로 설치용 APK를 생성하고 서명과 16KB 정렬을 확인합니다. 원격 게임 이미지가 APK 에셋에 들어 있으면 빌드를 실패 처리합니다. 결과는 `output/releases/v0.2.3/ModFinder-0.2.3-Android.apk`입니다. 기존 정식 앱 ID와 서명키를 유지하고 versionCode를 2003으로 올려 업데이트 설치를 지원합니다. Android 서명 환경변수와 개인 서명 설정은 [배포 절차](RELEASE.md)를 따릅니다.
 
 Java, Android SDK Platform 36과 Build Tools가 필요합니다. Android 빌드에 Rust·NDK·WebView는 필요하지 않습니다. 빌드는 APK를 로컬에 생성하며, 기존 웹 다운로드의 바이너리를 자동 교체하지 않습니다.
 

@@ -5,6 +5,7 @@ let dispose: (() => void) | undefined;
 afterEach(() => { dispose?.(); dispose = undefined; vi.unstubAllGlobals(); });
 
 function setup() {
+  let mutation: MutationCallback | undefined;
   const frames = new Map<number, FrameRequestCallback>();
   let frameId = 0;
   const gl = new Proxy<Record<string, any>>({
@@ -30,7 +31,7 @@ function setup() {
   vi.stubGlobal('innerWidth', 390); vi.stubGlobal('innerHeight', 844); vi.stubGlobal('devicePixelRatio', 3);
   vi.stubGlobal('getComputedStyle', () => ({ visibility: 'visible', borderTopLeftRadius: '20px' }));
   vi.stubGlobal('matchMedia', () => Object.assign(new EventTarget(), { matches: false }));
-  vi.stubGlobal('MutationObserver', class { observe() {} disconnect() {} });
+  vi.stubGlobal('MutationObserver', class { constructor(callback: MutationCallback) { mutation = callback; } observe() {} disconnect() {} });
   vi.stubGlobal('ResizeObserver', class { observe() {} unobserve() {} disconnect() {} });
   vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { frames.set(++frameId, callback); return frameId; });
   vi.stubGlobal('cancelAnimationFrame', (id: number) => frames.delete(id));
@@ -41,10 +42,23 @@ function setup() {
     for (const callback of pending) callback(time);
   };
   const uniform = (method: string, name: string) => gl[method].mock.calls.findLast((call: unknown[]) => call[0] === name)?.slice(1);
-  return { renderer, gl, canvas, doc, win, viewport, frames, frame, uniform, setTop: (value: number) => { top = value; } };
+  return { renderer, gl, canvas, doc, win, viewport, frames, frame, uniform, setTop: (value: number) => { top = value; }, mutate: (added: Element[], removed: Element[]) => mutation?.([{ addedNodes: added, removedNodes: removed } as unknown as MutationRecord], {} as MutationObserver) };
 }
 
 describe('glass scroll stability', () => {
+  it('restores background panels after removing a filter menu with no glass children', () => {
+    const s = setup(); s.frame(100);
+    class MenuElement { matches(selector: string) { return selector.includes('.game-deck'); } querySelector() { return null; } querySelectorAll() { return []; } }
+    vi.stubGlobal('Element', MenuElement);
+    const menu = new MenuElement();
+    let open = true;
+    s.doc.querySelector = () => open ? menu as never : null;
+    s.mutate([menu as unknown as Element], []); s.frame(110);
+    expect(s.uniform('uniform1i', 'uCount')).toEqual([0]);
+    open = false;
+    s.mutate([], [menu as unknown as Element]); s.frame(120);
+    expect(s.uniform('uniform1i', 'uCount')).toEqual([1]);
+  });
   it('updates scroll geometry at display cadence without rescanning panels or regenerating the scene', () => {
     const s = setup(); s.frame(100);
     const scans = s.doc.querySelectorAll.mock.calls.length;

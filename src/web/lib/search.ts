@@ -1,4 +1,4 @@
-import { t } from './i18n';
+import { t, locale } from './i18n';
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import { getGame } from '../../shared/games';
 import { externalSearch } from '../../shared/links';
@@ -22,7 +22,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
   const busy = useRef(false);
   const forceFresh = useRef(false);
   const seenCursors = useRef(new Map<string, Set<string>>());
-  const key = JSON.stringify(spec);
+  const key = JSON.stringify([spec, locale]);
   const run = useCallback(async (request: SearchRequest, gen: number, signal: AbortSignal, fresh = false) => {
     const id = bucketKey(request);
     try {

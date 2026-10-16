@@ -1,4 +1,5 @@
 import { useEffect, useRef, useState } from 'react';
+import { useOverlay } from './lib/overlay';
 import { ArrowLeft, ArrowRight, Search, X, Boxes, Swords, Trees, Building2, Flag, Zap, Dices, Ghost, Layers, Check, Download, TrendingUp, ArrowDownWideNarrow, Package, Hash, Cpu, Clock } from 'lucide-react';
 import type { Filters, Sort } from '../shared/types';
 import { categoryIcon } from './category-icons';
@@ -37,15 +38,13 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   const busy = useRef(false);
   const autoSpeed = useRailAutoScroll(rail,drag.gesture,!mobile && !openFilter,busy,genreMode ? undefined : GAME_RAIL_MOTION);
   useEffect(() => {
-    const previous = document.activeElement as HTMLElement | null;
-    const overflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
     root.current?.querySelector<HTMLElement>(mobile ? 'button' : 'input')?.focus({ preventScroll: true });
     const media = matchMedia('(prefers-reduced-motion: reduce)');
     const motion = () => { reduced.current = media.matches; };
     media.addEventListener('change', motion);
-    return () => { clearTimeout(timer.current); media.removeEventListener('change', motion); document.body.style.overflow = overflow; previous?.focus(); };
+    return () => { clearTimeout(timer.current); media.removeEventListener('change', motion); };
   }, []);
+  useOverlay(root);
   useEffect(() => {
     if (rail.current) rail.current.scrollLeft = 0;
   }, [query, genre, view]);
@@ -143,7 +142,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     .filter(version => version.toLowerCase().includes(versionQuery.toLowerCase()));
   const option = (id: string, label: string, selected: boolean, onClick: () => void) => <button type="button" key={id || 'all'} className={selected ? 'filter-option is-current' : 'filter-option'} aria-pressed={selected} onClick={() => { onClick(); setOpenFilter(null); }}><span>{label}</span>{selected && <Check size={18} />}</button>;
   const keyboard = (event: React.KeyboardEvent) => {
-    if (event.key === 'Escape') { event.preventDefault(); openFilter ? setOpenFilter(null) : genreMode && view !== 'menu' ? (setQuery(''), setView('menu')) : close(); }
+    if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); openFilter ? setOpenFilter(null) : genreMode && view !== 'menu' ? (setQuery(''), setView('menu')) : close(); }
     if (event.key === 'Tab') {
       const controls = [...root.current!.querySelectorAll<HTMLElement>('button:not(:disabled),input,select')].filter(control => !control.closest('[inert]'));
       const first = controls[0]; const last = controls.at(-1);

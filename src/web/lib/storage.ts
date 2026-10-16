@@ -87,8 +87,12 @@ export async function loadLocalData(): Promise<LocalData> {
   const raw = isNative() ? await (await import('@tauri-apps/api/core')).invoke<string | null>('load_local_state') : localStorage.getItem('modfinder:local:v1');
   if (!raw) return emptyLocalData();
   const data = parseLocalData(raw);
-  const { favoriteDetails } = await import('./api');
-  return refreshFavoriteReferences(data, favoriteDetails);
+  return data;
+}
+export function mergeFavoriteReferences(current: LocalData, original: LocalData, refreshed: LocalData): LocalData {
+  const originals = new Map(original.favorites.map(item => [item.key, item]));
+  const fresh = new Map(refreshed.favorites.map(item => [item.key, item]));
+  return { ...current, favorites: current.favorites.map(item => item === originals.get(item.key) ? fresh.get(item.key) ?? item : item) };
 }
 export async function refreshFavoriteReferences(data: LocalData, resolve: (item: Listing) => Promise<Listing>): Promise<LocalData> {
   const favorites = [...data.favorites];
