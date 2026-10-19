@@ -5,10 +5,10 @@ import { deleteFavoriteFolder, moveFavorite, setShortcutFolder, type LocalData }
 import { t } from './lib/i18n';
 
 type Update = Dispatch<SetStateAction<LocalData>>;
-function ShortcutCheckbox({ checked, onChange, compact = false }: { checked: boolean; onChange: (checked: boolean) => void; compact?: boolean }) {
+function ShortcutCheckbox({ checked, onChange, pill = false }: { checked: boolean; onChange: (checked: boolean) => void; pill?: boolean }) {
   return <label className="shortcut-toggle" title={t('메인 화면 바로가기')}>
-    <span className="shortcut-checkbox-glass"><input type="checkbox" aria-label={t('메인 화면 바로가기')} checked={checked} onChange={event => onChange(event.target.checked)}/><Check size={16} aria-hidden="true"/></span>
-    <span className={compact ? 'sr-only' : undefined}>{t('바로가기')}</span>
+    <span className="shortcut-checkbox-glass"><input type="checkbox" aria-label={t('메인 화면 바로가기')} checked={checked} onChange={event => onChange(event.target.checked)}/><Check size={16} aria-hidden="true"/>{pill && <span className="shortcut-checkbox-label">{t('바로가기')}</span>}</span>
+    {!pill && <span>{t('바로가기')}</span>}
   </label>;
 }
 
@@ -42,8 +42,9 @@ export function FolderBar({ data, update, selected, select }: { data: LocalData;
         select(id); setEditing(null);
       }}>
         <div className="folder-form-row">
-          <ShortcutCheckbox compact checked={shortcut} onChange={setShortcut}/>
-          <div className="folder-input-glass"><input id="folder-name" aria-label={t('그룹명')} placeholder={t('그룹명')} aria-invalid={!!error} aria-describedby={error ? 'folder-error' : undefined} data-autofocus maxLength={40} value={name} onChange={event => { setName(event.target.value); setError(''); }} /><button type="submit" className="icon-button folder-save" aria-label={t('저장')} title={t('저장')}><Check size={21} aria-hidden="true"/></button></div>
+          <ShortcutCheckbox pill checked={shortcut} onChange={setShortcut}/>
+          <div className="folder-input-glass"><input id="folder-name" aria-label={t('그룹명')} placeholder={t('그룹명')} aria-invalid={!!error} aria-describedby={error ? 'folder-error' : undefined} data-autofocus maxLength={40} value={name} onChange={event => { setName(event.target.value); setError(''); }} /></div>
+          <button type="submit" className="icon-button folder-save" aria-label={t('저장')} title={t('저장')}><Check size={21} aria-hidden="true"/></button>
         </div>
         {error && <p id="folder-error" role="alert">{error}</p>}
       </form>
