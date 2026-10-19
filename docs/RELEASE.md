@@ -35,6 +35,14 @@ The Android launcher disables persistent Gradle daemons for its build so that ge
 
 Use `Build-Windows.bat --check` or `Build-Android.bat --check` to check paths and configuration without building. Use `Start-Web.bat --verify` to start and check local services, then stop only services it started. Set `CI=true` when invoking a build launcher from automation to omit the final pause.
 
+## Windows installer appearance and signing
+
+Windows 0.2.4 uses Korean NSIS pages, concise welcome/finish text, and the existing MF logo for the installer, uninstaller, and sidebar. Settings are in `src/native/tauri.conf.json`; text is in `tooling/installer/messages.nsh`. After changing the source icon, regenerate the 24-bit sidebar with `tooling/scripts/build-installer-artwork.ps1` and rebuild the installer. The application icon remains `src/native/icons/icon.ico`.
+
+SmartScreen is controlled by Windows, not NSIS text. Public Windows binaries are currently unsigned. Removing the unknown-publisher status requires a trusted Windows code-signing identity and signing both the application and installer using Tauri's Windows signing configuration. A self-signed certificate is not a public trust fix. Even a valid signature does not guarantee an immediate end to SmartScreen reputation warnings. Keep signing credentials outside the repository; the Tauri updater signature is not Windows Authenticode. See [Tauri Windows signing](https://v2.tauri.app/distribute/sign/windows/).
+
+Install mode stays `currentUser`, avoiding an unnecessary administrator request for the application itself. WebView2 installation may still require elevation on systems where it is missing.
+
 ## Website downloads
 
 The web settings cards download through `/downloads/windows` and `/downloads/android` on the Worker. The Worker streams fixed, public GitHub release files and supplies attachment filenames; it supports HEAD and resumed downloads. It never forwards browser cookies or authorization headers to GitHub. Published versions, filenames and expected SHA-256 values are in `src/shared/data/app-downloads.json`, independently for Windows and Android. Local build versions may be newer than the published files.

@@ -1,0 +1,10 @@
+; Loaded before Tauri's MUI pages; retain upstream install/update behavior.
+!define MUI_WELCOMEPAGE_TITLE "Mod Finder 설치"
+!define MUI_WELCOMEPAGE_TEXT "게임별 모드를 한곳에서 검색하세요.$\r$\n$\r$\n다음을 누르면 설치를 시작합니다."
+!define MUI_FINISHPAGE_TITLE "설치 완료"
+!define MUI_FINISHPAGE_TEXT "Mod Finder를 사용할 준비가 되었습니다."
+!define MUI_UNCONFIRMPAGE_TEXT_TOP "Mod Finder를 제거합니다."
+!define MUI_UNFINISHPAGE_TITLE "제거 완료"
+!define MUI_UNFINISHPAGE_TEXT "Mod Finder를 제거했습니다."
+Caption "Mod Finder 설치"
+UninstallCaption "Mod Finder 제거"

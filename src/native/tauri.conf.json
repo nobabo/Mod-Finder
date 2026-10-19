@@ -16,5 +16,24 @@
       "devCsp": "default-src 'self'; script-src 'self'; style-src 'self' 'unsafe-inline'; font-src 'self'; img-src 'self' data: https:; connect-src 'self' ipc: http://ipc.localhost http://127.0.0.1:4318 ws://localhost:1420 http://localhost:1420 https://modfinder.pages.dev; object-src 'none'; base-uri 'self'; frame-src 'none'"
     }
   },
-  "bundle": { "active": true, "targets": ["nsis"], "category": "Entertainment", "shortDescription": "게임별 모드 통합 검색", "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"], "android": { "minSdkVersion": 29 } }
+  "bundle": {
+    "active": true,
+    "targets": ["nsis"],
+    "category": "Entertainment",
+    "shortDescription": "게임별 모드 통합 검색",
+    "icon": ["icons/32x32.png", "icons/128x128.png", "icons/128x128@2x.png", "icons/icon.icns", "icons/icon.ico"],
+    "windows": {
+      "nsis": {
+        "languages": ["Korean"],
+        "customLanguageFiles": { "Korean": "../../tooling/installer/Korean.nsh" },
+        "displayLanguageSelector": false,
+        "installMode": "currentUser",
+        "installerIcon": "icons/icon.ico",
+        "uninstallerIcon": "icons/icon.ico",
+        "sidebarImage": "../../tooling/installer/sidebar.bmp",
+        "installerHooks": "../../tooling/installer/messages.nsh"
+      }
+    },
+    "android": { "minSdkVersion": 29 }
+  }
 }
