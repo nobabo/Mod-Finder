@@ -48,10 +48,10 @@
   0%,100% { opacity:.18;transform:translate3d(-50%,0,0) rotate(-2deg); }
   50% { opacity:.24;transform:translate3d(-50%,0,0) rotate(2deg); }
 }
-@media(max-width:650px) {
+@media(max-width:650px) { :where(html:not([data-native])) {
   .theme-particle:nth-child(even) { display:none; }
   .flame { height:calc(155px * var(--size)); }
-}
+}}
 @media(prefers-reduced-motion:reduce) {
   .theme-effects { display:none; }
   .theme-particle,.bamboo-stem,.bamboo-leaves { animation:none; }
