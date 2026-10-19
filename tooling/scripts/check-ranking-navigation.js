@@ -2,6 +2,7 @@
 async (page) => {
   const check = (ok, message) => { if (!ok) throw new Error(message); };
   const title = 'UI Ranking Test Pack';
+  const home = new URL('/', page.url()).href;
   const requests = [];
   const pattern = '**/v1/search?**';
   const routeSearch = async route => {
@@ -25,7 +26,7 @@ async (page) => {
     await page.emulateMedia({reducedMotion:'reduce'});
     for (const [width,height] of [[390,844], [1440,1000]]) {
       await page.setViewportSize({width,height});
-      await page.reload();
+      await page.goto(home);
       await page.getByRole('button',{name:'다운로드 순위',exact:true}).click();
       const ranked = page.locator('.ranking-panel .mod-card').first();
       await ranked.waitFor();
@@ -37,6 +38,7 @@ async (page) => {
       check(await page.locator('.sheet-backdrop').count() === 0, 'Ranking opened the detail sheet');
       check(await page.getByRole('searchbox',{name:'모드 검색어'}).inputValue() === title, 'Ranking did not search the original mod title');
       check(await page.evaluate(() => scrollY === 0), 'Ranking search did not start at the top');
+      await page.screenshot({ path: `output/playwright/download-ranking-search-${width}.png` });
       const image = page.locator('.results-content .mod-logo-link').first();
       await image.waitFor();
       check(await image.evaluate(el => {
