@@ -73,6 +73,7 @@ describe('game community rankings', () => {
   it.each(GAMES.map(game => [game.id]))('renders the appropriate tabs for %s', gameId => {
     const html = renderToStaticMarkup(createElement(Rankings, { gameId, card: () => null, searchMod: vi.fn() }));
     expect(html.includes('검색 순위')).toBe(!!COMMUNITY_GALLERIES[gameId]);
+    expect(html).not.toContain('맞춤 추천');
     expect(html).toContain(getGame(gameId)!.sources.steam ? '구독 순위' : '다운로드 순위');
     if (gameId !== 'minecraft-java') expect(html).not.toContain('Sunlit Valley');
   });

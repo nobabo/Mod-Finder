@@ -10,6 +10,15 @@ const magic = mapModrinth({ project_id: 'magic', title: 'Magic', categories: ['m
 const other = mapModrinth({ project_id: 'other', title: 'Other', categories: [] }, game, 1);
 const groups = [other, magic].map(item => ({ id: item.key, listings: [item] }));
 describe('local recommendations', () => {
+  it('requires explicit opt-in for fresh, legacy and malformed stored preferences', () => {
+    expect(emptyLocalData().recommendationsEnabled).toBe(false);
+    for (const value of [undefined, false, 'true', 1, null]) {
+      expect(parseLocalData(JSON.stringify({ ...emptyLocalData(), recommendationsEnabled: value })).recommendationsEnabled).toBe(false);
+    }
+    const enabled = parseLocalData(JSON.stringify({ ...emptyLocalData(), recommendationsEnabled: true }));
+    expect(parseLocalData(JSON.stringify(enabled)).recommendationsEnabled).toBe(true);
+    expect(parseLocalData(JSON.stringify({ ...enabled, recommendationsEnabled: false })).recommendationsEnabled).toBe(false);
+  });
   it('combines Korean searches with clicked mod topics without storing provider payloads', () => {
     const events = recordInterest(recordInterest([], game.id, '마법', undefined, now), game.id, '', magic, now + 1);
     expect(recommend(groups, events, now + 2)[0].id).toBe(magic.key);

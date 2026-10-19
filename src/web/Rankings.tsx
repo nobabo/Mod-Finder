@@ -1,5 +1,3 @@
-import { Recommendations } from './Recommendations';
-import type { Interest } from './lib/preferences';
 import { useEffect, useState, type ReactNode } from 'react';
 import { ArrowRight, ChevronLeft, ChevronRight, Download, RefreshCw, Search } from 'lucide-react';
 import { getGame } from '../shared/games';
@@ -12,11 +10,11 @@ import { downloadRanking, rankingSources } from './lib/rankings';
 import { locale, t } from './lib/i18n';
 import { useModSummaries } from './lib/mod-summaries';
 
-export function Rankings({ gameId, card, searchMod, interests = [] }: { interests?: Interest[]; gameId: string; card: (item: Listing, alternatives: Listing[], select?: () => void) => ReactNode; searchMod: (entry: Pick<CommunityEntry, 'name' | 'kind'>) => void }) {
+export function Rankings({ gameId, card, searchMod }: { gameId: string; card: (item: Listing, alternatives: Listing[], select?: () => void) => ReactNode; searchMod: (entry: Pick<CommunityEntry, 'name' | 'kind'>) => void }) {
   const game = getGame(gameId);
   const community = communityRanking(gameId);
-  const [tab, setTab] = useState<'search' | 'downloads' | 'recommended'>(community ? 'search' : 'downloads');
-  const activeTab = tab === 'recommended' ? tab : community ? tab : 'downloads';
+  const [tab, setTab] = useState<'search' | 'downloads'>(community ? 'search' : 'downloads');
+  const activeTab = community ? tab : 'downloads';
   const sources = rankingSources(gameId);
   const [items, setItems] = useState<ResultGroup[]>([]);
   const [page, setPage] = useState(0);
@@ -37,11 +35,10 @@ export function Rankings({ gameId, card, searchMod, interests = [] }: { interest
   return <section className="collection-panel ranking-panel">
     <>
       <div className="ranking-tabs" role="group" aria-label={t('순위 종류')}>
-        <button type="button" aria-pressed={activeTab === 'recommended'} onClick={() => setTab('recommended')}>{t('맞춤 추천')}</button>
         {community && <button type="button" aria-pressed={activeTab === 'search'} onClick={() => setTab('search')}><Search size={18}/>{t('검색 순위')}</button>}
         <button type="button" aria-pressed={activeTab === 'downloads'} onClick={() => setTab('downloads')}><Download size={18}/>{t(sources[0] === 'steam' ? '구독 순위' : '다운로드 순위')}</button>
       </div>
-      {activeTab === 'recommended' ? <Recommendations gameId={gameId} interests={interests} card={card}/> : !game ? <p className="empty-state">{t('게임을 선택하세요.')}</p> : activeTab === 'search' && community ? <>
+      {!game ? <p className="empty-state">{t('게임을 선택하세요.')}</p> : activeTab === 'search' && community ? <>
         {!community.entries.length && <p className="empty-state">{t('제공되는 순위가 없어요.')}</p>}
         <ol className="ranking-list">{community.entries.map((entry, index) => <li key={entry.id}><button type="button" onClick={() => searchMod(entry)}><span className="rank-number">{String(index + 1).padStart(2, '0')}</span><strong>{locale === 'ko' ? entry.koreanName ?? (gameId === 'minecraft-java' ? (koreanNames as Record<string, string>)[entry.id] : undefined) ?? entry.name : entry.name}</strong><ArrowRight size={18}/></button></li>)}</ol>
       </> : <>

@@ -1,4 +1,4 @@
-import { useEffect, useMemo, useState, type ReactNode } from 'react';
+import { useEffect, useMemo, useState } from 'react';
 import type { Listing, VerifiedProjectLink } from '../shared/types';
 import { bucketKey, runSearchQueue, searchPlan } from '../shared/search-plan';
 import { appendStable, groupResults } from '../shared/ranking';
@@ -7,8 +7,10 @@ import { preferredGame, recommend, recommendationQueries, type Interest } from '
 import { searchSource } from './lib/api';
 import { useModSummaries } from './lib/mod-summaries';
 import { locale, t } from './lib/i18n';
+import { listingText } from '../shared/content';
+import { ModIcon } from './components';
 
-export function Recommendations({ gameId, interests, card }: { gameId: string; interests: Interest[]; card: (item: Listing, alternatives: Listing[]) => ReactNode }) {
+export function Recommendations({ gameId, interests, select }: { gameId: string; interests: Interest[]; select: (item: Listing, alternatives: Listing[]) => void }) {
   const selected = gameId === 'all' ? preferredGame(interests) : gameId;
   const queries = JSON.stringify(selected ? ['', ...recommendationQueries(interests, selected)] : []);
   const [items, setItems] = useState<Listing[]>([]);
@@ -33,8 +35,15 @@ export function Recommendations({ gameId, interests, card }: { gameId: string; i
     return () => controller.abort();
   }, [selected, queries, locale, refresh]);
   const groups = useMemo(() => recommend(groupResults(items, '', links), interests).slice(0, 10), [items, links, interests]);
-  if (!selected) return <p className="empty-state">{t('게임을 선택하세요.')}</p>;
-  if (loading) return <div className="results-loading" role="status" aria-label={t('검색 중')}><span className="results-spinner"/></div>;
-  if (!groups.length) return <div className="empty-state"><button className="secondary-button" onClick={() => setRefresh(value => value + 1)}>{t('다시 시도')}</button></div>;
-  return <ul className="mod-grid ranked-grid recommended-grid">{groups.map(group => <li key={group.id}>{card(group.listings[0], group.listings)}</li>)}</ul>;
+  if (!selected) return null;
+  return <section className="recommendations-row" aria-label={t('맞춤 추천')}>
+    <span className="recommendations-label">{t('맞춤 추천')}</span>
+    {loading && !groups.length ? <span className="recommendations-loading" role="status" aria-label={t('검색 중')}><span className="results-spinner"/></span>
+      : !groups.length ? <button type="button" className="secondary-button" onClick={() => setRefresh(value => value + 1)}>{t('다시 시도')}</button>
+      : <ul className="recommendations-list">{groups.map(group => {
+        const item = group.listings[0];
+        const title = listingText(item, locale).title;
+        return <li key={group.id}><button type="button" title={title} onClick={() => select(item, group.listings)}><ModIcon item={item}/><span>{title}</span></button></li>;
+      })}</ul>}
+  </section>;
 }

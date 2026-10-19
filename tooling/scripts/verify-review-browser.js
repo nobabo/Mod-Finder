@@ -76,21 +76,21 @@ async (page) => {
   await page.evaluate(() => {
     const data = JSON.parse(localStorage.getItem('modfinder:local:v1'));
     data.interests = [{ gameId: 'minecraft-java', query: 'magic', topics: ['magic'], weight: 2, at: Date.now() }];
+    data.recommendationsEnabled = true;
     localStorage.setItem('modfinder:local:v1', JSON.stringify(data));
   });
-  await page.goto('http://localhost:1420/');
-  await page.getByRole('button', { name: '맞춤 추천', exact: true }).click();
-  await page.locator('.recommended-grid>li').first().waitFor();
+  await page.goto('http://localhost:1420/?q=fixture');
+  await page.locator('.recommendations-list>li').first().waitFor();
   assert(searches.some(request => request.query === 'magic'), 'Recommendations did not expand the candidate pool');
-  assert(await page.locator('.recommended-grid>li').first().getByRole('button', { name: item.title, exact: true }).isVisible(), 'Interest-based candidate was not ranked first');
-  evidence.recommendations = { expanded: true, count: await page.locator('.recommended-grid>li').count() };
+  assert(await page.locator('.recommendations-list>li').first().getByRole('button', { name: item.title, exact: true }).isVisible(), 'Interest-based candidate was not ranked first');
+  evidence.recommendations = { expanded: true, count: await page.locator('.recommendations-list>li').count() };
   await page.screenshot({ path: 'output/playwright/review-recommendations-desktop.png' });
   await page.getByRole('button', { name: '설정 메뉴', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: '언어', exact: true }).click();
   await page.getByRole('dialog').getByRole('button', { name: 'English', exact: true }).click();
   await page.waitForFunction(() => document.documentElement.lang === 'en');
   await page.keyboard.press('Escape'); await page.keyboard.press('Escape');
-  await page.locator('.recommended-grid>li').first().waitFor();
+  await page.locator('.recommendations-list>li').first().waitFor();
   assert(searches.some(request => request.locale === 'en'), 'Language changes did not refresh source messages');
   evidence.language = true;
   await page.setViewportSize({ width: 390, height: 844 });

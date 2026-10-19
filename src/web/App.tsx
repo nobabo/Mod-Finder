@@ -1,7 +1,7 @@
 import { recordInterest } from './lib/preferences';
 import { t, locale, languagePreference, changeLanguage, useLocale } from './lib/i18n';
 import { useEffect, useRef, useState } from 'react';
-import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, GitCompareArrows, History, LoaderCircle, RefreshCw, Search, Settings2, SlidersHorizontal, X } from 'lucide-react';
+import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, GitCompareArrows, History, LoaderCircle, RefreshCw, Search, Settings2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import { categoriesForGame, getCategory } from '../shared/categories';
 import { GENRES, gamesInScope, getGame } from '../shared/games';
 import { SOURCE_NAMES, type Filters, type Listing, type Sort } from '../shared/types';
@@ -12,6 +12,7 @@ import { favoriteDetails } from './lib/api';
 import { detailReference } from './lib/detail-reference';
 import { FolderBar, MoveFavorite } from './Favorites';
 import { Rankings } from './Rankings';
+import { Recommendations } from './Recommendations';
 import { openExternal } from './lib/platform';
 import { Atmosphere } from './Atmosphere';
 import { BrandLogo } from './BrandLogo';
@@ -114,17 +115,17 @@ export default function App() {
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(''), 4000); return () => clearTimeout(timer); }, [toast]);
   useEffect(() => { applyTheme(accent); try { localStorage.setItem('modfinder-accent', accent); } catch { /* Theme persistence is optional. */ } }, [accent]);
   useEffect(() => { const onKey = (event: KeyboardEvent) => { if (event.key === 'Escape') setMenuOpen(false); if ((event.ctrlKey || event.metaKey) && event.key === 'k') { event.preventDefault(); navigate({ page: 'discover' }); inputRef.current?.focus(); } }; window.addEventListener('keydown', onKey); return () => window.removeEventListener('keydown', onKey); }, [navigate]);
-  const chooseGame = (id: string, nextGenre = 'all') => { if (hydrated) setLocal(prev => ({ ...prev, interests: recordInterest(prev.interests, id) })); navigate({ gameId: id, genre: nextGenre, filters: {}, categories: [], page: 'discover' }); setGamePicker(false); if (!matchMedia('(pointer: coarse), (max-width: 850px)').matches) requestAnimationFrame(() => inputRef.current?.focus()); };
+  const chooseGame = (id: string, nextGenre = 'all') => { if (hydrated) setLocal(prev => prev.recommendationsEnabled ? { ...prev, interests: recordInterest(prev.interests, id) } : prev); navigate({ gameId: id, genre: nextGenre, filters: {}, categories: [], page: 'discover' }); setGamePicker(false); if (!matchMedia('(pointer: coarse), (max-width: 850px)').matches) requestAnimationFrame(() => inputRef.current?.focus()); };
   const submit = (value = input, id = gameId, selectedGenre = genre, categories = id === gameId ? selectedCategories : [], kind?: string, clearFilters = false) => {
     const next = value.trim().slice(0, 200); setInput(next); setMenuOpen(false);
     const nextFilters = kind ? { kind } : clearFilters || id !== gameId || selectedGenre !== genre ? {} : filters;
     navigate({ page: 'discover', gameId: id, genre: selectedGenre, query: next, submitted: true, categories, filters: nextFilters });
     window.scrollTo({ top: 0, left: 0, behavior: 'instant' });
-    if (next && hydrated) setLocal(prev => ({ ...prev, interests: recordInterest(prev.interests, id, next), history: [{ gameId: id, genre: selectedGenre, query: next, ...(categories.length ? { categories } : {}) }, ...prev.history.filter(item => item.query !== next || item.gameId !== id || (item.genre ?? 'all') !== selectedGenre || JSON.stringify(item.categories ?? (item.category ? [item.category] : [])) !== JSON.stringify(categories))].slice(0, 20) }));
+    if (next && hydrated) setLocal(prev => ({ ...prev, interests: prev.recommendationsEnabled ? recordInterest(prev.interests, id, next) : prev.interests, history: [{ gameId: id, genre: selectedGenre, query: next, ...(categories.length ? { categories } : {}) }, ...prev.history.filter(item => item.query !== next || item.gameId !== id || (item.genre ?? 'all') !== selectedGenre || JSON.stringify(item.categories ?? (item.category ? [item.category] : [])) !== JSON.stringify(categories))].slice(0, 20) }));
     if (next === query && id === gameId && selectedGenre === genre) search.retry();
   };
-  const visit = async (url: string, item?: Listing) => { const generation = interestGeneration.current; try { await openExternal(url); if (item && hydrated && generation === interestGeneration.current) setLocal(prev => ({ ...prev, interests: recordInterest(prev.interests, item.gameId, "", item) })); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
-  const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => ({ ...toggleFavorite(prev, item), interests: prev.favorites.some(favorite => favorite.key === item.key) ? prev.interests : recordInterest(prev.interests, item.gameId, '', item) })); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
+  const visit = async (url: string, item?: Listing) => { const generation = interestGeneration.current; try { await openExternal(url); if (item && hydrated && generation === interestGeneration.current) setLocal(prev => prev.recommendationsEnabled ? { ...prev, interests: recordInterest(prev.interests, item.gameId, "", item) } : prev); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
+  const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => ({ ...toggleFavorite(prev, item), interests: !prev.recommendationsEnabled || prev.favorites.some(favorite => favorite.key === item.key) ? prev.interests : recordInterest(prev.interests, item.gameId, '', item) })); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
   const changeFilter = (key: keyof Filters, value: string) => navigate(prev => { const next = { ...prev.filters }; if (value) next[key] = value; else delete next[key]; return { ...prev, filters: next }; });
   const resetFilters = () => navigate({ filters: {}, categories: [] });
   const go = (target: Page) => { navigate({ page: target }); setMenuOpen(false); };
@@ -161,6 +162,7 @@ export default function App() {
       {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages columns={3}><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
         <button type="button" onClick={() => go('favorites')}><Bookmark size={34} /><span>{t("즐겨찾기")}</span></button>
         <button type="button" onClick={() => go('recent')}><History size={34} /><span>{t("최근 기록")}</span></button>
+        <button type="button" role="switch" aria-checked={!!local.recommendationsEnabled} aria-label={t("맞춤 추천")} disabled={!hydrated} onClick={() => setLocal(prev => ({ ...prev, recommendationsEnabled: !prev.recommendationsEnabled }))}><Sparkles size={34}/><span>{t("맞춤 추천")}</span><span className="recommendations-switch" aria-hidden="true"/></button>
       </SettingsMenu>}
     </div>
     {mobileLayout && <header className={`mobile-header ${headerScrolled ? 'is-scrolled' : ''}`}>
@@ -174,11 +176,12 @@ export default function App() {
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
       <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row">{!mobileLayout && page !== 'discover' && <button type="button" className="collection-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={76}/></button>}{!mobileLayout && heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160}/></div>}<form className="search-box" onSubmit={e => { e.preventDefault(); if (window.matchMedia("(pointer: coarse), (max-width: 850px)").matches) inputRef.current?.blur(); submit(); }}><button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" type="search" inputMode="search" enterKeyHint="search" name="q" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit" aria-label={t("모드 검색")}><ArrowRight size={18} aria-hidden="true" /></button></form>{!mobileLayout && filterControl}</div>
       {heroSearch && <div className="home-collections">
-      <Rankings interests={local.interests ?? []} key={gameId} gameId={gameId} card={card} searchMod={entry => submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined, true)}/>
+      <Rankings key={gameId} gameId={gameId} card={card} searchMod={entry => submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined, true)}/>
       {hydrated && shortcuts.length > 0 && <nav className="home-shortcuts" aria-label={t('메인 화면 바로가기')}>{shortcuts.map(item => <a key={item.key} href={item.url} target="_blank" rel="noopener noreferrer" title={listingText(item, locale).title} onClick={event => { event.preventDefault(); void visit(item.url, item); }}><ModIcon item={item}/><span>{listingText(item, locale).title}</span></a>)}</nav>}
       </div>}
       </div>
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
+        {hydrated && local.recommendationsEnabled && <Recommendations gameId={gameId} interests={local.interests ?? []} select={showDetail}/>}
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}
         {search.loading && !search.items.length && <div className="results-loading" role="status" aria-label={t("검색 중")}><span className="results-spinner" aria-hidden="true" /></div>}
