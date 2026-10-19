@@ -45,38 +45,30 @@ async (page) => {
   const visual = () => toggle.evaluate(element => {
     const style = getComputedStyle(element);
     const animation = element.getAnimations().find(item => item.animationName === 'genre-card-pick');
-    return { filter: style.filter, animation: animation?.playState, y: new DOMMatrix(style.transform).m42, drop: parseFloat(style.getPropertyValue('--card-drop')) || 0 };
+    return { filter: style.filter, animation: animation?.playState, y: new DOMMatrix(style.transform).m42, drop: parseFloat(style.getPropertyValue('--card-drop')) || 0, background: style.backgroundColor, image: style.backgroundImage };
   });
-  const freezePick = () => toggle.evaluate(element => {
-    const animation = element.getAnimations().find(item => item.animationName === 'genre-card-pick');
-    if (animation) { animation.pause(); animation.currentTime = 190; }
-  });
-  const finishPick = () => toggle.evaluate(element => {
+  const finishTransitions = () => toggle.evaluate(element => {
     for (const animation of element.getAnimations()) animation.finish();
   });
-  const drawFits = () => toggle.evaluate(element => element.getBoundingClientRect().top >= element.closest('.settings-rail').getBoundingClientRect().top);
   assert((await visual()).filter === 'grayscale(1)', 'Disabled recommendation card is not grayscale');
   await page.screenshot({ path: 'output/playwright/recommendation-card-off.png' });
   await page.emulateMedia({ reducedMotion: 'no-preference' });
   await toggle.focus(); await page.keyboard.press('Space');
-  assert(await toggle.getAttribute('aria-checked') === 'true' && (await visual()).animation === 'running', 'Keyboard activation did not play the shared genre effect');
-  await freezePick();
-  const lifted = await visual();
-  assert(lifted.y < lifted.drop - 25, 'Recommendation card did not draw upward like a genre card');
-  assert(await drawFits(), 'Desktop draw animation was clipped');
+  assert(await toggle.getAttribute('aria-checked') === 'true' && !(await visual()).animation, 'Keyboard activation must enable recommendations without a draw animation');
+  await finishTransitions();
+  const active = await visual();
+  assert(Math.abs(active.y - active.drop) < .1, 'Enabled recommendation card moved above the other settings cards');
+  assert(active.filter === 'none' && active.background === 'rgba(0, 0, 0, 0)' && active.image === 'none', 'Enabled card must keep color with a transparent background');
   await page.screenshot({ path: 'output/playwright/recommendation-card-on-desktop.png' });
-  await finishPick();
   await toggle.dispatchEvent('click'); await toggle.dispatchEvent('click');
-  assert(await toggle.evaluate(element => element.getAnimations().filter(item => item.animationName === 'genre-card-pick').length) === 1, 'Repeated toggles stacked draw animations');
-  await finishPick();
+  assert(!(await visual()).animation, 'Repeated toggles must not animate the card position');
+  await finishTransitions();
   await page.setViewportSize({ width: 390, height: 844 });
   await toggle.dispatchEvent('click'); await toggle.dispatchEvent('click');
-  assert((await visual()).animation === 'running', 'Mobile recommendation card did not animate');
-  await freezePick();
-  assert((await visual()).y < -10, 'Mobile card did not lift');
-  assert(await drawFits(), 'Mobile draw animation was clipped');
+  assert(!(await visual()).animation, 'Mobile recommendation card must not use a draw animation');
+  await finishTransitions();
+  assert(Math.abs((await visual()).y) < .1, 'Mobile recommendation card must stay aligned with the other cards');
   await page.screenshot({ path: 'output/playwright/recommendation-card-on-mobile.png' });
-  await finishPick();
   await page.emulateMedia({ reducedMotion: 'reduce' });
   await toggle.dispatchEvent('click'); await toggle.dispatchEvent('click');
   assert(await toggle.getAttribute('aria-checked') === 'true' && !(await visual()).animation, 'Reduced motion did not keep the color state without animation');
