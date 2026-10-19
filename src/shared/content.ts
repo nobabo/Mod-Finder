@@ -15,7 +15,12 @@ const gameSearchTranslations: Record<string, Record<string, string>> = gameSearc
 const packNames: Record<string, string> = packNamesKo;
 const normalizedQuery = (value: string) => value.normalize('NFKC').toLocaleLowerCase().replace(/\s+/g, ' ').trim();
 export function tagText(tag: string, locale: Locale) {
-  return locale === 'ko' ? tagTranslations[tag] ?? tag : tag;
+  if (locale !== 'ko') return tag;
+  if (tagTranslations[tag]) return tagTranslations[tag];
+  const compatible = tag.match(/^(\d+(?:\.\d+)+(?:-[a-z]\d+)?)-compatible$/i);
+  if (compatible) return `${compatible[1]} 호환`;
+  const version = tag.match(/^version:\s*(\d+(?:\.\d+)*)$/i);
+  return version ? `버전 ${version[1]}` : tag;
 }
 // Presentation overlay only: raw provider data remains unchanged in saved listings.
 export function listingText(item: Listing, locale: Locale) {

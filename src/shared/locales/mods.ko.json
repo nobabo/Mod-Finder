@@ -3,7 +3,10 @@
     "title": "디시즈드크래프트",
     "summary": "감염자에게 점령된 도시를 탐험하고 물자를 수집하며 싸우는 좀비 아포칼립스 모드팩입니다. 기술을 발전시키고 장비를 제작해 방사능 황무지에서 치료제를 찾습니다.",
     "searchTerm": "DeceasedCraft",
-    "aliases": ["디시즈드크래프트", "디시즈드 크래프트"],
+    "aliases": [
+      "디시즈드크래프트",
+      "디시즈드 크래프트"
+    ],
     "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/deceasedcraft",
     "reviewedAt": "2026-10-04"
   },
@@ -642,11 +645,15 @@
     "reviewedAt": "2026-09-30"
   },
   "nexus:skyrimspecialedition:16495": {
-    "title": "JContainers SE",
+    "title": "제이컨테이너 SE (JContainers SE)",
     "searchTerm": "JContainers SE",
-    "aliases": [],
+    "aliases": [
+      "JContainers SE",
+      "제이컨테이너 SE (JContainers SE)",
+      "제이컨테이너 SE"
+    ],
     "sourceUrl": "https://www.nexusmods.com/skyrimspecialedition/mods/16495",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "nexus:skyrimspecialedition:78809": {
     "title": "데이드릭 성소 - Xtudo 통합 패치",
@@ -802,11 +809,15 @@
     "reviewedAt": "2026-09-30"
   },
   "thunderstore:lethal-company:ebkr-r2modman": {
-    "title": "r2modman",
+    "title": "알투모드맨 (r2modman)",
     "searchTerm": "r2modman",
-    "aliases": [],
+    "aliases": [
+      "r2modman",
+      "알투모드맨 (r2modman)",
+      "알투모드맨"
+    ],
     "sourceUrl": "https://thunderstore.io/c/lethal-company/p/ebkr/r2modman/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:lethal-company:Evaisa-HookGenPatcher": {
     "title": "훅 생성 패처",
@@ -1232,11 +1243,15 @@
     "reviewedAt": "2026-09-30"
   },
   "thunderstore:valheim:ebkr-r2modman": {
-    "title": "r2modman",
+    "title": "알투모드맨 (r2modman)",
     "searchTerm": "r2modman",
-    "aliases": [],
+    "aliases": [
+      "r2modman",
+      "알투모드맨 (r2modman)",
+      "알투모드맨"
+    ],
     "sourceUrl": "https://thunderstore.io/c/valheim/p/ebkr/r2modman/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:valheim:denikson-BepInExPack_Valheim": {
     "title": "베핀엑스 팩 - 발헤임",
@@ -1383,20 +1398,26 @@
     "reviewedAt": "2026-09-30"
   },
   "thunderstore:valheim:ValheimModding-JsonDotNET": {
-    "title": "Json.NET",
+    "title": "제이슨닷넷 (Json.NET)",
     "searchTerm": "JsonDotNET",
     "aliases": [
-      "Json.NET"
+      "Json.NET",
+      "제이슨닷넷 (Json.NET)",
+      "제이슨닷넷"
     ],
     "sourceUrl": "https://thunderstore.io/c/valheim/p/ValheimModding/JsonDotNET/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:valheim:ValheimModding-YamlDotNet": {
-    "title": "YamlDotNet",
+    "title": "야믈닷넷 (YamlDotNet)",
     "searchTerm": "YamlDotNet",
-    "aliases": [],
+    "aliases": [
+      "YamlDotNet",
+      "야믈닷넷 (YamlDotNet)",
+      "야믈닷넷"
+    ],
     "sourceUrl": "https://thunderstore.io/c/valheim/p/ValheimModding/YamlDotNet/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:valheim:ASharpPen-Spawn_That": {
     "title": "생성 설정",
@@ -2056,11 +2077,15 @@
     "reviewedAt": "2026-09-30"
   },
   "nexus:cyberpunk2077:2380": {
-    "title": "RED4ext",
+    "title": "레드포엑스트 (RED4ext)",
     "searchTerm": "RED4ext",
-    "aliases": [],
+    "aliases": [
+      "RED4ext",
+      "레드포엑스트 (RED4ext)",
+      "레드포엑스트"
+    ],
     "sourceUrl": "https://www.nexusmods.com/cyberpunk2077/mods/2380",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "nexus:cyberpunk2077:1511": {
     "title": "레드스크립트",
@@ -2846,11 +2871,15 @@
     "reviewedAt": "2026-09-30"
   },
   "thunderstore:riskofrain2:ebkr-r2modman": {
-    "title": "r2modman",
+    "title": "알투모드맨 (r2modman)",
     "searchTerm": "r2modman",
-    "aliases": [],
+    "aliases": [
+      "r2modman",
+      "알투모드맨 (r2modman)",
+      "알투모드맨"
+    ],
     "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/ebkr/r2modman/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:riskofrain2:bbepis-BepInExPack": {
     "title": "베핀엑스 팩",
@@ -2871,11 +2900,15 @@
     "reviewedAt": "2026-09-30"
   },
   "thunderstore:riskofrain2:MonoDetour-MonoDetour": {
-    "title": "MonoDetour",
+    "title": "모노 디투어 (MonoDetour)",
     "searchTerm": "MonoDetour",
-    "aliases": [],
+    "aliases": [
+      "MonoDetour",
+      "모노 디투어 (MonoDetour)",
+      "모노 디투어"
+    ],
     "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/MonoDetour/MonoDetour/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:riskofrain2:MonoDetour-MonoDetour_BepInEx_5": {
     "title": "MonoDetour - 베핀엑스 5",
@@ -2905,11 +2938,15 @@
     "reviewedAt": "2026-09-30"
   },
   "thunderstore:riskofrain2:tristanmcpherson-R2API": {
-    "title": "R2API",
+    "title": "알투 API (R2API)",
     "searchTerm": "R2API",
-    "aliases": [],
+    "aliases": [
+      "R2API",
+      "알투 API (R2API)",
+      "알투 API"
+    ],
     "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/tristanmcpherson/R2API/",
-    "reviewedAt": "2026-09-30"
+    "reviewedAt": "2026-10-20"
   },
   "thunderstore:riskofrain2:RiskofThunder-R2API_ContentManagement": {
     "title": "R2API 콘텐츠 관리",
@@ -3648,5 +3685,185 @@
     ],
     "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=1595631294",
     "reviewedAt": "2026-09-30"
+  },
+  "curseforge:432:829758": {
+    "title": "던크래프트 - 전설의 메아리",
+    "searchTerm": "DawnCraft - Echoes of Legends",
+    "aliases": [
+      "던크래프트 - 전설의 메아리"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/dawn-craft",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:520914": {
+    "title": "올 더 모드 8 (ATM8)",
+    "searchTerm": "All the Mods 8 - ATM8",
+    "aliases": [
+      "올 더 모드 8 (ATM8)"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/all-the-mods-8",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:682001": {
+    "title": "커스드 워킹 - 현대 좀비 아포칼립스",
+    "searchTerm": "Cursed Walking - A Modern Zombie Apocalypse",
+    "aliases": [
+      "커스드 워킹 - 현대 좀비 아포칼립스"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/cursed-walking-a-modern-zombie-apocalypse",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:452013": {
+    "title": "베러 마인크래프트 (패브릭) BMC1",
+    "searchTerm": "Better MC [FABRIC] BMC1",
+    "aliases": [
+      "베러 마인크래프트 (패브릭) BMC1"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/better-mc-fabric-bmc1",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:289267": {
+    "title": "로그라이크 모험과 던전",
+    "searchTerm": "Roguelike Adventures and Dungeons",
+    "aliases": [
+      "로그라이크 모험과 던전"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/roguelike-adventures-and-dungeons",
+    "reviewedAt": "2026-10-20"
+  },
+  "modrinth:minecraft:Jkb29YJU": {
+    "title": "코블버스 - 포켓몬 모험 (코블몬)",
+    "searchTerm": "COBBLEVERSE - Pokemon Adventure [Cobblemon]",
+    "aliases": [
+      "코블버스 - 포켓몬 모험 (코블몬)"
+    ],
+    "sourceUrl": "https://modrinth.com/modpack/cobbleverse",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:268208": {
+    "title": "세브테크: 시대",
+    "searchTerm": "SevTech: Ages",
+    "aliases": [
+      "세브테크: 시대"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/sevtech-ages",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:256183": {
+    "title": "FTB 스카이팩토리 3",
+    "searchTerm": "FTB Presents SkyFactory 3",
+    "aliases": [
+      "FTB 스카이팩토리 3"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/ftb-presents-skyfactory-3",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:381671": {
+    "title": "올 더 모드 6 (ATM6)",
+    "searchTerm": "All the Mods 6 - ATM6",
+    "aliases": [
+      "올 더 모드 6 (ATM6)"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/all-the-mods-6",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:952976": {
+    "title": "케이브 호러 프로젝트 1 - 퀘스트 공포 모드팩",
+    "searchTerm": "Cave Horror Project 1 - Best Horror Modpack with Quests!",
+    "aliases": [
+      "케이브 호러 프로젝트 1 - 퀘스트 공포 모드팩"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/cave-horror-project",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:711537": {
+    "title": "볼트 헌터스 3판",
+    "searchTerm": "Vault Hunters Third Edition",
+    "aliases": [
+      "볼트 헌터스 3판"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/vault-hunters-1-18-2",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:429793": {
+    "title": "베러 마인크래프트 (포지) BMC1",
+    "searchTerm": "Better MC [FORGE] BMC1",
+    "aliases": [
+      "베러 마인크래프트 (포지) BMC1"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/better-mc-forge-bmc1",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:227724": {
+    "title": "FTB 인피니티 이볼브드",
+    "searchTerm": "FTB Infinity Evolved",
+    "aliases": [
+      "FTB 인피니티 이볼브드"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/ftb-infinity-evolved",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:1210677": {
+    "title": "코블버스 - 포켓몬 모험 (코블몬)",
+    "searchTerm": "COBBLEVERSE - Pokemon Adventure [Cobblemon]",
+    "aliases": [
+      "코블버스 - 포켓몬 모험 (코블몬)"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/cobbleverse-cobblemon",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:957753": {
+    "title": "시스코의 중세 판타지 RPG (얼티밋)",
+    "searchTerm": "Cisco's Fantasy Medieval RPG [Ultimate]",
+    "aliases": [
+      "시스코의 중세 판타지 RPG (얼티밋)"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/ciscos-adventure-rpg-ultimate",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:290913": {
+    "title": "스톤블록",
+    "searchTerm": "StoneBlock",
+    "aliases": [
+      "스톤블록"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/stoneblock",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:349129": {
+    "title": "마인크래프트 이터널",
+    "searchTerm": "MC  Eternal",
+    "aliases": [
+      "마인크래프트 이터널"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/minecraft-eternal",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:572778": {
+    "title": "로그라이크 모험과 던전 2",
+    "searchTerm": "Roguelike Adventures and Dungeons 2",
+    "aliases": [
+      "로그라이크 모험과 던전 2"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/roguelike-adventures-and-dungeons-2",
+    "reviewedAt": "2026-10-20"
+  },
+  "curseforge:432:445369": {
+    "title": "머스터드 바이러스 (포지 랩스)",
+    "searchTerm": "Mustard Virus by Forge Labs",
+    "aliases": [
+      "머스터드 바이러스 (포지 랩스)"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/zombie-apocalypse-slow-zombies-by-forge-labs",
+    "reviewedAt": "2026-10-20"
+  },
+  "thunderstore:valheim:shudnal-ConditionalConfigSync": {
+    "title": "조건부 설정 동기화",
+    "searchTerm": "ConditionalConfigSync",
+    "aliases": [
+      "조건부 설정 동기화"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/valheim/p/shudnal/ConditionalConfigSync/",
+    "reviewedAt": "2026-10-20"
   }
 }

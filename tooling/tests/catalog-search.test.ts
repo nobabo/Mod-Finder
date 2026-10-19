@@ -62,7 +62,7 @@ describe('catalog and global search', () => {
 });
 describe('localized content and verified duplicates', () => {
   it('keeps ranking translations tied to source IDs and searches their original names', () => {
-    for (const game of GAMES.filter(game => game.id !== 'minecraft-java')) {
+    for (const game of GAMES) {
       const prefixes = Object.entries(game.sources).map(([source, mapping]) => `${source}:${mapping.scope}:`);
       const entries = Object.entries(modTranslations).filter(([key]) => prefixes.some(prefix => key.startsWith(prefix)));
       expect(entries.length, game.id).toBeGreaterThanOrEqual(30);
@@ -101,6 +101,16 @@ describe('localized content and verified duplicates', () => {
     expect(tagText('bepinex', 'ko')).toBe('베핀엑스');
     expect(tagText('BepInEx', 'en')).toBe('BepInEx');
     expect(tagText('UnknownLoader', 'ko')).toBe('UnknownLoader');
+  });
+  it('localizes structured version tags without changing version identifiers or other languages', () => {
+    expect(tagText('1.21.1-f5-compatible', 'ko')).toBe('1.21.1-f5 호환');
+    expect(tagText('1.16.1-f2-compatible', 'en')).toBe('1.16.1-f2-compatible');
+    expect(tagText('version:1.050', 'ko')).toBe('버전 1.050');
+    expect(tagText('version:102', 'ko')).toBe('버전 102');
+    expect(tagText('version:1.050', 'ja')).toBe('version:1.050');
+    expect(tagText('version:FULL 4', 'ko')).toBe('전체 버전 4');
+    expect(tagText('version:unknown', 'ko')).toBe('version:unknown');
+    expect(tagText('SomeMod-compatible', 'ko')).toBe('SomeMod-compatible');
   });
   it('forwards exact Korean search terms in English while leaving other queries untouched', () => {
     const koreanSpec = { ...spec, gameId: 'minecraft-java', query: '  편의성  ' };

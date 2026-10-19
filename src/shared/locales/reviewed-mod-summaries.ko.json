@@ -1,4 +1,8 @@
 {
+  "minecraft-java": [
+    ["Fabulously Optimized", "Beautiful graphics, speedy performance and familiar features in a simple package. Wilderness Bound beta!", "아름다운 그래픽, 빠른 성능, 익숙한 기능을 간편한 모드팩 하나에 담았습니다. Wilderness Bound 베타를 제공합니다!", "modrinth:minecraft:1KVo5zza"],
+    ["Fabulously Optimized", "Beautiful graphics, speedy performance and familiar features in a simple package. Wilderness Bound beta!", "아름다운 그래픽, 빠른 성능, 익숙한 기능을 간편한 모드팩 하나에 담았습니다. Wilderness Bound 베타를 제공합니다!", "curseforge:432:396246"]
+  ],
   "lethal-company": [
     ["MoreCompany", "A stable lobby player count expansion mod. With cosmetics!", "로비의 최대 참가 인원을 안정적으로 늘려 줍니다. 꾸미기 아이템도 포함되어 있습니다.", null],
     ["ModelReplacementAPI", "API to simplify model replacement", "모델 교체를 간편하게 해 주는 API입니다.", null]
@@ -13,5 +17,26 @@
     ["Unofficial Skyrim Special Edition Patch - USSEP", "A comprehensive bugfixing mod for The Elder Scrolls V: Skyrim - Special Edition. The goal of the Unofficial Skyrim Special Edition Patch (aka USSEP) is to eventually fix every bug with Skyrim Special Edition not officially resolved by the", "엘더스크롤 V: 스카이림 스페셜 에디션의 버그를 폭넓게 수정하는 모드입니다. USSEP는 공식적으로 해결되지 않은 버그를 모두 수정하는 것을 목표로 합니다.", null],
     ["Skyrim 202X by Pfuscher", "High Res Textures for cities, dungeons, clutter, armors, landscapes and much more. Going towards 2200 files, way more to come !Thousands of hours of work into this. Please consider supporting me at Patreon and Kofi", "도시, 던전, 각종 사물, 방어구, 풍경 등에 고해상도 텍스처를 적용합니다. 파일 약 2,200개를 목표로 계속 추가하고 있으며, 수천 시간 동안 작업한 프로젝트입니다. Patreon과 Ko-fi에서 제작자를 후원할 수 있습니다.", null],
     ["KS Hairdos SSE", "KS Hairdos is a hair pack that contains 1.058 hairstyles. 951 hairstyles are for females, 107 are for males.", "총 1,058개의 헤어스타일을 담은 모드입니다. 여성용 951개, 남성용 107개입니다.", null]
+  ],
+  "rimworld": [
+    ["Dubs Mint Menus", "Dubs Mint Menus By Dubwise Searchable menus for building, bills, research, gear, plants and surgery, made for big mod lists where the vanilla menus run out of room. Every menu can be switched on or off in the mod settings. Build menu Every architect catego", "Dubwise가 제작한 메뉴 개선 모드입니다. 건설, 작업 지시, 연구, 장비, 작물, 수술 메뉴에 검색 기능을 추가합니다. 모드가 많아 기본 메뉴의 공간이 부족할 때 유용하며, 각 메뉴는 모드 설정에서 개별적으로 켜고 끌 수 있습니다.", "steam:294100:1446523594"]
+  ],
+  "valheim": [
+    ["TeleportEverything", "Teleport Everything 3 with UI is the official OdinPlus modularized pack for Teleport Creatures, Teleport Carts, Teleport Boats and Quick Teleport. Compatible with Valheim 1.0 (Deep North).", "생물·수레·배 순간이동과 빠른 순간이동 기능을 모듈로 묶은 OdinPlus 공식 팩입니다. Teleport Everything 3에는 설정 화면이 포함되며, 발헤임 1.0(심층 북부)과 호환됩니다.", "thunderstore:valheim:OdinPlus-TeleportEverything"]
+  ],
+  "terraria": [
+    ["灾厄Mod-汉化补丁", "This is a Chinese-translation Mod for Calamity Mod == 本Mod是由Kcovin制作，灾厄维基汉化组出品的灾厄汉化补丁 灾厄本体内容99%已汉化，目前适配灾厄版本2.2.2 简繁转换功能维护中 若在游玩灾厄时遇到不解，可以浏览由我们建立并维护的 灾厄中文维基 也可以加入反馈&讨论QQ群寻求解答或提供反馈，群号见灾厄中文维基首页 如果帮助解决不了你的问题加入 >>> 479534835 == 1.同时订阅灾厄Mod和本Mod 2.进入tml，在模组管理中同时", "Kcovin이 제작하고 칼라미티 위키 번역팀이 배포하는 중국어 번역 패치입니다. 본체 콘텐츠의 99%를 번역했으며 칼라미티 2.2.2에 대응합니다. 간체·번체 전환 기능은 유지보수 중입니다. 도움말은 중국어 위키와 피드백·토론용 QQ 그룹에서 확인할 수 있으며, 추가 문의 그룹 번호는 479534835입니다. 칼라미티 본체와 이 패치를 함께 구독한 뒤 tModLoader의 모드 관리 화면에서 설정합니다.", "steam:1281930:2825151264"]
+  ],
+  "project-zomboid": [
+    ["Spongie's Hair", "FLUFFY HAIR IS REQUIRED AND NEEDS TO BE ADDED TO THE MOD LIST AND WORKSHOP LIST IN SERVER SETTINGS OR THE MOD WILL NOT BE ENABLED Supports B41 and B42.21+. Works in multiplayer B41 VERSION Adds 80 new hairstyles for both body types Immersion breaking hairs", "Fluffy Hair가 필수입니다. 서버 설정의 모드 목록과 창작마당 목록 양쪽에 추가해야 이 모드가 활성화됩니다. 빌드 41과 빌드 42.21 이상을 지원하며 멀티플레이에서도 사용할 수 있습니다. 빌드 41 버전은 두 체형 모두에 새 헤어스타일 80개를 추가합니다.", "steam:108600:2463184726"]
+  ],
+  "cyberpunk-2077": [
+    ["AMM - Appearance Menu Mod", "Ultimate Photo Mode Helper. Spawn Companions. Change Appearances. Decorate Your House. Direct Your Actors.", "사진 모드 촬영을 돕는 모드입니다. 동료를 소환하고 외형을 바꾸며, 집을 꾸미거나 등장인물을 연출할 수 있습니다.", "nexus:cyberpunk2077:790"]
+  ],
+  "fallout-4": [
+    ["The Eyes Of Beauty Fallout Edition", "Change eyes textures for new high resolution ones. Will work for both gender. New textures will be added so keep in touch! Note: the mod is now flagged as adult content due to user's vidéos containing such content. The mod itself is not", "남녀 캐릭터 모두의 눈 텍스처를 새로운 고해상도 텍스처로 바꿉니다. 새 텍스처도 추가할 예정입니다. 사용자들이 올린 영상에 성인 콘텐츠가 포함되어 있어 사이트에서는 성인 콘텐츠로 분류되어 있습니다.", "nexus:fallout4:133"]
+  ],
+  "dont-starve-together": [
+    ["Show Me(New)", "This mod is an update based on Show Me (Origin) v0.58. https://steamcommunity.com/sharedfiles/filedetails/?id=666155465 Please refer to this link to view the update log of this mod. GitHub: https://github.com/BB-GOAT/show_me", "Show Me (Origin) 0.58을 기반으로 업데이트한 모드입니다. 원본 모드: https://steamcommunity.com/sharedfiles/filedetails/?id=666155465 변경 내역과 소스 코드: https://github.com/BB-GOAT/show_me", "steam:322330:2287303119"]
   ]
 }

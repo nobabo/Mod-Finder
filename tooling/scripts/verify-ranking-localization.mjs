@@ -9,6 +9,7 @@ async (page) => {
     });
   }
   const games = [
+    ['minecraft-java', '마인크래프트'],
     ['stardew-valley', '스타듀 밸리'], ['skyrim-se', '스카이림'],
     ['lethal-company', '리썰 컴퍼니'], ['rimworld', '림월드'],
     ['valheim', '발헤임'], ['terraria', '테라리아'],
@@ -17,15 +18,16 @@ async (page) => {
     ['risk-of-rain-2', '리스크 오브 레인 2'], ['cities-skylines', '시티즈: 스카이라인'],
     ['dont-starve-together', '돈 스타브 투게더'],
   ];
-  const unchanged = new Set(['r2modman', 'MonoDetour', 'R2API', 'Json.NET', 'YamlDotNet', 'JContainers SE', 'RED4ext', 'ENB', 'SKSE', 'LCMI', 'KORFACE', 'NAC X', 'PZ3D']);
-  const assertNames = (names, context) => {
-    if (!names.length || names.some(name => !/[가-힣]/.test(name) && !unchanged.has(name))) throw Error(context + ': unexpected untranslated names ' + names.join(', '));
+  const communityAcronyms = new Set(['ENB', 'SKSE', 'LCMI', 'KORFACE', 'NAC X', 'PZ3D']);
+  const assertNames = (names, context, allowed = new Set()) => {
+    if (!names.length || names.some(name => !/[가-힣]/.test(name) && !allowed.has(name))) throw Error(context + ': unexpected untranslated names ' + names.join(', '));
   };
-  for (const [id, name] of games) {
+  const selectedGame = new URL(page.url()).searchParams.get('verifyGame');
+  for (const [id, name] of games.filter(([id]) => !selectedGame || id === selectedGame)) {
     await page.getByRole('button', { name: '게임 바꾸기', exact: true }).click();
     await page.getByRole('dialog', { name: '게임 선택', exact: true }).getByRole('button', { name, exact: true }).click();
     const search = page.getByRole('button', { name: '검색 순위', exact: true });
-    if (await search.count()) assertNames(await page.locator('.ranking-list strong').allTextContents(), name + ' community');
+    if (await search.count()) assertNames(await page.locator('.ranking-list strong').allTextContents(), name + ' community', communityAcronyms);
     await page.getByRole('button', { name: id === 'rimworld' || id === 'terraria' || id === 'project-zomboid' || id === 'cities-skylines' || id === 'dont-starve-together' ? '구독 순위' : '다운로드 순위', exact: true }).click();
     await page.locator('.ranked-grid .title-button').first().waitFor({ timeout: 40000 });
     let count = 0;
@@ -33,9 +35,19 @@ async (page) => {
       const names = await page.locator('.ranked-grid .title-button').allTextContents();
       if (names.length !== 10) throw Error(name + ': expected ten items');
       assertNames(names, name + ' page ' + (index + 1));
+      assertNames(await page.locator('.ranked-grid .tags span').allTextContents(), name + ' tags');
       if (!(await page.locator('.ranking-pagination').textContent()).includes((index + 1) + ' / 3')) throw Error(name + ': pagination mismatch');
       count += names.length;
-      if (index === 0 && ['stardew-valley', 'skyrim-se', 'lethal-company'].includes(id)) {
+      for (let cardIndex = 0; cardIndex < names.length; cardIndex++) {
+        await page.locator('.ranked-grid .mod-logo-link').nth(cardIndex).hover();
+        await page.waitForFunction(cardIndex => {
+          const card = document.querySelectorAll('.ranked-grid .mod-card')[cardIndex];
+          const tooltip = document.getElementById(card?.getAttribute('aria-describedby') ?? '');
+          return tooltip?.getAttribute('aria-hidden') === 'false' && /[가-힣]/.test(tooltip.textContent ?? '');
+        }, cardIndex, { timeout: 10000 });
+        await page.keyboard.press('Escape');
+      }
+      if (index === 0 && ['minecraft-java', 'stardew-valley', 'skyrim-se', 'lethal-company'].includes(id)) {
         await page.screenshot({ path: 'output/playwright/' + id + '-localized-ranking.png', fullPage: true });
       }
       if (id === 'lethal-company' && index === 0) {
@@ -46,5 +58,5 @@ async (page) => {
     }
     console.log(JSON.stringify({ game: id, checked: count }));
   }
-  return 'Verified all 390 ranked titles, community titles, pagination and BepInEx tags.';
+  return selectedGame ? `Verified 30 Korean ranking titles, descriptions and tags for ${selectedGame}.` : 'Verified all 420 ranked titles, descriptions, tags, community titles and pagination.';
 }

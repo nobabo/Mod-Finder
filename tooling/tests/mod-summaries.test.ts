@@ -43,9 +43,9 @@ describe('imported Korean summaries', () => {
     }
     expect(count).toBe(15972);
   });
-  it('shows the nine reviewed descriptions only for their matching game and original text', () => {
+  it('shows reviewed descriptions only for their matching game and original text', () => {
     const reviewed = JSON.parse(readFileSync('src/shared/locales/reviewed-mod-summaries.ko.json', 'utf8')) as Record<string, SummaryTranslation[]>;
-    expect(Object.values(reviewed).flat()).toHaveLength(9);
+    expect(Object.values(reviewed).flat()).toHaveLength(18);
     for (const [gameId, additions] of Object.entries(reviewed)) {
       const rows = JSON.parse(readFileSync(`src/shared/locales/mod-summaries/${gameId}.json`, 'utf8')) as SummaryTranslation[];
       registerModSummaries(gameId, withReviewedSummaries(rows, additions));

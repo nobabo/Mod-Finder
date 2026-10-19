@@ -158,7 +158,7 @@
   "New Characters": "신규 캐릭터",
   "New Lands": "새로운 지역",
   "NoSync": "동기화 없음",
-  "NPC": "NPC",
+  "NPC": "NPC (등장인물)",
   "NPCs": "NPC",
   "Office": "사무실",
   "Other": "기타",
@@ -376,5 +376,17 @@
   "whitelisted": "허용 목록",
   "world-resets": "월드 초기화",
   "worldgen": "월드 생성",
-  "workshop-item": "창작마당 항목"
+  "workshop-item": "창작마당 항목",
+  "Quests": "퀘스트",
+  "Tech": "기술",
+  "Skyblock": "스카이블록",
+  "FTB Official Pack": "FTB 공식 모드팩",
+  "Extra Large": "초대형",
+  "Hildir's Request Update": "힐디르의 요청 업데이트",
+  "Ashlands Update": "잿가루 지대 업데이트",
+  "Bog Witch Update": "늪지의 마녀 업데이트",
+  "Deep North Update": "심층 북부 업데이트",
+  "Mistlands Update": "안개 지대 업데이트",
+  "Sim Settlements": "심 세틀먼츠",
+  "version:FULL 4": "전체 버전 4"
 }
