@@ -8,7 +8,7 @@
     <title>모드파인더</title>
     <link rel="icon" href="data:," />
     <link rel="stylesheet" href="/presentation-assets/b2ad856629d45d930af4269b.css" />
-    <link rel="stylesheet" href="/presentation-assets/eada396045f0fffc13c3461f.css" />
+    <link rel="stylesheet" href="/presentation-assets/9631b1174ffb97875cbd0d5b.css" />
   </head>
   <body>
     <div class="deck-viewport">
@@ -67,7 +67,7 @@
         </section>
         <!-- 7페이지 -->
         <section data-background="/presentation-assets/727e73325d6b5e22a0a15609.webp" class="slide product-slide" aria-labelledby="story-7">
-          <div class="product-layout reveal"><div><h2 id="story-7" class="reveal" data-edit>검색하고<br /><em>결과를<br />살펴보세요.</em></h2></div><div class="product-shot"><img src="/presentation-assets/5307f7a7124a2b3f0c73af04.png" alt="Mod Finder 5차 UI의 실제 모드 목록" /></div></div>
+          <div class="product-layout reveal"><div><h2 id="story-7" class="reveal" data-edit>검색하고<br /><em>결과를<br />살펴보세요.</em></h2></div><button type="button" class="product-shot video-trigger" data-video-src="/presentation-assets/f807c5d1497b46e48cdfd53e.mp4" data-video-title="모드 검색 시연" aria-label="모드 검색 시연 전체화면 재생" aria-haspopup="dialog" aria-controls="presentationVideoDialog" title="사진을 클릭하면 영상이 재생됩니다"><img src="/presentation-assets/5307f7a7124a2b3f0c73af04.png" alt="Mod Finder 5차 UI의 실제 모드 목록" /></button></div>
         </section>
         <!-- 8페이지 -->
         <section data-background="/presentation-assets/402bbf82af9dcd257b106a97.webp" class="slide product-slide" aria-labelledby="story-8">
@@ -86,11 +86,11 @@
         <!-- 11페이지 -->
         <section data-background="/presentation-assets/be68ef9670f0671fdd574441.webp" class="slide genre-slide" aria-labelledby="story-11">
           <h2 id="story-11" class="reveal" data-edit>장르 선택 <em>ON</em></h2>
-          <div class="genre-shots reveal"><div class="product-shot genre-shot"><img src="/presentation-assets/f132870946f2f37c1b752fcd.png" alt="5차 UI에서 마법 장르를 선택한 화면" /></div></div>
+          <div class="genre-shots reveal"><button type="button" class="product-shot genre-shot video-trigger" data-video-src="/presentation-assets/31dd1264087b6f43ffdb6820.mp4" data-video-title="필터 선택 시연" aria-label="필터 선택 시연 전체화면 재생" aria-haspopup="dialog" aria-controls="presentationVideoDialog" title="사진을 클릭하면 영상이 재생됩니다"><img src="/presentation-assets/f132870946f2f37c1b752fcd.png" alt="5차 UI에서 마법 장르를 선택한 화면" /></button></div>
         </section>
         <!-- 12페이지 -->
         <section data-background="/presentation-assets/aabd6e3e872111d42532efaf.webp" class="slide product-slide" aria-labelledby="story-12">
-          <div class="product-layout reveal"><div><h2 id="story-12" class="reveal" data-edit>무엇을 할지<br /><em>순위표로 찾기</em></h2></div><div class="product-shot screenshot-focus ranking-focus"><img src="/presentation-assets/5d0ef2d9084b41ceae24282f.png" alt="5차 UI의 검색 순위와 다운로드 순위 탭" /></div></div>
+          <div class="product-layout reveal"><div><h2 id="story-12" class="reveal" data-edit>무엇을 할지<br /><em>순위표로 찾기</em></h2></div><button type="button" class="product-shot screenshot-focus ranking-focus video-trigger" data-video-src="/presentation-assets/160fe0f9b7bd7df728dd00e8.mp4" data-video-title="순위표 검색 시연" aria-label="순위표 검색 시연 전체화면 재생" aria-haspopup="dialog" aria-controls="presentationVideoDialog" title="사진을 클릭하면 영상이 재생됩니다"><img src="/presentation-assets/5d0ef2d9084b41ceae24282f.png" alt="5차 UI의 검색 순위와 다운로드 순위 탭" /></button></div>
         </section>
         <!-- 13페이지 -->
         <section data-background="/presentation-assets/2251316382a8a79bd19a63fa.webp" class="slide story-slide scope-slide" aria-labelledby="story-13">
@@ -113,15 +113,98 @@
           </div>
         </section>
         <!-- 15페이지 -->
-        <section data-background="/presentation-assets/402bbf82af9dcd257b106a97.webp" class="slide closer thank-you" aria-labelledby="story-15">
-          <h2 id="story-15" class="reveal" data-edit><em>감사합니다</em></h2>
+        <section data-background="/presentation-assets/be68ef9670f0671fdd574441.webp" class="slide diagram-slide workflow-slide" aria-labelledby="story-15">
+          <h2 id="story-15" class="reveal" data-edit><em>검색 흐름</em></h2>
+          <ol class="search-workflow reveal" aria-label="검색 처리 순서">
+            <li class="workflow-step">
+              <span class="workflow-number" aria-hidden="true">01</span>
+              <h3 data-edit>게임·검색어<br />선택</h3>
+              <p data-edit>게임을 고르고<br />찾을 이름을 입력합니다.</p>
+            </li>
+            <li class="workflow-step">
+              <span class="workflow-number" aria-hidden="true">02</span>
+              <h3 data-edit>공통 API<br />요청</h3>
+              <p data-edit>선택한 검색 조건을<br />서버에 전달합니다.</p>
+            </li>
+            <li class="workflow-step">
+              <span class="workflow-number" aria-hidden="true">03</span>
+              <h3 data-edit>외부 플랫폼<br />조회</h3>
+              <p data-edit>게임에 맞는 플랫폼에서<br />모드를 찾습니다.</p>
+            </li>
+            <li class="workflow-step">
+              <span class="workflow-number" aria-hidden="true">04</span>
+              <h3 data-edit>결과 전달·<br />화면 표시</h3>
+              <p data-edit>찾은 모드를 받아<br />한 화면에 보여줍니다.</p>
+            </li>
+          </ol>
+        </section>
+        <!-- 16페이지 -->
+        <section data-background="/presentation-assets/aabd6e3e872111d42532efaf.webp" class="slide diagram-slide system-slide" aria-labelledby="story-16">
+          <h2 id="story-16" class="reveal" data-edit><em>시스템 구성</em></h2>
+          <div class="system-map reveal" role="group" aria-label="앱 화면과 공통 검색 API, 외부 플랫폼 사이의 요청과 결과 전달">
+            <div class="system-clients">
+              <div class="system-client">
+                <h3 data-edit>웹</h3>
+                <p data-edit>React · TypeScript</p>
+              </div>
+              <div class="system-client">
+                <h3 data-edit>Windows</h3>
+                <p data-edit>React · TypeScript<br />Tauri · Rust <span class="client-storage">저장: SQLite</span></p>
+              </div>
+              <div class="system-client">
+                <h3 data-edit>Android</h3>
+                <p data-edit>Kotlin · Jetpack Compose<br /><span class="client-storage">저장: JSON (AtomicFile)</span></p>
+              </div>
+            </div>
+            <div class="system-link" aria-hidden="true">
+              <span>요청</span><i class="diagram-arrow"></i>
+              <span class="response-label">결과</span><i class="diagram-arrow reverse"></i>
+            </div>
+            <div class="system-node system-api">
+              <p class="diagram-label" data-edit>운영</p>
+              <h3 data-edit>공통 검색 API</h3>
+              <p data-edit>Cloudflare Workers</p>
+            </div>
+            <div class="system-link" aria-hidden="true">
+              <span>조회</span><i class="diagram-arrow"></i>
+              <span class="response-label">결과</span><i class="diagram-arrow reverse"></i>
+            </div>
+            <div class="system-node system-platforms">
+              <p class="diagram-label" data-edit>게임별 연동</p>
+              <h3 data-edit>외부 플랫폼</h3>
+              <p data-edit>Modrinth · CurseForge<br />Nexus Mods · Thunderstore<br />Steam Workshop</p>
+            </div>
+          </div>
+          <div class="system-notes reveal">
+            <div class="search-support">
+              <h3 data-edit>검색어 처리 보조</h3>
+              <p data-edit>Fuse.js · es-hangul</p>
+            </div>
+            <div class="development-only">
+              <h3 data-edit>개발 전용</h3>
+              <p data-edit>Fastify · 로컬 개발 서버</p>
+            </div>
+          </div>
+        </section>
+        <!-- 17페이지 -->
+        <section data-background="/presentation-assets/402bbf82af9dcd257b106a97.webp" class="slide closer thank-you" aria-labelledby="story-17">
+          <h2 id="story-17" class="reveal" data-edit><em>감사합니다</em></h2>
         </section>
         <div id="announcement" class="sr-only" aria-live="polite"></div>
         <div id="intro-mount"></div>
       </main>
     </div>
 
-    <script defer src="/presentation-assets/3d6d6e9ee69c23a27f75e077.js"></script>
-    <script defer src="/presentation-assets/f671624a72de469f7ca737f4.js"></script>
+    <dialog id="presentationVideoDialog" class="presentation-video-dialog" aria-labelledby="presentationVideoTitle">
+      <div id="presentationVideoPlayer" class="presentation-video-player">
+        <h2 id="presentationVideoTitle" class="sr-only">시연 영상</h2>
+        <button type="button" class="presentation-video-close" aria-label="영상 닫고 발표로 돌아가기">닫기 <span aria-hidden="true">×</span></button>
+        <video id="presentationVideo" controls playsinline preload="metadata" tabindex="0" controlslist="nofullscreen noremoteplayback" disablepictureinpicture></video>
+        <p class="presentation-video-error" role="alert" hidden></p>
+      </div>
+    </dialog>
+
+    <script defer src="/presentation-assets/d224751aaa69a845d2412819.js"></script>
+    <script defer src="/presentation-assets/1eabfcbeea2d61e6b696268e.js"></script>
   </body>
 </html>
