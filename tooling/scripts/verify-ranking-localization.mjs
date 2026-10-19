@@ -35,11 +35,13 @@ async (page) => {
       const names = await page.locator('.ranked-grid .title-button').allTextContents();
       if (names.length !== 10) throw Error(name + ': expected ten items');
       assertNames(names, name + ' page ' + (index + 1));
-      assertNames(await page.locator('.ranked-grid .tags span').allTextContents(), name + ' tags');
+      const tags = await page.locator('.ranked-grid .tags span').allTextContents();
+      const untranslatedTags = tags.filter(tag => /\p{L}/u.test(tag) && !/[가-힣]/.test(tag));
+      if (untranslatedTags.length) throw Error(name + ': unexpected untranslated tags ' + untranslatedTags.join(', '));
       if (!(await page.locator('.ranking-pagination').textContent()).includes((index + 1) + ' / 3')) throw Error(name + ': pagination mismatch');
       count += names.length;
       for (let cardIndex = 0; cardIndex < names.length; cardIndex++) {
-        await page.locator('.ranked-grid .mod-logo-link').nth(cardIndex).hover();
+        await page.locator('.ranked-grid .title-button').nth(cardIndex).hover();
         await page.waitForFunction(cardIndex => {
           const card = document.querySelectorAll('.ranked-grid .mod-card')[cardIndex];
           const tooltip = document.getElementById(card?.getAttribute('aria-describedby') ?? '');
