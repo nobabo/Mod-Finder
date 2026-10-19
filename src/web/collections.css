@@ -89,12 +89,12 @@ html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-g
 .modal.folder-modal{position:relative;isolation:isolate;width:540px;max-height:none;border-radius:0;padding:0;border:0;background:none;box-shadow:none;overflow:visible;backdrop-filter:none}
 .folder-modal .modal-heading{margin:0;position:absolute;bottom:calc(100% + 8px);left:50%;transform:translateX(-50%);justify-content:center}
 .folder-modal .modal-heading .icon-button{width:40px;height:40px;color:var(--accent)}
-.folder-modal .folder-form{--folder-control-size:54px;--folder-shortcut-width:112px;gap:12px}
+.folder-modal .folder-form{--folder-control-size:54px;--folder-shortcut-width:var(--folder-control-size);gap:12px}
 .folder-form-row{display:grid;grid-template-columns:var(--folder-shortcut-width) minmax(0,1fr) var(--folder-control-size);align-items:center;gap:8px}
-.folder-form-row>.shortcut-toggle{justify-content:center}
-.folder-form-row .shortcut-checkbox-glass{display:flex;justify-content:center;gap:8px;width:100%;height:var(--folder-control-size);padding:0 12px;border-radius:999px}
-.folder-form-row .shortcut-checkbox-glass>svg{flex:none}
-.shortcut-checkbox-label{min-width:0;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
+.folder-form-row>.shortcut-toggle{position:relative;justify-content:center}
+.folder-form-row .shortcut-checkbox-glass{width:100%;height:var(--folder-control-size);border-radius:999px}
+.folder-form-row .shortcut-checkbox-glass>svg{opacity:.4}
+.shortcut-checkbox-label{position:absolute;top:calc(100% + 8px);left:50%;transform:translateX(-50%);line-height:1.4;white-space:nowrap}
 .folder-form>p{margin-left:calc(var(--folder-shortcut-width) + 8px)}
 .folder-input-glass,.folder-form-row .folder-save{position:relative;isolation:isolate;height:var(--folder-control-size);border-radius:999px;border:1px solid rgba(var(--tint-rgb),.55);background:transparent;box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),.4);backdrop-filter:blur(12px) saturate(1.2)}
 .folder-input-glass:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px rgba(var(--tint-rgb),.16),inset 0 1px 2px rgba(var(--tint-rgb),.5)}
