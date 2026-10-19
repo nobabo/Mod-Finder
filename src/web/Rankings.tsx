@@ -12,7 +12,7 @@ import { downloadRanking, rankingSources } from './lib/rankings';
 import { locale, t } from './lib/i18n';
 import { useModSummaries } from './lib/mod-summaries';
 
-export function Rankings({ gameId, card, searchMod, interests = [] }: { interests?: Interest[]; gameId: string; card: (item: Listing, alternatives: Listing[]) => ReactNode; searchMod: (entry: CommunityEntry) => void }) {
+export function Rankings({ gameId, card, searchMod, interests = [] }: { interests?: Interest[]; gameId: string; card: (item: Listing, alternatives: Listing[], select?: () => void) => ReactNode; searchMod: (entry: Pick<CommunityEntry, 'name' | 'kind'>) => void }) {
   const game = getGame(gameId);
   const community = communityRanking(gameId);
   const [tab, setTab] = useState<'search' | 'downloads' | 'recommended'>(community ? 'search' : 'downloads');
@@ -50,7 +50,7 @@ export function Rankings({ gameId, card, searchMod, interests = [] }: { interest
         {status === 'error' && <div className="empty-state"><p>{t('순위를 불러오지 못했어요.')}</p><button className="secondary-button" onClick={() => setRefresh(value => value + 1)}>{t('다시 시도')}</button></div>}
         {status === 'ready' && !items.length && <p className="empty-state">{t('제공되는 순위가 없어요.')}</p>}
         {!!items.length && <>
-          <ol className="mod-grid ranked-grid" start={page * 10 + 1}>{items.slice(page * 10, page * 10 + 10).map((group, index) => <li key={group.id}><span className="rank-number">{String(page * 10 + index + 1).padStart(2, '0')}</span>{card(group.listings[0], group.listings)}</li>)}</ol>
+          <ol className="mod-grid ranked-grid" start={page * 10 + 1}>{items.slice(page * 10, page * 10 + 10).map((group, index) => <li key={group.id}><span className="rank-number">{String(page * 10 + index + 1).padStart(2, '0')}</span>{card(group.listings[0], group.listings, () => searchMod({ name: group.listings[0].title, kind: group.listings[0].kind ?? 'mod' }))}</li>)}</ol>
           <div className="ranking-pagination">
             <button className="secondary-button" aria-label={t('이전 페이지')} disabled={page === 0} onClick={() => setPage(value => value - 1)}><ChevronLeft size={18}/></button>
             <span aria-live="polite">{page + 1} / {Math.ceil(items.length / 10)}</span>
