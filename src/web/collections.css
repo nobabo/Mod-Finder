@@ -6,8 +6,13 @@
 .folder-rail button span{max-width:220px;overflow:hidden;text-overflow:ellipsis;white-space:nowrap}
 .folder-rail button[aria-pressed=true],.ranking-tabs button[aria-pressed=true],.ranking-providers button[aria-pressed=true]{border-color:var(--accent);background:rgba(var(--tint-rgb),.16);color:var(--accent)}
 .folder-actions{flex:none;gap:4px}
-.shortcut-toggle{display:flex;align-items:center;gap:8px;cursor:pointer;font-size:13px;color:var(--text-soft)}
-.shortcut-toggle input,.folder-form .shortcut-toggle input{width:18px;height:18px;padding:0;margin:0;accent-color:var(--accent);flex:none}
+.shortcut-toggle{display:flex;align-items:center;gap:8px;min-height:44px;cursor:pointer;font-size:13px;color:var(--text-soft)}
+.shortcut-checkbox-glass{position:relative;isolation:isolate;display:grid;place-items:center;flex:none;width:24px;height:24px;border:1px solid rgba(var(--tint-rgb),.6);border-radius:7px;background:rgba(var(--tint-rgb),.06);box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),.45);backdrop-filter:blur(12px) saturate(1.2)}
+.shortcut-checkbox-glass input{position:absolute;inset:0;width:100%;height:100%;padding:0;margin:0;opacity:0;cursor:pointer;z-index:1}
+.shortcut-checkbox-glass>svg{color:var(--accent);opacity:0;pointer-events:none}
+.shortcut-checkbox-glass:has(input:checked){border-color:var(--accent);background:rgba(var(--tint-rgb),.2)}
+.shortcut-checkbox-glass input:checked~svg{opacity:1}
+.shortcut-checkbox-glass:has(input:focus-visible){outline:2px solid var(--accent);outline-offset:4px}
 .folder-actions .shortcut-toggle{margin-inline:6px}
 .home-shortcuts{display:flex;flex-wrap:wrap;justify-content:center;gap:8px;width:min(680px,100%);margin:20px auto}
 .home-shortcuts a{display:flex;flex-direction:column;align-items:center;gap:10px;width:104px;padding:14px 8px;border:1px solid transparent;border-radius:16px;color:var(--text);text-decoration:none}
@@ -22,7 +27,7 @@
 @media(max-width:650px){ :where(html:not([data-native])) {.folder-toolbar{flex-wrap:wrap}.folder-rail{flex-basis:100%}.folder-actions{margin-left:auto}.home-shortcuts a{width:88px}}}
 .folder-actions .icon-button{width:38px;height:38px}
 .folder-form{display:grid;gap:12px}
-.folder-form input{width:100%;border:1px solid var(--accent);background:var(--surface-deep);color:var(--text);border-radius:12px;padding:12px 14px;font:inherit}
+.folder-form #folder-name{width:100%;min-width:0;color:var(--text);font:inherit}
 .folder-form p{color:var(--text-soft);margin:0;font-size:13px}
 .folder-destinations{display:grid;gap:8px;max-height:60dvh;overflow:auto}
 .folder-destinations button{display:flex;align-items:center;gap:12px;padding:15px;border:1px solid rgba(var(--tint-rgb),.3);border-radius:12px;text-align:left}
@@ -81,16 +86,18 @@ html[data-glass="webgl"] .ranking-panel{backdrop-filter:none;background:linear-g
 @media(max-width:650px){ :where(html:not([data-native])) {.ranking-panel{padding:0 12px 12px;gap:10px;width:calc(100% - 66px);top:calc(100% + 16px)}.ranking-panel .ranking-tabs{margin:0 -12px}.ranking-panel .ranking-list,.ranking-panel .ranked-grid{grid-template-columns:1fr}.ranking-panel .ranking-tabs button{font-size:11px;padding:11px 6px}.ranking-panel .ranking-tabs svg{display:none}.ranking-panel .ranking-source{bottom:12px;right:8px}}}
 .ranking-panel::after{content:"";position:absolute;top:100%;left:0;width:1px;height:85px;pointer-events:none}
 
-.folder-modal{position:relative;isolation:isolate;width:min(420px,calc(100vw - 24px));aspect-ratio:1;max-height:none;border-radius:999px;padding:64px 44px;display:flex;flex-direction:column;justify-content:center;border:1px solid rgba(var(--tint-rgb),.6);background:rgba(var(--tint-rgb),.035);box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),.45),0 24px 70px #0005;overflow:visible;backdrop-filter:blur(18px) saturate(1.25)}
-.folder-modal .modal-heading{margin:0;position:absolute;top:40px;left:60px;right:60px;justify-content:flex-end}
-.folder-modal .modal-heading h2:not(.sr-only){font-size:15px;margin-right:auto}
+.modal.folder-modal{position:relative;isolation:isolate;width:420px;max-height:none;border-radius:0;padding:0;border:0;background:none;box-shadow:none;overflow:visible;backdrop-filter:none}
+.folder-modal .modal-heading{margin:0;position:absolute;bottom:calc(100% + 8px);right:0;justify-content:flex-end}
+.folder-modal .modal-heading .icon-button{width:40px;height:40px;color:var(--accent)}
 .folder-modal .folder-form{gap:12px}
-.folder-modal .modal-actions{justify-content:center;margin-top:12px}
+.folder-form-row{display:grid;grid-template-columns:44px minmax(0,1fr);align-items:center;gap:8px}
+.folder-form-row>.shortcut-toggle{justify-content:center}
+.folder-form>p{margin-left:52px}
 .folder-input-glass{position:relative;isolation:isolate;border-radius:999px;border:1px solid rgba(var(--tint-rgb),.55);background:transparent;box-shadow:inset 0 1px 2px rgba(var(--tint-rgb),.4);backdrop-filter:blur(12px) saturate(1.2)}
 .folder-input-glass:focus-within{border-color:var(--accent);box-shadow:0 0 0 2px rgba(var(--tint-rgb),.16),inset 0 1px 2px rgba(var(--tint-rgb),.5)}
-.folder-form .folder-input-glass input{background:transparent;border:0;border-radius:999px;outline:none;padding:13px 17px}
-html[data-glass="webgl"] .folder-modal,html[data-glass="webgl"] .folder-input-glass{backdrop-filter:none}
-@media(max-width:450px){ :where(html:not([data-native])) {.folder-modal{padding:56px 32px}.folder-modal .modal-heading{top:30px;left:50px;right:50px}.folder-modal .modal-actions button{flex:none;min-width:76px}}}
+.folder-form .folder-input-glass input{height:52px;background:transparent;border:0;border-radius:999px;outline:none;padding:13px 54px 13px 17px}
+.folder-input-glass .folder-save{position:absolute;right:6px;top:50%;transform:translateY(-50%);width:40px;height:40px;border-radius:50%;color:var(--accent)}
+html[data-glass="webgl"] .folder-input-glass,html[data-glass="webgl"] .shortcut-checkbox-glass{backdrop-filter:none}
 
 .discover-stage{display:contents}
 .content.collection-content{padding-top:140px;padding-bottom:140px;justify-content:center;min-height:100dvh}

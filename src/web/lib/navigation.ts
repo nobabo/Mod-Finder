@@ -42,7 +42,7 @@ export function readNavigation(url: URL): NavigationState {
     query: (params.get('q') ?? '').trim().slice(0, 200),
     submitted: params.has('q'),
     categories: [...new Set(params.getAll('category'))].filter(id => !!getCategory(gameId, id)),
-    folder: params.get('folder')?.slice(0, 80) || 'all',
+    folder: params.get('folder') === 'unfiled' ? 'all' : params.get('folder')?.slice(0, 80) || 'all',
   };
 }
 

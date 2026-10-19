@@ -33,6 +33,12 @@ describe('shareable navigation state', () => {
     expect(read('/?game=stardew-valley&genre=survival').genre).toBe('all');
   });
 
+  it('opens all favorites for retired unfiled links without reviving the removed tab', () => {
+    const state = roundTrip('/?page=favorites&folder=unfiled');
+    expect(state).toMatchObject({ page: 'favorites', folder: 'all' });
+    expect(navigationUrl(state, new URL(origin))).toBe('/?page=favorites');
+  });
+
   it('ignores invalid or cross-game filters and bounds untrusted input', () => {
     expect(read('/?game=unknown&page=admin&sort=unsafe&version=javascript:alert(1)&loader=bad&kind=bad&category=steam:Map')).toMatchObject({ gameId: 'minecraft-java', page: 'discover', sort: 'downloads', filters: {}, categories: [] });
     expect(read('/?game=stardew-valley&loader=fabric&version=1.21.1&kind=mod').filters).toEqual({});
