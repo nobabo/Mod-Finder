@@ -41,7 +41,48 @@ async (page) => {
   await page.screenshot({ path: 'output/playwright/recommendations-home.png' });
   await openSettings();
   assert(await toggle.getAttribute('aria-checked') === 'false', 'Fresh preferences enabled recommendations');
+  assert(await toggle.locator('.recommendations-switch,input').count() === 0, 'A separate miniature switch remains on the card');
+  const visual = () => toggle.evaluate(element => {
+    const style = getComputedStyle(element);
+    const animation = element.getAnimations().find(item => item.animationName === 'genre-card-pick');
+    return { filter: style.filter, animation: animation?.playState, y: new DOMMatrix(style.transform).m42, drop: parseFloat(style.getPropertyValue('--card-drop')) || 0 };
+  });
+  const freezePick = () => toggle.evaluate(element => {
+    const animation = element.getAnimations().find(item => item.animationName === 'genre-card-pick');
+    if (animation) { animation.pause(); animation.currentTime = 190; }
+  });
+  const finishPick = () => toggle.evaluate(element => {
+    for (const animation of element.getAnimations()) animation.finish();
+  });
+  const drawFits = () => toggle.evaluate(element => element.getBoundingClientRect().top >= element.closest('.settings-rail').getBoundingClientRect().top);
+  assert((await visual()).filter === 'grayscale(1)', 'Disabled recommendation card is not grayscale');
+  await page.screenshot({ path: 'output/playwright/recommendation-card-off.png' });
+  await page.emulateMedia({ reducedMotion: 'no-preference' });
+  await toggle.focus(); await page.keyboard.press('Space');
+  assert(await toggle.getAttribute('aria-checked') === 'true' && (await visual()).animation === 'running', 'Keyboard activation did not play the shared genre effect');
+  await freezePick();
+  const lifted = await visual();
+  assert(lifted.y < lifted.drop - 25, 'Recommendation card did not draw upward like a genre card');
+  assert(await drawFits(), 'Desktop draw animation was clipped');
+  await page.screenshot({ path: 'output/playwright/recommendation-card-on-desktop.png' });
+  await finishPick();
+  await toggle.dispatchEvent('click'); await toggle.dispatchEvent('click');
+  assert(await toggle.evaluate(element => element.getAnimations().filter(item => item.animationName === 'genre-card-pick').length) === 1, 'Repeated toggles stacked draw animations');
+  await finishPick();
+  await page.setViewportSize({ width: 390, height: 844 });
+  await toggle.dispatchEvent('click'); await toggle.dispatchEvent('click');
+  assert((await visual()).animation === 'running', 'Mobile recommendation card did not animate');
+  await freezePick();
+  assert((await visual()).y < -10, 'Mobile card did not lift');
+  assert(await drawFits(), 'Mobile draw animation was clipped');
+  await page.screenshot({ path: 'output/playwright/recommendation-card-on-mobile.png' });
+  await finishPick();
+  await page.emulateMedia({ reducedMotion: 'reduce' });
+  await toggle.dispatchEvent('click'); await toggle.dispatchEvent('click');
+  assert(await toggle.getAttribute('aria-checked') === 'true' && !(await visual()).animation, 'Reduced motion did not keep the color state without animation');
+  await toggle.dispatchEvent('click');
   await closeSettings();
+  await page.setViewportSize({ width: 1440, height: 1000 });
 
   // A pre-existing profile must not opt a legacy user in automatically.
   await page.evaluate(() => {
