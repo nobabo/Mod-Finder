@@ -1,4 +1,5 @@
 import { updateBrandIcon } from './brand';
+import { gameThemeFor } from './game-themes';
 
 const palette = [
   ['violet','바이올렛','Violet','#956cff','#609bff'],
@@ -23,11 +24,25 @@ const effects: Record<typeof palette[number][0], ThemeEffect> = {
   lime:'bamboo', amber:'fire', coral:'fire', crimson:'fire', rose:'petals',
   lavender:'petals', ice:'rain', silver:'rain', midnight:'bamboo',
 };
-export const THEMES = palette.map(([id,ko,en,primary,secondary]) => ({ id,ko,en,primary,secondary,effect:effects[id],rgb:rgb(primary),secondaryRgb:rgb(secondary),grad:`linear-gradient(135deg,${primary},${secondary})` }));
-export const themeById = (id: string) => THEMES.find(theme => theme.id === id) ?? THEMES[0];
-export function applyTheme(id: string) {
+const colorThemes = palette.map(([id,ko,en,primary,secondary]) => ({ id,ko,en,primary,secondary,effect:effects[id],rgb:rgb(primary),secondaryRgb:rgb(secondary),grad:`linear-gradient(135deg,${primary},${secondary})` }));
+export const THEMES = [{ ...colorThemes[0], id: 'game', ko: '게임 기본', en: 'Game default', grad: 'linear-gradient(135deg,#b7dfc8 0%,#d9eee0 49%,#f8edce 50%,#e1b96f 100%)' }, ...colorThemes];
+export const themeById = (id: string) => colorThemes.find(theme => theme.id === id) ?? colorThemes.find(theme => theme.id === 'magenta')!;
+export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
+  try {
+    const saved = storage.getItem('modfinder-theme');
+    if (THEMES.some(theme => theme.id === saved)) return saved!;
+    // The old app persisted magenta even when no theme had been chosen.
+    const legacy = storage.getItem('modfinder-accent');
+    if (legacy !== 'magenta' && colorThemes.some(theme => theme.id === legacy)) return legacy!;
+  } catch { /* Use the game default when optional storage is unavailable. */ }
+  return 'game';
+}
+export function applyTheme(id: string, gameId = '') {
   const theme = themeById(id); const style = document.documentElement.style;
+  const game = id === 'game' ? gameThemeFor(gameId) : undefined;
   document.documentElement.dataset.accent = theme.id;
+  if (game) document.documentElement.dataset.gameTheme = game.id;
+  else delete document.documentElement.dataset.gameTheme;
   const tint = (amount: number) => `rgb(${theme.rgb.map(value => Math.round(value * amount)).join(',')})`;
   const values: Record<string,string> = {
     '--tint-rgb':theme.rgb.join(','), '--secondary-rgb':theme.secondaryRgb.join(','),
@@ -35,7 +50,18 @@ export function applyTheme(id: string) {
     '--canvas':tint(.08),'--surface':tint(.19),'--surface-deep':tint(.12),
     '--muted':`color-mix(in srgb,${theme.primary} 30%,#c0c8da)`,
     '--text-soft':`color-mix(in srgb,${theme.primary} 20%,#f2f5ff)`,
+    '--text':'#eceaff', '--glow':`rgba(${theme.rgb.join(',')},.24)`,
+    '--brand-start':theme.primary, '--brand-end':theme.secondary,
+    'color-scheme':'dark',
   };
+  if (game) Object.assign(values, {
+    '--tint-rgb':rgb(game.primary).join(','), '--secondary-rgb':rgb(game.secondary).join(','),
+    '--accent':game.primary, '--cyan':game.secondary, '--grad':`linear-gradient(135deg,${game.primary},${game.secondary})`,
+    '--canvas':game.canvas, '--surface':game.surface, '--surface-deep':game.surfaceDeep,
+    '--text':game.text, '--text-soft':game.text, '--muted':game.muted, '--glow':'transparent',
+    '--brand-start':game.brandStart, '--brand-end':game.brandEnd,
+    'color-scheme':'light',
+  });
   Object.entries(values).forEach(([name,value]) => style.setProperty(name,value));
-  updateBrandIcon(theme.primary);
+  updateBrandIcon(game?.brandStart ?? theme.primary, game?.brandEnd ?? theme.secondary);
 }
