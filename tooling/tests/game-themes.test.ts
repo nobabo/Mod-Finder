@@ -32,10 +32,13 @@ describe('game default themes', () => {
     expect(root.dataset.gameTheme).toBe('minecraft');
     expect(values.get('--canvas')).toBe(GAME_THEMES['minecraft-java'].canvas);
     expect(values.get('--brand-start')).toBe(GAME_THEMES['minecraft-java'].brandStart);
-    expect(values.get('color-scheme')).toBe('light');
+    expect(values.get('color-scheme')).toBe('dark');
+    expect(values.get('--text')).toBe('#f4f8f5');
+    expect(sceneAppearance('game', 'minecraft-java')?.light).toBe(false);
     applyTheme('game', 'stardew-valley');
     expect(root.dataset.gameTheme).toBe('stardew');
     expect(values.get('--canvas')).toBe(GAME_THEMES['stardew-valley'].canvas);
+    expect(sceneAppearance('game', 'stardew-valley')?.light).toBe(false);
     applyTheme('crimson', 'stardew-valley');
     expect(root.dataset.gameTheme).toBeUndefined();
     expect(values.get('color-scheme')).toBe('dark');
@@ -77,7 +80,7 @@ describe('game default themes', () => {
     expect(values.get('color-scheme')).toBe('dark');
     expect(sceneAppearance('game', 'minecraft-java', '#101820')?.primary).not.toBe(GAME_THEMES['minecraft-java'].primary);
     applyTheme('game', 'minecraft-java');
-    expect(root.dataset.lightTheme).toBe('true');
+    expect(root.dataset.lightTheme).toBeUndefined();
     expect(values.get('--canvas')).toBe(defaultBackground('game', 'minecraft-java'));
     applyTheme('crimson', 'minecraft-java');
     expect(root.dataset.lightTheme).toBeUndefined();

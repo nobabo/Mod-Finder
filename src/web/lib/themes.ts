@@ -11,7 +11,7 @@ const effects: Record<typeof palette[number][0], ThemeEffect> = {
   crimson:'fire',
 };
 const colorThemes = palette.map(([id,ko,en,primary,secondary]) => ({ id,ko,en,primary,secondary,effect:effects[id],rgb:rgb(primary),secondaryRgb:rgb(secondary),grad:`linear-gradient(135deg,${primary},${secondary})` }));
-export const THEMES = [{ ...colorThemes[0], id: 'game', ko: '게임 기본', en: 'Game default', grad: 'linear-gradient(135deg,#b7dfc8 0%,#d9eee0 49%,#f8edce 50%,#e1b96f 100%)' }, ...colorThemes];
+export const THEMES = [{ ...colorThemes[0], id: 'game', ko: '게임 기본', en: 'Game default', grad: 'linear-gradient(135deg,#14251f 0%,#4a715c 49%,#29221c 50%,#9f805b 100%)' }, ...colorThemes];
 export const themeById = (id: string) => colorThemes.find(theme => theme.id === id) ?? colorThemes[0];
 export function defaultBackground(id: string, gameId: string): string {
   const game = id === 'game' ? gameThemeFor(gameId) : undefined;

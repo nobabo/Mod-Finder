@@ -33,7 +33,7 @@ async (page) => {
         await tab.waitForFunction(value => document.documentElement.style.getPropertyValue('--canvas') === value && localStorage.getItem('modfinder-background-color') === value, hex);
         await tab.locator('.theme-options button>.glass-control-surface').first().waitFor({ state: 'visible' });
       };
-      for (const [game, defaultColor] of [['minecraft-java', '#afc9ba'], ['stardew-valley', '#d0bf98']]) {
+      for (const [game, defaultColor] of [['minecraft-java', '#14251f'], ['stardew-valley', '#29221c']]) {
         await tab.goto(`${base}/?game=${game}`);
         await tab.locator('.atmosphere.is-ready').waitFor();
         await openTheme();
@@ -72,7 +72,7 @@ async (page) => {
         check(await color() === '#130507' && !(await inspect()).light, 'Reset restores original Crimson');
         check(!await tab.locator('.atmosphere').evaluate(el => el.classList.contains('game-atmosphere')), 'Reset restores original photograph treatment');
         await button('게임 기본').click();
-        check(await color() === defaultColor && (await inspect()).light, 'Reset restores game palette when switching back');
+        check(await color() === defaultColor && !(await inspect()).light, 'Reset restores dark game palette when switching back');
         await button('닫기').click();
         await tab.reload();
         await openTheme();
