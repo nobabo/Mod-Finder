@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
 import { colorHex, compositeBackgroundColor, hsvToRgb, normalizeBackgroundColor, parseBackgroundColor, readBackgroundColor, rgbToHsv } from '../../src/web/lib/background-color';
-import { applyTheme, sceneAppearance } from '../../src/web/lib/themes';
+import { AUTO_BACKGROUND, applyTheme, sceneAppearance } from '../../src/web/lib/themes';
 import { afterEach, vi } from 'vitest';
 
 afterEach(() => vi.unstubAllGlobals());
@@ -29,7 +29,7 @@ describe('RGBA background colors', () => {
     const values = new Map<string,string>();
     vi.stubGlobal('document',{documentElement:{dataset:{},style:{setProperty:(name:string,value:string)=>values.set(name,value)}},querySelector:()=>null});
     applyTheme('game','minecraft-java','#ffffff00');
-    expect(values.get('--canvas')).toBe('#14251f');
+    expect(values.get('--canvas')).toBe(AUTO_BACKGROUND);
     expect(values.get('color-scheme')).toBe('dark');
   });
   it('retains the original Crimson scene for zero alpha and its blend for intermediate alpha', () => {

@@ -11,7 +11,7 @@ export function ThemeOptions({ themeId, gameId, backgroundColor, changeTheme, ch
   const color = backgroundColor ?? defaultBackground(themeId,gameId);
   return <div className="theme-settings">
     <div className="theme-options"><CardPages columns={2}>{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={themeId === theme.id} onClick={() => changeTheme(theme.id)}>
-      <i style={{ background: theme.grad }} />{locale === 'ko' ? theme.ko : theme.en}{themeId === theme.id && <Check size={14} />}
+      <i style={{ background: theme.id === 'game' ? 'var(--grad)' : theme.grad }} />{theme.id === 'game' ? t('자동 색상') : locale === 'ko' ? theme.ko : theme.en}{themeId === theme.id && <Check size={14} />}
     </button>)}</CardPages></div>
     <div className="background-color-control">
       <span className="background-color-label">{t('배경색')}</span>

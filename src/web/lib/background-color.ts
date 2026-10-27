@@ -35,15 +35,34 @@ export function readBackgroundColor(storage: Pick<Storage, 'getItem'>): string |
   catch { return undefined; }
 }
 
-export function isLightBackground(hex: string): boolean {
+export function luminance(hex: string): number {
   const channels = [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16) / 255)
     .map(value => value <= .04045 ? value / 12.92 : ((value + .055) / 1.055) ** 2.4);
-  return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722 > .179;
+  return channels[0] * .2126 + channels[1] * .7152 + channels[2] * .0722;
 }
-
-export function lightenAccent(hex: string): string {
-  return '#' + [1, 3, 5].map(offset => {
-    const value = parseInt(hex.slice(offset, offset + 2), 16);
-    return Math.round(value + (255 - value) * .45).toString(16).padStart(2, '0');
-  }).join('');
+export function isLightBackground(hex: string): boolean { return luminance(hex) > .179; }
+export function contrastRatio(a: string, b: string): number {
+  const first = luminance(a), second = luminance(b);
+  return (Math.max(first,second)+.05)/(Math.min(first,second)+.05);
+}
+function mixColor(a: string, b: string, amount: number): string {
+  const from = parseBackgroundColor(a), to = parseBackgroundColor(b);
+  return colorHex({r:from.r+(to.r-from.r)*amount,g:from.g+(to.g-from.g)*amount,b:from.b+(to.b-from.b)*amount,a:1});
+}
+export function backgroundPalette(background: string, representative = background) {
+  const light = isLightBackground(background), pole = light ? '#000000' : '#ffffff';
+  const readable = (candidate: string) => {
+    for (let step = 0; step <= 20; step++) {
+      const color = mixColor(candidate,pole,step/20);
+      if (contrastRatio(color,background) >= 4.5) return color;
+    }
+    return pole;
+  };
+  const hsv = rgbToHsv(parseBackgroundColor(representative));
+  const saturation = hsv.s < .08 ? 0 : Math.min(.42,hsv.s*.65);
+  const primary = readable(colorHex(hsvToRgb({h:hsv.h,s:saturation,v:light?.32:.86})));
+  const secondary = readable(colorHex(hsvToRgb({h:hsv.h+28,s:saturation*.85,v:light?.35:.9})));
+  const text = readable(mixColor(background,pole,.94));
+  const muted = readable(mixColor(background,text,.72));
+  return {primary,secondary,text,muted,light};
 }

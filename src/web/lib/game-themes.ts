@@ -1,8 +1,6 @@
 export const GAME_THEMES = {
   'minecraft-java': {
-    id: 'minecraft', primary: '#397455', secondary: '#7a6546',
-    canvas: '#14251f', surface: 'transparent', surfaceDeep: 'transparent',
-    text: '#243f30', muted: '#506856', brandStart: '#76b79c', brandEnd: '#8eafd0',
+    id: 'minecraft',
     representative: 'steve',
     characters: [
       { name: 'steve', src: '/theme-art/minecraft-steve.webp', width: 526, height: 694 },
@@ -13,9 +11,7 @@ export const GAME_THEMES = {
     ],
   },
   'stardew-valley': {
-    id: 'stardew', primary: '#98632f', secondary: '#5d7d46',
-    canvas: '#29221c', surface: 'transparent', surfaceDeep: 'transparent',
-    text: '#513923', muted: '#725b40', brandStart: '#d0a06b', brandEnd: '#a5b581',
+    id: 'stardew',
     representative: 'junimo',
     characters: [
       { name: 'junimo', src: '/theme-art/stardew-junimo.webp', width: 42, height: 45 },

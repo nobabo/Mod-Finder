@@ -193,7 +193,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (context) { context.filter = 'blur(2.5px)'; context.drawImage(image,-6,-6,softened.width + 12,softened.height + 12); }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, context ? softened : image);
   };
-  const controlSelector = '.color-picker, .search-box, .filter-orb, .mobile-header .settings-fab, .mobile-nav-glass, .deck-search, .filter-dropdown.is-liquid-glass, .filter-dropdown-search, .ranking-panel, .folder-input-glass, .shortcut-checkbox-glass, .folder-save, .deck-card, .settings-menu nav button, .settings-menu nav a, .preference-panel .theme-options button, .language-options button';
+  const controlSelector = '.search-box, .filter-orb, .mobile-header .settings-fab, .mobile-nav-glass, .deck-search, .filter-dropdown.is-liquid-glass, .filter-dropdown-search, .ranking-panel, .folder-input-glass, .shortcut-checkbox-glass, .folder-save, .deck-card, .settings-menu nav button, .settings-menu nav a, .preference-panel .theme-options button, .language-options button';
   const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal:not(.folder-modal), .sheet`;
   const observer = new MutationObserver(records => {
     const nodes = records.flatMap(record => [...record.addedNodes, ...record.removedNodes]);
@@ -251,7 +251,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     }
     gl!.viewport(0,0,width,height);
     if (panelDirty) {
-      const deck = document.querySelector('.color-picker-dialog') ?? document.querySelector('.game-deck');
+      const deck = document.querySelector('.game-deck');
       panelElements = [...(deck ?? document).querySelectorAll<HTMLElement>(deck ? controlSelector : selector)].filter(el => getComputedStyle(el).visibility !== 'hidden');
       for (const element of observed) if (!panelElements.includes(element)) { sizes.unobserve(element); observed.delete(element); }
       geometry.clear();

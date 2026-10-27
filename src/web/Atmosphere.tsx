@@ -144,7 +144,7 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     <div key={current?.src} className={`atmosphere-fallback ${fading ? 'is-crossfading' : ''}`} onAnimationEnd={() => { setPrevious(undefined); setFading(false); }} style={{ backgroundImage: current ? `url("${current.src}")` : undefined }} />
     <div className="aurora-fallback" />
     <canvas ref={canvas} className="atmosphere-canvas" />
-    <ThemeEffects theme={theme} enabled={effectsEnabled && !reduced && motionEnabled} paused={paused} />
+    <ThemeEffects theme={theme} enabled={theme !== 'game' && effectsEnabled && !reduced && motionEnabled} paused={paused} />
     <div className="atmosphere-grain" />
   </div>;
 }

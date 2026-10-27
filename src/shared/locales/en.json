@@ -251,5 +251,6 @@
   "색상 선택": "Choose color",
   "채도와 명도": "Saturation and brightness",
   "색조": "Hue",
-  "불투명도": "Opacity"
+  "불투명도": "Opacity",
+  "자동 색상": "Automatic colors"
 }

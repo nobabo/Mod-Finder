@@ -12,11 +12,10 @@ async (page) => {
       const button = name => tab.getByRole('button',{name,exact:true});
       const picker = () => tab.getByRole('dialog',{name:'배경색',exact:true});
       const openTheme = async()=>{await button('설정 메뉴').click();await button('테마').click();};
-      const openPicker = async()=>{await button('색상 선택').click();await picker().waitFor();await picker().locator('.glass-control-surface').waitFor({state:'visible'});};
+      const openPicker = async()=>{await button('색상 선택').click();await picker().waitFor();};
       const stored = () => tab.evaluate(()=>localStorage.getItem('modfinder-background-color'));
       const choose = async hex => {await picker().getByRole('textbox',{name:'HEX',exact:true}).fill(hex);await tab.waitForFunction(value=>localStorage.getItem('modfinder-background-color')===value,hex);};
-      const lensHash = () => picker().locator('.glass-control-surface').evaluate(lens=>{const pixels=lens.getContext('2d').getImageData(0,0,lens.width,lens.height).data;let hash=1;for(let i=0;i<pixels.length;i+=97)hash=Math.imul(hash,31)+pixels[i]|0;return hash;});
-      for(const [game,defaultColor,halfColor] of [['minecraft-java','#14251f','#122329'],['stardew-valley','#29221c','#1d2228']]) {
+      for(const [game,defaultColor,halfColor] of [['minecraft-java','#1b1e22','#16202b'],['stardew-valley','#1b1e22','#16202b']]) {
         await tab.goto(`${base}/?game=${game}`);await tab.locator('.atmosphere.is-ready').waitFor();await openTheme();
         check(await tab.locator('.theme-options button').count()===2,'Two theme presets');
         check(await button('기본 색상으로').isDisabled(),'No override initially');
@@ -34,11 +33,14 @@ async (page) => {
         const hue=picker().getByRole('slider',{name:'색조',exact:true});await hue.focus();await hue.press('Home');await hue.press('ArrowRight');
         check(await hue.inputValue()==='1','Hue slider supports keyboard');
         await choose('#e5d0b0');check(await tab.locator('html').getAttribute('data-light-theme')==='true','Opaque light color adapts text');
-        const hash=await lensHash();
+        const bright = await tab.locator('html').evaluate(el=>({text:el.style.getPropertyValue('--text'),accent:el.style.getPropertyValue('--accent')}));
+        check(await picker().evaluate(el=>{const panel=el.querySelector('.color-picker'),style=getComputedStyle(panel),box=el.getBoundingClientRect();return style.backgroundColor==='rgba(0, 0, 0, 0)'&&style.backgroundImage==='none'&&style.backdropFilter.includes('blur')&&getComputedStyle(el).filter==='none'&&el.querySelectorAll('.glass-control-surface').length===0&&(innerWidth<=650||box.width>box.height);}), 'Wide transparent panel blurs only the backdrop');
         for(const [channel,value] of [['R','17'],['G','34'],['B','51'],['A','0.5']]) await picker().getByRole('spinbutton',{name:channel,exact:true}).fill(value);
         await tab.waitForFunction(()=>localStorage.getItem('modfinder-background-color')==='#11223380');
-        check(await tab.locator('html').evaluate((el,color)=>el.style.getPropertyValue('--canvas')===color,halfColor),'RGBA alpha composites over the actual game default');
-        await tab.waitForFunction(old=>{const lens=document.querySelector('.color-picker>.glass-control-surface'),pixels=lens.getContext('2d').getImageData(0,0,lens.width,lens.height).data;let next=1;for(let i=0;i<pixels.length;i+=97)next=Math.imul(next,31)+pixels[i]|0;return next!==old;},hash);
+        check(await tab.locator('html').evaluate((el,color)=>el.style.getPropertyValue('--canvas')===color,halfColor),'RGBA alpha composites over the shared neutral base');
+        const dark = await tab.locator('html').evaluate(el=>({text:el.style.getPropertyValue('--text'),accent:el.style.getPropertyValue('--accent')}));
+        check(bright.text!==dark.text && bright.accent!==dark.accent,'Background drives text and border colors');
+        check(await tab.getByRole('button',{name:'게임 기본',exact:true}).count()===0,'No game color preset');
         await tab.screenshot({path:`output/playwright/${game}-${mobile?'mobile':'desktop'}-rgba-picker.png`});
         const hex=picker().getByRole('textbox',{name:'HEX',exact:true});await hex.fill('#bad');await hex.press('Tab');
         check(await stored()==='#11223380' && await hex.inputValue()==='#11223380','Invalid draft does not replace saved color');
@@ -53,7 +55,7 @@ async (page) => {
         check(!await tab.locator('.atmosphere').evaluate(el=>el.classList.contains('game-atmosphere')),'Transparent Crimson keeps original photographic scene');
         await choose('#ffffff80');await picker().getByRole('button',{name:'닫기',exact:true}).click();
         await button('기본 색상으로').click();await tab.waitForFunction(()=>localStorage.getItem('modfinder-background-color')===null);
-        await button('게임 기본').click();await openPicker();
+        await button('자동 색상').click();await openPicker();
         if(mobile){await tab.setViewportSize({width:320,height:740});check(await picker().evaluate(el=>el.getBoundingClientRect().right<=innerWidth),'Picker fits 320px mobile');await tab.screenshot({path:`output/playwright/${game}-narrow-rgba-picker.png`});await tab.setViewportSize({width:390,height:844});}
         await tab.mouse.click(2,2);check(await picker().count()===0,'Backdrop dismisses picker');
         check(!await tab.locator('html').evaluate(el=>el.scrollWidth>innerWidth),'No horizontal overflow');
