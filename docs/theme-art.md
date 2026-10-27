@@ -1,6 +1,6 @@
 # Game default themes
 
-The **Game default / 게임 기본** preference follows the selected game. Minecraft uses a muted mint background (`#c6ddcf`); Stardew Valley uses a muted cream background (`#e8d9b5`). Each game has five locally bundled publisher screenshots at 18% opacity. They crossfade every 20 seconds, pausing while a dialog is open or the page is hidden. Reduced motion keeps the current image still. Other games and the all-games view retain the photographic magenta theme. Color themes remain available in settings.
+The **Game default / 게임 기본** preference follows the selected game. Minecraft uses a muted mint background (`#c6ddcf`); Stardew Valley uses a muted cream background (`#e8d9b5`). Each game has five locally bundled publisher screenshots mixed into the canvas at 18%. They crossfade every 20 seconds in a shuffled order, pausing while a dialog is open or the page is hidden. The first photo is shuffled too; optional session storage avoids repeating the last photo immediately after a reload. Each completed round is reshuffled without repeating its final photo at the boundary. Color themes use the same ordering policy with their original screenshot collections. Reduced motion keeps the current image still. Color themes remain available in settings.
 
 The new preference is saved as `modfinder-theme`. Existing non-default color choices migrate from `modfinder-accent`. The old automatically saved magenta default becomes Game default; magenta can still be explicitly selected and saved with the new key.
 
@@ -21,9 +21,11 @@ Retrieved 2026-10-28. Sources include publisher artwork, Mojang's resource pack,
 | `stardew-krobus.webp` | [Official Stardew Valley Wiki: Krobus](https://wiki.stardewvalley.net/Krobus), [original PNG](https://wiki.stardewvalley.net/mediawiki/images/7/71/Krobus.png) | Transparent padding trimmed; lossless WebP. © ConcernedApe. |
 | `stardew-stardrop.webp` | [Official Stardew Valley Wiki: Stardrop](https://wiki.stardewvalley.net/Stardrop), [original PNG](https://wiki.stardewvalley.net/mediawiki/images/a/a5/Stardrop.png) | Transparent padding trimmed; lossless WebP. © ConcernedApe. |
 
-Steve and the Junimo are the respective central representatives above the home search field. Four companions/props sit outside the ranking's side and lower corners. Compact layouts place the four below the ranking, preserving the filter button's position and keeping every label clear. The representative is clipped above the transparent search field so no artwork shows through its input. Characters are decorative, hidden from assistive technology, and ignore pointer events.
+Steve and the Junimo are the respective central representatives above the home search field, aligned with its center and the brand logo. Companion pairs cluster around the ranking's lower corners. Compact layouts bring both pairs just below those corners, preserving the filter button's position and keeping every label clear. The representative is clipped above the transparent search field so no artwork shows through its input. Characters are decorative, hidden from assistive technology, and ignore pointer events.
 
-The logo has separate pastel gradient tokens; control and text accents stay darker for legibility. Panels and controls have transparent fills, with a translucent tint only for selected options. Masked gradient rims and inset highlights preserve the liquid glass border treatment. These light themes do not mount the WebGL renderer or particle effects.
+Both game and color themes share the `Atmosphere` WebGL refraction renderer. The light shader mixes each photo into the pastel canvas before sampling the same scene through search, ranking and option-card lenses; it does not add opaque white panel fills. The dark shader preserves the original photo/aurora treatment. CSS blur and gradient rims remain a fallback when WebGL is unavailable. Particle effects remain limited to color themes.
+
+Mouse motion eases the background by at most 7px horizontally and 5px vertically. The same smoothed pointer drives small depth-dependent character movements and a gentle 3D brand tilt. Home-logo hover adds a small scale response. Touch does not drive the mouse effects; hidden pages and dialogs pause the scene, and reduced motion disables parallax and graphic transforms.
 
 ## Background collection
 

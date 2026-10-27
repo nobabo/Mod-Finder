@@ -46,6 +46,21 @@ function setup() {
 }
 
 describe('glass scroll stability', () => {
+  it('uses the pastel photograph inside the same refraction renderer and restores color themes', () => {
+    const s = setup();
+    s.renderer.setAppearance({ canvas: '#c6ddcf', primary: '#397455', secondary: '#7a6546', photoOpacity: .18 });
+    s.frame(100);
+    expect(s.uniform('uniform1f', 'uLightScene')).toEqual([1]);
+    expect(s.uniform('uniform1f', 'uPhotoOpacity')).toEqual([.18]);
+    expect(s.uniform('uniform3fv', 'uCanvas')).toEqual([[198 / 255, 221 / 255, 207 / 255]]);
+    expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[57 / 255, 116 / 255, 85 / 255]]);
+    s.renderer.setAppearance(undefined);
+    s.renderer.setTheme('cyan');
+    s.frame(140);
+    expect(s.uniform('uniform1f', 'uLightScene')).toEqual([0]);
+    expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[28 / 255, 209 / 255, 211 / 255]]);
+  });
+
   it('restores background panels after removing a filter menu with no glass children', () => {
     const s = setup(); s.frame(100);
     class MenuElement { matches(selector: string) { return selector.includes('.game-deck'); } querySelector() { return null; } querySelectorAll() { return []; } }

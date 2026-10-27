@@ -24,7 +24,8 @@ async (page) => {
         await tab.locator('.game-characters-search').waitFor();
         await tab.evaluate(() => document.fonts.ready);
         await tab.locator('.game-character img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
-        await tab.locator('.game-backdrop-photo').evaluateAll(images => Promise.all(images.map(image => image.decode())));
+        await tab.locator('.atmosphere.is-ready').waitFor();
+        await tab.locator('.search-box>.glass-control-surface').waitFor({ state: 'visible' });
         const inspect = async () => tab.evaluate(() => {
           const field = document.querySelector('.search-field');
           const form = field.querySelector('.search-box');
@@ -37,11 +38,12 @@ async (page) => {
           const filter = document.querySelector('.filter-orb').getBoundingClientRect();
           const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
           const transparent = el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).backgroundImage === 'none';
+          const scene = document.querySelector('.atmosphere');
+          const lens = form.querySelector('.glass-control-surface');
           return {
             game: document.documentElement.dataset.gameTheme,
-            photo: document.querySelector('.game-backdrop-photo.is-active').getAttribute('src'),
-            photos: document.querySelectorAll('.game-backdrop-photo').length,
-            opacity: getComputedStyle(document.querySelector('.game-backdrop-photo.is-active')).opacity,
+            photo: scene.dataset.background,
+            photos: Number(scene.dataset.backgroundCount),
             representatives: art.querySelectorAll('.is-representative').length,
             above: [...art.children].filter(el => el.getBoundingClientRect().top < box.top).length,
             centered: Math.abs(representative.x + representative.width / 2 - box.x - box.width / 2) < 15,
@@ -53,22 +55,24 @@ async (page) => {
             transparentSurfaces: transparent(form) && transparent(ranking),
             border: getComputedStyle(form, '::after').backgroundImage,
             overflow: document.documentElement.scrollWidth > innerWidth,
-            webgl: document.querySelectorAll('.atmosphere-canvas').length,
+            webgl: document.documentElement.dataset.glass === 'webgl',
+            refractedPixels: !!lens && lens.width > 0 && lens.getContext('2d').getImageData(Math.floor(lens.width / 2), Math.floor(lens.height / 2), 1, 1).data[3] === 255,
             placeholder: document.querySelector('#mod-query').placeholder,
           };
         });
         const report = await inspect();
         check(report.game === (game === 'minecraft-java' ? 'minecraft' : 'stardew'), 'Game palette follows selection');
-        check(report.photo.includes(game) && report.photos === 5 && Number(report.opacity) >= .15 && Number(report.opacity) <= .25, 'Five matching, visible photographs');
+        check(report.photo.includes(game) && report.photos === 5, 'Five matching photographs');
         check(report.representatives === 1 && report.above === 1 && report.centered, 'One representative centered above search');
         check(report.foreground && report.border.includes('gradient'), 'Search and glass border are above characters');
         check(report.companions === 4 && report.rankingCorners && report.textClear && report.filterClear, 'Companions stay at ranking corners, clear of text and filter');
         check(report.transparentSurfaces, 'Search and ranking have no white fill');
-        check(!report.overflow && report.webgl === 0, 'No overflow or dark scene renderer');
+        check(!report.overflow && report.webgl && report.refractedPixels, 'Actual WebGL refraction without overflow');
         await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-final.png` });
         await button('설정 메뉴').click();
         await tab.getByRole('dialog', { name: '설정 메뉴', exact: true }).waitFor();
         const card = button('즐겨찾기');
+        await card.locator('.glass-control-surface').waitFor({ state: 'visible' });
         const cardBackground = await card.evaluate(el => ({ color: getComputedStyle(el).backgroundColor, image: getComputedStyle(el).backgroundImage }));
         check(cardBackground.color === 'rgba(0, 0, 0, 0)' && cardBackground.image === 'none', 'Unselected option cards are transparent');
         check(await tab.locator('#mod-query').getAttribute('placeholder') === report.placeholder, 'Settings preserve search placeholder');
@@ -113,14 +117,14 @@ async (page) => {
     rotationTab.on('pageerror', error => errors.push(error.message));
     await rotationTab.clock.install();
     await rotationTab.goto(`${base}/?game=minecraft-java`);
-    const activePhoto = () => rotationTab.locator('.game-backdrop-photo.is-active').getAttribute('src');
-    await rotationTab.locator('.game-backdrop-photo.is-active').waitFor();
+    const activePhoto = () => rotationTab.locator('.atmosphere').getAttribute('data-background');
+    await rotationTab.locator('.atmosphere.is-ready').waitFor();
     const seen = new Set();
     for (let index = 0; index < 5; index++) {
       seen.add(await activePhoto());
       await rotationTab.clock.fastForward(20000);
     }
-    check(seen.size === 5, 'All five backgrounds rotate');
+    check(seen.size === 5, 'All five shuffled backgrounds rotate');
     await rotationTab.getByRole('button', { name: '설정 메뉴', exact: true }).click();
     const pausedPhoto = await activePhoto();
     await rotationTab.clock.fastForward(40000);

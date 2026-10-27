@@ -1,4 +1,6 @@
 import { themeById } from './themes';
+export interface GlassAppearance { canvas: string; primary: string; secondary: string; photoOpacity: number }
+const colorRgb = (hex: string) => [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16) / 255);
 // A shared scene is sampled again through rounded glass lenses. Unlike backdrop
 // blur, the surface changes sample coordinates, dispersion and specular response.
 const vertex = `
@@ -22,6 +24,9 @@ uniform float uMix;
 uniform float uMotion;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
+uniform float uLightScene;
+uniform float uPhotoOpacity;
+uniform vec3 uCanvas;
 uniform vec2 uPointer;
 uniform vec2 uBackgroundOffset;
 uniform vec4 uPanels[8];
@@ -40,6 +45,10 @@ vec2 cover(vec2 uv, vec2 image) {
 vec3 scene(vec2 uv) {
   if (uUseScene == 1) return texture2D(uScene, uv).rgb;
   vec3 photo = mix(texture2D(uPhotoA, cover(uv, uImageA)).rgb, texture2D(uPhotoB, cover(uv, uImageB)).rgb, uMix);
+  if (uLightScene > 0.5) {
+    float luminance = dot(photo, vec3(0.2126, 0.7152, 0.0722));
+    return uCanvas * mix(vec3(1.0), mix(vec3(luminance), photo, 0.8), uPhotoOpacity);
+  }
   float t = uTime * 0.14;
   float wave = 0.55 + 0.19 * sin(uv.x * 4.4 + t) + 0.105 * sin(uv.x * 8.0 - t * 0.7);
   float ribbon = exp(-pow((uv.y - wave) * 2.7, 2.0));
@@ -81,15 +90,23 @@ void main() {
       vec3 glass = vec3(scene(refracted - offset * 0.075).r, scene(refracted).g, scene(refracted + offset * 0.075).b);
       vec2 soft = vec2(1.2) / uSize;
       glass = glass * 0.74 + (scene(refracted + soft) + scene(refracted - soft)) * 0.13;
-      glass = glass * 1.16 + mix(uColorA, uColorB, 0.18) * 0.025;
+      if (uLightScene < 0.5) glass = glass * 1.16 + mix(uColorA, uColorB, 0.18) * 0.025;
+      else glass = mix(glass, vec3(1.0), 0.018);
       // Fresnel edge, a directional key light and a broad, moving reflection.
       float rim = exp(-abs(distance + 1.15) * 0.72);
       float innerRim = exp(-abs(distance + 5.0) * 0.8) * 0.16;
       vec2 lightDirection = normalize(vec2(-0.65, -0.85) + uPointer * 0.18);
       float facing = pow(max(dot(normal, lightDirection), 0.0), 3.0);
       float opposite = pow(max(dot(normal, -lightDirection), 0.0), 5.0);
-      glass += rim * (0.11 + facing * 0.6 + opposite * 0.23) * mix(uColorA, uColorB, smoothstep(-0.8, 0.8, face.x + face.y * 0.4));
-      glass += innerRim * mix(uColorA,uColorB,0.6);
+      vec3 rimColor = mix(uColorA, uColorB, smoothstep(-0.8, 0.8, face.x + face.y * 0.4));
+      if (uLightScene < 0.5) {
+        glass += rim * (0.11 + facing * 0.6 + opposite * 0.23) * rimColor;
+        glass += innerRim * mix(uColorA,uColorB,0.6);
+      } else {
+        glass += rim * (0.035 + facing * 0.17 + opposite * 0.06) * mix(vec3(1.0), rimColor, 0.2);
+        glass -= rim * (1.0 - facing) * rimColor * 0.055;
+        glass += innerRim * vec3(0.06);
+      }
       float reflection = pow(max(0.0, 1.0 - abs(face.y + 0.73 + face.x * 0.18) * 3.0), 3.0);
       glass += reflection * (0.022 + facing * bevel * 0.095) * mix(uColorA,uColorB,smoothstep(-0.8,0.8,face.x));
       glass -= pow(bevel, 2.0) * (1.0 - facing) * 0.025;
@@ -127,7 +144,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const position = gl.getAttribLocation(program, 'aPosition');
   gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const uniform = (name: string) => gl.getUniformLocation(program, name);
-  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
+  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uLightScene','uPhotoOpacity','uCanvas','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
   const texture = () => {
     const tex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -146,6 +163,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let hasPhoto = false; let blendElapsed = 0; let blending = false; let invalidated = false;
   let pendingPhoto: HTMLImageElement | null = null;
   let theme = themeById('violet'); let disposed = false; let raf = 0;
+  let appearance: GlassAppearance | undefined;
   let lastSceneFrame = 0; let elapsed = 0;
   let paused = false;
   let panelElements: HTMLElement[] = []; let panelDirty = true; let geometryDirty = true;
@@ -169,17 +187,19 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (context) { context.filter = 'blur(2.5px)'; context.drawImage(image,-6,-6,softened.width + 12,softened.height + 12); }
     gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, context ? softened : image);
   };
-  const controlSelector = '.search-box, .filter-orb, .mobile-header .settings-fab, .mobile-nav-glass, .deck-search, .filter-dropdown.is-liquid-glass, .filter-dropdown-search, .ranking-panel, .folder-input-glass, .shortcut-checkbox-glass, .folder-save';
+  const controlSelector = '.search-box, .filter-orb, .mobile-header .settings-fab, .mobile-nav-glass, .deck-search, .filter-dropdown.is-liquid-glass, .filter-dropdown-search, .ranking-panel, .folder-input-glass, .shortcut-checkbox-glass, .folder-save, .deck-card, .settings-menu nav button, .settings-menu nav a, .preference-panel .theme-options button, .language-options button';
   const selector = `${controlSelector}, .results-section:not(.search-results-panel), .settings-card, .history-list:not(:has(.empty-state)):not(.collection-stage .history-list), .settings-fab, .modal:not(.folder-modal), .sheet`;
   const observer = new MutationObserver(records => {
     const nodes = records.flatMap(record => [...record.addedNodes, ...record.removedNodes]);
+    const changedControl = records.some(record => record.type === 'attributes' && record.target instanceof Element && record.target.matches(selector));
+    if (!nodes.length && !changedControl) return;
     // Our own lens surfaces cannot change layout or the panel inventory.
     if (nodes.length && nodes.every(node => node instanceof Element && node.matches('.glass-control-surface'))) return;
     if (nodes.some(node => node instanceof Element && (node.matches(`${selector}, .game-deck`) || node.querySelector(`${selector}, .game-deck`)))) panelDirty = true;
     geometryDirty = true;
     schedule();
   });
-  observer.observe(document.body, { childList: true, subtree: true });
+  observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
   const resize = () => { panelDirty = true; schedule(); };
   // Scrolling changes positions, not the set of panels or their corner styles.
   // Present geometry at display cadence independently of the 30 Hz scene clock.
@@ -274,7 +294,11 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform2fv(uniforms.uImageA,frontSize); gl!.uniform2fv(uniforms.uImageB,backSize);
     gl!.uniform1f(uniforms.uMix,mix * mix * (3 - 2 * mix));
     gl!.uniform1f(uniforms.uTime,elapsed / 1000); gl!.uniform1f(uniforms.uMotion,reduced ? 0 : 1);
-    gl!.uniform3fv(uniforms.uColorA,theme.rgb.map(value => value / 255)); gl!.uniform3fv(uniforms.uColorB,theme.secondaryRgb.map(value => value / 255));
+    gl!.uniform3fv(uniforms.uColorA,appearance ? colorRgb(appearance.primary) : theme.rgb.map(value => value / 255));
+    gl!.uniform3fv(uniforms.uColorB,appearance ? colorRgb(appearance.secondary) : theme.secondaryRgb.map(value => value / 255));
+    gl!.uniform1f(uniforms.uLightScene,appearance ? 1 : 0);
+    gl!.uniform1f(uniforms.uPhotoOpacity,appearance?.photoOpacity ?? 1);
+    gl!.uniform3fv(uniforms.uCanvas,appearance ? colorRgb(appearance.canvas) : [0,0,0]);
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);
     gl!.uniform2fv(uniforms.uBackgroundOffset,reduced ? [0,0] : backgroundOffset);
     // Calculate the photographic/aurora scene once per frame. Refraction samples
@@ -344,6 +368,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   return {
     setPaused(value: boolean) { if (paused === value) return; paused = value; lastSceneFrame = 0; geometryDirty = true; schedule(); },
     setTheme(value: string) { theme = themeById(value); sceneDirty = true; schedule(); },
+    setAppearance(value?: GlassAppearance) { appearance = value; sceneDirty = true; schedule(); },
     setBackgroundOffset(x: number, y: number) { if (backgroundOffset[0] === x && backgroundOffset[1] === y) return; backgroundOffset = [x,y]; sceneDirty = true; schedule(); },
     setPhoto(image: HTMLImageElement, immediate = false) {
       if (disposed || gl.isContextLost()) return false;
