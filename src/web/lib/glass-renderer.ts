@@ -1,5 +1,5 @@
 import { themeById } from './themes';
-export interface GlassAppearance { canvas: string; primary: string; secondary: string; photoOpacity: number }
+export interface GlassAppearance { canvas: string; primary: string; secondary: string; photoOpacity: number; light?: boolean }
 const colorRgb = (hex: string) => [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16) / 255);
 // A shared scene is sampled again through rounded glass lenses. Unlike backdrop
 // blur, the surface changes sample coordinates, dispersion and specular response.
@@ -25,6 +25,7 @@ uniform float uMotion;
 uniform vec3 uColorA;
 uniform vec3 uColorB;
 uniform float uLightScene;
+uniform float uCanvasScene;
 uniform float uPhotoOpacity;
 uniform vec3 uCanvas;
 uniform vec2 uPointer;
@@ -45,7 +46,7 @@ vec2 cover(vec2 uv, vec2 image) {
 vec3 scene(vec2 uv) {
   if (uUseScene == 1) return texture2D(uScene, uv).rgb;
   vec3 photo = mix(texture2D(uPhotoA, cover(uv, uImageA)).rgb, texture2D(uPhotoB, cover(uv, uImageB)).rgb, uMix);
-  if (uLightScene > 0.5) {
+  if (uCanvasScene > 0.5) {
     float luminance = dot(photo, vec3(0.2126, 0.7152, 0.0722));
     return uCanvas * mix(vec3(1.0), mix(vec3(luminance), photo, 0.8), uPhotoOpacity);
   }
@@ -144,7 +145,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const position = gl.getAttribLocation(program, 'aPosition');
   gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const uniform = (name: string) => gl.getUniformLocation(program, name);
-  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uLightScene','uPhotoOpacity','uCanvas','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
+  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uLightScene','uCanvasScene','uPhotoOpacity','uCanvas','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
   const texture = () => {
     const tex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -162,7 +163,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let frontSize = [1,1]; let backSize = [1,1];
   let hasPhoto = false; let blendElapsed = 0; let blending = false; let invalidated = false;
   let pendingPhoto: HTMLImageElement | null = null;
-  let theme = themeById('violet'); let disposed = false; let raf = 0;
+  let theme = themeById('crimson'); let disposed = false; let raf = 0;
   let appearance: GlassAppearance | undefined;
   let lastSceneFrame = 0; let elapsed = 0;
   let paused = false;
@@ -296,7 +297,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform1f(uniforms.uTime,elapsed / 1000); gl!.uniform1f(uniforms.uMotion,reduced ? 0 : 1);
     gl!.uniform3fv(uniforms.uColorA,appearance ? colorRgb(appearance.primary) : theme.rgb.map(value => value / 255));
     gl!.uniform3fv(uniforms.uColorB,appearance ? colorRgb(appearance.secondary) : theme.secondaryRgb.map(value => value / 255));
-    gl!.uniform1f(uniforms.uLightScene,appearance ? 1 : 0);
+    gl!.uniform1f(uniforms.uLightScene,appearance && appearance.light !== false ? 1 : 0);
+    gl!.uniform1f(uniforms.uCanvasScene,appearance ? 1 : 0);
     gl!.uniform1f(uniforms.uPhotoOpacity,appearance?.photoOpacity ?? 1);
     gl!.uniform3fv(uniforms.uCanvas,appearance ? colorRgb(appearance.canvas) : [0,0,0]);
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);

@@ -5,7 +5,7 @@ import { lastBackground, rememberBackground, shuffleBackgrounds } from './lib/ba
 import { ThemeEffects } from './ThemeEffects';
 import { useScenePaused } from './lib/use-scene-paused';
 
-export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParallax = false, photoCollection, appearance }: { gameIds: string[]; theme: string; motionEnabled?: boolean; scrollParallax?: boolean; photoCollection?: readonly Screenshot[]; appearance?: GlassAppearance }) {
+export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParallax = false, photoCollection, appearance, effectsEnabled = true }: { gameIds: string[]; theme: string; motionEnabled?: boolean; scrollParallax?: boolean; photoCollection?: readonly Screenshot[]; appearance?: GlassAppearance; effectsEnabled?: boolean }) {
   const paused = useScenePaused();
   const parallax = useRef({ x: 0, y: 0 });
   const scope = gameIds.join('|');
@@ -146,7 +146,7 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     <div key={current?.src} className={`atmosphere-fallback ${fading ? 'is-crossfading' : ''}`} onAnimationEnd={() => { setPrevious(undefined); setFading(false); }} style={{ backgroundImage: current ? `url("${current.src}")` : undefined }} />
     <div className="aurora-fallback" />
     <canvas ref={canvas} className="atmosphere-canvas" />
-    <ThemeEffects theme={theme} enabled={!appearance && !reduced && motionEnabled} paused={paused} />
+    <ThemeEffects theme={theme} enabled={effectsEnabled && !reduced && motionEnabled} paused={paused} />
     <div className="atmosphere-grain" />
   </div>;
 }

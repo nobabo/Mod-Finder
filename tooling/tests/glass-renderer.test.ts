@@ -55,10 +55,20 @@ describe('glass scroll stability', () => {
     expect(s.uniform('uniform3fv', 'uCanvas')).toEqual([[198 / 255, 221 / 255, 207 / 255]]);
     expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[57 / 255, 116 / 255, 85 / 255]]);
     s.renderer.setAppearance(undefined);
-    s.renderer.setTheme('cyan');
+    s.renderer.setTheme('crimson');
     s.frame(140);
     expect(s.uniform('uniform1f', 'uLightScene')).toEqual([0]);
-    expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[28 / 255, 209 / 255, 211 / 255]]);
+    expect(s.uniform('uniform1f', 'uCanvasScene')).toEqual([0]);
+    expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[239 / 255, 62 / 255, 85 / 255]]);
+  });
+
+  it('uses the chosen dark canvas without applying the original aurora or light glass treatment', () => {
+    const s = setup();
+    s.renderer.setAppearance({ canvas: '#101820', primary: '#ef3e55', secondary: '#ff8145', photoOpacity: .18, light: false });
+    s.frame(100);
+    expect(s.uniform('uniform1f', 'uCanvasScene')).toEqual([1]);
+    expect(s.uniform('uniform1f', 'uLightScene')).toEqual([0]);
+    expect(s.uniform('uniform3fv', 'uCanvas')).toEqual([[16 / 255, 24 / 255, 32 / 255]]);
   });
 
   it('restores background panels after removing a filter menu with no glass children', () => {

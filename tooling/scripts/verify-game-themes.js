@@ -83,7 +83,7 @@ async (page) => {
         await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-settings.png` });
         if (!wasSelected) await recommendation.click();
         await button('테마').click();
-        await button('시안').click();
+        await button('크림슨').click();
         check(await tab.locator('html').getAttribute('data-game-theme') === null, 'Custom color overrides game palette');
         await button('게임 기본').click();
         await button('닫기').click();

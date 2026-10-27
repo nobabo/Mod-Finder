@@ -5,7 +5,7 @@ async (page) => {
   const reports = [];
   for (const [name, game, preference] of [
     ['minecraft', 'minecraft-java', 'game'], ['stardew', 'stardew-valley', 'game'],
-    ['cyan', 'minecraft-java', 'cyan'], ['magenta', 'stardew-valley', 'magenta'],
+    ['crimson', 'minecraft-java', 'crimson'],
   ]) {
     const context = await page.context().browser().newContext({ viewport: { width: 1536, height: 960 }, reducedMotion: 'no-preference' });
     try {

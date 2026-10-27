@@ -65,7 +65,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
   return createPortal(<div ref={root} className="settings-menu" role="dialog" aria-modal="true" aria-label={t('설정 메뉴')} onClick={event => { if (event.target === event.currentTarget) close(); }} onKeyDown={event => {
     if (event.key === 'Escape') { event.stopPropagation(); view === 'menu' ? close() : setView('menu'); }
     if (event.key !== 'Tab') return;
-    const items = [...root.current!.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],select')];
+    const items = [...root.current!.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],select,input:not(:disabled)')];
     if (event.shiftKey && document.activeElement === items[0]) { event.preventDefault(); items.at(-1)?.focus(); }
     else if (!event.shiftKey && document.activeElement === items.at(-1)) { event.preventDefault(); items[0]?.focus(); }
   }}>
