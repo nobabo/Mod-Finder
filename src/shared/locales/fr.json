@@ -247,5 +247,9 @@
   "바로가기": "Raccourcis",
   "메인 메뉴": "Menu principal",
   "배경색": "Couleur de fond",
-  "기본 색상으로": "Réinitialiser la couleur"
+  "기본 색상으로": "Réinitialiser la couleur",
+  "색상 선택": "Choisir la couleur",
+  "채도와 명도": "Saturation et luminosité",
+  "색조": "Teinte",
+  "불투명도": "Opacité"
 }

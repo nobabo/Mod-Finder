@@ -1,6 +1,6 @@
 import { updateBrandIcon } from './brand';
 import { gameThemeFor } from './game-themes';
-import { isLightBackground, lightenAccent, normalizeBackgroundColor } from './background-color';
+import { compositeBackgroundColor, isLightBackground, lightenAccent, normalizeBackgroundColor, parseBackgroundColor } from './background-color';
 
 const palette = [
   ['crimson','크림슨','Crimson','#ef3e55','#ff8145'],
@@ -20,11 +20,12 @@ export function defaultBackground(id: string, gameId: string): string {
 export function sceneAppearance(id: string, gameId: string, backgroundColor?: string) {
   const game = id === 'game' ? gameThemeFor(gameId) : undefined;
   const custom = normalizeBackgroundColor(backgroundColor);
-  if (!game && !custom) return undefined;
-  const canvas = custom ?? game!.canvas;
-  const light = isLightBackground(canvas);
+  const rgba = custom ? parseBackgroundColor(custom) : undefined;
+  if (!game && (!rgba || rgba.a === 0)) return undefined;
+  const canvas = custom ? custom.slice(0,7) : game!.canvas;
+  const light = isLightBackground(custom ? compositeBackgroundColor(custom, defaultBackground(id, gameId)) : canvas);
   const theme = game ?? themeById(id);
-  return { canvas, primary: game && !light ? lightenAccent(theme.primary) : theme.primary, secondary: game && !light ? lightenAccent(theme.secondary) : theme.secondary, photoOpacity: .18, light };
+  return { canvas, baseCanvas: game?.canvas, alpha: rgba?.a ?? 1, primary: game && !light ? lightenAccent(theme.primary) : theme.primary, secondary: game && !light ? lightenAccent(theme.secondary) : theme.secondary, photoOpacity: .18, light };
 }
 export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
   try {
@@ -65,8 +66,8 @@ export function applyTheme(id: string, gameId = '', backgroundColor?: string) {
     '--brand-start':game.brandStart, '--brand-end':game.brandEnd,
     'color-scheme':'light',
   });
-  if (custom || (game && !light)) Object.assign(values, {
-    '--canvas':appearance!.canvas, '--surface':'transparent', '--surface-deep':'transparent',
+  if (appearance && (custom || (game && !light))) Object.assign(values, {
+    '--canvas':custom ? compositeBackgroundColor(custom, defaultBackground(id, gameId)) : appearance.canvas, '--surface':'transparent', '--surface-deep':'transparent',
     '--text':light ? '#17271d' : '#f4f8f5', '--text-soft':light ? '#17271d' : '#f4f8f5',
     '--muted':light ? '#465d4c' : '#c6d3ca', '--glow':'transparent',
     '--accent':appearance!.primary, '--cyan':appearance!.secondary, '--grad':`linear-gradient(135deg,${appearance!.primary},${appearance!.secondary})`,

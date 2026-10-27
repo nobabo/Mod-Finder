@@ -1,0 +1,38 @@
+.color-checker { background-color:#a4aaa5;background-image:conic-gradient(#6e7971 25%,transparent 0 50%,#6e7971 0 75%,transparent 0);background-size:12px 12px; }
+.color-swatch { position:relative;flex:none;width:48px;height:44px;padding:4px;border:1px solid var(--line-strong);border-radius:12px;overflow:hidden; }
+.color-swatch>span { display:block;width:100%;height:100%;border-radius:7px; }
+.color-swatch:hover { border-color:var(--accent); }
+.color-picker-backdrop { position:fixed;inset:0;z-index:140;display:grid;place-items:center;padding:24px;background:#03080733;backdrop-filter:blur(10px); }
+.color-picker-dialog { width:min(100%,400px);max-height:calc(100dvh - 48px);overflow-y:auto;border-radius:26px;color:var(--text); }
+.color-picker { position:relative;isolation:isolate;padding:22px;border:1px solid var(--line-strong);border-radius:26px;background:rgba(var(--tint-rgb),.06);box-shadow:0 24px 80px #0005,inset 0 1px 1px rgba(var(--tint-rgb),.4); }
+.color-picker::after { content:'';position:absolute;inset:-1px;padding:1px;border-radius:inherit;pointer-events:none;background:linear-gradient(135deg,rgba(var(--tint-rgb),.8),rgba(var(--secondary-rgb),.25) 55%,rgba(var(--tint-rgb),.65));mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude; }
+.color-picker header { display:flex;align-items:center;justify-content:space-between;margin-bottom:18px; }
+.color-picker h2 { margin:0;font-size:18px;font-weight:500;color:var(--text); }
+.color-picker .deck-close { flex:none;width:36px;height:36px;color:var(--accent); }
+.color-picker-sv { position:relative;height:200px;border:1px solid var(--line-strong);border-radius:14px;background-image:linear-gradient(0deg,#000,transparent),linear-gradient(90deg,#fff,transparent);touch-action:none;cursor:crosshair; }
+.color-picker-sv:focus-visible { outline:2px solid var(--accent);outline-offset:3px; }
+.color-picker-cursor { position:absolute;width:16px;height:16px;border:2px solid #fff;border-radius:50%;box-shadow:0 0 0 1px #0009,0 2px 5px #0004;transform:translate(-50%,-50%);pointer-events:none; }
+.color-picker-slider { display:grid;grid-template-columns:66px minmax(0,1fr);gap:10px;align-items:center;margin-top:18px;font-size:12px;color:var(--muted); }
+.color-picker-slider input { display:block;appearance:none;-webkit-appearance:none;width:100%;height:14px;margin:0;border:0;border-radius:999px;cursor:pointer; }
+.color-picker-hue { background:linear-gradient(90deg,#f00,#ff0,#0f0,#0ff,#00f,#f0f,#f00); }
+.color-picker-alpha-track { display:block;border-radius:999px; }
+.color-picker-slider input::-webkit-slider-thumb { appearance:none;-webkit-appearance:none;width:19px;height:19px;border:2px solid #fff;border-radius:50%;background:transparent;box-shadow:0 0 0 1px #0007,0 2px 4px #0004; }
+.color-picker-slider input::-moz-range-thumb { width:15px;height:15px;border:2px solid #fff;border-radius:50%;background:transparent;box-shadow:0 0 0 1px #0007; }
+.color-picker-fields { display:grid;grid-template-columns:repeat(4,minmax(0,1fr));gap:10px;margin-top:22px; }
+.color-picker-fields label,.color-picker-hex-row label { display:flex;flex-direction:column;gap:7px;font-size:11px;color:var(--muted); }
+.color-picker :is(input[type="number"],input[type="text"]) { width:100%;min-width:0;height:42px;padding:8px 10px;border:1px solid var(--line-strong);border-radius:11px;background:rgba(var(--tint-rgb),.05);color:var(--text);font-size:13px;font-variant-numeric:tabular-nums; }
+.color-picker input[type="number"] { appearance:textfield;-moz-appearance:textfield; }
+.color-picker input::-webkit-inner-spin-button,.color-picker input::-webkit-outer-spin-button { appearance:none;-webkit-appearance:none;margin:0; }
+.color-picker-hex-row { display:flex;align-items:flex-end;gap:12px;margin-top:16px; }
+.color-picker-hex-row label { flex:1; }
+.color-picker-hex-row input { text-transform:uppercase;letter-spacing:.8px; }
+.color-picker-preview { display:block;width:42px;height:42px;flex:none;overflow:hidden;border:1px solid var(--line-strong);border-radius:11px; }
+.color-picker-preview>span { display:block;width:100%;height:100%; }
+html[data-glass="fallback"] .color-picker { backdrop-filter:blur(24px) saturate(1.2);background:color-mix(in srgb,var(--canvas) 85%,transparent); }
+@media(max-width:480px) {
+  .color-picker-backdrop { padding:16px; }
+  .color-picker-dialog { max-height:calc(100dvh - 32px); }
+  .color-picker { padding:18px; }
+  .color-picker-fields { gap:8px; }
+  .color-picker-sv { height:180px; }
+}

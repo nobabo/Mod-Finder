@@ -247,5 +247,9 @@
   "바로가기": "Shortcuts",
   "메인 메뉴": "Main menu",
   "배경색": "Background color",
-  "기본 색상으로": "Reset color"
+  "기본 색상으로": "Reset color",
+  "색상 선택": "Choose color",
+  "채도와 명도": "Saturation and brightness",
+  "색조": "Hue",
+  "불투명도": "Opacity"
 }
