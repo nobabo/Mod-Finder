@@ -1,11 +1,12 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState, type CSSProperties } from 'react';
 import { backgroundPlaylist, type Screenshot } from '../shared/backgrounds';
 import { createGlassRenderer, type GlassAppearance } from './lib/glass-renderer';
 import { lastBackground, rememberBackground, shuffleBackgrounds } from './lib/background-order';
 import { ThemeEffects } from './ThemeEffects';
 import { useScenePaused } from './lib/use-scene-paused';
+import { photoAverageColor } from './lib/photo-color';
 
-export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParallax = false, photoCollection, appearance, effectsEnabled = true }: { gameIds: string[]; theme: string; motionEnabled?: boolean; scrollParallax?: boolean; photoCollection?: readonly Screenshot[]; appearance?: GlassAppearance; effectsEnabled?: boolean }) {
+export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParallax = false, photoCollection, appearance, effectsEnabled = true, onPhotoColor }: { gameIds: string[]; theme: string; motionEnabled?: boolean; scrollParallax?: boolean; photoCollection?: readonly Screenshot[]; appearance?: GlassAppearance; effectsEnabled?: boolean; onPhotoColor?: (color: string) => void }) {
   const paused = useScenePaused();
   const parallax = useRef({ x: 0, y: 0 });
   const scope = gameIds.join('|');
@@ -22,12 +23,14 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
   const loadedScope = useRef(scope);
   const [reduced, setReduced] = useState(() => matchMedia('(prefers-reduced-motion: reduce)').matches);
   const [ready, setReady] = useState(false);
+  const [averageColor, setAverageColor] = useState<string>();
   const [epoch, setEpoch] = useState(0);
   const canvas = useRef<HTMLCanvasElement>(null);
   const backdrop = useRef<HTMLDivElement>(null);
   const renderer = useRef<ReturnType<typeof createGlassRenderer>>(null);
   const themeRef = useRef(theme); themeRef.current = theme;
   const appearanceRef = useRef(appearance); appearanceRef.current = appearance;
+  const photoCallback = useRef(onPhotoColor); photoCallback.current = onPhotoColor;
   useEffect(() => {
     const element = canvas.current!;
     const engine = createGlassRenderer(element, () => setReady(false));
@@ -111,6 +114,8 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     const image = new Image(); image.decoding = 'async'; image.src = photo.src;
     void image.decode().then(() => {
       if (!active) return;
+      const average = photoAverageColor(image);
+      if (average) { setAverageColor(average); photoCallback.current?.(average); }
       const immediate = loadedScope.current !== scope;
       loadedScope.current = scope;
       try { setReady(renderer.current?.setPhoto(image,immediate) === true); } catch { setReady(false); }
@@ -139,7 +144,7 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
     return () => clearInterval(timer);
   }, [scope, photos, initialOrder, reduced, paused]);
   useEffect(() => { document.documentElement.dataset.glass = ready ? 'webgl' : 'fallback'; return () => { delete document.documentElement.dataset.glass; }; }, [ready]);
-  return <div ref={backdrop} className={`atmosphere ${appearance ? 'game-atmosphere' : ''} ${ready ? 'is-ready' : ''}`} data-background={photo?.src} data-background-count={photos.length} data-background-order={order.map(item => item.src).join('|')} data-paused={paused} aria-hidden="true">
+  return <div ref={backdrop} className={`atmosphere ${appearance ? 'game-atmosphere' : ''} ${ready ? 'is-ready' : ''}`} style={{ '--fallback-photo-opacity':.18 + .82 * (1-(appearance?.alpha ?? 1)), '--fallback-photo-blend':(appearance?.alpha ?? 1) < 1 ? 'normal' : 'multiply' } as CSSProperties} data-photo-average={averageColor} data-photo-alpha={appearance?.alpha ?? 1} data-background={photo?.src} data-background-count={photos.length} data-background-order={order.map(item => item.src).join('|')} data-paused={paused} aria-hidden="true">
     {previous && <div className="atmosphere-fallback" style={{ backgroundImage:`url("${previous.src}")` }} />}
     <div key={current?.src} className={`atmosphere-fallback ${fading ? 'is-crossfading' : ''}`} onAnimationEnd={() => { setPrevious(undefined); setFading(false); }} style={{ backgroundImage: current ? `url("${current.src}")` : undefined }} />
     <div className="aurora-fallback" />

@@ -11,14 +11,15 @@ export const THEMES = [{...colorThemes[0],id:'game',ko:'자동 색상',en:'Autom
 export const themeById = (id: string) => colorThemes.find(theme => theme.id === id) ?? colorThemes[0];
 export const AUTO_BACKGROUND = '#1b1e22';
 export function defaultBackground(id: string, _gameId = ''): string { return id === 'game' ? AUTO_BACKGROUND : '#130507'; }
-export function sceneAppearance(id: string, gameId: string, backgroundColor?: string) {
+export function sceneAppearance(id: string, gameId: string, backgroundColor?: string, photoColor?: string) {
   const custom = normalizeBackgroundColor(backgroundColor), base = defaultBackground(id,gameId);
   const rgba = custom ? parseBackgroundColor(custom) : undefined;
-  if (id !== 'game' && (!rgba || rgba.a === 0)) return undefined;
+  if (id !== 'game' && !rgba) return undefined;
   const canvas = custom ? custom.slice(0,7) : base;
-  const visible = custom ? compositeBackgroundColor(custom,base) : base;
-  const colors = backgroundPalette(visible,rgba?.a === 0 ? base : canvas);
-  return {canvas,baseCanvas:id === 'game' ? base : undefined,alpha:rgba?.a ?? 1,primary:colors.primary,secondary:colors.secondary,photoOpacity:.18,light:colors.light};
+  const under = photoColor ?? base;
+  const visible = custom ? compositeBackgroundColor(custom,under) : base;
+  const colors = backgroundPalette(visible,rgba?.a === 0 ? under : canvas);
+  return {canvas,alpha:rgba?.a ?? 1,primary:colors.primary,secondary:colors.secondary,photoOpacity:.18,light:colors.light};
 }
 export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
   try {
@@ -29,15 +30,19 @@ export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
   } catch { /* Use the game default when optional storage is unavailable. */ }
   return 'game';
 }
-export function applyTheme(id: string, gameId = '', backgroundColor?: string) {
+export function applyTheme(id: string, gameId = '', backgroundColor?: string, photoColor?: string) {
   const root = document.documentElement, style = root.style;
   const game = id === 'game' ? gameThemeFor(gameId) : undefined;
   const custom = normalizeBackgroundColor(backgroundColor), base = defaultBackground(id,gameId);
-  const canvas = custom ? compositeBackgroundColor(custom,base) : base;
-  const representative = custom && parseBackgroundColor(custom).a > 0 ? custom.slice(0,7) : base;
+  const under = photoColor ?? base;
+  const canvas = custom ? compositeBackgroundColor(custom,under) : base;
+  const representative = custom ? parseBackgroundColor(custom).a > 0 ? custom.slice(0,7) : under : base;
   const colors = backgroundPalette(canvas,representative);
+  const reveal = custom ? 1-parseBackgroundColor(custom).a : 0;
+  const shadow = reveal > 0 ? `0 1px 3px rgba(${colors.light ? '255,255,255' : '0,0,0'},${.8*reveal})` : 'none';
   root.dataset.accent = themeById(id).id;
   root.dataset.autoTheme = 'true';
+  if (reveal > 0) root.dataset.photoReveal = 'true'; else delete root.dataset.photoReveal;
   if (game) root.dataset.gameTheme = game.id; else delete root.dataset.gameTheme;
   if (colors.light) root.dataset.lightTheme = 'true'; else delete root.dataset.lightTheme;
   const primary = rgb(colors.primary).join(','), secondary = rgb(colors.secondary).join(',');
@@ -51,6 +56,7 @@ export function applyTheme(id: string, gameId = '', backgroundColor?: string) {
     '--hairline':`linear-gradient(135deg,rgba(${primary},.6),rgba(${secondary},.3))`,
     '--edge':`rgba(${primary},.55)`,'--edge-hot':`rgba(${primary},.95)`,
     '--gold':colors.secondary,'--ok':colors.primary,'--warn':colors.secondary,
+    '--photo-text-shadow':shadow,'text-shadow':shadow,
     'color':colors.text,'color-scheme':colors.light ? 'light' : 'dark',
   };
   Object.entries(values).forEach(([name,value])=>style.setProperty(name,value));

@@ -20,31 +20,34 @@ async (page) => {
         check(await tab.locator('html').evaluate((el, color) => el.style.getPropertyValue('--canvas') === color, canvas), 'Darker game default');
         const art = tab.locator('.game-character .artwork-reaction');
         check(await art.count() === 5, 'All five character images have reactions');
-        const targets = [tab.locator(mobile ? '.mobile-header .brand-art' : '.hero-brand .brand-art'), tab.locator('.game-logo.artwork-reaction'), ...await art.all()];
+        const brand = tab.locator('.app-brand-header .brand-logo');
+        check(await brand.evaluate(el=>el.getBoundingClientRect().top<=20 && !el.closest('.artwork-reaction') && getComputedStyle(el).animationName==='none'),'MF is static at the top');
+        const targets = [tab.locator('.game-logo.artwork-reaction'), ...await art.all()];
+        const react = async target => { const hit=await target.evaluate(el=>{const box=el.getBoundingClientRect(),clip=el.closest('.game-characters-search')?.getBoundingClientRect();return {x:box.x+box.width/2,y:clip?(Math.max(box.top,clip.top)+Math.min(box.bottom,clip.bottom))/2:box.y+box.height/2};}); if(mobile)await tab.touchscreen.tap(hit.x,hit.y);else await tab.mouse.move(hit.x,hit.y); };
         for (let index = 0; index < targets.length; index++) {
           const target = targets[index];
-          if (mobile) await target.tap(); else await target.hover();
+          await react(target);
           const handle = await target.elementHandle();
           await tab.waitForFunction(el => el.classList.contains('is-reacting'), handle);
           const reaction = await target.evaluate(el => {
             for (const animation of el.getAnimations({ subtree: true })) { animation.pause(); animation.currentTime = 240; }
             const motion = getComputedStyle(el.querySelector('.artwork-motion'));
             const ring = getComputedStyle(el.querySelector('.artwork-ripple'), '::before');
-            return { name: motion.animationName, iterations: motion.animationIterationCount, y: new DOMMatrixReadOnly(motion.transform).m42, opacity: Number(ring.opacity), circle: ring.width === ring.height && ring.borderRadius === '50%', waves: el.getAnimations({ subtree: true }).filter(animation => animation.animationName === 'artwork-ripple').length };
+            return { name: motion.animationName, iterations: motion.animationIterationCount, y: new DOMMatrixReadOnly(motion.transform).m42, scaleY:new DOMMatrixReadOnly(motion.transform).m22, opacity: Number(ring.opacity), circle: ring.width === ring.height && ring.borderRadius === '50%', waves: el.getAnimations({ subtree: true }).filter(animation => animation.animationName === 'artwork-ripple').length };
           });
-          check(reaction.name === 'artwork-pop' && reaction.iterations === '1' && reaction.y < -3, 'One short upward hop');
+          check(reaction.name === 'artwork-pop' && reaction.iterations === '1' && reaction.y < -2.8 && reaction.y >= -7.1 && reaction.scaleY < 1.03, 'One short upward hop');
           check(reaction.opacity > .1 && reaction.circle && reaction.waves === 2, 'Two visible circular ripples');
-          if (index === 2) await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-artwork-pop.png` });
+          if (index === 1) await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-artwork-pop.png` });
           await target.evaluate(el => { for (const animation of el.getAnimations({ subtree: true })) animation.play(); });
           await tab.waitForFunction(el => !el.classList.contains('is-reacting'), handle);
           check(await target.locator('.artwork-motion').evaluate(el => getComputedStyle(el).transform === 'none'), 'Returns to rest while pointer stays over the image');
-          if (mobile && index === 1) {
+          if (mobile && index === 0) {
             await tab.locator('.game-deck').waitFor({ state: 'visible' });
             await tab.getByRole('button', { name: '닫기', exact: true }).click();
           }
-          if (index === 2 && !mobile) {
+          if (index === 1 && !mobile) {
             await tab.mouse.move(15, 100);
-            await target.hover();
+            await react(target);
             check(await target.evaluate(el => el.classList.contains('is-reacting')), 'Leaving and returning replays the reaction');
             await tab.mouse.move(15, 100);
             check(await target.evaluate(el => el.classList.contains('is-reacting')), 'Quick pointer exit does not cut the reaction short');
@@ -56,7 +59,7 @@ async (page) => {
         check(await input.evaluate(el => el === document.activeElement), 'Decorations do not block search focus');
         await tab.emulateMedia({ reducedMotion: 'reduce' });
         const target = art.first();
-        if (mobile) await target.tap(); else await target.hover();
+        await react(target);
         check(await target.evaluate(el => !el.classList.contains('is-reacting') && el.getAnimations({ subtree: true }).length === 0), 'Reduced motion suppresses hops and ripples');
         await tab.emulateMedia({ reducedMotion: 'no-preference' });
         await tab.getByRole('button', { name: '게임 바꾸기', exact: true }).click();

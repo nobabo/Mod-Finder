@@ -1,5 +1,5 @@
 import { themeById } from './themes';
-export interface GlassAppearance { canvas: string; primary: string; secondary: string; photoOpacity: number; light?: boolean; baseCanvas?: string; alpha?: number }
+export interface GlassAppearance { canvas: string; primary: string; secondary: string; photoOpacity: number; light?: boolean; alpha?: number }
 const colorRgb = (hex: string) => [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16) / 255);
 // A shared scene is sampled again through rounded glass lenses. Unlike backdrop
 // blur, the surface changes sample coordinates, dispersion and specular response.
@@ -28,8 +28,6 @@ uniform float uLightScene;
 uniform float uCanvasScene;
 uniform float uPhotoOpacity;
 uniform vec3 uCanvas;
-uniform vec3 uBaseCanvas;
-uniform float uHasBaseCanvas;
 uniform float uCanvasAlpha;
 uniform vec2 uPointer;
 uniform vec2 uBackgroundOffset;
@@ -51,8 +49,7 @@ vec3 scene(vec2 uv) {
   vec3 photo = mix(texture2D(uPhotoA, cover(uv, uImageA)).rgb, texture2D(uPhotoB, cover(uv, uImageB)).rgb, uMix);
   float luminance = dot(photo, vec3(0.2126, 0.7152, 0.0722));
   vec3 photoTint = mix(vec3(1.0), mix(vec3(luminance), photo, 0.8), uPhotoOpacity);
-  if (uCanvasScene > 0.5 && uHasBaseCanvas > 0.5) return mix(uBaseCanvas, uCanvas, uCanvasAlpha) * photoTint;
-  if (uCanvasScene > 0.5 && uCanvasAlpha >= 1.0) return uCanvas * photoTint;
+  if (uCanvasScene > 0.5) return mix(photo, uCanvas * photoTint, uCanvasAlpha);
   float t = uTime * 0.14;
   float wave = 0.55 + 0.19 * sin(uv.x * 4.4 + t) + 0.105 * sin(uv.x * 8.0 - t * 0.7);
   float ribbon = exp(-pow((uv.y - wave) * 2.7, 2.0));
@@ -63,7 +60,6 @@ vec3 scene(vec2 uv) {
   vec3 opposite = mix(uColorB, uColorA, smoothstep(0.05, 0.95, colorFlow));
   float vignette = 1.0 - 0.44 * smoothstep(0.25, 0.8, length((uv - 0.5) * vec2(1.0, 0.85)));
   vec3 original = (photo * 0.27 + aurora * (0.022 + ribbon * curtain * 0.14) + opposite * upper * 0.06 + vec3(0.009, 0.013, 0.022)) * vignette;
-  if (uCanvasScene > 0.5) return mix(original, uCanvas * photoTint, uCanvasAlpha);
   return original;
 }
 float roundedBox(vec2 p, vec2 halfSize, float radius) {
@@ -150,7 +146,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const position = gl.getAttribLocation(program, 'aPosition');
   gl.enableVertexAttribArray(position); gl.vertexAttribPointer(position, 2, gl.FLOAT, false, 0, 0);
   const uniform = (name: string) => gl.getUniformLocation(program, name);
-  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uLightScene','uCanvasScene','uPhotoOpacity','uCanvas','uBaseCanvas','uHasBaseCanvas','uCanvasAlpha','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
+  const uniforms = Object.fromEntries(['uPhotoA','uPhotoB','uScene','uUseScene','uSize','uView','uImageA','uImageB','uTime','uMix','uMotion','uColorA','uColorB','uLightScene','uCanvasScene','uPhotoOpacity','uCanvas','uCanvasAlpha','uPointer','uBackgroundOffset','uPanels','uRadii','uCount'].map(key => [key, uniform(key === 'uPanels' || key === 'uRadii' ? `${key}[0]` : key)]));
   const texture = () => {
     const tex = gl.createTexture()!;
     gl.bindTexture(gl.TEXTURE_2D, tex);
@@ -306,8 +302,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform1f(uniforms.uCanvasScene,appearance ? 1 : 0);
     gl!.uniform1f(uniforms.uPhotoOpacity,appearance?.photoOpacity ?? 1);
     gl!.uniform3fv(uniforms.uCanvas,appearance ? colorRgb(appearance.canvas) : [0,0,0]);
-    gl!.uniform3fv(uniforms.uBaseCanvas,appearance?.baseCanvas ? colorRgb(appearance.baseCanvas) : [0,0,0]);
-    gl!.uniform1f(uniforms.uHasBaseCanvas,appearance?.baseCanvas ? 1 : 0);
     gl!.uniform1f(uniforms.uCanvasAlpha,appearance?.alpha ?? 1);
     gl!.uniform2fv(uniforms.uPointer,reduced ? [0,0] : pointer);
     gl!.uniform2fv(uniforms.uBackgroundOffset,reduced ? [0,0] : backgroundOffset);

@@ -32,11 +32,23 @@ describe('RGBA background colors', () => {
     expect(values.get('--canvas')).toBe(AUTO_BACKGROUND);
     expect(values.get('color-scheme')).toBe('dark');
   });
-  it('retains the original Crimson scene for zero alpha and its blend for intermediate alpha', () => {
-    expect(sceneAppearance('crimson','minecraft-java','#ffffff00')).toBeUndefined();
+  it('keeps a photo-backed appearance for transparent Crimson colors', () => {
+    expect(sceneAppearance('crimson','minecraft-java','#ffffff00')?.alpha).toBe(0);
     const appearance = sceneAppearance('crimson','minecraft-java','#ffffff80');
-    expect(appearance?.baseCanvas).toBeUndefined();
+
     expect(appearance?.alpha).toBeCloseTo(128/255);
     expect(appearance?.canvas).toBe('#ffffff');
+  });
+  it('adapts transparent colors to the photograph while opaque colors stay independent of it', () => {
+    expect(sceneAppearance('game','minecraft-java','#ffffff00','#f5e8d2')?.light).toBe(true);
+    expect(sceneAppearance('game','minecraft-java','#ffffff00','#101820')?.light).toBe(false);
+    expect(sceneAppearance('game','minecraft-java','#101820','#ffffff')?.light).toBe(false);
+    const values = new Map<string,string>();
+    vi.stubGlobal('document',{documentElement:{dataset:{},style:{setProperty:(name:string,value:string)=>values.set(name,value)}},querySelector:()=>null});
+    applyTheme('game','minecraft-java','#ffffff00','#f5e8d2');
+    expect(values.get('--canvas')).toBe('#f5e8d2');
+    expect(values.get('color-scheme')).toBe('light');
+    applyTheme('game','minecraft-java','#00000080','#ffffff');
+    expect(values.get('--canvas')).toBe('#7f7f7f');
   });
 });

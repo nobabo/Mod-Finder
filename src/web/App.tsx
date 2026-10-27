@@ -1,3 +1,4 @@
+import { createPortal } from 'react-dom';
 import { recordInterest } from './lib/preferences';
 import { t, locale, languagePreference, changeLanguage, useLocale } from './lib/i18n';
 import { useEffect, useMemo, useRef, useState } from 'react';
@@ -83,7 +84,8 @@ export default function App() {
   const [backgroundColor, setBackgroundColor] = useState<string | undefined>(() => {
     try { return readBackgroundColor(localStorage); } catch { return undefined; }
   });
-  const appearance = useMemo(() => sceneAppearance(accent, gameId, backgroundColor), [accent, gameId, backgroundColor]);
+  const [photoColor, setPhotoColor] = useState<string>();
+  const appearance = useMemo(() => sceneAppearance(accent, gameId, backgroundColor, photoColor), [accent, gameId, backgroundColor, photoColor]);
   const gameTheme = accent === 'game' ? gameThemeFor(gameId) : undefined;
   const [toast, setToast] = useState('');
   const returnHome = () => { navigate({ page: 'discover', query: '', submitted: false, filters: {}, categories: [] }); setInput(''); setMenuOpen(false); setFilterOpen(false); setGamePicker(false); };
@@ -121,7 +123,7 @@ export default function App() {
   }, []);
   useEffect(() => { if (hydrated) void saveLocalData(local).catch(() => setToast(t("변경사항을 저장하지 못했어요. 저장 공간을 확인해 주세요."))); }, [local, hydrated]);
   useEffect(() => { if (!toast) return; const timer = setTimeout(() => setToast(''), 4000); return () => clearTimeout(timer); }, [toast]);
-  useEffect(() => { applyTheme(accent, gameId, backgroundColor); try { localStorage.setItem('modfinder-theme', accent); } catch { /* Theme persistence is optional. */ } }, [accent, gameId, backgroundColor]);
+  useEffect(() => { applyTheme(accent, gameId, backgroundColor, photoColor); try { localStorage.setItem('modfinder-theme', accent); } catch { /* Theme persistence is optional. */ } }, [accent, gameId, backgroundColor, photoColor]);
   useEffect(() => {
     try { if (backgroundColor) localStorage.setItem('modfinder-background-color', backgroundColor); else localStorage.removeItem('modfinder-background-color'); }
     catch { /* Background color persistence is optional. */ }
@@ -168,7 +170,8 @@ export default function App() {
   };
   const settingsControl = <button type="button" className="settings-fab" aria-label={t("설정 메뉴")} aria-expanded={menuOpen} title={t("설정 메뉴")} onClick={() => setMenuOpen(value => !value)}><Settings2 size={25} /></button>;
   const filterControl = <button type="button" className={`filter-orb ${filterOpen || activeFilters ? 'active' : ''}`} aria-label={t("검색 필터")} aria-expanded={filterOpen} onClick={() => setFilterOpen(value => !value)}><SlidersHorizontal size={18}/></button>;
-  return <div className={`app-shell ${page === 'discover' && hasSearch ? 'has-results' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg>{gameTheme ? <GameBackdrop key={gameId} gameId={gameId} backgroundColor={backgroundColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} /> : <Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} appearance={appearance} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} />}
+  return <div className={`app-shell ${page === 'discover' && hasSearch ? 'has-results' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg>{gameTheme ? <GameBackdrop key={gameId} gameId={gameId} backgroundColor={backgroundColor} photoColor={photoColor} onPhotoColor={setPhotoColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} /> : <Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} appearance={appearance} onPhotoColor={setPhotoColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} />}
+    {createPortal(<header className="app-brand-header"><button type="button" className="home-logo" aria-label={t("메인 화면으로 이동")} onClick={returnHome}><BrandLogo size={76}/></button></header>,document.body)}
     <div className="settings-fab-wrap">
       {!mobileLayout && settingsControl}
       {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages columns={3}><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
@@ -179,15 +182,13 @@ export default function App() {
     </div>
     {mobileLayout && <header className={`mobile-header ${headerScrolled ? 'is-scrolled' : ''}`}>
       {headerScrolled && <div className="mobile-nav-glass" aria-hidden="true"/>}
-      <nav className="mobile-nav" aria-label={t('메인 메뉴')}>{settingsControl}<button type="button" className="page-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={96}/></button>{page === 'discover' && filterControl}</nav>
+      <nav className="mobile-nav" aria-label={t('메인 메뉴')}>{settingsControl}{page === 'discover' && filterControl}</nav>
     </header>}
     <main className="main">
       <div className={`content ${page !== 'discover' ? 'collection-content' : ''}`}><div className={page !== 'discover' ? 'collection-stage' : 'discover-stage'}>
-      {!mobileLayout && page !== 'discover' && <button type="button" className="collection-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={76}/></button>}
-      {!mobileLayout && page === 'discover' && hasSearch && <button type="button" className="results-brand home-logo" aria-label={t('메인 화면으로 이동')} onClick={returnHome}><BrandLogo size={96} /></button>}
       <div className={page === 'discover' && hasSearch ? 'results-section search-results-panel' : 'search-results-wrapper'}>
       {page === 'discover' && hasSearch && <ResultPanelOutline/>}
-      {page === 'discover' && <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row">{!mobileLayout && heroSearch && <div className="hero-brand" role="img" aria-label="Mod Finder"><BrandLogo size={160}/></div>}<div className="search-field">{heroSearch && gameTheme && <GameCharacters theme={gameTheme} />}<form className="search-box" onSubmit={e => { e.preventDefault(); if (window.matchMedia("(pointer: coarse), (max-width: 850px)").matches) inputRef.current?.blur(); submit(); }}><button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" type="search" inputMode="search" enterKeyHint="search" name="q" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit" aria-label={t("모드 검색")}><ArrowRight size={18} aria-hidden="true" /></button></form></div>{!mobileLayout && filterControl}</div>
+      {page === 'discover' && <div className={`search-dock ${heroSearch ? 'hero' : 'compact'}`}><div ref={searchRowRef} className="search-row"><div className="search-field">{heroSearch && gameTheme && <GameCharacters theme={gameTheme} />}<form className="search-box" onSubmit={e => { e.preventDefault(); if (window.matchMedia("(pointer: coarse), (max-width: 850px)").matches) inputRef.current?.blur(); submit(); }}><button type="button" className="game-orb" style={{ '--game-color': game?.color ?? '#a78bfa' } as React.CSSProperties} aria-label={t("게임 바꾸기")} title={t("게임 바꾸기")} aria-expanded={gamePicker} onClick={() => setGamePicker(value => !value)}><GameLogo gameId={gameId} /></button><label className="sr-only" htmlFor="mod-query">{t("모드 검색어")}</label><input ref={inputRef} id="mod-query" type="search" inputMode="search" enterKeyHint="search" name="q" value={input} maxLength={200} onChange={e => setInput(e.target.value)} placeholder={t('검색할 모드를 입력하세요.')} autoComplete="off" /><button ref={searchButtonRef} type="submit" className="search-submit" aria-label={t("모드 검색")}><ArrowRight size={18} aria-hidden="true" /></button></form></div>{!mobileLayout && filterControl}</div>
       {heroSearch && <div className="home-collections">
       <Rankings key={gameId} gameId={gameId} card={card} decoration={gameTheme && <GameCharacters theme={gameTheme} placement="ranking" />} searchMod={entry => submit(entry.name, gameId, 'all', [], entry.kind === 'modpack' && gameId === 'minecraft-java' ? 'modpack' : undefined, true)}/>
       {hydrated && shortcuts.length > 0 && <nav className="home-shortcuts" aria-label={t('메인 화면 바로가기')}>{shortcuts.map(item => <a key={item.key} href={item.url} target="_blank" rel="noopener noreferrer" title={listingText(item, locale).title} onClick={event => { event.preventDefault(); void visit(item.url, item); }}><ModIcon item={item}/><span>{listingText(item, locale).title}</span></a>)}</nav>}

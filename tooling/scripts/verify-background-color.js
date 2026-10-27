@@ -37,7 +37,7 @@ async (page) => {
         check(await picker().evaluate(el=>{const panel=el.querySelector('.color-picker'),style=getComputedStyle(panel),box=el.getBoundingClientRect();return style.backgroundColor==='rgba(0, 0, 0, 0)'&&style.backgroundImage==='none'&&style.backdropFilter.includes('blur')&&getComputedStyle(el).filter==='none'&&el.querySelectorAll('.glass-control-surface').length===0&&(innerWidth<=650||box.width>box.height);}), 'Wide transparent panel blurs only the backdrop');
         for(const [channel,value] of [['R','17'],['G','34'],['B','51'],['A','0.5']]) await picker().getByRole('spinbutton',{name:channel,exact:true}).fill(value);
         await tab.waitForFunction(()=>localStorage.getItem('modfinder-background-color')==='#11223380');
-        check(await tab.locator('html').evaluate((el,color)=>el.style.getPropertyValue('--canvas')===color,halfColor),'RGBA alpha composites over the shared neutral base');
+        check(await tab.evaluate(()=>{const average=document.querySelector('.atmosphere').dataset.photoAverage;const expected='#'+[1,3,5].map((at,index)=>Math.round(parseInt(average.slice(at,at+2),16)*(127/255)+[17,34,51][index]*(128/255)).toString(16).padStart(2,'0')).join('');return document.documentElement.style.getPropertyValue('--canvas')===expected;}),'RGBA contrast follows the revealed photograph');
         const dark = await tab.locator('html').evaluate(el=>({text:el.style.getPropertyValue('--text'),accent:el.style.getPropertyValue('--accent')}));
         check(bright.text!==dark.text && bright.accent!==dark.accent,'Background drives text and border colors');
         check(await tab.getByRole('button',{name:'게임 기본',exact:true}).count()===0,'No game color preset');
@@ -49,10 +49,10 @@ async (page) => {
         check(await button('색상 선택').evaluate(el=>el===document.activeElement),'Focus returns to swatch');
         await button('닫기').click();await tab.reload();await tab.locator('.atmosphere.is-ready').waitFor();await openTheme();await openPicker();
         check(await picker().getByRole('textbox',{name:'HEX',exact:true}).inputValue()==='#11223380','RGBA survives reload');
-        await choose('#ffffff00');check(await tab.locator('html').evaluate((el,color)=>el.style.getPropertyValue('--canvas')===color,defaultColor),'Fully transparent color restores base game canvas');
-        check(await tab.locator('html').getAttribute('data-light-theme')===null,'Transparent white keeps dark text scheme');
+        await choose('#ffffff00');check(await tab.evaluate(()=>document.documentElement.style.getPropertyValue('--canvas')===document.querySelector('.atmosphere').dataset.photoAverage),'Zero alpha exposes the photo color');
+
         await picker().getByRole('button',{name:'닫기',exact:true}).click();await button('크림슨').click();await openPicker();
-        check(!await tab.locator('.atmosphere').evaluate(el=>el.classList.contains('game-atmosphere')),'Transparent Crimson keeps original photographic scene');
+        check(await tab.locator('.atmosphere').getAttribute('data-photo-alpha')==='0','Transparent Crimson reveals its photograph too');
         await choose('#ffffff80');await picker().getByRole('button',{name:'닫기',exact:true}).click();
         await button('기본 색상으로').click();await tab.waitForFunction(()=>localStorage.getItem('modfinder-background-color')===null);
         await button('자동 색상').click();await openPicker();

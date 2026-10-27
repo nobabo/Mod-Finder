@@ -12,7 +12,7 @@ export function ArtworkReaction({ children, className = '' }: { children: ReactN
   };
   return <span className={`artwork-reaction ${className}${playing ? ' is-reacting' : ''}`} aria-hidden="true"
     onPointerEnter={event => { if (event.pointerType === 'mouse') play(); }}
-    onPointerDown={event => { if (event.pointerType !== 'mouse') play(); }}>
+    onPointerDown={play}>
     <span className="artwork-ripple" />
     <span className="artwork-motion">{children}</span>
   </span>;

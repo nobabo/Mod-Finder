@@ -71,15 +71,14 @@ describe('glass scroll stability', () => {
     expect(s.uniform('uniform3fv', 'uCanvas')).toEqual([[16 / 255, 24 / 255, 32 / 255]]);
   });
 
-  it('sends RGBA opacity and the underlying game canvas to the refraction shader', () => {
+  it('sends RGBA opacity to blend the photograph and selected color', () => {
     const s = setup();
-    s.renderer.setAppearance({canvas:'#ffffff',baseCanvas:'#14251f',alpha:.5,primary:'#92b3a2',secondary:'#b6aa99',photoOpacity:.18,light:false});
+    s.renderer.setAppearance({canvas:'#ffffff',alpha:.5,primary:'#92b3a2',secondary:'#b6aa99',photoOpacity:.18,light:false});
     s.frame(100);
     expect(s.uniform('uniform1f','uCanvasAlpha')).toEqual([.5]);
-    expect(s.uniform('uniform1f','uHasBaseCanvas')).toEqual([1]);
-    expect(s.uniform('uniform3fv','uBaseCanvas')).toEqual([[20/255,37/255,31/255]]);
+    s.renderer.setAppearance({canvas:'#ffffff',alpha:0,primary:'#92b3a2',secondary:'#b6aa99',photoOpacity:.18,light:false}); s.frame(120);
+    expect(s.uniform('uniform1f','uCanvasAlpha')).toEqual([0]);
     s.renderer.setAppearance(undefined); s.frame(140);
-    expect(s.uniform('uniform1f','uHasBaseCanvas')).toEqual([0]);
     expect(s.uniform('uniform1f','uCanvasAlpha')).toEqual([1]);
   });
 

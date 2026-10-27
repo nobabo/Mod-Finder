@@ -16,10 +16,10 @@ html[data-light-theme] {
 }
 .game-atmosphere { background:var(--canvas); }
 html:is([data-light-theme],[data-auto-theme]) .app-shell { background:transparent; }
-.game-atmosphere .atmosphere-fallback { filter:saturate(.8);opacity:.18;mix-blend-mode:multiply; }
+.game-atmosphere .atmosphere-fallback { filter:blur(2.5px);opacity:var(--fallback-photo-opacity,.18);mix-blend-mode:var(--fallback-photo-blend,multiply); }
 .game-atmosphere .atmosphere-fallback.is-crossfading { animation:game-photo-dissolve 2.4s ease both; }
 .game-atmosphere :is(.aurora-fallback,.atmosphere-grain) { display:none; }
-@keyframes game-photo-dissolve { from { opacity:0; } to { opacity:.18; } }
+@keyframes game-photo-dissolve { from { opacity:0; } to { opacity:var(--fallback-photo-opacity,.18); } }
 html:is([data-light-theme],[data-auto-theme]) * { scrollbar-color:rgba(var(--tint-rgb),.4) transparent; }
 html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { background:rgba(var(--tint-rgb),.4);background-clip:padding-box; }
 
@@ -45,9 +45,6 @@ html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { backgr
 .character-krobus { width:42px; }
 .character-stardrop { width:34px; }
 
-html[data-game-theme] .hero-brand { left:calc(50% - 36px);bottom:calc(100% + 132px); }
-html[data-game-theme="stardew"] .hero-brand { bottom:calc(100% + 92px); }
-html[data-game-theme] .hero-brand .brand-logo { width:100px; }
 html:is([data-light-theme],[data-auto-theme]) .search-box {
   z-index:2;
   background:transparent;
@@ -144,7 +141,6 @@ html:is([data-light-theme],[data-auto-theme]) .folder-modal::before { display:no
 }}
 @media(max-height:500px) { html[data-game-theme] {
   .game-characters { display:none; }
-  .hero-brand { bottom:calc(100% + 8px); }
   .content:has(.search-dock.hero) { padding-top:16px; }
   .home-collections { margin-top:16px;top:auto; }
 }}
@@ -157,11 +153,10 @@ html[data-glass="webgl"] :is(.deck-card.is-current,.deck-card[aria-pressed="true
   content:'';position:absolute;inset:1px;z-index:0;border-radius:inherit;pointer-events:none;
   background:linear-gradient(135deg,rgba(var(--tint-rgb),.1),rgba(var(--secondary-rgb),.05));
 }
-.brand-logo { display:block;filter:drop-shadow(0 3px 10px rgba(var(--tint-rgb),.15)); }
+.brand-logo { display:block;filter:none;transform:none;transition:none;animation:none; }
 .artwork-reaction { position:relative;isolation:isolate;vertical-align:middle;line-height:0; }
-.brand-art { display:inline-block;pointer-events:auto; }
-.game-logo { --artwork-hop:6px; }
-.game-logo :is(.brand-art,.artwork-motion) { width:100%;height:100%; }
+.game-logo { --artwork-hop:3px; }
+.game-logo .artwork-motion { width:100%;height:100%; }
 .game-logo>.artwork-motion { position:relative; }
 .artwork-motion { display:block;pointer-events:none;transform-origin:50% 90%; }
 .artwork-ripple { position:absolute;inset:0;z-index:-1;pointer-events:none; }
@@ -172,10 +167,10 @@ html[data-glass="webgl"] :is(.deck-card.is-current,.deck-card[aria-pressed="true
 .artwork-reaction.is-reacting>.artwork-ripple::after { animation:artwork-ripple .64s .08s ease-out both; }
 @keyframes artwork-pop {
   0%,100% { transform:translateY(0) scale(1); }
-  14% { transform:translateY(2px) scale(1.08,.92); }
-  40% { transform:translateY(calc(-1 * var(--artwork-hop,14px))) scale(.97,1.05) rotate(-3deg); }
-  67% { transform:translateY(0) scale(1.06,.95) rotate(2deg); }
-  84% { transform:translateY(-3px) scale(.99,1.02); }
+  14% { transform:translateY(1px) scale(1.04,.96); }
+  40% { transform:translateY(calc(-1 * var(--artwork-hop,7px))) scale(.985,1.025) rotate(-1.5deg); }
+  67% { transform:translateY(0) scale(1.03,.975) rotate(1deg); }
+  84% { transform:translateY(-1.5px) scale(.995,1.01); }
 }
 @keyframes artwork-ripple {
   0% { opacity:0;transform:translate(-50%,-50%) scale(.35); }
@@ -197,3 +192,18 @@ html:is([data-light-theme],[data-auto-theme])[data-glass="fallback"] :is(.search
 @media(max-width:650px) {
   .background-color-control { gap:10px;padding:10px 12px; }
 }
+
+.app-brand-header { position:fixed;top:calc(8px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:90;line-height:0; }
+.app-brand-header .brand-logo { width:76px;height:76px; }
+html[data-photo-reveal] :is(.search-box input,.ranking-panel button,.ranking-panel strong,.rank-number) { text-shadow:var(--photo-text-shadow); }
+.app-shell { --page-brand-space:96px; }
+.app-shell>.main { padding-top:calc(var(--page-brand-space) + env(safe-area-inset-top)); }
+.app-shell .content { min-height:calc(100dvh - var(--page-brand-space) - env(safe-area-inset-top)); }
+html .settings-menu,html .settings-menu:has(.preference-panel),html .game-deck { padding-top:calc(96px + env(safe-area-inset-top)); }
+body:has(.entry-content[inert]) .app-brand-header { visibility:hidden; }
+@media(max-width:1400px) { :where(html:not([data-native])) {
+  .app-shell { --page-brand-space:80px;--mobile-header-height:80px; }
+  .app-brand-header .brand-logo { width:64px;height:64px; }
+  .mobile-header { padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:16px; }
+  .mobile-nav .filter-orb { grid-column:3; }
+}}
