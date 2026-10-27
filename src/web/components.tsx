@@ -1,6 +1,7 @@
 import { getGame } from '../shared/games';
 import logos from '../shared/data/logos.json';
 import { BrandLogo } from './BrandLogo';
+import { ArtworkReaction } from './ArtworkReaction';
 import { ModDescription } from './ModDescription';
 import { listingText, tagText } from '../shared/content';
 import { t, locale } from './lib/i18n';
@@ -65,7 +66,7 @@ export function GameLogo({ gameId }: { gameId: string }) {
   if (gameId === 'all') return <span className="game-logo"><BrandLogo /></span>;
   const game = getGame(gameId);
   const source = game?.image ?? (logos as Record<string, { src: string }>)[gameId]?.src;
-  return <span className={`game-logo${game?.image ? '' : ' game-logo-wordmark'}`}>{source && failedSource !== source
+  return <ArtworkReaction className={`game-logo${game?.image ? '' : ' game-logo-wordmark'}`}>{source && failedSource !== source
     ? <img key={source} src={source} alt="" referrerPolicy="no-referrer" onError={() => setFailedSource(source)} />
-    : <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#151230" />{MARKS[gameId] ?? <text x="20" y="25" textAnchor="middle" fontSize="14" fill="currentColor">{game?.short ?? '?'}</text>}</svg>}</span>;
+    : <svg viewBox="0 0 40 40" aria-hidden="true"><circle cx="20" cy="20" r="20" fill="#151230" />{MARKS[gameId] ?? <text x="20" y="25" textAnchor="middle" fontSize="14" fill="currentColor">{game?.short ?? '?'}</text>}</svg>}</ArtworkReaction>;
 }

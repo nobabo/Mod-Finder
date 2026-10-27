@@ -26,17 +26,17 @@ html[data-light-theme] ::-webkit-scrollbar-thumb { background:rgba(var(--tint-rg
 
 .game-characters { position:absolute;inset:0;z-index:1;pointer-events:none;user-select:none; }
 .game-characters-search { top:auto;bottom:calc(100% + 2px);height:170px;overflow:hidden; }
-.game-character { position:absolute;display:block;filter:drop-shadow(0 3px 1px rgba(50,67,40,.08)); }
+.game-character { position:absolute;display:block;pointer-events:auto;filter:drop-shadow(0 3px 1px rgba(50,67,40,.08)); }
 .game-character img { display:block;width:100%;height:auto; }
-.character-art { display:block;transform:translate3d(calc(var(--scene-pointer-x,0) * var(--art-depth,1) * 3px),calc(var(--scene-pointer-y,0) * var(--art-depth,1) * 2px),0) rotate(calc(var(--scene-pointer-x,0) * var(--art-depth,1) * 1.3deg)); }
+.character-art { display:block; }
 .character-steve { width:128px;left:calc(50% - 64px);bottom:-52px;transform:rotate(-3deg); }
 .character-junimo { width:72px;left:calc(50% - 36px);bottom:-8px; }
 .characters-stardew img,.character-grass img,.character-diamond img { image-rendering:pixelated; }
 /* Companions belong to the ranking's outer corners, clear of search and filter. */
-.game-characters-ranking .companion-0 { right:calc(100% + 8px);bottom:-2px;transform:rotate(-7deg);transform-origin:100% 100%;--art-depth:.7; }
-.game-characters-ranking .companion-1 { left:calc(100% + 8px);bottom:-2px;transform:rotate(7deg);transform-origin:0 100%;--art-depth:-.8; }
-.game-characters-ranking .companion-2 { left:4px;top:calc(100% + 10px);transform:rotate(-8deg);--art-depth:-.6; }
-.game-characters-ranking .companion-3 { right:6px;top:calc(100% + 12px);transform:rotate(8deg);--art-depth:.8; }
+.game-characters-ranking .companion-0 { right:calc(100% + 8px);bottom:-2px;transform:rotate(-7deg);transform-origin:100% 100%; }
+.game-characters-ranking .companion-1 { left:calc(100% + 8px);bottom:-2px;transform:rotate(7deg);transform-origin:0 100%; }
+.game-characters-ranking .companion-2 { left:4px;top:calc(100% + 10px);transform:rotate(-8deg); }
+.game-characters-ranking .companion-3 { right:6px;top:calc(100% + 12px);transform:rotate(8deg); }
 .character-alex { width:78px; }
 .character-creeper { width:46px; }
 .character-grass { width:58px; }
@@ -158,12 +158,35 @@ html[data-glass="webgl"] :is(.deck-card.is-current,.deck-card[aria-pressed="true
   content:'';position:absolute;inset:1px;z-index:0;border-radius:inherit;pointer-events:none;
   background:linear-gradient(135deg,rgba(var(--tint-rgb),.1),rgba(var(--secondary-rgb),.05));
 }
-.brand-logo { transform:perspective(600px) rotateX(calc(var(--scene-pointer-y,0) * -3deg)) rotateY(calc(var(--scene-pointer-x,0) * 5deg)) scale(var(--brand-scale,1));filter:drop-shadow(0 3px 10px rgba(var(--tint-rgb),.15));transition:filter .25s,scale .25s; }
-.home-logo:hover { --brand-scale:1.045; }
+.brand-logo { display:block;filter:drop-shadow(0 3px 10px rgba(var(--tint-rgb),.15)); }
+.artwork-reaction { position:relative;isolation:isolate;vertical-align:middle;line-height:0; }
+.brand-art { display:inline-block;pointer-events:auto; }
+.game-logo { --artwork-hop:6px; }
+.game-logo :is(.brand-art,.artwork-motion) { width:100%;height:100%; }
+.game-logo>.artwork-motion { position:relative; }
+.artwork-motion { display:block;pointer-events:none;transform-origin:50% 90%; }
+.artwork-ripple { position:absolute;inset:0;z-index:-1;pointer-events:none; }
+.artwork-ripple::before,.artwork-ripple::after { content:'';position:absolute;left:50%;top:65%;width:85%;aspect-ratio:1;border:2px solid rgba(var(--tint-rgb),.65);border-radius:50%;opacity:0;transform:translate(-50%,-50%) scale(.35); }
+.artwork-ripple::after { width:65%;border-color:rgba(var(--secondary-rgb),.6); }
+.artwork-reaction.is-reacting>.artwork-motion { animation:artwork-pop .62s cubic-bezier(.2,.7,.3,1) both; }
+.artwork-reaction.is-reacting>.artwork-ripple::before { animation:artwork-ripple .64s ease-out both; }
+.artwork-reaction.is-reacting>.artwork-ripple::after { animation:artwork-ripple .64s .08s ease-out both; }
+@keyframes artwork-pop {
+  0%,100% { transform:translateY(0) scale(1); }
+  14% { transform:translateY(2px) scale(1.08,.92); }
+  40% { transform:translateY(calc(-1 * var(--artwork-hop,14px))) scale(.97,1.05) rotate(-3deg); }
+  67% { transform:translateY(0) scale(1.06,.95) rotate(2deg); }
+  84% { transform:translateY(-3px) scale(.99,1.02); }
+}
+@keyframes artwork-ripple {
+  0% { opacity:0;transform:translate(-50%,-50%) scale(.35); }
+  16% { opacity:.7; }
+  100% { opacity:0;transform:translate(-50%,-50%) scale(1.7); }
+}
 html[data-light-theme][data-glass="fallback"] :is(.search-box,.ranking-panel,.deck-card) { backdrop-filter:blur(12px) saturate(1.2); }
 @media(prefers-reduced-motion:reduce) {
   .game-atmosphere .atmosphere-fallback.is-crossfading { animation:none; }
-  .character-art,.brand-logo { transform:none;transition:none; }
+  .artwork-reaction.is-reacting>.artwork-motion,.artwork-reaction.is-reacting>.artwork-ripple::before,.artwork-reaction.is-reacting>.artwork-ripple::after { animation:none; }
 }
 
 .theme-settings { width:min(100%,480px);margin:auto; }

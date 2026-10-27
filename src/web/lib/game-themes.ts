@@ -1,7 +1,7 @@
 export const GAME_THEMES = {
   'minecraft-java': {
     id: 'minecraft', primary: '#397455', secondary: '#7a6546',
-    canvas: '#c6ddcf', surface: 'transparent', surfaceDeep: 'transparent',
+    canvas: '#afc9ba', surface: 'transparent', surfaceDeep: 'transparent',
     text: '#243f30', muted: '#506856', brandStart: '#76b79c', brandEnd: '#8eafd0',
     representative: 'steve',
     characters: [
@@ -14,7 +14,7 @@ export const GAME_THEMES = {
   },
   'stardew-valley': {
     id: 'stardew', primary: '#98632f', secondary: '#5d7d46',
-    canvas: '#e8d9b5', surface: 'transparent', surfaceDeep: 'transparent',
+    canvas: '#d0bf98', surface: 'transparent', surfaceDeep: 'transparent',
     text: '#513923', muted: '#725b40', brandStart: '#d0a06b', brandEnd: '#a5b581',
     representative: 'junimo',
     characters: [

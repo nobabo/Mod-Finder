@@ -33,7 +33,7 @@ async (page) => {
         await tab.waitForFunction(value => document.documentElement.style.getPropertyValue('--canvas') === value && localStorage.getItem('modfinder-background-color') === value, hex);
         await tab.locator('.theme-options button>.glass-control-surface').first().waitFor({ state: 'visible' });
       };
-      for (const [game, defaultColor] of [['minecraft-java', '#c6ddcf'], ['stardew-valley', '#e8d9b5']]) {
+      for (const [game, defaultColor] of [['minecraft-java', '#afc9ba'], ['stardew-valley', '#d0bf98']]) {
         await tab.goto(`${base}/?game=${game}`);
         await tab.locator('.atmosphere.is-ready').waitFor();
         await openTheme();

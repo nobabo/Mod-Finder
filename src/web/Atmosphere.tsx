@@ -52,8 +52,6 @@ export function Atmosphere({ gameIds, theme, motionEnabled = true, scrollParalla
       element.style.setProperty('--background-x', `${x}px`);
       element.style.setProperty('--background-y', `${y}px`);
       renderer.current?.setBackgroundOffset(x, y);
-      document.documentElement.style.setProperty('--scene-pointer-x', String(x / 7));
-      document.documentElement.style.setProperty('--scene-pointer-y', String(y / 5));
     };
     write();
     if (reduced || !motionEnabled || paused) return;

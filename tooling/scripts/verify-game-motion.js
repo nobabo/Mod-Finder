@@ -37,16 +37,16 @@ async (page) => {
         };
       });
       await tab.mouse.move(100, 160);
-      await tab.waitForFunction(() => parseFloat(document.documentElement.style.getPropertyValue('--scene-pointer-x')) < -.75);
+      await tab.waitForFunction(() => parseFloat(document.querySelector('.atmosphere').style.getPropertyValue('--background-x')) < -5.25);
       const left = await inspect();
       await tab.mouse.move(1430, 790);
-      await tab.waitForFunction(() => parseFloat(document.documentElement.style.getPropertyValue('--scene-pointer-x')) > .75);
+      await tab.waitForFunction(() => parseFloat(document.querySelector('.atmosphere').style.getPropertyValue('--background-x')) > 5.25);
       const right = await inspect();
       check(left.glass === 'webgl' && right.glass === 'webgl', `${name}: shared WebGL renderer`);
       check(right.offset - left.offset > 9 && Math.abs(right.offset) <= 7, `${name}: bounded, real background parallax`);
       check(left.lensHash !== right.lensHash, `${name}: refracted pixels respond`);
-      check(left.logo !== right.logo, `${name}: logo responds to cursor`);
-      if (preference === 'game') check(left.character !== right.character, `${name}: character responds to cursor`);
+      check(left.logo === right.logo, `${name}: logo stays still until hovered`);
+      if (preference === 'game') check(left.character === right.character, `${name}: characters stay still until hovered`);
       await tab.screenshot({ path: `output/playwright/${name}-interactive-glass.png` });
       await tab.getByRole('button', { name: '설정 메뉴', exact: true }).click();
       const card = tab.getByRole('button', { name: '즐겨찾기', exact: true });
@@ -67,7 +67,7 @@ async (page) => {
       }
       check(orders.size > 1, `${name}: photograph order is shuffled, not a fixed sequence`);
       check(errors.length === 0, `${name}: ${errors.join(', ')}`);
-      reports.push({ theme: name, webgl: true, parallax: true, refractionPixels: true, reactiveLogo: true, reactiveCharacters: preference === 'game', distinctOrders: orders.size, starts });
+      reports.push({ theme: name, webgl: true, parallax: true, refractionPixels: true, pointerFollowingArtwork: false, distinctOrders: orders.size, starts });
     } finally {
       await context.close();
     }
