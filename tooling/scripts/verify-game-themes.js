@@ -21,24 +21,36 @@ async (page) => {
       const button = name => tab.getByRole('button', { name, exact: true });
       for (const game of ['minecraft-java', 'stardew-valley']) {
         await tab.goto(`${base}/?game=${game}`);
-        await tab.locator('.game-characters').waitFor();
+        await tab.locator('.game-characters-search').waitFor();
         await tab.evaluate(() => document.fonts.ready);
         await tab.locator('.game-character img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
-        await tab.locator('.game-backdrop-photo').evaluate(image => image.decode());
+        await tab.locator('.game-backdrop-photo').evaluateAll(images => Promise.all(images.map(image => image.decode())));
         const inspect = async () => tab.evaluate(() => {
           const field = document.querySelector('.search-field');
           const form = field.querySelector('.search-box');
           const art = field.querySelector('.game-characters');
           const box = form.getBoundingClientRect();
           const representative = art.querySelector('.is-representative').getBoundingClientRect();
+          const ranking = document.querySelector('.ranking-panel');
+          const companions = [...ranking.querySelectorAll('.is-companion')].map(el => el.getBoundingClientRect());
+          const text = [...ranking.querySelectorAll('.ranking-tabs button,.ranking-list strong,.ranking-pagination,.title-button')].map(el => el.getBoundingClientRect());
+          const filter = document.querySelector('.filter-orb').getBoundingClientRect();
+          const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
+          const transparent = el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).backgroundImage === 'none';
           return {
             game: document.documentElement.dataset.gameTheme,
-            photo: document.querySelector('.game-backdrop-photo').getAttribute('src'),
-            opacity: getComputedStyle(document.querySelector('.game-backdrop-photo')).opacity,
+            photo: document.querySelector('.game-backdrop-photo.is-active').getAttribute('src'),
+            photos: document.querySelectorAll('.game-backdrop-photo').length,
+            opacity: getComputedStyle(document.querySelector('.game-backdrop-photo.is-active')).opacity,
             representatives: art.querySelectorAll('.is-representative').length,
             above: [...art.children].filter(el => el.getBoundingClientRect().top < box.top).length,
             centered: Math.abs(representative.x + representative.width / 2 - box.x - box.width / 2) < 15,
             foreground: Number(getComputedStyle(form).zIndex) > Number(getComputedStyle(art).zIndex),
+            companions: companions.length,
+            rankingCorners: companions.every(rect => rect.top >= ranking.getBoundingClientRect().top),
+            textClear: companions.every(rect => text.every(label => !overlaps(rect, label))),
+            filterClear: companions.every(rect => !overlaps(rect, filter)),
+            transparentSurfaces: transparent(form) && transparent(ranking),
             border: getComputedStyle(form, '::after').backgroundImage,
             overflow: document.documentElement.scrollWidth > innerWidth,
             webgl: document.querySelectorAll('.atmosphere-canvas').length,
@@ -47,9 +59,11 @@ async (page) => {
         });
         const report = await inspect();
         check(report.game === (game === 'minecraft-java' ? 'minecraft' : 'stardew'), 'Game palette follows selection');
-        check(report.photo.includes(game) && Number(report.opacity) > 0 && Number(report.opacity) <= .08, 'Matching faint photograph');
+        check(report.photo.includes(game) && report.photos === 5 && Number(report.opacity) >= .15 && Number(report.opacity) <= .25, 'Five matching, visible photographs');
         check(report.representatives === 1 && report.above === 1 && report.centered, 'One representative centered above search');
         check(report.foreground && report.border.includes('gradient'), 'Search and glass border are above characters');
+        check(report.companions === 4 && report.rankingCorners && report.textClear && report.filterClear, 'Companions stay at ranking corners, clear of text and filter');
+        check(report.transparentSurfaces, 'Search and ranking have no white fill');
         check(!report.overflow && report.webgl === 0, 'No overflow or dark scene renderer');
         await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-final.png` });
         await button('설정 메뉴').click();
@@ -70,11 +84,12 @@ async (page) => {
         await button('게임 기본').click();
         await button('닫기').click();
         await tab.reload();
-        await tab.locator('.game-characters').waitFor();
+        await tab.locator('.game-characters-search').waitFor();
         check(await tab.evaluate(() => localStorage.getItem('modfinder-theme')) === 'game', 'Game default survives reload');
         if (mobile) {
           await tab.setViewportSize({ width: 320, height: 740 });
-          check(!(await inspect()).overflow, 'Narrow mobile has no horizontal overflow');
+          const narrow = await inspect();
+          check(!narrow.overflow && narrow.textClear && narrow.filterClear, 'Narrow mobile keeps all text and controls clear');
           await tab.setViewportSize({ width: 390, height: 844 });
         }
         await tab.locator('#mod-query').fill(game === 'minecraft-java' ? 'sodium' : 'SMAPI');
@@ -88,8 +103,35 @@ async (page) => {
       check(await tab.locator('html').getAttribute('data-game-theme') === null, 'Other games retain their photographic theme');
       await tab.locator('.atmosphere-canvas').waitFor();
     }
+    const rotationContext = await page.context().browser().newContext({ reducedMotion: 'no-preference', viewport: { width: 1536, height: 960 } });
+    contexts.push(rotationContext);
+    await rotationContext.addInitScript(() => {
+      document.cookie = 'mf-language=ko; Path=/';
+      localStorage.setItem('modfinder-intro-seen', '1');
+    });
+    const rotationTab = await rotationContext.newPage();
+    rotationTab.on('pageerror', error => errors.push(error.message));
+    await rotationTab.clock.install();
+    await rotationTab.goto(`${base}/?game=minecraft-java`);
+    const activePhoto = () => rotationTab.locator('.game-backdrop-photo.is-active').getAttribute('src');
+    await rotationTab.locator('.game-backdrop-photo.is-active').waitFor();
+    const seen = new Set();
+    for (let index = 0; index < 5; index++) {
+      seen.add(await activePhoto());
+      await rotationTab.clock.fastForward(20000);
+    }
+    check(seen.size === 5, 'All five backgrounds rotate');
+    await rotationTab.getByRole('button', { name: '설정 메뉴', exact: true }).click();
+    const pausedPhoto = await activePhoto();
+    await rotationTab.clock.fastForward(40000);
+    check(await activePhoto() === pausedPhoto, 'Rotation pauses behind dialogs');
+    await rotationTab.getByRole('button', { name: '닫기', exact: true }).click();
+    await rotationTab.emulateMedia({ reducedMotion: 'reduce' });
+    const stillPhoto = await activePhoto();
+    await rotationTab.clock.fastForward(40000);
+    check(await activePhoto() === stillPhoto, 'Reduced motion keeps the photograph still');
     check(errors.length === 0, errors.join('\n'));
-    return { passed: true, reports, pageErrors: errors };
+    return { passed: true, reports, rotatingBackgrounds: seen.size, pausedBehindDialogs: true, reducedMotion: true, pageErrors: errors };
   } finally {
     await Promise.all(contexts.map(context => context.close()));
   }

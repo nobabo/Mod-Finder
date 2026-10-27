@@ -10,7 +10,7 @@ import { downloadRanking, rankingSources } from './lib/rankings';
 import { locale, t } from './lib/i18n';
 import { useModSummaries } from './lib/mod-summaries';
 
-export function Rankings({ gameId, card, searchMod }: { gameId: string; card: (item: Listing, alternatives: Listing[], select?: () => void) => ReactNode; searchMod: (entry: Pick<CommunityEntry, 'name' | 'kind'>) => void }) {
+export function Rankings({ gameId, card, searchMod, decoration }: { gameId: string; card: (item: Listing, alternatives: Listing[], select?: () => void) => ReactNode; searchMod: (entry: Pick<CommunityEntry, 'name' | 'kind'>) => void; decoration?: ReactNode }) {
   const game = getGame(gameId);
   const community = communityRanking(gameId);
   const [tab, setTab] = useState<'search' | 'downloads'>(community ? 'search' : 'downloads');
@@ -33,6 +33,7 @@ export function Rankings({ gameId, card, searchMod }: { gameId: string; card: (i
     return () => controller.abort();
   }, [gameId, activeTab, refresh, locale]);
   return <section className="collection-panel ranking-panel">
+    {decoration}
     <>
       <div className="ranking-tabs" role="group" aria-label={t('순위 종류')}>
         {community && <button type="button" aria-pressed={activeTab === 'search'} onClick={() => setTab('search')}><Search size={18}/>{t('검색 순위')}</button>}

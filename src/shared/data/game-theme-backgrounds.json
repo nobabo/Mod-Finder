@@ -1,0 +1,66 @@
+{
+  "minecraft-java": [
+    {
+      "src": "/theme-backgrounds/minecraft-java/01.webp",
+      "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/EXPLORE_PDPScreenshotRefresh2024_multipleBiomes_01.png",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "src": "/theme-backgrounds/minecraft-java/02.webp",
+      "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/CREATE_BuildAlmostAnything.png",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "src": "/theme-backgrounds/minecraft-java/03.webp",
+      "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/SURVIVE.png",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "src": "/theme-backgrounds/minecraft-java/04.webp",
+      "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/PLAYTOGETHERPDPScreenshotRefresh2024_exitingPortal_01.png",
+      "width": 1600,
+      "height": 900
+    },
+    {
+      "src": "/theme-backgrounds/minecraft-java/05.webp",
+      "sourceUrl": "https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/screenshots/PDP-Gallery_OV_1_16x9.jpg",
+      "width": 1200,
+      "height": 675
+    }
+  ],
+  "stardew-valley": [
+    {
+      "src": "/theme-backgrounds/stardew-valley/01.webp",
+      "sourceUrl": "https://www.stardewvalley.net/wp-content/uploads/2018/12/1_1screenshot15.png",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "src": "/theme-backgrounds/stardew-valley/02.webp",
+      "sourceUrl": "https://www.stardewvalley.net/wp-content/uploads/2018/12/NightMarket-1-1.png",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "src": "/theme-backgrounds/stardew-valley/03.webp",
+      "sourceUrl": "https://www.stardewvalley.net/wp-content/uploads/2018/12/Multiplayer_Screenshot2-1.png",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "src": "/theme-backgrounds/stardew-valley/04.webp",
+      "sourceUrl": "https://www.stardewvalley.net/wp-content/uploads/2018/12/StardewValley_12-1.png",
+      "width": 960,
+      "height": 540
+    },
+    {
+      "src": "/theme-backgrounds/stardew-valley/05.webp",
+      "sourceUrl": "https://www.stardewvalley.net/wp-content/uploads/2018/12/StardewValley_4.png",
+      "width": 960,
+      "height": 540
+    }
+  ]
+}

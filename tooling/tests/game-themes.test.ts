@@ -1,5 +1,7 @@
 import { afterEach, describe, expect, it, vi } from 'vitest';
 import { existsSync, readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
+import backgrounds from '../../src/shared/data/game-theme-backgrounds.json';
 import { GAME_THEMES, gameThemeFor } from '../../src/web/lib/game-themes';
 import { applyTheme, readThemePreference } from '../../src/web/lib/themes';
 
@@ -45,6 +47,8 @@ describe('game default themes', () => {
 
   it('bundles every character locally as a static WebP', () => {
     for (const theme of Object.values(GAME_THEMES)) {
+      expect(theme.characters).toHaveLength(5);
+      expect(new Set(theme.characters.map(character => character.src)).size).toBe(5);
       for (const character of theme.characters) {
         const path = `src/web/public${character.src}`;
         expect(existsSync(path)).toBe(true);
@@ -53,6 +57,22 @@ describe('game default themes', () => {
         expect(file.toString('ascii', 8, 12)).toBe('WEBP');
         expect(file.includes(Buffer.from('ANIM'))).toBe(false);
       }
+    }
+  });
+
+  it('ships five distinct, locally bundled photographs for each game default', () => {
+    for (const [gameId, photos] of Object.entries(backgrounds)) {
+      expect(gameThemeFor(gameId)).toBeDefined();
+      expect(photos).toHaveLength(5);
+      expect(new Set(photos.map(photo => photo.sourceUrl)).size).toBe(5);
+      const hashes = photos.map(photo => {
+        expect(photo.src).toMatch(new RegExp(`^/theme-backgrounds/${gameId}/`));
+        expect(photo.sourceUrl).toMatch(/^https:\/\/(www\.minecraft\.net|www\.stardewvalley\.net)\//);
+        expect(photo.width).toBeGreaterThanOrEqual(800);
+        expect(photo.height).toBeGreaterThanOrEqual(400);
+        return createHash('sha256').update(readFileSync(`src/web/public${photo.src}`)).digest('hex');
+      });
+      expect(new Set(hashes).size).toBe(5);
     }
   });
 });

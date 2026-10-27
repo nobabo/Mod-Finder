@@ -16,27 +16,38 @@ html[data-game-theme] {
 }
 html[data-game-theme] .game-atmosphere { background:var(--canvas); }
 html[data-game-theme] .app-shell { background:transparent; }
-.game-backdrop-photo { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:.06;filter:saturate(.7);mix-blend-mode:multiply; }
+.game-backdrop-photo { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;opacity:0;filter:saturate(.8);mix-blend-mode:multiply;transition:opacity 1.8s ease; }
+.game-backdrop-photo.is-active { opacity:.18; }
 html[data-game-theme] * { scrollbar-color:rgba(var(--tint-rgb),.4) transparent; }
 html[data-game-theme] ::-webkit-scrollbar-thumb { background:rgba(var(--tint-rgb),.4);background-clip:padding-box; }
 
 .game-characters { position:absolute;inset:0;z-index:1;pointer-events:none;user-select:none; }
+.game-characters-search { top:auto;bottom:calc(100% + 2px);height:170px;overflow:hidden; }
 .game-character { position:absolute;display:block;filter:drop-shadow(0 3px 1px rgba(50,67,40,.08)); }
 .game-character img { display:block;width:100%;height:auto; }
-.character-steve { width:154px;left:calc(50% - 77px);bottom:calc(100% - 67px);transform:rotate(-6deg); }
-.character-alex { width:96px;left:7%;top:calc(100% - 2px);transform:rotate(-12deg); }
-.character-adventurer { width:76px;right:9%;top:calc(100% - 2px);transform:rotate(12deg); }
-.characters-stardew img { image-rendering:pixelated; }
-.character-junimo { width:84px;left:calc(50% - 42px);bottom:calc(100% - 10px); }
-.character-cat { width:66px;left:9%;top:calc(100% - 2px);transform:rotate(-8deg); }
-.character-chicken { width:92px;right:8%;top:calc(100% - 2px);transform:rotate(9deg); }
+.character-steve { width:154px;left:calc(50% - 77px);bottom:-67px;transform:rotate(-6deg); }
+.character-junimo { width:84px;left:calc(50% - 42px);bottom:-10px; }
+.characters-stardew img,.character-grass img,.character-diamond img { image-rendering:pixelated; }
+/* Companions belong to the ranking's outer corners, clear of search and filter. */
+.game-characters-ranking .companion-0 { right:calc(100% + 18px);top:22%;transform:rotate(-12deg); }
+.game-characters-ranking .companion-1 { left:calc(100% + 18px);top:30%;transform:rotate(12deg); }
+.game-characters-ranking .companion-2 { left:-12px;top:calc(100% + 14px);transform:rotate(-14deg); }
+.game-characters-ranking .companion-3 { right:-4px;top:calc(100% + 24px);transform:rotate(14deg); }
+.character-alex { width:90px; }
+.character-creeper { width:54px; }
+.character-grass { width:68px; }
+.character-diamond { width:46px; }
+.character-cat { width:64px; }
+.character-chicken { width:86px; }
+.character-krobus { width:48px; }
+.character-stardrop { width:42px; }
 
 html[data-game-theme] .hero-brand { bottom:calc(100% + 159px); }
 html[data-game-theme="stardew"] .hero-brand { bottom:calc(100% + 111px); }
 html[data-game-theme] .hero-brand .brand-logo { width:100px; }
 html[data-game-theme] .search-box {
   z-index:2;
-  background:var(--surface);
+  background:transparent;
   border:2px solid rgba(var(--tint-rgb),.4);
   box-shadow:0 6px 0 rgba(var(--tint-rgb),.04),0 16px 35px rgba(var(--tint-rgb),.08),inset 0 2px 2px #fffc,inset 0 -2px 3px rgba(var(--tint-rgb),.1);
   backdrop-filter:none;
@@ -46,19 +57,19 @@ html[data-game-theme] .search-box::after {
   background:linear-gradient(135deg,#fffc,rgba(var(--tint-rgb),.7) 22%,#fffb 45%,rgba(var(--secondary-rgb),.6) 76%,rgba(var(--tint-rgb),.7));
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;
 }
-html[data-game-theme] .home-collections { top:calc(100% + 144px); }
-html[data-game-theme="stardew"] .home-collections { top:calc(100% + 116px); }
+html[data-game-theme] .home-collections { top:calc(100% + 24px);padding-bottom:120px; }
+html[data-game-theme] .home-collections:has(.game-characters-ranking) .home-shortcuts { margin-top:110px; }
 html[data-game-theme] .search-box:hover,
 html[data-game-theme] .search-box:focus-within { border-color:var(--accent);box-shadow:0 6px 0 rgba(var(--tint-rgb),.08),0 0 0 4px rgba(var(--tint-rgb),.08); }
 html[data-game-theme] :is(.search-box input,.deck-search input,.filter-dropdown-search input) { color:var(--text);text-shadow:none; }
 html[data-game-theme] :is(.search-box input,.deck-search input,.filter-dropdown-search input)::placeholder { color:var(--muted); }
 html[data-game-theme] :is(.search-submit,.settings-fab,.filter-orb,.game-orb,.deck-close,.deck-navigation button) { color:var(--accent); }
-html[data-game-theme] :is(.settings-fab,.filter-orb,.game-orb) { background:var(--surface-deep);border-color:rgba(var(--tint-rgb),.5);box-shadow:0 4px 12px rgba(var(--tint-rgb),.1); }
+html[data-game-theme] :is(.settings-fab,.filter-orb,.game-orb) { background:transparent;border-color:rgba(var(--tint-rgb),.5);box-shadow:0 4px 12px rgba(var(--tint-rgb),.1); }
 html[data-game-theme] .game-logo img { mix-blend-mode:normal; }
 
 html[data-game-theme] :is(.ranking-panel,.collection-panel,.history-list,.settings-card,.modal,.sheet,.toast,.compare-tray,.filter-dropdown),
 html[data-game-theme] .mod-description-tooltip::before {
-  background:var(--surface);
+  background:transparent;
   border:1px solid rgba(var(--tint-rgb),.45);
   box-shadow:0 12px 32px rgba(var(--tint-rgb),.09),inset 0 1px 1px #fffc,inset 0 -1px 2px rgba(var(--tint-rgb),.15);
   backdrop-filter:none;
@@ -70,13 +81,13 @@ html[data-game-theme] :is(.ranking-panel,.collection-panel,.history-list,.settin
   background:linear-gradient(135deg,#fffc,rgba(var(--tint-rgb),.6) 22%,rgba(var(--secondary-rgb),.2) 52%,#fffa 80%,rgba(var(--tint-rgb),.6));
   mask:linear-gradient(#fff 0 0) content-box,linear-gradient(#fff 0 0);mask-composite:exclude;
 }
-html[data-game-theme] :is(.search-results-panel,.search-results-panel>.results-content) { background:var(--surface);border-radius:24px; }
+html[data-game-theme] :is(.search-results-panel,.search-results-panel>.results-content) { background:transparent;border-radius:24px; }
 html[data-game-theme] .result-panel-outline { filter:drop-shadow(0 1px 1px #fff9); }
-html[data-game-theme] .result-panel-outline path { fill:var(--surface); }
+html[data-game-theme] .result-panel-outline path { fill:transparent; }
 html[data-game-theme] .results-content { border-color:rgba(var(--tint-rgb),.45); }
 html[data-game-theme] .mod-card,
 html[data-game-theme] .mod-card:hover { background:none;border:0;box-shadow:none; }
-html[data-game-theme] :is(.card-cover,.detail-cover,.deck-search,.filter-dropdown-search) { background:var(--surface-deep); }
+html[data-game-theme] :is(.card-cover,.detail-cover,.deck-search,.filter-dropdown-search) { background:transparent; }
 html[data-game-theme] :is(h1,.page-heading h1,.sheet-heading h2,.modal h2,.title-button,.history-list strong,.settings-card h2,.comparison-table thead th,.compare-tray strong,.filter-option,.deck-card>span,.deck-empty,.mod-description-tooltip) { color:var(--text);text-shadow:none; }
 html[data-game-theme] :is(.card-meta,.card-author,.history-number,.tray-names) { color:var(--muted); }
 html[data-game-theme] .mod-description-copy { text-shadow:none; }
@@ -84,7 +95,7 @@ html[data-game-theme] :is(.text-button,.external-link,.icon-button,.title-button
 html[data-game-theme] .secondary-button:hover { color:var(--text); }
 html[data-game-theme] .filter-option.is-current { color:var(--accent); }
 html[data-game-theme] :is(.modal-backdrop,.sheet-backdrop) { background:rgba(var(--tint-rgb),.18); }
-html[data-game-theme] :is(.game-deck,.settings-menu) { background:color-mix(in srgb,var(--canvas) 85%,transparent);backdrop-filter:blur(14px); }
+html[data-game-theme] :is(.game-deck,.settings-menu) { background:transparent;backdrop-filter:blur(20px); }
 html[data-game-theme] :is(.deck-header h2,.settings-deck-header h2) { color:var(--text);text-shadow:none; }
 html[data-game-theme] :is(.deck-card,.settings-menu nav :is(button,a),.preference-panel .theme-options button,.language-options button) { background:transparent;color:var(--text);border-color:rgba(var(--tint-rgb),.4);box-shadow:0 8px 24px rgba(var(--tint-rgb),.05),inset 0 1px 1px #fffa,inset 0 -1px 2px rgba(var(--tint-rgb),.12); }
 html[data-game-theme] .deck-card>span { text-shadow:none; }
@@ -99,26 +110,34 @@ html[data-game-theme] .settings-menu nav .recommendations-card[aria-checked="fal
 html[data-game-theme] .genre-deck .deck-card:not([aria-pressed="true"]) { filter:grayscale(1);color:var(--muted);border-color:rgba(var(--tint-rgb),.25); }
 html[data-game-theme] .settings-menu nav .recommendations-card[aria-checked="false"],
 html[data-game-theme] .genre-deck .deck-card:not([aria-pressed="true"]) { background:transparent; }
-html[data-game-theme] :is(.picker-pagination>button,.deck-navigation button,.deck-close) { background:var(--surface);color:var(--accent); }
-html[data-game-theme] .mobile-nav-glass { background:var(--canvas);box-shadow:0 4px 20px rgba(var(--tint-rgb),.08);backdrop-filter:none; }
+html[data-game-theme] :is(.picker-pagination>button,.deck-navigation button,.deck-close) { background:transparent;color:var(--accent); }
+html[data-game-theme] .mobile-nav-glass { background:transparent;box-shadow:0 4px 20px rgba(var(--tint-rgb),.08);backdrop-filter:blur(16px); }
 html[data-game-theme] .folder-modal { background:none;border:0;box-shadow:none; }
 html[data-game-theme] .folder-modal::before { display:none; }
 
 @media(max-width:1400px) { :where(html:not([data-native]))[data-game-theme] {
   .content:has(.search-dock.hero) { padding-top:max(164px,calc(42dvh - var(--mobile-header-height) - env(safe-area-inset-top) - 32px)); }
-  .home-collections { top:auto;margin-top:144px; }
-  &[data-game-theme="stardew"] .home-collections { top:auto;margin-top:116px; }
+  .home-collections { top:auto;margin-top:24px; }
+}}
+@media(max-width:1100px) { :where(html:not([data-native]))[data-game-theme] {
+  .game-characters-ranking .companion-0 { left:4%;right:auto;top:calc(100% + 14px); }
+  .game-characters-ranking .companion-1 { left:30%;right:auto;top:calc(100% + 18px); }
+  .game-characters-ranking .companion-2 { left:auto;right:30%;top:calc(100% + 18px); }
+  .game-characters-ranking .companion-3 { left:auto;right:3%;top:calc(100% + 24px); }
+  .character-alex { width:62px; }
+  .character-creeper { width:38px; }
+  .character-grass { width:54px; }
+  .character-diamond { width:32px; }
+  .character-cat { width:48px; }
+  .character-chicken { width:58px; }
+  .character-krobus { width:42px; }
+  .character-stardrop { width:34px; }
 }}
 @media(max-width:650px) { :where(html:not([data-native]))[data-game-theme] {
   .content:has(.search-dock.hero) { padding-top:max(124px,calc(42dvh - var(--mobile-header-height) - env(safe-area-inset-top) - 32px)); }
-  .character-steve { width:116px;left:calc(50% - 58px);bottom:calc(100% - 51px); }
-  .character-alex { width:68px;left:6%; }
-  .character-adventurer { width:53px;right:8%; }
-  .character-junimo { width:68px;left:calc(50% - 34px);bottom:calc(100% - 8px); }
-  .character-cat { width:53px;left:7%; }
-  .character-chicken { width:70px;right:5%; }
-  .home-collections { margin-top:110px; }
-  &[data-game-theme="stardew"] .home-collections { margin-top:96px; }
+  .game-characters-search { height:130px; }
+  .character-steve { width:116px;left:calc(50% - 58px);bottom:-51px; }
+  .character-junimo { width:68px;left:calc(50% - 34px);bottom:-8px; }
 }}
 @media(max-height:500px) { html[data-game-theme] {
   .game-characters { display:none; }
@@ -126,3 +145,4 @@ html[data-game-theme] .folder-modal::before { display:none; }
   .content:has(.search-dock.hero) { padding-top:16px; }
   .home-collections { margin-top:16px;top:auto; }
 }}
+@media(prefers-reduced-motion:reduce) { .game-backdrop-photo { transition:none; } }
