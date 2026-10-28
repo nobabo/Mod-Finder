@@ -105,7 +105,7 @@ export function MovableArtwork({ id, className, themeClass, label, width, height
     >{children}</button>;
   const coordinates = position && artworkCoordinates(position, metrics, metrics.viewport);
   const layer = anchor.current?.closest('.app-shell');
-  return <span ref={anchor} className={className} style={{ aspectRatio: `${width}/${height}` } as CSSProperties} data-artwork-id={id} onPointerDown={down} onPointerMove={move}
+  return <span ref={anchor} className={`${className}${moved ? ' is-artwork-anchor' : ''}`} style={{ aspectRatio: `${width}/${height}` } as CSSProperties} data-artwork-id={id} onPointerDown={down} onPointerMove={move}
     onPointerUp={event => { if (gesture.current?.id === event.pointerId) finish(false); }} onPointerCancel={event => { if (gesture.current?.id === event.pointerId) finish(true); }}
     onLostPointerCapture={event => { if (event.target === anchor.current && gesture.current?.id === event.pointerId) finish(true); }} onKeyDown={keyboard}
     onClick={event => { event.preventDefault(); event.stopPropagation(); }} onDoubleClick={event => { event.preventDefault(); if (!paused) update(); }}>

@@ -68,6 +68,10 @@ async (page) => {
     check(await stored(steve) === saved, 'Escape cancels without persisting a partial drag');
     box = await art(steve).boundingBox();
     check(Math.abs(box.x - 160) < 2, 'Escape restores the previous position');
+    check(await tab.locator(`[data-artwork-id="${steve}"]`).evaluate(anchor => {
+      const rect = anchor.getBoundingClientRect();
+      return !anchor.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + 20));
+    }), 'The original location leaves no invisible drag target');
     await dragTo('minecraft-java:alex', 1040, 230);
     check(await placed(steve).count() === 1 && await placed('minecraft-java:alex').count() === 1, 'Companions move independently');
     await dragTo(steve, 650, 380);

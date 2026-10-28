@@ -27,6 +27,7 @@ html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { backgr
 .game-characters-search { top:auto;bottom:calc(100% + 2px);height:170px;overflow:hidden; }
 .game-character { position:absolute;display:block;pointer-events:auto;filter:drop-shadow(0 3px 1px rgba(50,67,40,.08)); }
 .game-character img { display:block;width:100%;height:auto; }
+.game-character.is-artwork-anchor { pointer-events:none; }
 .movable-artwork { display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none; }
 .movable-artwork:focus-visible { outline:2px solid var(--accent);outline-offset:5px;border-radius:6px; }
 .movable-artwork:disabled { cursor:default; }
