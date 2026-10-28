@@ -1,0 +1,314 @@
+[
+  {
+    "game": "skyrim-se",
+    "name": "iron-helmet",
+    "local": "src/web/public/theme-art/skyrim-se-iron-helmet.png",
+    "sourceUrl": "https://en.uesp.net/wiki/File:SR-icon-armor-IronHelmet.png",
+    "imageUrl": "https://images.uesp.net/6/63/SR-icon-armor-IronHelmet.png",
+    "crop": [
+      0,
+      107,
+      514,
+      406
+    ]
+  },
+  {
+    "game": "skyrim-se",
+    "name": "sweetroll",
+    "local": "src/web/public/theme-art/skyrim-se-sweetroll.png",
+    "sourceUrl": "https://en.uesp.net/wiki/File:SR-icon-food-SweetRoll.png",
+    "imageUrl": "https://images.uesp.net/9/93/SR-icon-food-SweetRoll.png",
+    "crop": [
+      0,
+      1,
+      216,
+      215
+    ]
+  },
+  {
+    "game": "lethal-company",
+    "name": "employee",
+    "local": "src/web/public/theme-art/lethal-company-employee.png",
+    "sourceUrl": "https://lethal.miraheze.org/wiki/File:Waving_Employee.png",
+    "imageUrl": "https://static.wikitide.net/lethalwiki/a/a4/Waving_Employee.png",
+    "crop": [
+      416,
+      0,
+      1427,
+      1080
+    ]
+  },
+  {
+    "game": "lethal-company",
+    "name": "hoarding-bug",
+    "local": "src/web/public/theme-art/lethal-company-hoarding-bug.png",
+    "sourceUrl": "https://lethal.miraheze.org/wiki/File:Hoardingbugrender.png",
+    "imageUrl": "https://static.wikitide.net/lethalwiki/d/da/Hoardingbugrender.png",
+    "crop": [
+      119,
+      107,
+      865,
+      1000
+    ]
+  },
+  {
+    "game": "rimworld",
+    "name": "thrumbo",
+    "local": "src/web/public/theme-art/rimworld-thrumbo.png",
+    "sourceUrl": "https://rimworldwiki.com/wiki/File:Thrumbo.png",
+    "imageUrl": "https://rimworldwiki.com/images/2/22/Thrumbo.png",
+    "crop": [
+      22,
+      15,
+      208,
+      234
+    ]
+  },
+  {
+    "game": "rimworld",
+    "name": "muffalo",
+    "local": "src/web/public/theme-art/rimworld-muffalo.png",
+    "sourceUrl": "https://rimworldwiki.com/wiki/File:Muffalo_south.png",
+    "imageUrl": "https://rimworldwiki.com/images/8/85/Muffalo_south.png",
+    "crop": [
+      56,
+      64,
+      201,
+      201
+    ]
+  },
+  {
+    "game": "valheim",
+    "name": "troll",
+    "local": "src/web/public/theme-art/valheim-troll.webp",
+    "sourceUrl": "https://valheim.fandom.com/wiki/File:Troll.png",
+    "imageUrl": "https://static.wikia.nocookie.net/valheim/images/f/f3/Troll.png/revision/latest?cb=20220213025911",
+    "crop": [
+      34,
+      13,
+      809,
+      692
+    ]
+  },
+  {
+    "game": "valheim",
+    "name": "greydwarf",
+    "local": "src/web/public/theme-art/valheim-greydwarf.webp",
+    "sourceUrl": "https://valheim.fandom.com/wiki/File:Greydwarf.png",
+    "imageUrl": "https://static.wikia.nocookie.net/valheim/images/8/82/Greydwarf.png/revision/latest?cb=20240119081841",
+    "crop": [
+      256,
+      45,
+      712,
+      977
+    ]
+  },
+  {
+    "game": "terraria",
+    "name": "guide",
+    "local": "src/web/public/theme-art/terraria-guide.png",
+    "sourceUrl": "https://terraria.wiki.gg/wiki/File:Guide.png",
+    "imageUrl": "https://terraria.wiki.gg/images/Guide.png?eebef6",
+    "crop": [
+      0,
+      0,
+      26,
+      46
+    ]
+  },
+  {
+    "game": "terraria",
+    "name": "blue-slime",
+    "local": "src/web/public/theme-art/terraria-blue-slime.png",
+    "sourceUrl": "https://terraria.wiki.gg/wiki/File:Blue_Slime.png",
+    "imageUrl": "https://terraria.wiki.gg/images/Blue_Slime.png?26f279",
+    "crop": [
+      0,
+      0,
+      32,
+      22
+    ]
+  },
+  {
+    "game": "project-zomboid",
+    "name": "spiffo",
+    "local": "src/web/public/theme-art/project-zomboid-spiffo.webp",
+    "sourceUrl": "https://projectzomboid.fandom.com/wiki/File:Spiffo_of_Apocalypse.png",
+    "imageUrl": "https://static.wikia.nocookie.net/projectzomboid/images/b/bc/Spiffo_of_Apocalypse.png/revision/latest?cb=20260712043128",
+    "crop": [
+      0,
+      0,
+      99,
+      148
+    ]
+  },
+  {
+    "game": "project-zomboid",
+    "name": "baseball-bat",
+    "local": "src/web/public/theme-art/project-zomboid-baseball-bat.webp",
+    "sourceUrl": "https://projectzomboid.fandom.com/wiki/File:Baseball_bat_inv.png",
+    "imageUrl": "https://static.wikia.nocookie.net/projectzomboid/images/6/6d/Baseball_bat_inv.png/revision/latest?cb=20110714000241",
+    "crop": [
+      0,
+      0,
+      120,
+      120
+    ]
+  },
+  {
+    "game": "cyberpunk-2077",
+    "name": "johnny-silverhand",
+    "local": "src/web/public/theme-art/cyberpunk-2077-johnny-silverhand.png",
+    "sourceUrl": "https://www.cyberpunk.net/en/en/cyberpunk-2077",
+    "imageUrl": "https://www.cyberpunk.net/build/images/cyberpunk/character/character-johnny@1x-3a4afbd5.png",
+    "crop": [
+      227,
+      159,
+      653,
+      880
+    ]
+  },
+  {
+    "game": "cyberpunk-2077",
+    "name": "jackie-welles",
+    "local": "src/web/public/theme-art/cyberpunk-2077-jackie-welles.png",
+    "sourceUrl": "https://www.cyberpunk.net/en/en/cyberpunk-2077",
+    "imageUrl": "https://www.cyberpunk.net/build/images/cyberpunk/character/character-jackie@1x-907b804d.png",
+    "crop": [
+      224,
+      125,
+      656,
+      880
+    ]
+  },
+  {
+    "game": "baldurs-gate-3",
+    "name": "astarion",
+    "local": "src/web/public/theme-art/baldurs-gate-3-astarion.png",
+    "sourceUrl": "https://bg3.wiki/wiki/File:Astarion_Model.png",
+    "imageUrl": "https://bg3.wiki/w/images/7/72/Astarion_Model.png",
+    "crop": [
+      29,
+      11,
+      483,
+      1261
+    ]
+  },
+  {
+    "game": "baldurs-gate-3",
+    "name": "shadowheart",
+    "local": "src/web/public/theme-art/baldurs-gate-3-shadowheart.png",
+    "sourceUrl": "https://bg3.wiki/wiki/File:Shadowheart_Model.png",
+    "imageUrl": "https://bg3.wiki/w/images/c/c4/Shadowheart_Model.png",
+    "crop": [
+      37,
+      9,
+      383,
+      1257
+    ]
+  },
+  {
+    "game": "fallout-4",
+    "name": "vault-boy",
+    "local": "src/web/public/theme-art/fallout-4-vault-boy.png",
+    "sourceUrl": "https://fallout.wiki/wiki/File:Vault_Boy.png",
+    "imageUrl": "https://images.fallout.wiki/b/bc/Vault_Boy.png",
+    "crop": [
+      4,
+      4,
+      194,
+      260
+    ]
+  },
+  {
+    "game": "fallout-4",
+    "name": "nuka-cola",
+    "local": "src/web/public/theme-art/fallout-4-nuka-cola.png",
+    "sourceUrl": "https://fallout.wiki/wiki/File:Nukacolabottlefull2.png",
+    "imageUrl": "https://images.fallout.wiki/c/cf/Nukacolabottlefull2.png",
+    "crop": [
+      0,
+      0,
+      324,
+      952
+    ]
+  },
+  {
+    "game": "risk-of-rain-2",
+    "name": "commando",
+    "local": "src/web/public/theme-art/risk-of-rain-2-commando.png",
+    "sourceUrl": "https://riskofrain2.wiki.gg/wiki/File:Commando.png",
+    "imageUrl": "https://riskofrain2.wiki.gg/images/Commando.png?f6fe3c",
+    "crop": [
+      0,
+      20,
+      256,
+      256
+    ]
+  },
+  {
+    "game": "risk-of-rain-2",
+    "name": "ukulele",
+    "local": "src/web/public/theme-art/risk-of-rain-2-ukulele.png",
+    "sourceUrl": "https://riskofrain2.wiki.gg/wiki/File:Ukulele.png",
+    "imageUrl": "https://riskofrain2.wiki.gg/images/Ukulele.png?5c9db6",
+    "crop": [
+      4,
+      4,
+      121,
+      118
+    ]
+  },
+  {
+    "game": "cities-skylines",
+    "name": "wind-turbine",
+    "local": "src/web/public/theme-art/cities-skylines-wind-turbine.png",
+    "sourceUrl": "https://skylines.paradoxwikis.com/File:Wind_Turbine.png",
+    "imageUrl": "https://skylines.paradoxwikis.com/images/3/3e/Wind_Turbine.png",
+    "crop": [
+      25,
+      1,
+      73,
+      99
+    ]
+  },
+  {
+    "game": "cities-skylines",
+    "name": "chirper",
+    "local": "src/web/public/theme-art/cities-skylines-chirper.png",
+    "sourceUrl": "https://skylines.paradoxwikis.com/File:Chirper_Surviving_Mars.png",
+    "imageUrl": "https://skylines.paradoxwikis.com/images/9/9a/Chirper_Surviving_Mars.png",
+    "crop": [
+      0,
+      1,
+      64,
+      60
+    ]
+  },
+  {
+    "game": "dont-starve-together",
+    "name": "wilson",
+    "local": "src/web/public/theme-art/dont-starve-together-wilson.png",
+    "sourceUrl": "https://dontstarve.wiki.gg/wiki/File:Wilson_Head.png",
+    "imageUrl": "https://dontstarve.wiki.gg/images/Wilson_Head.png?e312e4",
+    "crop": [
+      67,
+      28,
+      433,
+      472
+    ]
+  },
+  {
+    "game": "dont-starve-together",
+    "name": "chester",
+    "local": "src/web/public/theme-art/dont-starve-together-chester.png",
+    "sourceUrl": "https://dontstarve.wiki.gg/wiki/File:Chester.png",
+    "imageUrl": "https://dontstarve.wiki.gg/images/Chester.png?8482a9",
+    "crop": [
+      14,
+      10,
+      234,
+      209
+    ]
+  }
+]

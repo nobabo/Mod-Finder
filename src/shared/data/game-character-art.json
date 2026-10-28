@@ -1,0 +1,540 @@
+{
+  "skyrim-se": [
+    {
+      "name": "iron-helmet",
+      "src": "/theme-art/skyrim-se-iron-helmet.png",
+      "width": 514,
+      "height": 299,
+      "imageWidth": 514,
+      "imageHeight": 514,
+      "crop": [
+        0,
+        107,
+        514,
+        406
+      ],
+      "ko": "철 투구",
+      "en": "Iron Helmet",
+      "kind": "item",
+      "displayWidth": 110
+    },
+    {
+      "name": "sweetroll",
+      "src": "/theme-art/skyrim-se-sweetroll.png",
+      "width": 216,
+      "height": 214,
+      "imageWidth": 216,
+      "imageHeight": 216,
+      "crop": [
+        0,
+        1,
+        216,
+        215
+      ],
+      "ko": "스위트롤",
+      "en": "Sweetroll",
+      "kind": "item",
+      "displayWidth": 78
+    }
+  ],
+  "lethal-company": [
+    {
+      "name": "employee",
+      "src": "/theme-art/lethal-company-employee.png",
+      "width": 1011,
+      "height": 1080,
+      "imageWidth": 1920,
+      "imageHeight": 1080,
+      "crop": [
+        416,
+        0,
+        1427,
+        1080
+      ],
+      "ko": "직원",
+      "en": "Employee",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "hoarding-bug",
+      "src": "/theme-art/lethal-company-hoarding-bug.png",
+      "width": 746,
+      "height": 893,
+      "imageWidth": 930,
+      "imageHeight": 2070,
+      "crop": [
+        119,
+        107,
+        865,
+        1000
+      ],
+      "ko": "비축벌레",
+      "en": "Hoarding Bug",
+      "kind": "mob",
+      "displayWidth": 78
+    }
+  ],
+  "rimworld": [
+    {
+      "name": "thrumbo",
+      "src": "/theme-art/rimworld-thrumbo.png",
+      "width": 186,
+      "height": 219,
+      "imageWidth": 256,
+      "imageHeight": 256,
+      "crop": [
+        22,
+        15,
+        208,
+        234
+      ],
+      "ko": "트럼보",
+      "en": "Thrumbo",
+      "kind": "mob",
+      "displayWidth": 110
+    },
+    {
+      "name": "muffalo",
+      "src": "/theme-art/rimworld-muffalo.png",
+      "width": 145,
+      "height": 137,
+      "imageWidth": 256,
+      "imageHeight": 256,
+      "crop": [
+        56,
+        64,
+        201,
+        201
+      ],
+      "ko": "머팔로",
+      "en": "Muffalo",
+      "kind": "mob",
+      "displayWidth": 78
+    }
+  ],
+  "valheim": [
+    {
+      "name": "troll",
+      "src": "/theme-art/valheim-troll.webp",
+      "width": 775,
+      "height": 679,
+      "imageWidth": 992,
+      "imageHeight": 697,
+      "crop": [
+        34,
+        13,
+        809,
+        692
+      ],
+      "ko": "트롤",
+      "en": "Troll",
+      "kind": "mob",
+      "displayWidth": 110
+    },
+    {
+      "name": "greydwarf",
+      "src": "/theme-art/valheim-greydwarf.webp",
+      "width": 456,
+      "height": 932,
+      "imageWidth": 1000,
+      "imageHeight": 1000,
+      "crop": [
+        256,
+        45,
+        712,
+        977
+      ],
+      "ko": "회색난쟁이",
+      "en": "Greydwarf",
+      "kind": "mob",
+      "displayWidth": 78
+    }
+  ],
+  "terraria": [
+    {
+      "name": "guide",
+      "src": "/theme-art/terraria-guide.png",
+      "width": 26,
+      "height": 46,
+      "imageWidth": 26,
+      "imageHeight": 46,
+      "crop": [
+        0,
+        0,
+        26,
+        46
+      ],
+      "ko": "가이드",
+      "en": "Guide",
+      "kind": "character",
+      "displayWidth": 110,
+      "pixelated": true
+    },
+    {
+      "name": "blue-slime",
+      "src": "/theme-art/terraria-blue-slime.png",
+      "width": 32,
+      "height": 22,
+      "imageWidth": 32,
+      "imageHeight": 22,
+      "crop": [
+        0,
+        0,
+        32,
+        22
+      ],
+      "ko": "파란 슬라임",
+      "en": "Blue Slime",
+      "kind": "mob",
+      "displayWidth": 78,
+      "pixelated": true
+    }
+  ],
+  "project-zomboid": [
+    {
+      "name": "spiffo",
+      "src": "/theme-art/project-zomboid-spiffo.webp",
+      "width": 99,
+      "height": 148,
+      "imageWidth": 99,
+      "imageHeight": 148,
+      "crop": [
+        0,
+        0,
+        99,
+        148
+      ],
+      "ko": "스피포",
+      "en": "Spiffo",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "baseball-bat",
+      "src": "/theme-art/project-zomboid-baseball-bat.webp",
+      "width": 120,
+      "height": 120,
+      "imageWidth": 120,
+      "imageHeight": 120,
+      "crop": [
+        0,
+        0,
+        120,
+        120
+      ],
+      "ko": "야구방망이",
+      "en": "Baseball Bat",
+      "kind": "item",
+      "displayWidth": 78
+    }
+  ],
+  "cyberpunk-2077": [
+    {
+      "name": "johnny-silverhand",
+      "src": "/theme-art/cyberpunk-2077-johnny-silverhand.png",
+      "width": 426,
+      "height": 721,
+      "imageWidth": 880,
+      "imageHeight": 880,
+      "crop": [
+        227,
+        159,
+        653,
+        880
+      ],
+      "ko": "조니 실버핸드",
+      "en": "Johnny Silverhand",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "jackie-welles",
+      "src": "/theme-art/cyberpunk-2077-jackie-welles.png",
+      "width": 432,
+      "height": 755,
+      "imageWidth": 880,
+      "imageHeight": 880,
+      "crop": [
+        224,
+        125,
+        656,
+        880
+      ],
+      "ko": "재키 웰즈",
+      "en": "Jackie Welles",
+      "kind": "character",
+      "displayWidth": 78
+    }
+  ],
+  "baldurs-gate-3": [
+    {
+      "name": "astarion",
+      "src": "/theme-art/baldurs-gate-3-astarion.png",
+      "width": 454,
+      "height": 1250,
+      "imageWidth": 542,
+      "imageHeight": 1280,
+      "crop": [
+        29,
+        11,
+        483,
+        1261
+      ],
+      "ko": "아스타리온",
+      "en": "Astarion",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "shadowheart",
+      "src": "/theme-art/baldurs-gate-3-shadowheart.png",
+      "width": 346,
+      "height": 1248,
+      "imageWidth": 396,
+      "imageHeight": 1270,
+      "crop": [
+        37,
+        9,
+        383,
+        1257
+      ],
+      "ko": "섀도하트",
+      "en": "Shadowheart",
+      "kind": "character",
+      "displayWidth": 78
+    }
+  ],
+  "fallout-4": [
+    {
+      "name": "vault-boy",
+      "src": "/theme-art/fallout-4-vault-boy.png",
+      "width": 190,
+      "height": 256,
+      "imageWidth": 200,
+      "imageHeight": 266,
+      "crop": [
+        4,
+        4,
+        194,
+        260
+      ],
+      "ko": "볼트 보이",
+      "en": "Vault Boy",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "nuka-cola",
+      "src": "/theme-art/fallout-4-nuka-cola.png",
+      "width": 324,
+      "height": 952,
+      "imageWidth": 324,
+      "imageHeight": 952,
+      "crop": [
+        0,
+        0,
+        324,
+        952
+      ],
+      "ko": "누카콜라",
+      "en": "Nuka-Cola",
+      "kind": "item",
+      "displayWidth": 78
+    }
+  ],
+  "risk-of-rain-2": [
+    {
+      "name": "commando",
+      "src": "/theme-art/risk-of-rain-2-commando.png",
+      "width": 256,
+      "height": 236,
+      "imageWidth": 256,
+      "imageHeight": 256,
+      "crop": [
+        0,
+        20,
+        256,
+        256
+      ],
+      "ko": "코만도",
+      "en": "Commando",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "ukulele",
+      "src": "/theme-art/risk-of-rain-2-ukulele.png",
+      "width": 117,
+      "height": 114,
+      "imageWidth": 128,
+      "imageHeight": 128,
+      "crop": [
+        4,
+        4,
+        121,
+        118
+      ],
+      "ko": "우쿨렐레",
+      "en": "Ukulele",
+      "kind": "item",
+      "displayWidth": 78
+    }
+  ],
+  "cities-skylines": [
+    {
+      "name": "wind-turbine",
+      "src": "/theme-art/cities-skylines-wind-turbine.png",
+      "width": 48,
+      "height": 98,
+      "imageWidth": 109,
+      "imageHeight": 100,
+      "crop": [
+        25,
+        1,
+        73,
+        99
+      ],
+      "ko": "풍력 발전기",
+      "en": "Wind Turbine",
+      "kind": "item",
+      "displayWidth": 110
+    },
+    {
+      "name": "chirper",
+      "src": "/theme-art/cities-skylines-chirper.png",
+      "width": 64,
+      "height": 59,
+      "imageWidth": 64,
+      "imageHeight": 60,
+      "crop": [
+        0,
+        1,
+        64,
+        60
+      ],
+      "ko": "처퍼",
+      "en": "Chirper",
+      "kind": "character",
+      "displayWidth": 78
+    }
+  ],
+  "dont-starve-together": [
+    {
+      "name": "wilson",
+      "src": "/theme-art/dont-starve-together-wilson.png",
+      "width": 366,
+      "height": 444,
+      "imageWidth": 500,
+      "imageHeight": 500,
+      "crop": [
+        67,
+        28,
+        433,
+        472
+      ],
+      "ko": "윌슨",
+      "en": "Wilson",
+      "kind": "character",
+      "displayWidth": 110
+    },
+    {
+      "name": "chester",
+      "src": "/theme-art/dont-starve-together-chester.png",
+      "width": 220,
+      "height": 199,
+      "imageWidth": 240,
+      "imageHeight": 220,
+      "crop": [
+        14,
+        10,
+        234,
+        209
+      ],
+      "ko": "체스터",
+      "en": "Chester",
+      "kind": "mob",
+      "displayWidth": 78
+    }
+  ],
+  "minecraft-java": [
+    {
+      "name": "steve",
+      "src": "/theme-art/minecraft-steve.webp",
+      "width": 526,
+      "height": 694,
+      "imageWidth": 526,
+      "imageHeight": 694,
+      "crop": [
+        0,
+        0,
+        526,
+        694
+      ],
+      "ko": "스티브",
+      "en": "Steve",
+      "kind": "character",
+      "displayWidth": 128,
+      "pixelated": false
+    },
+    {
+      "name": "diamond",
+      "src": "/theme-art/minecraft-diamond.webp",
+      "width": 12,
+      "height": 13,
+      "imageWidth": 12,
+      "imageHeight": 13,
+      "crop": [
+        0,
+        0,
+        12,
+        13
+      ],
+      "ko": "다이아몬드",
+      "en": "Diamond",
+      "kind": "item",
+      "displayWidth": 42,
+      "pixelated": true
+    }
+  ],
+  "stardew-valley": [
+    {
+      "name": "junimo",
+      "src": "/theme-art/stardew-junimo.webp",
+      "width": 42,
+      "height": 45,
+      "imageWidth": 42,
+      "imageHeight": 45,
+      "crop": [
+        0,
+        0,
+        42,
+        45
+      ],
+      "ko": "주니모",
+      "en": "Junimo",
+      "kind": "character",
+      "displayWidth": 72,
+      "pixelated": true
+    },
+    {
+      "name": "chicken",
+      "src": "/theme-art/stardew-chicken.webp",
+      "width": 192,
+      "height": 192,
+      "imageWidth": 192,
+      "imageHeight": 192,
+      "crop": [
+        0,
+        0,
+        192,
+        192
+      ],
+      "ko": "닭",
+      "en": "Chicken",
+      "kind": "mob",
+      "displayWidth": 72,
+      "pixelated": true
+    }
+  ]
+}

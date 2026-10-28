@@ -1,12 +1,15 @@
 import { useEffect, useLayoutEffect, useRef, useState, type CSSProperties, type KeyboardEvent, type PointerEvent, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { artworkCoordinates, artworkPosition, readArtworkPosition, saveArtworkPosition, type ArtworkPosition, type ArtworkSize } from './lib/artwork-layout';
+import { artworkCoordinates, artworkPosition, readArtworkPosition, saveArtworkPosition, type ArtworkPosition, type ArtworkSize, type ArtworkRect } from './lib/artwork-layout';
 import { t } from './lib/i18n';
 
 interface Drag { id: number; x: number; y: number; left: number; top: number; size: ArtworkSize; previous?: ArtworkPosition; moved: boolean }
 const viewport = () => ({ width: document.documentElement.clientWidth, height: window.innerHeight });
+const searchObstacles = (): ArtworkRect[] => [...document.querySelectorAll<HTMLElement>('.search-box,.filter-orb')].filter(element=>element.getClientRects().length>0).map(element=>{
+  const box = element.getBoundingClientRect(); return {left:box.left,top:box.top,width:box.width,height:box.height};
+});
 
-export function MovableArtwork({ id, className, themeClass, label, width, height, paused, children }: { id: string; className: string; themeClass: string; label: string; width: number; height: number; paused: boolean; children: ReactNode }) {
+export function MovableArtwork({ id, className, themeClass, label, width, height, displayWidth, paused, children }: { id: string; className: string; themeClass: string; label: string; width: number; height: number; displayWidth: number; paused: boolean; children: ReactNode }) {
   const anchor = useRef<HTMLSpanElement>(null);
   const button = useRef<HTMLButtonElement>(null);
   const gesture = useRef<Drag | null>(null);
@@ -14,7 +17,7 @@ export function MovableArtwork({ id, className, themeClass, label, width, height
     try { return readArtworkPosition(localStorage, id); } catch { return undefined; }
   });
   const current = useRef(position); current.current = position;
-  const [metrics, setMetrics] = useState({ width: 0, height: 0, artWidth: 0, rotation: 'none', viewport: viewport() });
+  const [metrics, setMetrics] = useState({ width: 0, height: 0, artWidth: 0, rotation: 'none', viewport: viewport(), obstacles: [] as ArtworkRect[] });
   const [dragging, setDragging] = useState(false);
   const moved = !!position;
   const previousMoved = useRef(moved);
@@ -24,13 +27,16 @@ export function MovableArtwork({ id, className, themeClass, label, width, height
       const box = element.getBoundingClientRect();
       const transform = new DOMMatrixReadOnly(getComputedStyle(element).transform);
       const rotation = `matrix(${transform.a},${transform.b},${transform.c},${transform.d},0,0)`;
-      setMetrics({ width: box.width, height: box.height, artWidth: element.offsetWidth, rotation, viewport: viewport() });
+      setMetrics({ width: box.width, height: box.height, artWidth: element.offsetWidth, rotation, viewport: viewport(), obstacles:searchObstacles() });
     };
     const observer = new ResizeObserver(measure);
     observer.observe(element);
+    const dock = element.closest('.search-dock');
+    if (dock) observer.observe(dock);
     window.addEventListener('resize', measure);
+    window.addEventListener('scroll', measure, {passive:true});
     measure();
-    return () => { observer.disconnect(); window.removeEventListener('resize', measure); };
+    return () => { observer.disconnect(); window.removeEventListener('resize', measure); window.removeEventListener('scroll',measure); };
   }, []);
   useLayoutEffect(() => {
     if (previousMoved.current === moved) return;
@@ -86,7 +92,7 @@ export function MovableArtwork({ id, className, themeClass, label, width, height
     if (!drag.moved && Math.hypot(dx, dy) < 5) return;
     drag.moved = true;
     setDragging(true);
-    const next = artworkPosition(drag.left + dx, drag.top + dy, drag.size, viewport());
+    const next = artworkPosition(drag.left + dx, drag.top + dy, drag.size, viewport(),searchObstacles());
     current.current = next; setPosition(next);
     event.preventDefault(); event.stopPropagation();
   };
@@ -98,14 +104,14 @@ export function MovableArtwork({ id, className, themeClass, label, width, height
     event.preventDefault(); event.stopPropagation();
     const box = button.current!.getBoundingClientRect();
     const step = event.shiftKey ? 24 : 8;
-    update(artworkPosition(box.left + direction[0] * step, box.top + direction[1] * step, box, viewport()));
+    update(artworkPosition(box.left + direction[0] * step, box.top + direction[1] * step, box, viewport(),searchObstacles()));
   };
   const controls = (free: boolean) => <button ref={button} type="button" className={free ? `${className} movable-artwork is-positioned` : 'movable-artwork'} aria-label={t('이미지 이동: {name}', { name: label })} aria-description={t('방향키로 이동, Home 키로 원위치')} aria-keyshortcuts="ArrowUp ArrowDown ArrowLeft ArrowRight Home" disabled={paused}
     style={free ? { position: 'absolute', left: '50%', top: '50%', right: 'auto', bottom: 'auto', width: metrics.artWidth, aspectRatio: `${width}/${height}`, transform: `translate(-50%,-50%) ${metrics.rotation === 'none' ? '' : metrics.rotation}`, transformOrigin: '50% 50%' } : undefined}
     >{children}</button>;
-  const coordinates = position && artworkCoordinates(position, metrics, metrics.viewport);
+  const coordinates = position && artworkCoordinates(position, metrics, metrics.viewport,metrics.obstacles);
   const layer = anchor.current?.closest('.app-shell');
-  return <span ref={anchor} className={`${className}${moved ? ' is-artwork-anchor' : ''}`} style={{ aspectRatio: `${width}/${height}` } as CSSProperties} data-artwork-id={id} onPointerDown={down} onPointerMove={move}
+  return <span ref={anchor} className={`${className}${moved ? ' is-artwork-anchor' : ''}`} style={{ aspectRatio: `${width}/${height}`, '--artwork-width':`${Math.min(displayWidth,160*width/height)}px` } as CSSProperties} data-artwork-id={id} onPointerDown={down} onPointerMove={move}
     onPointerUp={event => { if (gesture.current?.id === event.pointerId) finish(false); }} onPointerCancel={event => { if (gesture.current?.id === event.pointerId) finish(true); }}
     onLostPointerCapture={event => { if (event.target === anchor.current && gesture.current?.id === event.pointerId) finish(true); }} onKeyDown={keyboard}
     onClick={event => { event.preventDefault(); event.stopPropagation(); }} onDoubleClick={event => { event.preventDefault(); if (!paused) update(); }}>

@@ -1,34 +1,47 @@
-# Automatic background colors
+# Game artwork and default colors
 
-The **Automatic colors / 자동 색상** preference derives text, borders, icon and brand gradients from the selected background. Game-specific color palettes have been removed. All games use a shared neutral base (`#1b1e22`) when no custom color is saved. Existing `modfinder-theme=game` preferences become automatic without losing game artwork. Crimson remains an optional preset.
+Automatic colors uses the selected game's RGBA default in `src/shared/data/game-theme-colors.json`. Minecraft uses `#18645242`. Saved manual colors override these defaults; **기본 색상으로** restores the current game's default. Text, outlines and MF accents adapt to the color composited over the current photograph. Crimson remains optional.
 
-The representative hue follows the chosen color, while light/dark mode and foreground contrast follow its composite over a small average-color sample of the current photograph. Text receives a subtle contrast shadow as the photograph is revealed. Text, muted text and foreground accents meet a 4.5:1 contrast ratio against that composite. Changing games preserves the chosen palette. Game-specific characters and the five shuffled publisher photographs remain independent of color selection; photos crossfade every 20 seconds, pausing behind dialogs or on hidden pages. Reduced motion keeps the current photograph still.
+## Two elements per game
 
-The background swatch opens a wide custom color-picker dialog: a saturation/brightness square beside hue/opacity sliders, RGBA fields, and HEX input. Small screens stack these controls. The panel has no background fill or WebGL surface; CSS backdrop blur softens only content behind it. Its own controls stay sharp. RGB is 0–255 and alpha is 0–1; preferences save immediately as six- or eight-digit hex in `modfinder-background-color`. Alpha directly blends the chosen color treatment over the photograph in both Automatic and Crimson: zero shows the uncolored photo, one retains the color treatment, and intermediate values reveal photo detail proportionally. CSS fallback photo visibility follows the same direction. Reset clears the override. Escape, the close button and backdrop clicks dismiss only the picker, returning focus to its swatch.
+Every supported game displays exactly two representative characters, creatures or items. Game title wordmarks remain in game navigation, and are not used as home decorations.
 
-## Original artwork sources
-
-Retrieved 2026-10-28. Sources include publisher artwork, Mojang's resource pack, and in-game renders/sprites distributed by the respective wikis. Wiki-hosted renders are identified below. They are bundled locally to avoid third-party requests during use. All game artwork remains owned by the respective rights holders.
-
-| Local asset in `src/web/public/theme-art/` | Publisher source | Preparation |
+| Game | Left element | Right element |
 | --- | --- | --- |
-| `minecraft-steve.webp` | [Minecraft: What is Minecraft?](https://www.minecraft.net/en-us/about-minecraft), [original PNG](https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/game-characters/MC-About_Key-Art_Gather_Resources_600x800.png) | Transparent padding trimmed; lossless WebP. © Mojang / Microsoft. |
-| `minecraft-alex.webp` | [Minecraft: What is Minecraft?](https://www.minecraft.net/en-us/about-minecraft), [original PNG](https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/game-characters/MC-About_Key-Art_Build_Amazing_Things_600x800.png) | Alex cropped from the upper-left at (60, 72)–(255, 305); lossless WebP. © Mojang / Microsoft. |
-| `minecraft-creeper.webp` | [Minecraft Wiki: Creeper](https://minecraft.wiki/w/Creeper), [game render](https://minecraft.wiki/images/Creeper_JE3_BE1.png) | Transparent padding trimmed; lossless WebP. Game model/textures © Mojang / Microsoft. |
-| `minecraft-grass.webp` | [Minecraft Wiki: Grass Block](https://minecraft.wiki/w/Grass_Block), [game render](https://minecraft.wiki/images/Grass_Block_JE7_BE6.png) | Transparent padding trimmed; lossless WebP. Game model/textures © Mojang / Microsoft. |
-| `minecraft-diamond.webp` | [Mojang Bedrock samples](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/textures/items/diamond.png) | Original inventory sprite, transparent padding trimmed; lossless WebP. © Mojang / Microsoft. |
-| `stardew-chicken.webp` | [Stardew Valley official site](https://www.stardewvalley.net/), [original PNG](https://www.stardewvalley.net/wp-content/uploads/2017/12/cropped-chickenfavicon-192x192.png) | Lossless WebP. © ConcernedApe. |
-| `stardew-junimo.webp` | [Official Stardew Valley Wiki: Junimos](https://wiki.stardewvalley.net/Junimos), [original GIF](https://wiki.stardewvalley.net/mediawiki/images/5/57/Junimo.gif) | First frame, transparent padding trimmed; static lossless WebP. © ConcernedApe. |
-| `stardew-cat.webp` | [Official Stardew Valley Wiki: Pet](https://wiki.stardewvalley.net/Pet), [original PNG](https://wiki.stardewvalley.net/mediawiki/images/1/1e/Cat_1.png) | Transparent padding trimmed; lossless WebP. © ConcernedApe. |
-| `stardew-krobus.webp` | [Official Stardew Valley Wiki: Krobus](https://wiki.stardewvalley.net/Krobus), [original PNG](https://wiki.stardewvalley.net/mediawiki/images/7/71/Krobus.png) | Transparent padding trimmed; lossless WebP. © ConcernedApe. |
-| `stardew-stardrop.webp` | [Official Stardew Valley Wiki: Stardrop](https://wiki.stardewvalley.net/Stardrop), [original PNG](https://wiki.stardewvalley.net/mediawiki/images/a/a5/Stardrop.png) | Transparent padding trimmed; lossless WebP. © ConcernedApe. |
+| Minecraft | Steve | Diamond |
+| Stardew Valley | Junimo | Chicken |
+| Skyrim | Iron Helmet | Sweetroll |
+| Lethal Company | Employee | Hoarding Bug |
+| RimWorld | Thrumbo | Muffalo |
+| Valheim | Troll | Greydwarf |
+| Terraria | Guide | Blue Slime |
+| Project Zomboid | Spiffo | Baseball Bat |
+| Cyberpunk 2077 | Johnny Silverhand | Jackie Welles |
+| Baldur's Gate 3 | Astarion | Shadowheart |
+| Fallout 4 | Vault Boy | Nuka-Cola |
+| Risk of Rain 2 | Commando | Ukulele |
+| Cities: Skylines | Wind Turbine | Chirper |
+| Don't Starve Together | Wilson | Chester |
 
-Steve and the Junimo are the respective central representatives above the home search field, aligned with its center. The static MF brand logo is fixed at the top center across home, results, favorites, recent history, and settings; it has no hover or click animation. Companion pairs cluster around the ranking's lower corners. Compact layouts bring both pairs just below those corners, preserving the filter button's position and keeping every label clear. The representative is clipped above the transparent search field so no artwork shows through its input. Characters remain decorative and hidden from assistive technology. Only their image bounds accept pointer events; surrounding decoration layers let search and ranking controls receive input.
+Both elements rest above the search field with a clear gap. Only their image bounds accept pointer events. Dragging, keyboard movement, restored positions, scrolling and resizing keep the search field and filter button clear. Escape cancels a drag; Home or double-click resets an individual image. Removed characters are not restored from old saved positions. MF stays fixed at the top center with a 24px inset, without motion.
 
-Both game and color themes share the `Atmosphere` WebGL refraction renderer. The light shader mixes each photo into the pastel canvas before sampling the same scene through search, ranking and option-card lenses; it does not add opaque white panel fills. The default Crimson shader preserves its original photo/aurora treatment; a custom Crimson background uses the chosen canvas instead. CSS blur and gradient rims remain a fallback when WebGL is unavailable. Particle effects remain limited to color themes.
+## Original image sources
 
-Mouse motion eases the background by at most 7px horizontally and 5px vertically. Characters and logos stay still as the pointer moves elsewhere. Hovering an image plays one short squash-and-stretch hop at half its previous amplitude (7px for characters, 3px for game icons) with two expanding circular ripples; leaving and returning replays it. Touch can trigger the same reaction with a tap. Hidden pages and dialogs pause the background scene, and reduced motion disables parallax, hops, and ripples. The shared neutral default leaves explicitly saved background colors intact.
+Retrieved 2026-10-28. The 24 newly bundled original files, source pages, image URLs and CSS view bounds are recorded in [game-art-sources.json](game-art-sources.json). Images are supplied by the publishers or game wikis and remain owned by the respective rights holders. No AI-generated substitutes or wordmark substitutes are used.
 
-## Background collection
+The original pixels are preserved. Transparent padding and the second Hoarding Bug reference pose are excluded by CSS view bounds recorded in `src/shared/data/game-character-art.json`. Pixel-art assets use nearest-neighbor display.
 
-The five sources per game, dimensions, and local paths are recorded in `src/shared/data/game-theme-backgrounds.json`; assets are in `src/web/public/theme-backgrounds/`. Minecraft scenes come from the [official introduction](https://www.minecraft.net/en-us/about-minecraft) and [store gallery](https://www.minecraft.net/en-us/store/minecraft-java-bedrock-edition-pc): biomes, building, survival, a portal, and exploration. Stardew Valley scenes come from its [official homepage gallery](https://www.stardewvalley.net/): a summer farm, the night market, an autumn multiplayer farm, the mines, and spring scenery. The original color themes' separate screenshot catalog is unchanged.
+Existing Minecraft and Stardew Valley sources:
+
+- Steve: [Mojang introduction artwork](https://www.minecraft.net/content/dam/minecraftnet/games/minecraft/game-characters/MC-About_Key-Art_Gather_Resources_600x800.png), originally trimmed and stored as lossless WebP.
+- Diamond: [Mojang Bedrock samples](https://github.com/Mojang/bedrock-samples/blob/main/resource_pack/textures/items/diamond.png), originally trimmed and stored as lossless WebP.
+- Junimo: [official Stardew Valley Wiki sprite](https://wiki.stardewvalley.net/mediawiki/images/5/57/Junimo.gif), originally stored as a static first-frame lossless WebP.
+- Chicken: [official Stardew Valley site image](https://www.stardewvalley.net/wp-content/uploads/2017/12/cropped-chickenfavicon-192x192.png), originally stored as lossless WebP.
+
+Development preparation is reproducible through `tooling/scripts/collect-character-art.mjs --download` and `tooling/scripts/prepare-character-art.py` (Pillow). The Cities wiki originals can be downloaded with Playwright CLI using `tooling/scripts/fetch-city-character-images.js` when its image host requires a browser. The prepare script records alpha bounds without changing image pixels.
+
+## Scene and interaction
+
+The photo collections remain in `src/shared/data/backgrounds.json` and `src/shared/data/game-theme-backgrounds.json`. Minecraft and Stardew Valley retain their five publisher screenshots. All game elements and photos are bundled locally.
+
+Game and color themes share the Atmosphere WebGL renderer. Its glass surfaces keep colored outlines and sample the same photographic scene. CSS blur is the fallback. Background parallax stays bounded, and dialogs or hidden pages pause the scene. Hover and touch retain the short image hop and ripple, with the ripple clipped to the artwork bounds. Reduced motion disables these effects.

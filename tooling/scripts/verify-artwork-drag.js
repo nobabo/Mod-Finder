@@ -72,8 +72,8 @@ async (page) => {
       const rect = anchor.getBoundingClientRect();
       return !anchor.contains(document.elementFromPoint(rect.x + rect.width / 2, rect.y + 20));
     }), 'The original location leaves no invisible drag target');
-    await dragTo('minecraft-java:alex', 1040, 230);
-    check(await placed(steve).count() === 1 && await placed('minecraft-java:alex').count() === 1, 'Companions move independently');
+    await dragTo('minecraft-java:diamond', 1040, 230);
+    check(await placed(steve).count() === 1 && await placed('minecraft-java:diamond').count() === 1, 'Companions move independently');
     await dragTo(steve, 650, 380);
     const hit = await art(steve).evaluate(el => {
       const box = el.getBoundingClientRect();
@@ -100,7 +100,7 @@ async (page) => {
     check(JSON.parse(await stored(steve)).x > 0, 'Keyboard moves artwork');
     await tab.keyboard.press('Home');
     check(await stored(steve) === null && await placed(steve).count() === 0, 'Home resets one image to its original anchor');
-    check(await stored('minecraft-java:alex') !== null, 'Reset preserves other images');
+    check(await stored('minecraft-java:diamond') !== null, 'Reset preserves other images');
 
     await tab.getByRole('button', { name: '게임 바꾸기', exact: true }).click();
     await tab.getByRole('textbox', { name: '게임 찾기', exact: true }).fill('스타듀');
@@ -114,10 +114,10 @@ async (page) => {
     check(await stored('stardew-valley:junimo') === null, 'Double-click restores the original placement');
     await tab.goto(`${base}/?game=skyrim-se`);
     await ready();
-    await dragTo('skyrim-se:logo', 120, 150);
-    check(await stored('skyrim-se:logo') !== null, 'Other games use the same draggable behavior');
-    box = await art('skyrim-se:logo').boundingBox();
-    check(Math.abs(box.x - 120) < 2 && Math.abs(box.y - 150) < 2, 'Wordmarks do not jump when detached from their anchor');
+    await dragTo('skyrim-se:iron-helmet', 120, 150);
+    check(await stored('skyrim-se:iron-helmet') !== null, 'Other games use the same draggable behavior');
+    box = await art('skyrim-se:iron-helmet').boundingBox();
+    check(Math.abs(box.x - 120) < 2 && Math.abs(box.y - 150) < 2, 'Game items do not jump when detached from their anchor');
     await tab.screenshot({ path: 'output/playwright/skyrim-logo-dragged.png' });
 
     const mobile = await page.context().browser().newContext({ viewport: { width: 390, height: 844 }, isMobile: true, hasTouch: true, reducedMotion: 'reduce' });

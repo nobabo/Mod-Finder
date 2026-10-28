@@ -2,23 +2,41 @@ import { describe, expect, it } from 'vitest';
 import { existsSync } from 'node:fs';
 import { GAMES } from '../../src/shared/games';
 import { artworkForGame } from '../../src/web/lib/game-artwork';
-import { artworkCoordinates, artworkPosition, readArtworkPosition, saveArtworkPosition } from '../../src/web/lib/artwork-layout';
+import { artworkCoordinates, artworkPosition, readArtworkPosition, saveArtworkPosition, safeArtworkCoordinates } from '../../src/web/lib/artwork-layout';
 
 describe('movable home artwork', () => {
   it('provides bundled main-screen artwork for every supported game, keeping existing characters', () => {
     for (const game of GAMES) {
       const artwork = artworkForGame(game.id)!;
       expect(artwork, game.id).toBeDefined();
+      expect(artwork.characters).toHaveLength(2);
       expect(artwork.characters.filter(character => character.name === artwork.representative)).toHaveLength(1);
       for (const character of artwork.characters) {
         expect(existsSync(`src/web/public${character.src}`), game.id).toBe(true);
         expect(character.width).toBeGreaterThan(0);
         expect(character.height).toBeGreaterThan(0);
+        expect(character.src).toMatch(/^\/theme-art\//);
+        expect(['character','mob','item']).toContain(character.kind);
+        expect(character.crop).toHaveLength(4);
+        expect(character.crop[2]).toBeLessThanOrEqual(character.imageWidth);
+        expect(character.crop[3]).toBeLessThanOrEqual(character.imageHeight);
       }
     }
-    expect(artworkForGame('minecraft-java')?.characters).toHaveLength(5);
-    expect(artworkForGame('stardew-valley')?.characters).toHaveLength(5);
+    expect(artworkForGame('minecraft-java')?.characters.map(character=>character.name)).toEqual(['steve','diamond']);
+    expect(artworkForGame('stardew-valley')?.characters.map(character=>character.name)).toEqual(['junimo','chicken']);
     for (const id of ['all', 'unknown', '__proto__']) expect(artworkForGame(id)).toBeUndefined();
+  });
+
+  it('keeps pointer, keyboard and restored placements clear of search and filter areas', () => {
+    const viewport = {width:390,height:844}, size = {width:100,height:140};
+    const search = {left:16,top:324,width:358,height:64}, filter = {left:326,top:16,width:48,height:48};
+    const obstacles = [search,filter];
+    const clear = (point: {left:number;top:number}) => obstacles.every(box=>point.left+size.width<=box.left-12 || point.left>=box.left+box.width+12 || point.top+size.height<=box.top-12 || point.top>=box.top+box.height+12);
+    expect(clear(safeArtworkCoordinates(160,330,size,viewport,obstacles))).toBe(true);
+    const saved = artworkPosition(160,330,size,viewport,obstacles);
+    expect(clear(artworkCoordinates(saved,size,viewport,obstacles))).toBe(true);
+    expect(clear(artworkCoordinates({x:.5,y:.5},size,viewport,obstacles))).toBe(true);
+    expect(safeArtworkCoordinates(160,100,size,viewport,obstacles)).toEqual({left:160,top:100});
   });
 
   it('keeps dragged artwork fully inside the viewport and repositions it on a smaller screen', () => {

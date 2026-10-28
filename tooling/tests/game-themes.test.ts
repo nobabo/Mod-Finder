@@ -93,8 +93,8 @@ describe('game default themes', () => {
 
   it('bundles every character locally as a static WebP', () => {
     for (const theme of Object.values(GAME_THEMES)) {
-      expect(theme.characters).toHaveLength(5);
-      expect(new Set(theme.characters.map(character => character.src)).size).toBe(5);
+      expect(theme.characters).toHaveLength(2);
+      expect(new Set(theme.characters.map(character => character.src)).size).toBe(2);
       for (const character of theme.characters) {
         const path = `src/web/public${character.src}`;
         expect(existsSync(path)).toBe(true);

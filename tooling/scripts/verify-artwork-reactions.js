@@ -19,7 +19,7 @@ async (page) => {
         await tab.locator('.game-character img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
         check(Math.abs(Number(await tab.locator('.atmosphere').getAttribute('data-photo-alpha')) - parseInt(color.slice(7,9),16) / 255) < .001, 'Game default preserves its photo transparency');
         const art = tab.locator('.game-character .artwork-reaction');
-        check(await art.count() === 5, 'All five character images have reactions');
+        check(await art.count() === 2, 'Both game elements have reactions');
         const brand = tab.locator('.app-brand-header .brand-logo');
         check(await brand.evaluate(el=>el.closest('.app-brand-header').getBoundingClientRect().top===24 && !el.closest('.artwork-reaction') && getComputedStyle(el).animationName==='none'),'MF stays static at its lower position');
         const targets = [tab.locator('.game-logo.artwork-reaction'), ...await art.all()];
