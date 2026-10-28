@@ -1,13 +1,33 @@
 import { describe, expect, it } from 'vitest';
-import { backgroundPalette, contrastRatio } from '../../src/web/lib/background-color';
+import { backgroundPalette, compositeBackgroundColor, contrastRatio, normalizeBackgroundColor, parseBackgroundColor } from '../../src/web/lib/background-color';
 import { AUTO_BACKGROUND, defaultBackground, sceneAppearance, THEMES } from '../../src/web/lib/themes';
+import { GAMES } from '../../src/shared/games';
+import gameColors from '../../src/shared/data/game-theme-colors.json';
 
 describe('automatic background palette', () => {
-  it('replaces game-specific colors with one automatic preference', () => {
+  it('uses distinct RGBA defaults for every game while explicit colors override them', () => {
     expect(THEMES[0].ko).toBe('자동 색상');
-    for (const game of ['minecraft-java','stardew-valley','valheim','all']) {
-      expect(defaultBackground('game',game)).toBe(AUTO_BACKGROUND);
-      expect(sceneAppearance('game',game,'#a5c5e5')).toEqual(sceneAppearance('game','minecraft-java','#a5c5e5'));
+    expect(Object.keys(gameColors).sort()).toEqual(GAMES.map(game => game.id).sort());
+    expect(defaultBackground('game','minecraft-java')).toBe('#18645242');
+    expect(new Set(Object.values(gameColors)).size).toBe(GAMES.length);
+    for (const game of GAMES) {
+      const color = defaultBackground('game',game.id);
+      expect(normalizeBackgroundColor(color)).toBe(color);
+      expect(parseBackgroundColor(color).a).toBeGreaterThan(0);
+      expect(parseBackgroundColor(color).a).toBeLessThan(1);
+      expect(sceneAppearance('game',game.id)?.alpha).toBe(parseBackgroundColor(color).a);
+      expect(sceneAppearance('game',game.id,'#a5c5e5')).toEqual(sceneAppearance('game','minecraft-java','#a5c5e5'));
+    }
+    for (const game of ['all','unknown','__proto__']) expect(defaultBackground('game',game)).toBe(AUTO_BACKGROUND);
+  });
+  it('keeps renderer colors and contrast in step for game defaults on bright and dark photos', () => {
+    for (const game of GAMES) for (const photo of ['#f1e8d4','#101820']) {
+      const color = defaultBackground('game',game.id), appearance = sceneAppearance('game',game.id,undefined,photo)!;
+      const composite = compositeBackgroundColor(color,photo);
+      const expected = backgroundPalette(composite,color.slice(0,7));
+      expect(appearance.primary).toBe(expected.primary);
+      expect(appearance.light).toBe(expected.light);
+      for (const foreground of [expected.primary,expected.secondary,expected.text,expected.muted]) expect(contrastRatio(foreground,composite)).toBeGreaterThanOrEqual(4.5);
     }
   });
   it('keeps text, muted text and foreground accents readable across bright, dark and saturated colors', () => {

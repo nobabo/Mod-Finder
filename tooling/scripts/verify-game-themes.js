@@ -33,8 +33,19 @@ async (page) => {
           const box = form.getBoundingClientRect();
           const representative = art.querySelector('.is-representative').getBoundingClientRect();
           const ranking = document.querySelector('.ranking-panel');
+          const rankBox = ranking.getBoundingClientRect();
           const companions = [...ranking.querySelectorAll('.is-companion')].map(el => el.getBoundingClientRect());
-          const text = [...ranking.querySelectorAll('.ranking-tabs button,.ranking-list strong,.ranking-pagination,.title-button')].map(el => el.getBoundingClientRect());
+          const decorations = [...document.querySelectorAll('.game-characters .is-companion')].map(el => el.getBoundingClientRect());
+          const text = [];
+          const walker = document.createTreeWalker(ranking, NodeFilter.SHOW_TEXT);
+          while (walker.nextNode()) if (walker.currentNode.textContent.trim()) {
+            const range = document.createRange(); range.selectNodeContents(walker.currentNode);
+            text.push(...range.getClientRects());
+          }
+          const upperRight = art.querySelector('.artwork-search-top-right').getBoundingClientRect();
+          const lowerRight = art.querySelector('.artwork-search-bottom-right').getBoundingClientRect();
+          const upperLeft = ranking.querySelector('.artwork-ranking-top-left').getBoundingClientRect();
+          const rankLowerRight = ranking.querySelector('.artwork-ranking-bottom-right').getBoundingClientRect();
           const filter = document.querySelector('.filter-orb').getBoundingClientRect();
           const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
           const transparent = el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).backgroundImage === 'none';
@@ -45,13 +56,14 @@ async (page) => {
             photo: scene.dataset.background,
             photos: Number(scene.dataset.backgroundCount),
             representatives: art.querySelectorAll('.is-representative').length,
-            above: [...art.children].filter(el => el.getBoundingClientRect().top < box.top).length,
-            centered: Math.abs(representative.x + representative.width / 2 - box.x - box.width / 2) < 15,
-            foreground: Number(getComputedStyle(form).zIndex) > Number(getComputedStyle(art).zIndex),
+            searchCorners: representative.left >= box.left && representative.right < box.left + box.width * .45 && representative.top < box.top && upperRight.right <= box.right && upperRight.left > box.left + box.width * .6 && Math.abs(upperRight.bottom - box.top) < 18 && Math.abs(lowerRight.right - box.right) < 12 && lowerRight.top > box.top,
+            foreground: Number(getComputedStyle(art).zIndex) > Number(getComputedStyle(form).zIndex),
             companions: companions.length,
-            rankingCorners: companions.every(rect => rect.top >= ranking.getBoundingClientRect().top),
-            textClear: companions.every(rect => text.every(label => !overlaps(rect, label))),
-            filterClear: companions.every(rect => !overlaps(rect, filter)),
+            rankingCorners: upperLeft.left < rankBox.left && upperLeft.top < rankBox.top && rankLowerRight.left > rankBox.left + rankBox.width * .6 && rankLowerRight.bottom >= rankBox.bottom,
+            textClear: decorations.every(rect => text.every(label => !overlaps(rect, label))),
+            filterClear: decorations.every(rect => !overlaps(rect, filter)),
+            artworkInView: decorations.every(rect => rect.left >= 0 && rect.right <= innerWidth),
+            brandTop: document.querySelector('.app-brand-header').getBoundingClientRect().top,
             transparentSurfaces: transparent(form) && transparent(ranking),
             border: getComputedStyle(form, '::after').backgroundImage,
             overflow: document.documentElement.scrollWidth > innerWidth,
@@ -63,9 +75,10 @@ async (page) => {
         const report = await inspect();
         check(report.game === (game === 'minecraft-java' ? 'minecraft' : 'stardew'), 'Game palette follows selection');
         check(report.photo.includes(game) && report.photos === 5, 'Five matching photographs');
-        check(report.representatives === 1 && report.above === 1 && report.centered, 'One representative centered above search');
-        check(report.foreground && report.border.includes('gradient'), 'Search and glass border are above characters');
-        check(report.companions === 4 && report.rankingCorners && report.textClear && report.filterClear, 'Companions stay at ranking corners, clear of text and filter');
+        check(report.representatives === 1 && report.searchCorners, 'Artwork follows the reference search corners');
+        check(report.foreground && report.border.includes('gradient'), 'Full artwork remains visible over the search outline');
+        check(report.companions === 2 && report.rankingCorners && report.textClear && report.filterClear, 'Ranking corner artwork keeps text and filter clear');
+        check(report.artworkInView && report.brandTop === 24, 'Artwork stays in view and MF is lowered by 16px');
         check(report.transparentSurfaces, 'Search and ranking have no white fill');
         check(!report.overflow && report.webgl && report.refractedPixels, 'Actual WebGL refraction without overflow');
         await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-final.png` });

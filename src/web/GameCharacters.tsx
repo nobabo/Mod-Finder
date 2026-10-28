@@ -10,9 +10,9 @@ export function GameCharacters({ gameId, placement = 'search' }: { gameId: strin
   const theme = artworkForGame(gameId);
   if (!theme) return null;
   const game = getGame(gameId)!;
-  const characters = theme.characters.filter(character => (character.name === theme.representative) === (placement === 'search'));
+  const characters = theme.characters.filter(character => character.anchor.startsWith(placement));
   return <div className={`game-characters game-characters-${placement} characters-${theme.id}`}>
-    {characters.map((character, index) => <MovableArtwork key={`${gameId}:${character.name}`} id={`${gameId}:${character.name}`} width={character.width} height={character.height} themeClass={`characters-${theme.id}`} label={`${locale === 'ko' ? game.koreanName : game.name} ${character.logo ? '' : character.name}`.trim()} paused={paused} className={`game-character character-${character.name} ${character.logo ? `is-game-wordmark logo-${gameId}` : ''} ${placement === 'search' ? 'is-representative' : `is-companion companion-${index}`}`}>
+    {characters.map(character => <MovableArtwork key={`${gameId}:${character.name}`} id={`${gameId}:${character.name}`} width={character.width} height={character.height} themeClass={`characters-${theme.id}`} label={`${locale === 'ko' ? game.koreanName : game.name} ${character.logo ? '' : character.name}`.trim()} paused={paused} className={`game-character character-${character.name} artwork-${character.anchor} ${character.logo ? `is-game-wordmark logo-${gameId}` : ''} ${character.name === theme.representative ? 'is-representative' : 'is-companion'}`}>
       <ArtworkReaction className="character-art"><img src={character.src} width={character.width} height={character.height} alt="" draggable={false} decoding="async" /></ArtworkReaction>
     </MovableArtwork>)}
   </div>;

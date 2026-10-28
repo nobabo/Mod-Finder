@@ -38,7 +38,7 @@ async (page) => {
     for (const game of games) {
       await tab.goto(`${base}/?game=${game}`);
       await ready();
-      const representative = tab.locator('.game-characters-search .movable-artwork');
+      const representative = tab.locator('.game-characters-search .is-representative>.movable-artwork');
       check(await representative.count() === 1, `${game}: has one main image`);
       check(await representative.locator('img').evaluate(img => img.naturalWidth > 0), `${game}: bundled image decodes`);
       check(await tab.locator('.movable-artwork:focus-visible').count() === 0, `${game}: initial artwork does not steal keyboard focus`);

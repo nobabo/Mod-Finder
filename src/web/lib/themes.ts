@@ -1,5 +1,6 @@
 import { updateBrandIcon } from './brand';
 import { gameThemeFor } from './game-themes';
+import gameColors from '../../shared/data/game-theme-colors.json';
 import { backgroundPalette, compositeBackgroundColor, normalizeBackgroundColor, parseBackgroundColor } from './background-color';
 
 const palette = [['crimson','크림슨','Crimson','#ef3e55','#ff8145']] as const;
@@ -10,16 +11,21 @@ const colorThemes = palette.map(([id,ko,en,primary,secondary]) => ({id,ko,en,pri
 export const THEMES = [{...colorThemes[0],id:'game',ko:'자동 색상',en:'Automatic',grad:'linear-gradient(135deg,#788894,#c4cbd0)'},...colorThemes];
 export const themeById = (id: string) => colorThemes.find(theme => theme.id === id) ?? colorThemes[0];
 export const AUTO_BACKGROUND = '#1b1e22';
-export function defaultBackground(id: string, _gameId = ''): string { return id === 'game' ? AUTO_BACKGROUND : '#130507'; }
+export function defaultBackground(id: string, gameId = ''): string {
+  return id === 'game' ? Object.hasOwn(gameColors,gameId) ? gameColors[gameId as keyof typeof gameColors] : AUTO_BACKGROUND : '#130507';
+}
+function backgroundAppearance(id: string, gameId: string, backgroundColor?: string, photoColor?: string) {
+  const custom = normalizeBackgroundColor(backgroundColor);
+  const color = custom ?? defaultBackground(id,gameId), rgba = parseBackgroundColor(color);
+  const canvas = color.slice(0,7), under = photoColor ?? (id === 'game' ? AUTO_BACKGROUND : '#130507');
+  const visible = compositeBackgroundColor(color,under);
+  const colors = backgroundPalette(visible,rgba.a === 0 ? under : canvas);
+  return {custom,rgba,canvas,visible,colors};
+}
 export function sceneAppearance(id: string, gameId: string, backgroundColor?: string, photoColor?: string) {
-  const custom = normalizeBackgroundColor(backgroundColor), base = defaultBackground(id,gameId);
-  const rgba = custom ? parseBackgroundColor(custom) : undefined;
-  if (id !== 'game' && !rgba) return undefined;
-  const canvas = custom ? custom.slice(0,7) : base;
-  const under = photoColor ?? base;
-  const visible = custom ? compositeBackgroundColor(custom,under) : base;
-  const colors = backgroundPalette(visible,rgba?.a === 0 ? under : canvas);
-  return {canvas,alpha:rgba?.a ?? 1,primary:colors.primary,secondary:colors.secondary,photoOpacity:.18,light:colors.light};
+  const {custom,rgba,canvas,colors} = backgroundAppearance(id,gameId,backgroundColor,photoColor);
+  if (id !== 'game' && !custom) return undefined;
+  return {canvas,alpha:rgba.a,primary:colors.primary,secondary:colors.secondary,photoOpacity:.18,light:colors.light};
 }
 export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
   try {
@@ -33,12 +39,8 @@ export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
 export function applyTheme(id: string, gameId = '', backgroundColor?: string, photoColor?: string) {
   const root = document.documentElement, style = root.style;
   const game = id === 'game' ? gameThemeFor(gameId) : undefined;
-  const custom = normalizeBackgroundColor(backgroundColor), base = defaultBackground(id,gameId);
-  const under = photoColor ?? base;
-  const canvas = custom ? compositeBackgroundColor(custom,under) : base;
-  const representative = custom ? parseBackgroundColor(custom).a > 0 ? custom.slice(0,7) : under : base;
-  const colors = backgroundPalette(canvas,representative);
-  const reveal = custom ? 1-parseBackgroundColor(custom).a : 0;
+  const {visible:canvas,rgba,colors} = backgroundAppearance(id,gameId,backgroundColor,photoColor);
+  const reveal = 1-rgba.a;
   const shadow = reveal > 0 ? `0 1px 3px rgba(${colors.light ? '255,255,255' : '0,0,0'},${.8*reveal})` : 'none';
   root.dataset.accent = themeById(id).id;
   root.dataset.autoTheme = 'true';

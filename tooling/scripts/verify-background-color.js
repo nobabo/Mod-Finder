@@ -15,7 +15,7 @@ async (page) => {
       const openPicker = async()=>{await button('색상 선택').click();await picker().waitFor();};
       const stored = () => tab.evaluate(()=>localStorage.getItem('modfinder-background-color'));
       const choose = async hex => {await picker().getByRole('textbox',{name:'HEX',exact:true}).fill(hex);await tab.waitForFunction(value=>localStorage.getItem('modfinder-background-color')===value,hex);};
-      for(const [game,defaultColor,halfColor] of [['minecraft-java','#1b1e22','#16202b'],['stardew-valley','#1b1e22','#16202b']]) {
+      for(const [game,defaultColor] of [['minecraft-java','#18645242'],['stardew-valley','#8a5a2442']]) {
         await tab.goto(`${base}/?game=${game}`);await tab.locator('.atmosphere.is-ready').waitFor();await openTheme();
         check(await tab.locator('.theme-options button').count()===2,'Two theme presets');
         check(await button('기본 색상으로').isDisabled(),'No override initially');
@@ -56,6 +56,7 @@ async (page) => {
         await choose('#ffffff80');await picker().getByRole('button',{name:'닫기',exact:true}).click();
         await button('기본 색상으로').click();await tab.waitForFunction(()=>localStorage.getItem('modfinder-background-color')===null);
         await button('자동 색상').click();await openPicker();
+        check(await picker().getByRole('textbox',{name:'HEX',exact:true}).inputValue()===defaultColor,'Reset restores the selected game RGBA default');
         if(mobile){await tab.setViewportSize({width:320,height:740});check(await picker().evaluate(el=>el.getBoundingClientRect().right<=innerWidth),'Picker fits 320px mobile');await tab.screenshot({path:`output/playwright/${game}-narrow-rgba-picker.png`});await tab.setViewportSize({width:390,height:844});}
         await tab.mouse.click(2,2);check(await picker().count()===0,'Backdrop dismisses picker');
         check(!await tab.locator('html').evaluate(el=>el.scrollWidth>innerWidth),'No horizontal overflow');

@@ -24,7 +24,7 @@ html:is([data-light-theme],[data-auto-theme]) * { scrollbar-color:rgba(var(--tin
 html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { background:rgba(var(--tint-rgb),.4);background-clip:padding-box; }
 
 .game-characters { position:absolute;inset:0;z-index:1;pointer-events:none;user-select:none; }
-.game-characters-search { top:auto;bottom:calc(100% + 2px);height:170px;overflow:hidden; }
+.game-characters-search { z-index:3;overflow:visible; }
 .game-character { position:absolute;display:block;pointer-events:auto;filter:drop-shadow(0 3px 1px rgba(50,67,40,.08)); }
 .game-character img { display:block;width:100%;height:auto; }
 .game-character.is-artwork-anchor { pointer-events:none; }
@@ -36,17 +36,17 @@ html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { backgr
 .game-artwork-layer.is-dragging { z-index:31; }
 .game-artwork-layer.is-dragging .movable-artwork { cursor:grabbing; }
 .game-artwork-layer .movable-artwork { height:auto;pointer-events:auto; }
-.is-game-wordmark { width:clamp(180px,24vw,240px);left:50%;bottom:12px;transform:translateX(-50%); }
+.is-game-wordmark { width:clamp(180px,24vw,240px);left:16px;bottom:calc(100% + 12px); }
 .is-game-wordmark.logo-lethal-company img { filter:invert(1); }
 .character-art { display:block; }
-.character-steve { width:128px;left:calc(50% - 64px);bottom:-52px;transform:rotate(-3deg); }
-.character-junimo { width:72px;left:calc(50% - 36px);bottom:-8px; }
+.character-steve { width:128px;left:16px;bottom:calc(100% - 44px);transform:rotate(-3deg); }
+.character-junimo { width:72px;left:28px;bottom:calc(100% - 8px); }
 .characters-stardew img,.character-grass img,.character-diamond img { image-rendering:pixelated; }
-/* Companions belong to the ranking's outer corners, clear of search and filter. */
-.game-characters-ranking .companion-0 { right:calc(100% + 8px);bottom:-2px;transform:rotate(-7deg);transform-origin:100% 100%; }
-.game-characters-ranking .companion-1 { left:calc(100% + 8px);bottom:-2px;transform:rotate(7deg);transform-origin:0 100%; }
-.game-characters-ranking .companion-2 { left:4px;top:calc(100% + 10px);transform:rotate(-8deg); }
-.game-characters-ranking .companion-3 { right:6px;top:calc(100% + 12px);transform:rotate(8deg); }
+/* Default artwork follows the search and ranking edges; saved drags use the free layer. */
+.game-characters-search .artwork-search-top-right { right:48px;bottom:calc(100% - 4px);transform:rotate(7deg); }
+.game-characters-search .artwork-search-bottom-right { right:-4px;top:calc(100% - 34px);transform:rotate(8deg); }
+.game-characters-ranking .artwork-ranking-top-left { left:-30px;top:-18px;transform:rotate(-8deg); }
+.game-characters-ranking .artwork-ranking-bottom-right { left:calc(100% - 4px);bottom:-2px;transform:rotate(-7deg); }
 .character-alex { width:78px; }
 .character-creeper { width:46px; }
 .character-grass { width:58px; }
@@ -131,10 +131,6 @@ html:is([data-light-theme],[data-auto-theme]) .folder-modal::before { display:no
   .home-collections { top:auto;margin-top:24px; }
 }}
 @media(max-width:1100px) { :where(html:not([data-native]))[data-game-theme] {
-  .game-characters-ranking .companion-0 { left:2px;right:auto;bottom:auto;top:calc(100% + 8px); }
-  .game-characters-ranking .companion-1 { left:auto;right:2px;bottom:auto;top:calc(100% + 8px); }
-  .game-characters-ranking .companion-2 { left:56px;right:auto;top:calc(100% + 32px); }
-  .game-characters-ranking .companion-3 { left:auto;right:54px;top:calc(100% + 34px); }
   .character-alex { width:54px; }
   .character-creeper { width:34px; }
   .character-grass { width:42px; }
@@ -144,11 +140,16 @@ html:is([data-light-theme],[data-auto-theme]) .folder-modal::before { display:no
   .character-krobus { width:34px; }
   .character-stardrop { width:28px; }
 }}
+@media(max-width:850px) { :where(html:not([data-native]))[data-game-theme] {
+  .game-characters-ranking .artwork-ranking-bottom-right { left:auto;right:-4px;bottom:auto;top:calc(100% - 4px); }
+}}
 @media(max-width:650px) { :where(html:not([data-native]))[data-game-theme] {
   .content:has(.search-dock.hero) { padding-top:max(124px,calc(42dvh - var(--mobile-header-height) - env(safe-area-inset-top) - 32px)); }
-  .game-characters-search { height:130px; }
-  .character-steve { width:104px;left:calc(50% - 52px);bottom:-42px; }
-  .character-junimo { width:60px;left:calc(50% - 30px);bottom:-6px; }
+  .character-steve { width:104px;left:8px;bottom:calc(100% - 22px); }
+  .character-junimo { width:60px;left:18px;bottom:calc(100% - 4px); }
+  .game-characters-search .artwork-search-top-right { right:32px; }
+  .game-characters-search .artwork-search-bottom-right { right:2px;top:calc(100% - 20px); }
+  .game-characters-ranking .artwork-ranking-top-left { left:-12px;top:-8px; }
 }}
 @media(max-height:500px) { html[data-game-theme] {
   .game-characters { display:none; }
@@ -204,7 +205,7 @@ html:is([data-light-theme],[data-auto-theme])[data-glass="fallback"] :is(.search
   .background-color-control { gap:10px;padding:10px 12px; }
 }
 
-.app-brand-header { position:fixed;top:calc(8px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:90;line-height:0; }
+.app-brand-header { position:fixed;top:calc(24px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:90;line-height:0; }
 .app-brand-header .brand-logo { width:76px;height:76px; }
 html[data-photo-reveal] :is(.search-box input,.ranking-panel button,.ranking-panel strong,.rank-number) { text-shadow:var(--photo-text-shadow); }
 .app-shell { --page-brand-space:96px; }
