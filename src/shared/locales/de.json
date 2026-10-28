@@ -252,5 +252,7 @@
   "채도와 명도": "Sättigung und Helligkeit",
   "색조": "Farbton",
   "불투명도": "Deckkraft",
-  "자동 색상": "Automatische Farben"
+  "자동 색상": "Automatische Farben",
+  "이미지 이동: {name}": "Bild verschieben: {name}",
+  "방향키로 이동, Home 키로 원위치": "Mit Pfeiltasten bewegen; Pos1 setzt die Position zurück"
 }
