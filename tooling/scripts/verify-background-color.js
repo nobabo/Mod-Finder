@@ -15,7 +15,7 @@ async (page) => {
       const openPicker = async()=>{await button('색상 선택').click();await picker().waitFor();};
       const stored = () => tab.evaluate(()=>localStorage.getItem('modfinder-background-color'));
       const choose = async hex => {await picker().getByRole('textbox',{name:'HEX',exact:true}).fill(hex);await tab.waitForFunction(value=>localStorage.getItem('modfinder-background-color')===value,hex);};
-      for(const [game,defaultColor] of [['minecraft-java','#186452b3'],['stardew-valley','#8a5a24b3']]) {
+      for(const [game,defaultColor] of [['minecraft-java','#186452b3'],['stardew-valley','#503515e6']]) {
         await tab.goto(`${base}/?game=${game}`);await tab.locator('.atmosphere.is-ready').waitFor();await openTheme();
         check(await tab.locator('.theme-options button').count()===2,'Two theme presets');
         check(await button('기본 색상으로').isDisabled(),'No override initially');
