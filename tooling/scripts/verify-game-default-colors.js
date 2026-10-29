@@ -3,11 +3,11 @@ async (page) => {
   const base = new URL(page.url()).origin;
   const check = (condition, message) => { if (!condition) throw Error(message); };
   const defaults = [
-    ['minecraft-java', '#18645266'], ['stardew-valley', '#50351566'], ['skyrim-se', '#27465f66'],
-    ['lethal-company', '#722d2466'], ['rimworld', '#44376266'], ['valheim', '#28524866'],
-    ['terraria', '#356f2966'], ['project-zomboid', '#4c542866'], ['cyberpunk-2077', '#8a741a66'],
-    ['baldurs-gate-3', '#65422266'], ['fallout-4', '#214d7666'], ['risk-of-rain-2', '#1f647666'],
-    ['cities-skylines', '#164e6366'], ['dont-starve-together', '#59432d66'],
+    ['minecraft-java', '#1864524d'], ['stardew-valley', '#5035154d'], ['skyrim-se', '#27465f4d'],
+    ['lethal-company', '#722d244d'], ['rimworld', '#4437624d'], ['valheim', '#2852484d'],
+    ['terraria', '#356f294d'], ['project-zomboid', '#4c54284d'], ['cyberpunk-2077', '#8a741a4d'],
+    ['baldurs-gate-3', '#6542224d'], ['fallout-4', '#214d764d'], ['risk-of-rain-2', '#1f64764d'],
+    ['cities-skylines', '#164e634d'], ['dont-starve-together', '#59432d4d'],
   ];
   const context = await page.context().browser().newContext({ viewport: { width: 1536, height: 960 }, reducedMotion: 'reduce' });
   try {
@@ -49,11 +49,11 @@ async (page) => {
     await picker().getByRole('button', { name: '닫기', exact: true }).click();
     await button('기본 색상').click();
     await button('커스텀 색상').click();
-    check(await picker().getByRole('textbox', { name: 'HEX', exact: true }).inputValue() === '#27465f66', 'Reset restores the current game default');
+    check(await picker().getByRole('textbox', { name: 'HEX', exact: true }).inputValue() === '#27465f4d', 'Reset restores the current game default');
     await tab.reload();
     await tab.locator('.atmosphere.is-ready').waitFor();
     await openPicker();
-    check(await picker().getByRole('textbox', { name: 'HEX', exact: true }).inputValue() === '#27465f66', 'Reset survives reload');
+    check(await picker().getByRole('textbox', { name: 'HEX', exact: true }).inputValue() === '#27465f4d', 'Reset survives reload');
     check(errors.length === 0, errors.join(', '));
     return { passed: true, reports, override: true, reset: true, errors };
   } finally { await context.close(); }
