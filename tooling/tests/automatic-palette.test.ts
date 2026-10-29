@@ -8,15 +8,16 @@ describe('automatic background palette', () => {
   it('uses distinct RGBA defaults for every game while explicit colors override them', () => {
     expect(THEMES[0].ko).toBe('기본 색상');
     expect(Object.keys(gameColors).sort()).toEqual(GAMES.map(game => game.id).sort());
-    expect(defaultBackground('game','minecraft-java')).toBe('#18645242');
+    expect(defaultBackground('game','minecraft-java')).toBe('#186452b3');
     expect(new Set(Object.values(gameColors)).size).toBe(GAMES.length);
     for (const game of GAMES) {
       const color = defaultBackground('game',game.id);
       expect(normalizeBackgroundColor(color)).toBe(color);
-      expect(parseBackgroundColor(color).a).toBeGreaterThan(0);
+      expect(parseBackgroundColor(color).a).toBeGreaterThanOrEqual(.7);
       expect(parseBackgroundColor(color).a).toBeLessThan(1);
       expect(sceneAppearance('game',game.id)?.alpha).toBe(parseBackgroundColor(color).a);
       expect(sceneAppearance('game',game.id,'#a5c5e5')).toEqual(sceneAppearance('game','minecraft-java','#a5c5e5'));
+      expect(sceneAppearance('game',game.id,'#ffffff80','#f1e8d4')).toEqual(sceneAppearance('game','minecraft-java','#ffffff80','#f1e8d4'));
     }
     for (const game of ['all','unknown','__proto__']) expect(defaultBackground('game',game)).toBe(AUTO_BACKGROUND);
   });

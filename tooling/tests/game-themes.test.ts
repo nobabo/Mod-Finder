@@ -30,7 +30,7 @@ describe('game default themes', () => {
     vi.stubGlobal('document', { documentElement: root, querySelector: () => null });
     applyTheme('game', 'minecraft-java');
     expect(root.dataset.gameTheme).toBe('minecraft');
-    expect(values.get('--canvas')).toBe(compositeBackgroundColor('#18645242',AUTO_BACKGROUND));
+    expect(values.get('--canvas')).toBe(compositeBackgroundColor(defaultBackground('game','minecraft-java'),AUTO_BACKGROUND));
     expect(values.get('--brand-start')).toBe(backgroundPalette(values.get('--canvas')!,'#186452').primary);
     expect(root.dataset.photoReveal).toBe('true');
     expect(values.get('color-scheme')).toBe('dark');

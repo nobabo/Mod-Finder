@@ -13,7 +13,7 @@ async (page) => {
       const tab = await context.newPage();
       const errors = [];
       tab.on('pageerror', error => errors.push(error.message));
-      for (const [game, color] of [['minecraft-java', '#18645242'], ['stardew-valley', '#8a5a2442']]) {
+      for (const [game, color] of [['minecraft-java', '#186452b3'], ['stardew-valley', '#8a5a24b3']]) {
         await tab.goto(`${base}/?game=${game}`);
         await tab.locator('.atmosphere.is-ready').waitFor();
         await tab.locator('.game-character img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
@@ -23,7 +23,19 @@ async (page) => {
         const brand = tab.locator('.app-brand-header .brand-logo');
         check(await brand.evaluate(el=>el.closest('.app-brand-header').getBoundingClientRect().top===56 && !el.closest('.artwork-reaction') && getComputedStyle(el).animationName==='none'),'MF stays static at its lower position');
         const targets = [tab.locator('.game-logo.artwork-reaction'), ...await art.all()];
-        const react = async target => { const hit=await target.evaluate(el=>{const box=el.getBoundingClientRect();return {x:box.x+box.width/2,y:box.y+box.height/2};}); if(mobile)await tab.touchscreen.tap(hit.x,hit.y);else await tab.mouse.move(hit.x,hit.y); };
+        const react = async target => {
+          const hit = await target.evaluate(el => {
+            const box = el.getBoundingClientRect();
+            for (const y of [.5, .25, .75, .1, .9]) for (const x of [.5, .25, .75, .1, .9]) {
+              const point = { x: box.x + box.width * x, y: box.y + box.height * y };
+              const top = document.elementFromPoint(point.x, point.y);
+              if (top && (top === el || el.contains(top))) return point;
+            }
+            return null;
+          });
+          check(hit, 'Artwork has a reachable pointer position');
+          if (mobile) await tab.touchscreen.tap(hit.x, hit.y); else await tab.mouse.move(hit.x, hit.y);
+        };
         for (let index = 0; index < targets.length; index++) {
           const target = targets[index];
           await react(target);
