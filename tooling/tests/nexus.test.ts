@@ -58,6 +58,12 @@ it('respects unsupported games and the operator disable switch', async () => {
   expect(await (await disabled.api(path())).json()).toMatchObject({ status: 'disabled' });
   expect(disabled.fetcher).not.toHaveBeenCalled();
 });
+it('does not claim Nexus applied unsupported project types', async () => {
+  const { api } = setup();
+  const result = await (await api(path({ ...req, filters: { kind: 'shader' } }))).json() as SearchResult;
+  expect(result.appliedFilters).toEqual({});
+  expect(result.unsupportedFilters).toContain('kind');
+});
 it.each([['relevance', 'relevance'], ['popular', 'downloads'], ['updated', 'updatedAt']] as const)('forwards %s sorting', async (sort, field) => {
   const { api, fetcher } = setup(); await api(path({ ...req, sort }));
   expect(JSON.parse(String(fetcher.mock.calls[0][1]?.body)).variables.sort).toEqual([{ [field]: { direction: 'DESC' } }, { name: { direction: 'ASC' } }, { createdAt: { direction: 'ASC' } }]);

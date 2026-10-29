@@ -1,0 +1,727 @@
+[
+  {
+    "key": "thunderstore:valheim:Feierabendbier-Germania",
+    "original": "Modpack für den Feierabendserver Germania Feierabend.",
+    "korean": "Germania Feierabend 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Valgard_Valley-Valgard_Valley",
+    "original": "Модпак для українського сервера Valgard Valley",
+    "korean": "우크라이나 Valgard Valley 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:DPSOVS-DPSO",
+    "original": "Mod Pack for DPSO Valheim 2024 Run",
+    "korean": "DPSO의 2024년 발헤임 플레이용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Storsele_Gubbar-StorseleServer",
+    "original": "Northen Sweden private server mod pack.",
+    "korean": "스웨덴 북부의 비공개 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Vikings_Brasil-Vikings_Brasil_Admin",
+    "original": "Pacote de mods para administração do servidor Vikings Brasil. (não use em seu pacote de cliente)",
+    "korean": "Vikings Brasil 서버 관리용 모드 모음입니다. 클라이언트용 팩에는 사용하지 마세요."
+  },
+  {
+    "key": "thunderstore:valheim:ClubN_Creadores_Contenido-ClubN_VikingoBuscaEsposa_Server_Modpack",
+    "original": "Modpack para acceder al servidor gratuito de Vikingo busca Esposa de ClubÑ para creadores de contenido hispanohablantes",
+    "korean": "스페인어권 콘텐츠 제작자를 위한 ClubÑ의 무료 Vikingo busca Esposa 서버에 접속하는 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Valhabba-Valhabba_Modpack",
+    "original": "Modpack du Valhabba",
+    "korean": "Valhabba용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Kabifail-Kabifail_modpack",
+    "original": "Kello, kuolinilmoitukset, kierrätys, helpompi istutus, craftaa laatikoista, hiparit näkyviin jne...",
+    "korean": "시계, 사망 알림, 재활용, 편리한 심기, 상자 안 재료로 제작하기, HP 표시 등을 제공합니다."
+  },
+  {
+    "key": "thunderstore:valheim:ankemp-Pineappleheim_Modpack",
+    "original": "Pineappleheim server modpack",
+    "korean": "Pineappleheim 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:prozarkk-VALHEIM_ARENA_PVP",
+    "original": "Modpack para el servidor VALHEIM ARENA PVP",
+    "korean": "VALHEIM ARENA PVP 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:KyriosGaming-KyriosGaming",
+    "original": "Modpack for Kyrios Gaming",
+    "korean": "Kyrios Gaming용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:DangerZone-KeebsServer_Modpack",
+    "original": "Coming back to Valheim, adding content",
+    "korean": "발헤임에 돌아와 콘텐츠를 더해 즐기는 구성입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Stonebirds-StoneBirds_Valheim",
+    "original": "New Mod pack after 3.0.0",
+    "korean": "3.0.0 이후의 새로운 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:ImmernDarNew-ImmernDarNew_Modpack",
+    "original": "Modpack für den ImmernDar Server",
+    "korean": "ImmernDar 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:KO_Teknik-TekHard_Server_Modpack",
+    "original": "Modpack officiel du serveur TekHard Valheim (hardcore, no-map, progression lente).",
+    "korean": "하드코어·지도 없음·느린 진행을 적용한 TekHard Valheim 서버의 공식 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Leucotsu-Astraheim_Epicloot",
+    "original": "Интересная и веселая сборка для игры с друзьями, постарайтесь выжить в мире Valheim!",
+    "korean": "친구들과 즐길 수 있는 흥미롭고 재미있는 모드 구성입니다. 발헤임의 세계에서 살아남아 보세요."
+  },
+  {
+    "key": "thunderstore:valheim:sighsorry-AlmostVanilla",
+    "original": "vanillaish modpack",
+    "korean": "바닐라에 가까운 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Dzk-WarheimFR",
+    "original": "French PvP Server - Warheim",
+    "korean": "프랑스어 PvP 서버 Warheim용 구성입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Mairya-Mairya_Better_Play_Valheim_Pack",
+    "original": "【重要大版本更新警告】本次为重大版本升级！请**完全卸载旧版本全部模组之后，再安装本整合包**，直接覆盖会引发报错、存档异常、功能失效。\n英灵神殿综合体验整合包｜QoL便利、建筑拓展、魔法战斗、MMO成长，自带全套简体中文汉化，适配多人联机",
+    "korean": "중요: 이번 업데이트는 큰 버전 변경입니다. 기존 버전의 모든 모드를 완전히 제거한 뒤 이 모드팩을 설치하세요. 그대로 덮어쓰면 오류, 저장 파일 이상, 기능 장애가 발생할 수 있습니다. 편의 기능·건축 확장·마법 전투·MMO 성장 요소를 담은 발헤임 종합 모드팩으로, 중국어 간체 번역과 멀티플레이를 지원합니다."
+  },
+  {
+    "key": "thunderstore:valheim:Gandalf_Mithrandir-Middle_Earth_Server_S2",
+    "original": "Join DISCORD Channel link Below",
+    "korean": "아래 링크의 Discord 채널에 참여하세요."
+  },
+  {
+    "key": "thunderstore:valheim:Hefez-ValheimMlecznaChatka",
+    "original": "Paczka modów Mlecznej Chatki",
+    "korean": "Mleczna Chatka의 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanMassive",
+    "original": "Modpack for SanMassive Valheim Server",
+    "korean": "SanMassive 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:VVV-VVV_Mod",
+    "original": "Pacote de mods para jogar com amigos",
+    "korean": "친구들과 플레이하기 위한 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:NOI_or_Die-NOI_or_Die",
+    "original": "Server modpack for NOI or Die server.",
+    "korean": "NOI or Die 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:HyperionModding-HyperionModpack",
+    "original": "Modpack for sussy's friend, fukadukindamuk on discord",
+    "korean": "sussy의 친구, Discord의 fukadukindamuk를 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:CubeServer-gr0kash_Modpack",
+    "original": "Modsammlung für den Cube-Valheim-Server",
+    "korean": "Cube-Valheim 서버용 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Vikings_Brasil-Sound_Pack",
+    "original": "Pacote de recursos para o servidor Vikings Brasil.",
+    "korean": "Vikings Brasil 서버용 리소스 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Eotenas-Eotenas",
+    "original": "Modpack for Valheim server Eotenas",
+    "korean": "Eotenas 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Les_Neuf_Royaumes-Les_Neuf_Royaumes",
+    "original": "Serveur de jeux extrêmement customisé, 100% Franglais (Mod oblige désolé) avec progression difficile. Pour plus de détails rendez-vous en bas de page↓",
+    "korean": "대폭 맞춤 구성한 게임 서버로, 진행 난도가 높으며 100% 프랑스어·영어 혼용으로 제공합니다. 모드 특성상 언어가 섞이는 점은 양해해 주세요. 자세한 내용은 페이지 아래에서 확인하세요."
+  },
+  {
+    "key": "thunderstore:valheim:Univers_de_Leya-Univers_de_Leya",
+    "original": "ModPack reservé à la communauté de L’Univers de Leya.",
+    "korean": "L’Univers de Leya 커뮤니티 전용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:prozarkk-VALHEIM_ARENA_PVP_ADMIN",
+    "original": "Modpack ADMIN para el servidor VALHEIM ARENA PVP",
+    "korean": "VALHEIM ARENA PVP 서버의 관리자용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Hoot_Brigade-HootBrigade",
+    "original": "Modpack for Valheim",
+    "korean": "발헤임용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:WackyMole-WackySummerVal",
+    "original": "Wackys Summer Valheim Pack",
+    "korean": "Wacky의 여름 발헤임 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Aicho-Aicho_Build_Pack",
+    "original": "Lista de mods para una construccion avanzada del juego - List of mods for advanced game construction",
+    "korean": "고급 건축을 위한 모드 목록입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Feymarch_Adventures-Feymarch",
+    "original": "A Feymarch Adventure",
+    "korean": "Feymarch 모험입니다."
+  },
+  {
+    "key": "thunderstore:valheim:N31-Szczuro_Paczka",
+    "original": "Szczuro_Paczka do grania ze znajomymi. Mody dostosowane do małej grupy ludzi bez zabezpieczeń serwerowych",
+    "korean": "친구들과 플레이하는 Szczuro_Paczka입니다. 서버 보호 기능 없이 소규모 모임에 맞춰 모드를 구성했습니다."
+  },
+  {
+    "key": "thunderstore:valheim:MagosImplacaveis-MODPACK_Implacavel",
+    "original": "MODPACK Implacavel necessario para jogar no servidor dos Magos Implacaveis Oficial",
+    "korean": "Magos Implacaveis 공식 서버에서 플레이하는 데 필요한 MODPACK Implacavel입니다."
+  },
+  {
+    "key": "thunderstore:valheim:adomorph000-motaheimhispano_modpack",
+    "original": "Mods necesarios para jugar de manera inmersiva con valweed en español",
+    "korean": "valweed와 함께 스페인어로 몰입감 있게 플레이하는 데 필요한 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Blace-N2NForFriends",
+    "original": "Мод собран чтобы играть с друзьями по сети. The mod is designed to allow you to play with friends online.",
+    "korean": "친구들과 온라인에서 함께 플레이하도록 구성한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:BlackBulls-ModPack_La_Entrega_de_Odin",
+    "original": "Este es el paquete de mods para la serie speed run planeada por un par de vatos sin que hacer",
+    "korean": "심심한 두 친구가 기획한 스피드런 시리즈용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:lFS-VanillaOrNotV",
+    "original": "<3 vanilla or not? <3",
+    "korean": "♥ 바닐라일까요, 아닐까요? ♥"
+  },
+  {
+    "key": "thunderstore:valheim:skalheim-skalheim_greylisted",
+    "original": "skålheim optional mods",
+    "korean": "skålheim의 선택 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:AzureServer-Azure_Server_Test",
+    "original": "Szerverhez jelszó szükséges! Modmagyarosítások folyamatban",
+    "korean": "서버 접속에 비밀번호가 필요합니다. 모드의 헝가리어 번역은 진행 중입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Soup_Earl-Pimpheim",
+    "original": "Modpack for a private valheim server",
+    "korean": "비공개 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:BetterSounds-RUS_Better_Vanilla_Valheim",
+    "original": "Сборка модов, не извращающих Вальхейм. Полностью на русском языке! Подробнее в описании...",
+    "korean": "발헤임의 본래 모습을 해치지 않는 모드 모음입니다. 전체 러시아어를 지원합니다. 자세한 내용은 상세 설명을 확인하세요."
+  },
+  {
+    "key": "thunderstore:valheim:Lanach-Lanach",
+    "original": "Lanach Game Servers - Custom Valheim Modpack",
+    "korean": "Lanach Game Servers의 맞춤 발헤임 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:NexusImport-Friends_Additions",
+    "original": "Some extra mods for friends",
+    "korean": "친구들을 위한 추가 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Godmin-GodminsBalrondExperience",
+    "original": "Balronds Mods, Warpalicious Locations & Lebensqualität (Quality of Life) mit einem Hauch von Juwelenschleifen",
+    "korean": "Balrond의 모드와 Warpalicious Locations, 편의 기능에 보석 세공 요소를 약간 더했습니다."
+  },
+  {
+    "key": "thunderstore:valheim:BiskosGaming-BiskosGamingModpack",
+    "original": "Main modpack for realism-themed server.",
+    "korean": "현실적인 분위기의 서버를 위한 기본 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Lanach-LanachAdmin",
+    "original": "Lanach Game Servers - Custom Valheim Modpack",
+    "korean": "Lanach Game Servers의 맞춤 발헤임 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Ashr4f-LesFousDuBus",
+    "original": "Le pack officiel du serveur Les Fous du Bus. 85 mods: QoL, construction, combat, cuisine, taverne, carte partagee FR, 6 mods maison.",
+    "korean": "Les Fous du Bus 서버의 공식 팩입니다. 편의 기능·건축·전투·요리·선술집·프랑스어 공유 지도와 자체 제작 모드 6개를 포함해 총 85개 모드를 담았습니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanTyndur",
+    "original": "Modpack for SanTyndur Valheim Server",
+    "korean": "SanTyndur 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:1010101110-vrp_stable",
+    "original": "Valheim Roleplay Server mod",
+    "korean": "Valheim Roleplay 서버 모드입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Wiandar-RUS_Better_Vanila_Valheim",
+    "original": "Сборка модов, не извращающих Вальхейм. Полностью на русском языке! Подробнее в описании...",
+    "korean": "발헤임의 본래 모습을 해치지 않는 모드 모음입니다. 전체 러시아어를 지원합니다. 자세한 내용은 상세 설명을 확인하세요."
+  },
+  {
+    "key": "thunderstore:valheim:Traka-ThePathofOdin",
+    "original": "(Spanish)(Beta:BeforeCallToArms) Modpack (Jugadores) Aventura Path of Odin ¡¡IMPORTANTE!!(Descarga el mapa en ThePathofOdinAdmin)",
+    "korean": "스페인어·베타 BeforeCallToArms용 Path of Odin 모험의 플레이어용 모드팩입니다. 중요: 지도는 ThePathofOdinAdmin에서 다운로드하세요."
+  },
+  {
+    "key": "thunderstore:valheim:Drotian-Exiliados_de_Midgard",
+    "original": "El frío viento del invierno susurra antiguas profecías. La ira de una dragona y la locura de un rey marcarán tu destino. Vive la profecía, forja alianzas y descubre el eco perdido del Niño del Invierno en el Norte donde la verdad aún duerme.",
+    "korean": "차가운 겨울바람이 오래된 예언을 속삭입니다. 암룡의 분노와 왕의 광기가 당신의 운명을 결정합니다. 예언을 따라 동맹을 맺고, 진실이 아직 잠든 북방에서 겨울의 아이가 남긴 잃어버린 메아리를 찾아보세요."
+  },
+  {
+    "key": "thunderstore:valheim:Mascasa-NOI_or_Die",
+    "original": "Server modpack for NOI or Die server.",
+    "korean": "NOI or Die 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Prophet_Productions-Kyrios_S3_beta1",
+    "original": "Testing Beta Pack for Kyrios S3 Modded Server.",
+    "korean": "Kyrios S3 모드 서버의 베타 테스트용 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Stratosphere_Systems-Stone_Citadel_Season_2",
+    "original": "Stone Citadel - Season 2 - Client/Server Modpack",
+    "korean": "Stone Citadel 시즌 2의 클라이언트·서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:GrachGendalf-The_Mysterious_world_GrachGendalf",
+    "original": "Модпак лично для меня и моих друзей.",
+    "korean": "제작자와 친구들을 위한 개인 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanSassy",
+    "original": "Modpack for SanSassy Valheim Server",
+    "korean": "SanSassy 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Mascasa-NOI_or_Die_client",
+    "original": "Client modpack for NOI or Die server.",
+    "korean": "NOI or Die 서버의 클라이언트용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Easy_Play-Jogabilidade",
+    "original": "Pacote de mod's que melhoram a jogabilidade.",
+    "korean": "게임플레이를 개선하는 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanScandes",
+    "original": "Modpack for SanScandes Valheim Server",
+    "korean": "SanScandes 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:PszValheim-PSZModpackE",
+    "original": "Psz modpack epicloot",
+    "korean": "Epic Loot를 포함한 PSZ 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Necks-ForsakenLands",
+    "original": "Forsaken Lands Modpack",
+    "korean": "Forsaken Lands 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:TrFoxGroup-TrFox_2",
+    "original": "ModPack pessoal Criado por KiroTsuke & Yuiiki pra ser jogado com amigos, Esse modpack é basicamente o Modpack RelicHeim com muito mais mods e bem mais dificultado, portanto se quiser algo mais leve baixe o modpack deles.",
+    "korean": "KiroTsuke와 Yuiiki가 친구들과 즐기기 위해 만든 개인 모드팩입니다. RelicHeim에 더 많은 모드와 높은 난도를 더한 구성입니다. 더 가벼운 구성을 원한다면 원래 RelicHeim 모드팩을 이용하세요."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanSylvania2",
+    "original": "Modpack for SanSylvania2 Valheim Server",
+    "korean": "SanSylvania2 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:da_fwiends-fwiends_modpack",
+    "original": "modpack for da fwiends",
+    "korean": "친구들을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:BlauePfoten-BlauePfoten",
+    "original": "Blue's Modpack für den Pfötchen-Clan",
+    "korean": "Pfötchen-Clan을 위한 Blue의 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanRocky",
+    "original": "Modpack for SanRocky Valheim Server",
+    "korean": "SanRocky 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Membris-Membrilandia_Modpack",
+    "original": "Modpack para el server Membrilandia",
+    "korean": "Membrilandia 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Leucotsu-Asperaheim_Jewelcraft",
+    "original": "Сборка для совместной игры с друзьями, много интересного внутри! Будет еще сложнее!",
+    "korean": "친구들과 함께 플레이하는 구성으로, 다양한 흥미로운 콘텐츠를 담았습니다. 더욱 어려운 도전이 기다립니다."
+  },
+  {
+    "key": "thunderstore:valheim:DONTLEAVE-DONTLEAVE",
+    "original": "Modpack do servidor DONTLEAVE",
+    "korean": "DONTLEAVE 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:hgwaz-hgwaz_modpack",
+    "original": "hgwaz modpack",
+    "korean": "hgwaz 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanHeim_v4",
+    "original": "Modpack for SanHeim_v4 Valheim Server",
+    "korean": "SanHeim_v4 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanSylvania",
+    "original": "Modpack for SanSylvania Valheim Server",
+    "korean": "SanSylvania 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Traka-ThePathofOdinAdmin",
+    "original": "(Spanish)(Beta:BeforeCallToArms) Modpack para administradores del mundo de Path of Odin, ¡¡IMPORTANTE!! Unete al discord para saber como instalarlo correctamente",
+    "korean": "스페인어·베타 BeforeCallToArms용 Path of Odin 월드의 관리자용 모드팩입니다. 중요: 올바른 설치 방법은 Discord에 참여해 확인하세요."
+  },
+  {
+    "key": "thunderstore:valheim:H4nz0-HardheimHungary",
+    "original": "HARDHEIM HUNGARY! Magyar Valheim szerver csomag.",
+    "korean": "HARDHEIM HUNGARY의 헝가리 발헤임 서버용 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:daKeepa-Handelsserver_Modpack",
+    "original": "Modpack für einen Community Handelsserver mit RPG Elementen.",
+    "korean": "RPG 요소를 담은 커뮤니티 거래 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Valheim_LHSN-LA_HERMANDAD_SIN_NOMBRE_MODPACK",
+    "original": "Pack de mods para el servidor de Valheim de La hermandad sin nombre",
+    "korean": "La hermandad sin nombre의 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:TravequeirosFloripa-Travequeiros_Floripa_ModPack",
+    "original": "Mod de Travequeiros",
+    "korean": "Travequeiros의 모드입니다."
+  },
+  {
+    "key": "thunderstore:valheim:RatMob-Ratmob_Valheim",
+    "original": "Ratmob Valheim Modpack",
+    "korean": "Ratmob 발헤임 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:davkan-davkan_modpack",
+    "original": "Modpack for Davkan servers",
+    "korean": "Davkan 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanPike",
+    "original": "Modpack for SanPike Valheim Server",
+    "korean": "SanPike 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:GemiX-UnserValheim_Modpack",
+    "original": "Unser Valheim-Koop-Modpack mit EpicLoot, PlanBuild und weiteren Mods. Originale Mod-Standardwerte, keine eigenen Konfigurationen.",
+    "korean": "EpicLoot·PlanBuild 등을 담은 발헤임 협동 모드팩입니다. 각 모드의 기본 설정값을 사용하며 별도 맞춤 설정은 적용하지 않습니다."
+  },
+  {
+    "key": "thunderstore:valheim:Hefez-ValheimMlecznaChatka_V2",
+    "original": "Paczka modów Mlecznej Chatki V2",
+    "korean": "Mleczna Chatka의 모드 모음 V2입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Baloreg-Valhpack",
+    "original": "ModPack per un esperienza completa nel mondo di Valheim.",
+    "korean": "발헤임 세계를 폭넓게 경험하기 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Wiandar-RUS_Better_Vanilla_Valheim",
+    "original": "Сборка модов, не извращающих Вальхейм. Полностью на русском языке! Подробнее в описании...",
+    "korean": "발헤임의 본래 모습을 해치지 않는 모드 모음입니다. 전체 러시아어를 지원합니다. 자세한 내용은 상세 설명을 확인하세요."
+  },
+  {
+    "key": "thunderstore:valheim:butterszValheim-Buttersz_Valheim_Server",
+    "original": "Buttersz Valheim Server",
+    "korean": "Buttersz 발헤임 서버입니다."
+  },
+  {
+    "key": "thunderstore:valheim:NegoPreto-ReinoFeerico",
+    "original": "Modpack em produção para um servidor BR de Valheim.",
+    "korean": "브라질 발헤임 서버를 위해 제작 중인 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Bademeister-Bademeister_Spa_Modpack_Grinse",
+    "original": "Modpack für Grinse",
+    "korean": "Grinse용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:BRVKMBS2023-ModPack_BRVKMBS2024",
+    "original": "pack de mods do Servidor BR VK MBS 2024.",
+    "korean": "BR VK MBS 2024 서버용 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:LOSDC-Valheim_Chaos_Mod",
+    "original": "Valheim Chaos Mod",
+    "korean": "Valheim Chaos 모드입니다."
+  },
+  {
+    "key": "thunderstore:valheim:BRVKMBS2023-ModPack_BRVKMBS2023",
+    "original": "pack de mods do Servidor BR VK MBS 2023.",
+    "korean": "BR VK MBS 2023 서버용 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:guigs199-Valheim_ZooFriends_QoL_V2",
+    "original": "Modpack oficial Servidor V2 ZooFriends (Valheim 1.0.14). Versao 2.7.5: mods atualizados, StarLevelSystem com bloqueio por chefe e Epic Loot sem moedas e sem tokens.",
+    "korean": "V2 ZooFriends 서버의 공식 모드팩으로, 발헤임 1.0.14용입니다. 2.7.5 버전은 모드를 업데이트하고 StarLevelSystem에 보스 진행 제한을 적용하며, Epic Loot의 동전과 토큰을 사용하지 않습니다."
+  },
+  {
+    "key": "thunderstore:valheim:Hugel-HugelModpack",
+    "original": "Hugel Modpack",
+    "korean": "Hugel 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:GrimDeath9-Goons_Pack",
+    "original": "Not so Vanilla Pack",
+    "korean": "바닐라와는 조금 다른 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Noxal-ValHOA",
+    "original": "Valheim HOA Pack",
+    "korean": "Valheim HOA 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Prophet_Productions-Kyrios_Season_3",
+    "original": "Beta Testing Pack for Kyrios Gaming Season 3",
+    "korean": "Kyrios Gaming 시즌 3의 베타 테스트용 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Panheim-Panheim_Modpack",
+    "original": "Pangaming Valheim Server Modpack",
+    "korean": "Pangaming 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:WBATB_Server-Valheimplusplus",
+    "original": "Valheimplusplus",
+    "korean": "발헤임 플러스플러스입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Eevee-EeveeStrike_Modpack",
+    "original": "Modpack de la Eevee Strike",
+    "korean": "Eevee Strike 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Glitnir_Norte_Profundo-Glitnir_Realms",
+    "original": "Inicie sua jornada nas terras de Glitnir, onde lendas sao forjadas e herois eternizados. O destino aguarda aqueles corajosos o suficiente para deixar sua marca. Voce esta pronto para escrever sua propria lenda?",
+    "korean": "전설이 만들어지고 영웅이 영원히 기억되는 Glitnir의 땅에서 여정을 시작하세요. 흔적을 남길 용기 있는 이들을 운명이 기다립니다. 자신만의 전설을 쓸 준비가 되셨나요?"
+  },
+  {
+    "key": "thunderstore:valheim:ilovegarry-GarrysDaySpaAdventures",
+    "original": "QoL Valheim modpack for garry",
+    "korean": "garry를 위한 발헤임 편의 기능 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:zeonax-ZaWarudo",
+    "original": "Un modpack hecho para mis amigos que me piden que meta 300 mods como si tuviera una PC de la NASA",
+    "korean": "NASA급 컴퓨터라도 있는 것처럼 모드 300개를 넣어 달라는 친구들을 위해 만든 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:1tsfree-Freeheim_ModPack",
+    "original": "Esto es un modpack actualizado hasta 'Bog Witch' para jugar valheim con unos amigos y puedan instalar los mods facilmente",
+    "korean": "친구들과 발헤임을 즐기고 모드를 쉽게 설치하도록 구성했습니다. ‘Bog Witch’까지 업데이트된 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:NMServers-NMServer_Modpack",
+    "original": "Aqui,a diversão e a camaradagem são prioridade. Junte-se a nós nessa aventura épica, onde a aventura e as boas amizades esperam por você!",
+    "korean": "재미와 동료애를 가장 중요하게 여깁니다. 모험과 좋은 우정이 기다리는 장대한 여정에 함께하세요."
+  },
+  {
+    "key": "thunderstore:valheim:BlackBulls-ModPack_La_Entrega_de_Odin_Administradores",
+    "original": "Este es el paquete de mods para la serie speed run planeada por un par de vatos sin que hacer que usarán estos mods para administrar",
+    "korean": "심심한 두 친구가 기획한 스피드런 시리즈를 관리할 때 사용하는 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:KingsAndGods-KingsAndGodsPack",
+    "original": "A comprehensive modpack for Valheim server, enhancing exploration, magic, dungeons, and multiplayer.",
+    "korean": "탐험·마법·던전·멀티플레이를 확장하는 발헤임 서버용 종합 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:smtcnts-smtcntsServer",
+    "original": "Arkadaşlarımla kurduğum server için yerelleştirme paketi.",
+    "korean": "제작자가 친구들과 함께 만든 서버용 현지화 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Seathre-Midnight_Tokers_Modpack",
+    "original": "Modpack for Midnight Tokers Private Valheim Servers",
+    "korean": "Midnight Tokers의 비공개 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Bagugamigos-Manaos",
+    "original": "Modpack para o server Manaós dos bagugamigos",
+    "korean": "bagugamigos의 Manaós 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Seathre-Midnight_Tokers_Server_Pack",
+    "original": "Server-side modpack for Midnight Tokers Private Valheim Servers",
+    "korean": "Midnight Tokers의 비공개 발헤임 서버에서 사용하는 서버 측 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:INSIGHT-InsightHeim_Season_03",
+    "original": "Thế giới tùy chỉnh semi-hardcore, lũ quái vật hiểm ác, EpicLoot. Bạn có thể sống sót?",
+    "korean": "세미 하드코어 맞춤 세계와 위험한 괴물, EpicLoot를 담았습니다. 살아남을 수 있을까요?"
+  },
+  {
+    "key": "thunderstore:valheim:Obiheim-Obiheim",
+    "original": "Valheim Content Pack",
+    "korean": "발헤임 콘텐츠 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Torsten-Brototype",
+    "original": "Brain Rot - private server",
+    "korean": "Brain Rot 비공개 서버용 구성입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanSylvania2_QOL",
+    "original": "QOL Optional Modpack for SanSylvania2 Valheim Server",
+    "korean": "SanSylvania2 발헤임 서버의 선택형 편의 기능 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Eotenas-EotenasAdmin",
+    "original": "Admin Modpack for Valheim server Eotenas",
+    "korean": "Eotenas 발헤임 서버의 관리자용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Titinhost_NetworkCoHosting-GangaEptirPlayerModpack",
+    "original": "Ganga Eptir Player Modpack - Join us on Discord @ https://discord.gg/dnywvuTKQc",
+    "korean": "Ganga Eptir 플레이어용 모드팩입니다. Discord에 참여하세요: https://discord.gg/dnywvuTKQc"
+  },
+  {
+    "key": "thunderstore:valheim:BifrostGaming-Alheim",
+    "original": "Alheim Modpack for Valheim",
+    "korean": "발헤임용 Alheim 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Valheim_Nada-MODPACK_Implacavel_Beta",
+    "original": "MODPACK Implacavel necessario para jogar no servidor dos Magos Implacaveis BETA",
+    "korean": "Magos Implacaveis 베타 서버에서 플레이하는 데 필요한 MODPACK Implacavel입니다."
+  },
+  {
+    "key": "thunderstore:valheim:DeezNatz-BoyzInDaHoodModPack",
+    "original": "De Best. Jamaican me crazzzzzzzzy!",
+    "korean": "최고예요. 정말 미치도록 신나요!"
+  },
+  {
+    "key": "thunderstore:valheim:Cebt-Cebt_Valheim_Server",
+    "original": "Modpack for Cebt Valheim Server",
+    "korean": "Cebt 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:anguspiv-goose_modpack",
+    "original": "A modpack for Goose Valheim server",
+    "korean": "Goose 발헤임 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:killme-killmeMMO",
+    "original": "大型Valheim MMO模组整合包，包含RtD系列完整模组、Do or Die系列、WackyMole的MMO系统和黑魂战斗风格。增加了魔法、装备、生物群系、海洋探索、农场系统等丰富内容。优化服务器性能，支持多人游戏。",
+    "korean": "RtD 전체 모드와 Do or Die 시리즈, WackyMole의 MMO 시스템, 다크소울 스타일의 전투를 담은 대형 발헤임 MMO 모드팩입니다. 마법·장비·생물군계·바다 탐험·농장 시스템 등 다양한 콘텐츠를 더하고 서버 성능을 최적화하며 멀티플레이를 지원합니다."
+  },
+  {
+    "key": "thunderstore:valheim:Romulus-Romulus",
+    "original": "Romulus HC Server - Starting 9/6/24",
+    "korean": "Romulus HC 서버 · 시작일 9/6/24."
+  },
+  {
+    "key": "thunderstore:valheim:Tetonheim-Tetonheim_ModPack",
+    "original": "Modpack requerido para el ingreso al servidor Tetonheim",
+    "korean": "Tetonheim 서버에 접속하는 데 필요한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:HeadlessBrain-Ashlands_Calling",
+    "original": "Модпак для українського сервера Ashlands Calling",
+    "korean": "우크라이나 Ashlands Calling 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Crit_Or_Miss-Hammerfell_Modpack",
+    "original": "A modpack for my private server Hammerfell.",
+    "korean": "제작자의 비공개 Hammerfell 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:ElliteDev-SOHeim",
+    "original": "SOHeim modpack for Valheim.",
+    "korean": "발헤임용 SOHeim 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:HausNeratius-SvenServerLoadout",
+    "original": "Mods_on_svens_server",
+    "korean": "sven의 서버에서 사용하는 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:NerdProcessing-Nerdheim_Season8",
+    "original": "Modpack for Nerd Processing discord community",
+    "korean": "Nerd Processing Discord 커뮤니티용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:guigs199-ZooModPack",
+    "original": "Agregado de mods para o servidor zoologico4ever de valheim",
+    "korean": "발헤임 zoologico4ever 서버용 모드 모음입니다."
+  },
+  {
+    "key": "thunderstore:valheim:ripCodex-Skallheim",
+    "original": "Skallheim Server Pack, Valheim Version 0.220.5",
+    "korean": "발헤임 0.220.5용 Skallheim 서버 팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:NSB-MEL_Modpack",
+    "original": "Modpack de nuestro servidor de Valheim, en español: ranuras de equipo y transfiguración, cámara de construcción, modo foto, mapas dibujados a mano, estadísticas y esquelas, portales de admin y más. El servidor tiene que llevar el mismo modpack.",
+    "korean": "제작자의 발헤임 서버용 스페인어 모드팩입니다. 장비 슬롯·형상변환·건축 카메라·사진 모드·손으로 그린 지도·통계·부고 알림·관리자 포털 등을 담았습니다. 서버에도 같은 모드팩을 적용해야 합니다."
+  },
+  {
+    "key": "thunderstore:valheim:Terre_Verdoyante-Terre_Verdoyante",
+    "original": "ip srv: 82.64.144.197:2456 / Srv entre amis pour découvrir le jeu",
+    "korean": "게임을 함께 알아가는 친구들의 서버입니다. 서버 주소: 82.64.144.197:2456."
+  },
+  {
+    "key": "thunderstore:valheim:Basement_Dweller_Gaming-BDG_Test_Server",
+    "original": "Test server modpack ferda bois",
+    "korean": "친구들을 위한 테스트 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:SanEggs-SanPike_QOL",
+    "original": "QOL Optional Modpack for SanPike Valheim Server",
+    "korean": "SanPike 발헤임 서버의 선택형 편의 기능 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:ImmernDar-ImmernDar_Modpack",
+    "original": "Modpack für den ImmernDar Server",
+    "korean": "ImmernDar 서버용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Brunel-Brunel",
+    "original": "Le Modpack officiel de Jocelyn Brunel.",
+    "korean": "Jocelyn Brunel의 공식 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:BRKT-BRKT_Modpack",
+    "original": "Modpack Magro pro jogo rodar mais liso, igual minha carteira.   Brincadeiras a parte, Modpack feito centrado no Jewelcraft e EpicMMO. Pensado para jogar PVE com configurações de dificuldade elevadas e com multiplos jogadores.",
+    "korean": "제작자의 지갑처럼 슬림해서 게임이 부드럽게 돌아가는 모드팩입니다. 농담은 접어두고, Jewelcraft와 EpicMMO를 중심으로 높은 난도의 다인 PVE 플레이를 위해 구성했습니다."
+  },
+  {
+    "key": "thunderstore:valheim:TheWormhole-TheWormholeAshlands",
+    "original": "Modpack richiesto per connettersi al server TheWormhole .",
+    "korean": "TheWormhole 서버에 접속하는 데 필요한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:Evading_Responsibility-Evading_Responsibility_Pack",
+    "original": "Vanilla plus modpack for private server",
+    "korean": "비공개 서버용 바닐라 플러스 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:valheim:warpalicious-Praetoria_Creative",
+    "original": "A public Valheim creative server",
+    "korean": "공개 발헤임 크리에이티브 서버입니다."
+  }
+]

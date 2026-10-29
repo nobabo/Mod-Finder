@@ -77,6 +77,7 @@ export function createApi(config: Config, http = new UpstreamClient(config.UPSTR
       const { gameId, source, query, sort, cursor, version, loader, kind, category } = parsed.data;
       if (!getGame(gameId)) return jsonResponse({ error: 'game_not_found' }, 404);
       if (category && getCategory(gameId, category)?.source !== source) return jsonResponse({ error: 'invalid_category' }, 400);
+      if (source === 'nexus' && ((kind === 'mod' && category === 'nexus:collections') || (kind === 'modpack' && category && category !== 'nexus:collections'))) return jsonResponse({ error: 'conflicting_filters' }, 400);
       const search: SearchRequest = { gameId, source, query, sort, cursor, filters: { ...(version ? { version } : {}), ...(loader ? { loader } : {}), ...(kind ? { kind } : {}), ...(category ? { category } : {}) } };
       try { readCursor(search); } catch { return jsonResponse({ error: 'invalid_cursor' }, 400); }
       const result = await adapters[source].search(search);

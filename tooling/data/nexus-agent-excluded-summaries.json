@@ -1,0 +1,68 @@
+[
+  {
+    "key": "nexus:cyberpunk2077:collection-b9vkht",
+    "original": "wegewg",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": null
+  },
+  {
+    "key": "nexus:fallout4:collection-b7eods",
+    "original": "ваитыа",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:fallout4:collection-mnqsj4"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-kfyu8u",
+    "original": "I kream hard",
+    "reason": "Isolated ambiguous slang without enough context; no sexual meaning was invented.",
+    "replacementKey": "nexus:stardewvalley:collection-qp8wpv"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-vyveq5",
+    "original": "blah BLAH BLah",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-rqenev"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-cmcm43",
+    "original": "das",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-jzzsyf"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-g04pe5",
+    "original": "xxx",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-t8ighb"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-uoz3a4",
+    "original": "zart zurt",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-ce7trj"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-awwyb8",
+    "original": "blah blah blah",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-ikpuag"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-vvmnin",
+    "original": "wdada",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-xenlci"
+  },
+  {
+    "key": "nexus:stardewvalley:collection-4hakms",
+    "original": "ougou",
+    "reason": "Nonsemantic placeholder, repeated filler or isolated token without a usable description.",
+    "replacementKey": "nexus:stardewvalley:collection-1wkylm"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-t0mjji",
+    "original": "ll ugi8y7896",
+    "reason": "Nonsemantic random letter-and-digit token; no Korean meaning was invented.",
+    "replacementKey": null
+  }
+]

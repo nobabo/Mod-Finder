@@ -15,7 +15,7 @@ export function externalSearch(game: Game, source: Source, query: string, filter
     case 'curseforge': url = new URL(`https://www.curseforge.com/${mapping.slug}/search`); url.searchParams.set('search', q); url.searchParams.set('page', '1'); url.searchParams.set('pageSize', '20'); break;
     case 'thunderstore': url = new URL(`https://thunderstore.io/c/${mapping.scope}/`); url.searchParams.set('q', q); if (category?.source === 'thunderstore') url.searchParams.set('includedCategories', category.value); break;
     case 'steam': url = new URL('https://steamcommunity.com/workshop/browse/'); url.searchParams.set('appid', mapping.scope); url.searchParams.set('searchtext', q); if (category?.source === 'steam') url.searchParams.set('requiredtags[]', category.value); break;
-    case 'nexus': return { url: `https://www.nexusmods.com/${mapping.scope}/mods/`, queryForwarded: false };
+    case 'nexus': return { url: filters.kind === 'modpack' || category?.value === 'collections' ? `https://www.nexusmods.com/games/${mapping.scope}/collections` : `https://www.nexusmods.com/${mapping.scope}/mods/`, queryForwarded: false };
   }
   return { url: url.href, queryForwarded: true };
 }

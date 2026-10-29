@@ -55,6 +55,12 @@ assert.equal(steam.status, 'success'); assert.ok(steam.items.length > 0); assert
 const moreSteam = await (await request(`${steamPath}&cursor=${encodeURIComponent(steam.nextCursor)}`)).json();
 assert.equal(moreSteam.status, 'success'); assert.ok(moreSteam.items.length > 0);
 assert.equal(moreSteam.items[0].rank, steam.items.length + 1, 'Steam ranks must continue after the first page');
+const collections = await (await request('/v1/search?gameId=stardew-valley&source=nexus&category=nexus%3Acollections&query=expanded&sort=downloads')).json();
+assert.equal(collections.status, 'success');
+assert.ok(collections.items.length > 0 && collections.items.every(item => item.kind === 'modpack' && item.key.startsWith('nexus:stardewvalley:collection-')));
+const collection = collections.items[0];
+const collectionDetail = await (await request(`/v1/listings/nexus/${encodeURIComponent(collection.scope)}/${encodeURIComponent(collection.id)}`)).json();
+assert.equal(collectionDetail.listing?.key, collection.key);
 for (const language of ['ko', 'en']) {
   const response = await request('/', { headers: { Cookie: `mf-language=${language}` } });
   assert.equal(response.status, 200);

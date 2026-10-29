@@ -1,0 +1,827 @@
+[
+  {
+    "key": "thunderstore:riskofrain2:DragonycksModdingComms-Gwen",
+    "original": "Head high, chin up, scissors ready!",
+    "korean": "고개를 들고, 턱을 올리고, 가위 준비!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Arbition-Curb_Your_Death",
+    "original": "Pretty, pretty, pretty good.",
+    "korean": "꽤, 꽤, 꽤 괜찮네요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:KABAN-RussiFUCKation",
+    "original": "Руссифицирует модификации. Больше не поддерживается.",
+    "korean": "모드에 러시아어 번역을 적용합니다. 더 이상 지원하지 않습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lunzir2-BazaarLunarForEveryone",
+    "original": "Help my friend make this mod lets everyone can buy Lunar items, no need unmod. 商店蓝色摊位每个人都可以买。",
+    "korean": "친구를 도와 만든 모드입니다. 모드를 해제할 필요 없이 시장의 파란 상점에서 모두 루나 아이템을 구매할 수 있습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Phreel-DontCareAboutLunarCoins",
+    "original": "Infinite lunars, free lunar costs, lunar command essences",
+    "korean": "루나 무한, 루나 비용 무료, 루나 명령의 정수."
+  },
+  {
+    "key": "thunderstore:riskofrain2:mojkqueira-Postal",
+    "original": "Postal dude model on Commando made by me mojkqueira https://www.youtube.com/@sr.fimosinha3631/videos",
+    "korean": "제가 만든 Commando용 Postal Dude 모델입니다. 제작: mojkqueira. https://www.youtube.com/@sr.fimosinha3631/videos"
+  },
+  {
+    "key": "thunderstore:riskofrain2:DestroyedClone-FasterAchievementText",
+    "original": "Shortens achievement popups.",
+    "korean": "도전 과제 팝업의 표시 시간을 줄입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lunzir2-WannaGoHome",
+    "original": "Added a portal back to my home (bazaar). The included maps: Moon, The Planetarium, Gold Shores, Bulwark, Limbo. 在隐藏地图添加商店传送门，老米、天文馆、黄金海岸，堡垒、完整之时。",
+    "korean": "시장으로 돌아가는 포털을 추가합니다. 대상 맵: Moon, The Planetarium, Gold Shores, Bulwark, Limbo."
+  },
+  {
+    "key": "thunderstore:riskofrain2:toarch7-SeekerAutoChores",
+    "original": "Automates Seeker meditation QTE input. Client-side.",
+    "korean": "Seeker의 명상 QTE 입력을 자동으로 처리합니다. 클라이언트 전용입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Arbition-Vagrant_Hates_Normies",
+    "original": "Normies get out REEEEEEEEEEEEEEEEE",
+    "korean": "평범한 놈들은 나가! REEEEEEEEEEEEEEEEE"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Slendykray-DroneCommand",
+    "original": "Choose your drones",
+    "korean": "드론을 선택하세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:SushiDev-RexBuff",
+    "original": "Buffs Rex's regen.",
+    "korean": "Rex의 재생력을 강화합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lunzir2-BossRewardForEveryone",
+    "original": "Help someone make this mod. Share the boss loot. 分享boss的战利品",
+    "korean": "다른 사람을 도와 만든 모드입니다. 보스가 떨어뜨린 전리품을 공유합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Fletch-MULT_Balatro",
+    "original": "Mult Balatro Mod",
+    "korean": "Mult Balatro 모드입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:mwxmmy-DiyEngi",
+    "original": "可以自定义技能和炮台类型，炮台可以是为游戏角色或怪物,无需房主安装。如果想了解详情或者提出意见，可以加 QQ 群 785191578。(如果想学习做 mod，也可以免费进群交流学习)\nYou can customize skill and turret types. Turrets can be designed for both playable characters and monsters, and it doesn't require the host to install them.",
+    "korean": "스킬과 포탑 종류를 직접 설정할 수 있습니다. 플레이 가능한 캐릭터나 몬스터를 포탑으로 사용할 수도 있으며 호스트가 설치할 필요는 없습니다. 자세한 내용이나 의견은 QQ 그룹 785191578로 알려 주세요. 모드 제작을 배우고 싶다면 무료로 참여해 교류할 수 있습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lunzir2-RGBHighlight",
+    "original": "This is my second private module, welcome to DJ Vanilla. Most interactive objects can be highlighted in RGB or solid color 可以让大部分交互物体高亮显示RGB或者纯彩色，提供多个颜色。这是我第二个私藏模组，希望玩的开心。",
+    "korean": "제 두 번째 개인 소장 모드입니다. DJ Vanilla에 오신 것을 환영합니다. 대부분의 상호작용 가능한 물체를 RGB 또는 단색으로 강조하며 여러 색상을 제공합니다. 즐겁게 플레이하세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Nuxlar-NoEscapeWait",
+    "original": "Removes escape ship charge time",
+    "korean": "탈출선의 충전 대기시간을 없앱니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lunzir2-ItemLimited",
+    "original": "Help my friends made this. Limit item and convert excess items to scraps or drop to the ground, now added equipment limit. 限制物品上限，多出部分转换成碎片或掉在地上，现在增加主动装备限制。",
+    "korean": "친구들을 위해 만들었습니다. 아이템 개수에 상한을 두고, 초과분은 스크랩으로 바꾸거나 바닥에 떨어뜨립니다. 이제 사용 장비의 개수 제한도 추가했습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Nuxlar-Frenchthrix",
+    "original": "Makes Mithrix Fr*nch",
+    "korean": "Mithrix를 프랑스인으로 바꿉니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Fletch-Chef_Sanji",
+    "original": "Sanji Chef Skin Mod",
+    "korean": "Chef용 Sanji 스킨 모드입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Dante_RU",
+    "original": "Russifier for Dante. Русификатор для Dante",
+    "korean": "Dante용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Arsonist_Mod_RU",
+    "original": "Russifier for Arsonist Mod. Русификатор для Arsonist Mod",
+    "korean": "Arsonist Mod용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Deputy_RU",
+    "original": "Russifier for Deputy. Русификатор для Deputy",
+    "korean": "Deputy용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:mwxmmy-FixBossHealthDisplay",
+    "original": "Fix the issue with displaying Boss health incorrectly when it exceeds 2.1 billion.\n修复Boss血量超过21亿导致显示错误的问题",
+    "korean": "보스 체력이 21억을 넘었을 때 잘못 표시되는 문제를 수정합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:W0lfmare-ArtificerEmber",
+    "original": "Adds Dancermage Ember skin for a Artificer",
+    "korean": "Artificer용 Dancermage Ember 스킨을 추가합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-VanillaVoid_and_Razorhive_RU",
+    "original": "Russifier for VanillaVoid and Razorhive. Русификатор для VanillaVoid и Razorhive",
+    "korean": "VanillaVoid와 Razorhive용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:NotABot-SimpleEclipseDisplay",
+    "original": "Displays Eclipse Level On Character Icon.",
+    "korean": "캐릭터 아이콘에 Eclipse 레벨을 표시합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Mortician_RU",
+    "original": "Russifier for Mortician. Русификатор для Mortician",
+    "korean": "Mortician용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-ArtificerExtended_RU",
+    "original": "Russifier for ArtificerExtended. Русификатор для ArtificerExtended",
+    "korean": "ArtificerExtended용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Pathfinder_RU",
+    "original": "Russifier for Pathfinder. Русификатор для Pathfinder",
+    "korean": "Pathfinder용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:HDeDeDe-LunarBottledChaos",
+    "original": "Makes Bottled Chaos a lunar item.",
+    "korean": "Bottled Chaos를 루나 아이템으로 바꿉니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:CONDE-PlayWithEliteItem",
+    "original": "Ao iniciar o jogo os jogadores recebem automaticamente um equipamento de elite aleatório no slot 2 de equipamento.",
+    "korean": "게임을 시작하면 플레이어들이 장비 슬롯 2에 무작위 엘리트 장비를 자동으로 받습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Shaman_RU",
+    "original": "Russifier for Shaman. Русификатор для Shaman",
+    "korean": "Shaman용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:DragonycksModdingComms-UltrakillUmbraInvasion",
+    "original": "Plays Clair de Soleil during Umbra invasions.",
+    "korean": "Umbra 침공 중에 Clair de Soleil을 재생합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:mwmw-AxolCommando",
+    "original": "Gives Commando an Axol skin! Includes dynamic bones!",
+    "korean": "Commando용 Axol 스킨을 추가합니다. 다이내믹 본을 포함합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:NoobNumber1-infiniteordershrine",
+    "original": "one click happy man",
+    "korean": "클릭 한 번에 행복해집니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Belmont_RU",
+    "original": "Russifier for Belmont. Русификатор для Belmont",
+    "korean": "Belmont용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Rifter_RU",
+    "original": "Russifier for Rifter. Русификатор для Rifter",
+    "korean": "Rifter용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Bastian_RU",
+    "original": "Russifier for Bastian. Русификатор для Bastian",
+    "korean": "Bastian용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Muskmelovon-Equilibrium",
+    "original": "为每名玩家创建独立箱子和独立拾取，彻底告别抢装备，让联机体验更轻松。大厅启用均衡神器生效。Creates separate chests and pickups for each player, eliminating loot stealing and making co-op more enjoyable.becomes effective upon enabling the 'Artifact of Equilibrium' within the Lobby.",
+    "korean": "플레이어마다 별도의 상자와 획득 아이템을 제공해 전리품을 서로 빼앗지 않고 협동 플레이를 즐길 수 있게 합니다. 대기실에서 Artifact of Equilibrium을 활성화하면 적용됩니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Submariner_RU",
+    "original": "Russifier for Submariner. Русификатор для Submariner",
+    "korean": "Submariner용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Muskmelovon-ShareChest",
+    "original": "让宝箱掉落多倍物品的《雨中冒险2》模组。在神器界面启用均衡神器（Artifact of Equilibrium）即可生效。A Risk of Rain 2 mod that makes chests drop multiple items. Activate the Artifact of Equilibrium in the artifact selection screen to enable multiplied loot.",
+    "korean": "상자에서 여러 아이템이 나오게 하는 Risk of Rain 2 모드입니다. 유물 선택 화면에서 Artifact of Equilibrium을 활성화하면 전리품이 늘어납니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:BazaarIsMyHomeRestoration-BazaarIsMyHomeFixed",
+    "original": "No war, no disease, just peace and love. Add lots of facilities in bazaar. Now added lunar, void printer and cauldron. 月店是我家，欢迎来选购。现在增加蓝色、紫色的大锅和打印机。",
+    "korean": "전쟁도 질병도 없이 평화와 사랑만 있는 시장입니다. 시장에 여러 시설을 추가합니다. 이제 루나·공허 프린터와 가마솥도 추가했습니다. 달 상점은 제 집이니 구경하러 오세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-PassiveAgression_RU",
+    "original": "Russifier for PassiveAgression. Русификатор для PassiveAgression",
+    "korean": "PassiveAgression용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-BubbetsItems_RU",
+    "original": "Russifier for BubbetsItems. Русификатор для BubbetsItems",
+    "korean": "BubbetsItems용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Loon-LoonsCustomOstPack",
+    "original": "Uuuuuuuuuuuuuuu Umadachi uuuuuuuuuuu umapyoi umapyoi ft. Mili, sasakure.UK, lasah, Noah, AZALI and various others. Made using Penumbrah's Custom Ost mod.",
+    "korean": "우우우우, Umadachi, 우우우우, umapyoi, umapyoi! Mili, sasakure.UK, lasah, Noah, AZALI 등. Penumbrah의 Custom Ost 모드로 만들었습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:peat859-Stagger",
+    "original": "Avoid Getting 1 Shot",
+    "korean": "한 방에 죽는 일을 피하세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Gregor-Risk_of_Gregor",
+    "original": "Adds Gregor",
+    "korean": "Gregor를 추가합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:PenguCC-BepInEx_Grafana_RR2",
+    "original": "A Playercount Tracker for Survivors-Toolkit",
+    "korean": "Survivors-Toolkit용 플레이어 수 추적기입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Brynzananas-PVP_Mod",
+    "original": "Enables PVP event after teleporter event. Adds 3 new items. Configurable!.$.",
+    "korean": "텔레포터 이벤트 후 PvP 이벤트를 활성화합니다. 새 아이템 3개를 추가하며 설정을 변경할 수 있습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-StormySkills_RU",
+    "original": "Russifier for StormySkills. Русификатор для StormySkills",
+    "korean": "StormySkills용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-Aetherium_RU",
+    "original": "Russifier for Aetherium. Русификатор для Aetherium",
+    "korean": "Aetherium용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-RobItems_RU",
+    "original": "Russifier for RobItems. Русификатор для RobItems",
+    "korean": "RobItems용 러시아어 번역입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Shamus-Vengeance_Interval_Modifier",
+    "original": "Change how often your evil doppelganger spawns.",
+    "korean": "자신의 사악한 도플갱어가 나타나는 빈도를 바꿉니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:OverwatchSurvivors-Overwatch_Doctrine",
+    "original": "血律 / Doctrine: support survivor with Infuse, healing drones and Deliverance. 中文 / English. Multiplayer: all players need this mod.",
+    "korean": "Doctrine(血律): Infuse, 치유 드론, Deliverance를 사용하는 지원형 생존자입니다. 중국어·영어를 지원합니다. 멀티플레이에서는 모든 플레이어가 이 모드를 설치해야 합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:acanthic-BlackMaskExecutioner",
+    "original": "Black Mask as an Executioner skin!",
+    "korean": "Executioner용 Black Mask 스킨입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:mckahz8d650b0d65024088-RileyIsSh_t",
+    "original": "Adds taunting death messages",
+    "korean": "조롱하는 사망 메시지를 추가합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Bili_Nephren-RailgunnerGitsGudChinese",
+    "original": "磁轨炮手每打错一次填装的QTE就会受到伤害，并会被系统嘲笑、阴阳怪气！快来一起被嘲讽吧！",
+    "korean": "Railgunner가 재장전 QTE를 실패할 때마다 피해를 입고 시스템의 조롱과 빈정거림을 듣습니다! 함께 놀림받아 보세요!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:DioTheWorld78-StarStorm2_Japanese_Language",
+    "original": "Starstorm2に日本語翻訳を追加します",
+    "korean": "Starstorm2에 일본어 번역을 추가합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:2333666-Lacia",
+    "original": "Adds Lacia, a survivor using Black Monolith weapons and support skills. 新增使用Black Monolith装置作战的幸存者蕾西亚。",
+    "korean": "Black Monolith 무기와 지원 스킬을 사용하는 생존자 Lacia를 추가합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:0n_x-QualityTempShops",
+    "original": "Temp item shops are always quality",
+    "korean": "임시 아이템 상점은 항상 고품질입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:OverwatchSurvivors-Overwatch_Shion",
+    "original": "死怨 / Shion: dual pistols, charged cross volleys, a motorcycle and Satsuriku Spree. 简体中文 / English.",
+    "korean": "Shion(死怨): 쌍권총, 차지형 교차 일제사격, 오토바이, Satsuriku Spree를 사용합니다. 간체 중국어·영어를 지원합니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lunzir2-StageBuilderTool",
+    "original": "Help friend make this. A simple mod could customize the weight of each facility in the game. 可以自定义游戏每个设施出现的比重。",
+    "korean": "친구를 도와 만들었습니다. 게임 내 각 시설이 등장하는 비중을 직접 설정할 수 있는 간단한 모드입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:KevinfromHPCustomerService-PickupIconRenderer",
+    "original": "An in-game icon renderer for Risk of Rain 2.",
+    "korean": "Risk of Rain 2 게임 내 아이콘 렌더러입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:public_ParticleSystem-MagicalWizardThatTeleportsYouToMithrix",
+    "original": "Raphaël",
+    "korean": "Raphaël(라파엘)."
+  },
+  {
+    "key": "thunderstore:riskofrain2:SanicScript-TF2SoldierModFIX",
+    "original": "THIS IS A FIX OF LEMNER TF2SoldierMod I AM NOT THE CREATOR",
+    "korean": "LEMNER의 TF2SoldierMod 수정본입니다. 저는 원본 제작자가 아닙니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:NovaGC-ItemsHighlightConfigurator",
+    "original": "Items highlight color configurator",
+    "korean": "아이템의 강조 색상을 설정하는 도구입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:garberlog-BetterMultiplayerRedux",
+    "original": "Better Multiplayer Redux",
+    "korean": "Better Multiplayer Redux 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Nitrolink-De_Modpack",
+    "original": "Modpack for da homies",
+    "korean": "친구들을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Mintoe-Risk_of_Chimp",
+    "original": "Ooh ooh... Chimpo mode.",
+    "korean": "우우… Chimpo 모드."
+  },
+  {
+    "key": "thunderstore:riskofrain2:BTP-Impossible_pack_2",
+    "original": "！注意：此次更新仍然有一些Bug。请尽量移除无关mod，否则可能导致各种Bug，或者直接删除所有mod，再重新下载我的这个整合包。（一般情况皮肤可以随便加）",
+    "korean": "주의: 이번 업데이트에도 버그가 일부 남아 있습니다. 관련 없는 다른 모드는 가급적 제거하세요. 그렇지 않으면 여러 버그가 생길 수 있습니다. 모든 모드를 지운 뒤 이 통합팩을 다시 다운로드하는 방법도 있습니다. 스킨은 일반적으로 자유롭게 추가해도 됩니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:EndXiom-ResonatorsOfTheSoul",
+    "original": "大型《Risk of Rain 2》内容模组：强化难度、神器、挑战、回响者、万神殿、试炼档案馆与 PvP。 A large content mod featuring new difficulties, artifacts, challenges, Resonator, Pantheon, Trial Archive, and PvP.",
+    "korean": "새 난이도, 유물, 도전, Resonator, Pantheon, Trial Archive, PvP를 제공하는 Risk of Rain 2 대형 콘텐츠 모드입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:RoR2JP-NeikersModPack",
+    "original": "このモッドパックはDiscordサーバー【RiskOfRain2】で使用しているMODPackです。 This ModPack is for RiskOfRain2  server only.",
+    "korean": "Discord 서버 【RiskOfRain2】에서 사용하는 전용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:CedarBehnke-CededMod",
+    "original": "Lizzard Gaming",
+    "korean": "Lizzard Gaming(리저드 게이밍)."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lord_Alucard-COOMERS_MODPACK",
+    "original": "Пак для Климовчанина",
+    "korean": "Климовчанин을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Kenshiroll-baller",
+    "original": "Baller modpack.",
+    "korean": "Baller 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:WeberPyth-zhcnLoLModPak",
+    "original": "LOL汉化整合包",
+    "korean": "LOL 중국어 번역 통합팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-SomeMods_RU",
+    "original": "Pack of Russifiers. Пак русификаторов",
+    "korean": "러시아어 번역 모음팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:DarkAndFriends-DarkAndFriendsModPack",
+    "original": "Juste un modpack entre potes",
+    "korean": "친구들끼리 사용하는 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:RoR2JP-NeikersModPackAdditionalSkinsMod",
+    "original": "このモッドパックは追加スキンを集めたものです。",
+    "korean": "추가 스킨들을 모은 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:EdgeStudios-HopeStar",
+    "original": "孤独，希望，星世纪。又有什么在等待着你......",
+    "korean": "고독, 희망, 별의 시대. 또 무엇이 당신을 기다리고 있을까요……"
+  },
+  {
+    "key": "thunderstore:riskofrain2:SuddenDeathOfRain-SDOR_Modpack",
+    "original": "【暴毙整合包】，为中国玩家制作的一款整合包  CN ONLY",
+    "korean": "중국 플레이어를 위해 만든 暴毙整合包입니다. 중국어 전용(CN ONLY)입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:E-Epsilous_QoL_Modpack",
+    "original": "For some friends.",
+    "korean": "몇몇 친구들을 위해."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Aal-Modny_Manchek",
+    "original": "Alleen voor de echte garito's",
+    "korean": "진짜 'garito'들만을 위한 팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Game_Over_DS_Team-Game_Over_Modpack",
+    "original": "Modpack Per il server Discord di Game Over (Con traduzioni... Leggi descrizione)",
+    "korean": "Game Over Discord 서버용 모드팩입니다. 번역을 포함하니 설명을 읽어 주세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Kagenryo-QualityKagenModPack",
+    "original": "Modpack for besto friendos",
+    "korean": "최고의 친구들을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:KantBooty-For_The_Boys",
+    "original": "modpack for my lazy friends",
+    "korean": "게으른 친구들을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Senjosei-ImagineJoiningVoice",
+    "original": "Imagine joining voice",
+    "korean": "음성 채팅에 참여한다니, 상상해 보세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:aphroller-modpackpack",
+    "original": "modpack blahblah",
+    "korean": "모드팩, 어쩌고저쩌고."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Goblin-SisbyCoolPack",
+    "original": "Cool vanilla+ modpack",
+    "korean": "멋진 바닐라+ 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Jafraud-Evil_Modpack",
+    "original": "An evil modpack for evil people",
+    "korean": "사악한 사람들을 위한 사악한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Eachann-CN_GoodStart",
+    "original": "[汉化 YYDS] 整合很多提升游戏交互/体验的 Mod, 但不会改变游戏的平衡性. 同时兼容非常好, 作为一个前置的组合包, 我觉得他泰裤辣",
+    "korean": "중국어 번역 최고! 게임의 상호작용과 플레이 경험을 개선하는 모드를 여럿 묶었으며 게임 밸런스는 바꾸지 않습니다. 호환성도 좋아 기본·선행 모드 통합팩으로 쓰기 좋습니다. 정말 멋집니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:bad_ending-bad_ending_modpack",
+    "original": "Chaos based modpack",
+    "korean": "혼돈 기반의 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:goglaxie-gogpack",
+    "original": "Collection faite pour les gogs par les gogs, un update golémique",
+    "korean": "gog들이 gog들을 위해 만든 모음팩입니다. 'golémique' 업데이트입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Paymin-Paquetaxo_Botanero",
+    "original": "Modpack para disfrutar",
+    "korean": "즐기기 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:GoldenWing-Golden_Rain",
+    "original": "for_da_bois",
+    "korean": "친구들을 위한 팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Baby_Zerlox-Tussivolution",
+    "original": "El que no salta es cagon... Es puto y cagon",
+    "korean": "뛰지 않는 놈은 겁쟁이… 빌어먹을 겁쟁이다!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:iacianciolover-kobyFanClub",
+    "original": "solo miembros de la koby army pueden descargar este paquete.",
+    "korean": "이 팩은 koby army 회원만 다운로드할 수 있습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:KorePride-VanillaPlus",
+    "original": "Vanilla Semi +",
+    "korean": "바닐라 세미+."
+  },
+  {
+    "key": "thunderstore:riskofrain2:masquecaralhos-Boa_Modpack",
+    "original": "Amogus twerk",
+    "korean": "Amogus 트월킹."
+  },
+  {
+    "key": "thunderstore:riskofrain2:GreatAssets-Risk_of_Idiots",
+    "original": "Dumb mods for dumber idiots",
+    "korean": "더 멍청한 바보들을 위한 바보 같은 모드입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Tennocracia-RorcitoModPack",
+    "original": "Un packsito de mods para jugar con los pibes",
+    "korean": "친구들과 함께 플레이할 작은 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:homies-LazyHomiePack",
+    "original": "A modpack for my lazy friends",
+    "korean": "게으른 친구들을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:2008-LluviaArriesgada",
+    "original": "Aqui llueve.",
+    "korean": "여기는 비가 내립니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Image-PersonjesImage",
+    "original": "Mods para los pibes de Image",
+    "korean": "Image의 친구들을 위한 모드들입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:popi_team-UrFriendsCanStayOnVanilla",
+    "original": "Vanilla compatible. Server side only.",
+    "korean": "바닐라와 호환됩니다. 서버 측 전용입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:InyanyaCuties-DespairModpack",
+    "original": "Unclearable?",
+    "korean": "클리어 불가능?"
+  },
+  {
+    "key": "thunderstore:riskofrain2:bruhidc-Damodpack",
+    "original": "Da modpack for da bois",
+    "korean": "친구들을 위한 그 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:JulR-Goonpack",
+    "original": "Goon modpack",
+    "korean": "Goon 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Crotolamo-Crotolamo",
+    "original": "Esto para amigos pero si lo quieres pillar adelante, pero qué es Crotolamo?",
+    "korean": "친구들용이지만 원한다면 받아 가세요. 그런데 Crotolamo가 뭐냐고요?"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lenhador-ModpackLightdoHebao",
+    "original": "Modpack dedicado aos casas com pouca memoria RAM",
+    "korean": "RAM이 적은 'casas'를 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:ZachPackPeople-ZachPack",
+    "original": "Characters, items, UI changes, etc.",
+    "korean": "캐릭터, 아이템, UI 변경 등."
+  },
+  {
+    "key": "thunderstore:riskofrain2:amleaf-LeafMulti",
+    "original": "Modpack for friends，和好朋友一起冒险才好玩",
+    "korean": "친구들과 함께 모험을 즐기기 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:BasicThoughts-SimpleAndElegant",
+    "original": "Simple yet elegant modpack.",
+    "korean": "단순하지만 세련된 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:The_Lonk-DanielsParadieRandomSkinpack",
+    "original": "random skinpack 👍",
+    "korean": "무작위 스킨팩입니다. 👍"
+  },
+  {
+    "key": "thunderstore:riskofrain2:SalsicciaGaming-SausagePack",
+    "original": "Gross, unstable cringefest",
+    "korean": "역겹고 불안정한 오글거림의 향연."
+  },
+  {
+    "key": "thunderstore:riskofrain2:ZachPackPeople-Dawnzymizer",
+    "original": "Schnoozer streamer randomizer Modpack.",
+    "korean": "스트리머 Schnoozer의 랜더마이저 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Gymbros-GymbrosModpack",
+    "original": "Met veel liefde van Dani ❤",
+    "korean": "Dani가 사랑을 듬뿍 담아. ❤"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Slippery_Jims_Butthole_Circus-SlipperyJimsFertileModpack",
+    "original": "SOOOOOOOOOOOOOOOOWEEE, WELCOME TO SLIPPERY JIMS BUTTHOLE BONANZA! HAVE A SEAT, STRAP IN, AND GET READY TO SLIP!",
+    "korean": "소오오오우이! Slippery Jims Butthole Bonanza에 오신 것을 환영합니다! 앉아서 안전벨트를 매고 미끄러질 준비를 하세요!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:RoR2JP-NeikersModPackAdditionalUsefulMod",
+    "original": "このモッドパックはゲームを快適にするMODを集めたものです。",
+    "korean": "게임을 더 쾌적하게 만드는 모드를 모은 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:IDKWHATTEAM-Risk_Of_Rizz",
+    "original": "A Vanilla modpack for ror2.",
+    "korean": "Risk of Rain 2용 바닐라 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Cummerman-MiodzioLodzioModzikLodzik",
+    "original": "czesc cwelu, dzisiaj pogramy w fajny risk of rain 2 modpack cweeeeluchu",
+    "korean": "야, 이 등신아. 오늘은 재미있는 Risk of Rain 2 모드팩을 해 보자, 등신아."
+  },
+  {
+    "key": "thunderstore:riskofrain2:snoobert-FartSityLuxuryGetawayPackage",
+    "original": "dumb idiot modpack for dumb idiots",
+    "korean": "바보들을 위한 바보 같은 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:chupachups-chupa_chups",
+    "original": "we go big mode. vanilla++ experience",
+    "korean": "크게 놀아 봅시다. 바닐라++ 경험입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:TacoCat-Soggfort",
+    "original": "A modpack for my boys over at Soggfort",
+    "korean": "Soggfort 친구들을 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Airsickcorvid-fun_mods",
+    "original": "Fun mods for",
+    "korean": "재미있는 모드들…"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Chupeta-Modpack_CDC_",
+    "original": "Modpack para membros da CDC",
+    "korean": "CDC 회원용 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Sisby-SisbyCoolPack",
+    "original": "Cool vanilla+ modpack",
+    "korean": "멋진 바닐라+ 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Nona_ROR2-Nona_ModPack",
+    "original": "私による私だけのModPackです。便利系と難易度上昇系で構成されたバニラ寄りのModPackです。",
+    "korean": "제가 저만을 위해 만든 모드팩입니다. 편의성 개선과 난이도 상승 모드로 구성한 바닐라에 가까운 팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:seccand-Moldpack",
+    "original": "hi i exist",
+    "korean": "안녕, 나 여기 있어."
+  },
+  {
+    "key": "thunderstore:riskofrain2:chef_lingunni-garfield_world",
+    "original": "do you like garfield?",
+    "korean": "Garfield 좋아하시나요?"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Yenito-Weezomodpack",
+    "original": "modpack for weezo too lazy too install mods",
+    "korean": "모드 설치하기 귀찮아하는 weezo를 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Mokuu-MokuuPlus",
+    "original": "Best Modpack world master king lord big boss",
+    "korean": "최고의 모드팩, 세계의 주인, 왕, 군주, 대장!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:SafeFirst_Modpacks-Safefirst_Modpack",
+    "original": "A brief description",
+    "korean": "간단한 설명."
+  },
+  {
+    "key": "thunderstore:riskofrain2:ror2modpack77de43c0c7474240-Bauxite_Modpack",
+    "original": "Bauxite Modpack",
+    "korean": "Bauxite 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:SillyBoyz-GoofyStuff",
+    "original": "Modpack I made for my buds",
+    "korean": "친구들을 위해 만든 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:E-Epsilous_Content_Modpack",
+    "original": "For some friends.",
+    "korean": "몇몇 친구들을 위해."
+  },
+  {
+    "key": "thunderstore:riskofrain2:BlodynCain-Sagolmak",
+    "original": "agalarımla_sagoluyoruz",
+    "korean": "친구들과 함께하는 Sagolmak입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Rads-Risk_of_Rads",
+    "original": "Modpack for my fellas, install if you wish",
+    "korean": "친구들을 위한 모드팩입니다. 원한다면 설치하세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:asbestos-AsbestosModPack",
+    "original": "The definitive asbestos mod pack",
+    "korean": "Asbestos 모드팩의 결정판입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Coldeib-SomeRebalanceMods_RU",
+    "original": "Pack of Russifiers for rebalance mods. Пак русификаторов для ребалансных модов",
+    "korean": "밸런스 조정 모드용 러시아어 번역 모음팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:NatetheNecroMancer-Jelqing",
+    "original": "its educational",
+    "korean": "교육적입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:SacoweaInc-SacoweasINC",
+    "original": "Modpack para jugar con amigos",
+    "korean": "친구들과 함께 플레이하기 위한 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:CDXD-HexedRisk",
+    "original": "每关切换前每名玩家独立三选一海克斯，效果独立生效并提供可配置刷新次数。",
+    "korean": "스테이지가 바뀌기 전에 플레이어마다 개별적으로 헥스 3개 중 1개를 선택합니다. 효과는 각자 독립적으로 적용되며, 다시 뽑기 횟수를 설정할 수 있습니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Savi-SavisStuperStuoolModPackRR",
+    "original": "Wowie",
+    "korean": "와우!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:bucketcat-bucketcatsVanillaPlusMultiplayerModpack",
+    "original": "Vanilla+",
+    "korean": "바닐라+."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Amassaprima-60contonoburguerking",
+    "original": "qualé dpac tu realmente gastou tanto assim",
+    "korean": "야, dpac. 정말 그렇게 많이 쓴 거야?"
+  },
+  {
+    "key": "thunderstore:riskofrain2:SKIBIDI_GANG_RIZZLERS-Mods_For_Tax_Evaders",
+    "original": "dont drink 3am",
+    "korean": "새벽 3시에는 마시지 마세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:erao-ModpackeraoRiskOfRain",
+    "original": "Mod dos rapazes",
+    "korean": "녀석들을 위한 모드입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:PandaMuffin-HomieModPack",
+    "original": "modpack i made for my friends",
+    "korean": "친구들을 위해 만든 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:MeatyMemberMen-MeatyMemberMen_2",
+    "original": "MeatyMemberMen Mod Pack",
+    "korean": "MeatyMemberMen 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:eppicteam-yourname_mod",
+    "original": "best fo de best",
+    "korean": "최고를 위한 최고."
+  },
+  {
+    "key": "thunderstore:riskofrain2:peepee-vpack",
+    "original": "friend group vanilla+ pack",
+    "korean": "친구 모임용 바닐라+ 팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Koyu-Isaiahmagazine",
+    "original": "Isaiahmagazine modpack download now",
+    "korean": "Isaiahmagazine 모드팩입니다. 지금 다운로드하세요."
+  },
+  {
+    "key": "thunderstore:riskofrain2:NameJeff-FungoModpack",
+    "original": "ModpackFungoGuy",
+    "korean": "FungoGuy 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:vas1-rikardo",
+    "original": "ricardo woooo",
+    "korean": "ricardo, 우우우!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:edu-edu",
+    "original": "edu modpack",
+    "korean": "edu 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Cummerman-pierdolenie",
+    "original": "czesc cwelu, dzisiaj pogramy w fajny risk of rain 2 modpack cweeeeluchu",
+    "korean": "야, 이 등신아. 오늘은 재미있는 Risk of Rain 2 모드팩을 해 보자, 등신아."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Yakiko-Harder_Vanilla_Compatible",
+    "original": "Enjoy!",
+    "korean": "즐기세요!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Dimenzio-DimenzioPack",
+    "original": "Das super duper coole Modpack von Dimenzio",
+    "korean": "Dimenzio가 만든 아주아주 멋진 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:TeamGayButLikeRespectfully-dum",
+    "original": "mod description pog",
+    "korean": "모드 설명, Pog!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Te0-White_Tree_Modpack",
+    "original": "Modpack_clusterfuck_for_my_friends",
+    "korean": "친구들을 위한 엉망진창 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:MadManns-ein_Mass_Bubatz_Bitte",
+    "original": "Ach wie gut das niemand weiß, dass ich Markus Söder heiß",
+    "korean": "내 이름이 Markus Söder라는 걸 아무도 모른다니, 참 좋군!"
+  },
+  {
+    "key": "thunderstore:riskofrain2:Misael-ModpackPala431",
+    "original": "Modpack para jugar con mi bro",
+    "korean": "내 브로와 함께 플레이할 모드팩입니다."
+  },
+  {
+    "key": "thunderstore:riskofrain2:Lenhador-ModpackdoHebao",
+    "original": "Modpack dedicado aos casas",
+    "korean": "'casas'를 위한 모드팩입니다."
+  }
+]

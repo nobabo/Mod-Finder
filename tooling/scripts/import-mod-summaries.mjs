@@ -43,10 +43,20 @@ for (const game of [...games, { id: 'curseforge/minecraft-mods', target: 'minecr
   catalogs.set(target, [...(catalogs.get(target) ?? []), ...rows]);
   report[game.id] = { imported: rows.length, skippedEmptyOriginal };
 }
-// Finish validating every input before replacing any application catalog.
+// Read every previous catalog as part of validation before replacing any file.
+const planned = [];
 for (const [gameId, rows] of catalogs) {
   const path = join(destination, `${gameId}.json`);
-  await writeFile(`${path}.tmp`, JSON.stringify(rows) + '\n');
+  // Preserve later source-scoped expansions when reimporting older source files.
+  let previous = [];
+  try { previous = await readJson(path); } catch (error) { if (error.code !== 'ENOENT') throw error; }
+  const identity = row => JSON.stringify([row[0], row[1], row[3]]);
+  const incoming = new Set(rows.map(identity));
+  const merged = [...rows, ...previous.filter(row => row[3] && !incoming.has(identity(row)))];
+  planned.push({ path, merged });
+}
+for (const { path, merged } of planned) {
+  await writeFile(`${path}.tmp`, JSON.stringify(merged) + '\n');
   await rename(`${path}.tmp`, path);
 }
 await writeFile(join(input, 'import-report.json'), JSON.stringify(report, null, 2) + '\n');

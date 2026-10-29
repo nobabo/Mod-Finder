@@ -1,0 +1,832 @@
+[
+  {
+    "key": "nexus:baldursgate3:1482",
+    "original": "A steampunk bronze dice",
+    "korean": "스팀펑크 스타일의 청동 주사위입니다."
+  },
+  {
+    "key": "nexus:baldursgate3:2167",
+    "original": "Add some love to Drow subrace / Donne de l'amour aux lignées d'Elfes noirs.",
+    "korean": "드로우 하위 종족에 애정을 더해 줍니다."
+  },
+  {
+    "key": "nexus:baldursgate3:2602",
+    "original": "For Tieflings, Elves, Half-Elves, Drow, Humans",
+    "korean": "티플링·엘프·하프엘프·드로우·인간용입니다."
+  },
+  {
+    "key": "nexus:baldursgate3:10542",
+    "original": "A modular hair pack containing 13 hairstyles plus a few variants.",
+    "korean": "13가지 헤어스타일과 몇 가지 변형을 담은 모듈식 헤어 팩입니다."
+  },
+  {
+    "key": "nexus:baldursgate3:4083",
+    "original": "Armor for most races",
+    "korean": "대부분의 종족을 위한 방어구입니다."
+  },
+  {
+    "key": "nexus:baldursgate3:18243",
+    "original": "Custom BT1/3 head, supports Elf/Half-Elf/Human/Drow/Tiefling, supports EotB/Unique Tav/KAVT!",
+    "korean": "BT1/3용 맞춤 얼굴입니다. 엘프·하프엘프·인간·드로우·티플링과 EotB·Unique Tav·KAVT를 지원합니다."
+  },
+  {
+    "key": "nexus:baldursgate3:6591",
+    "original": "Adds Silvanus as a selectable deity.",
+    "korean": "선택 가능한 신으로 실바너스를 추가합니다."
+  },
+  {
+    "key": "nexus:baldursgate3:1035",
+    "original": "Younger Jaheira",
+    "korean": "자헤이라를 더 젊게 바꿉니다."
+  },
+  {
+    "key": "nexus:baldursgate3:3731",
+    "original": "Heyoo i Bring You BUNNY EARS FOR ALL",
+    "korean": "모두를 위한 토끼 귀를 추가합니다."
+  },
+  {
+    "key": "nexus:baldursgate3:8926",
+    "original": "【Added new head presets】",
+    "korean": "새로운 얼굴 프리셋을 추가했습니다."
+  },
+  {
+    "key": "nexus:baldursgate3:13651",
+    "original": "Adds Reforged﻿ CrestTops, Chin for heads from Pearl﻿ mod",
+    "korean": "Pearl 모드의 얼굴에 Reforged CrestTops와 턱을 추가합니다."
+  },
+  {
+    "key": "nexus:baldursgate3:3583",
+    "original": "A grittier Lae'zel for your Bae'Zel needs.",
+    "korean": "레이젤을 더욱 거칠고 강인한 모습으로 바꿉니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:5803",
+    "original": "NEW VERSION IN DESCRIPTION",
+    "korean": "새 버전은 상세 설명에서 확인하세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8724",
+    "original": "NEW STORE IN DESCRIPTION",
+    "korean": "새 상점은 상세 설명에서 확인하세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:16627",
+    "original": "replacer for XC-10 Strix",
+    "korean": "XC-10 Strix를 대체합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:15264",
+    "original": "Cool, adventurous, elegant, fight pose.FemV 55 poses (AMM+PHOTOMODE) *NEW*Add MascV 15 poses.",
+    "korean": "멋지고 모험적인 자세, 우아한 자세와 전투 자세를 담았습니다. 여성 V용 포즈 55개를 AMM·사진 모드에서 지원하며, 남성 V용 포즈 15개도 새로 추가했습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8853",
+    "original": "Virtual Atelier for my stuff.",
+    "korean": "제작자의 아이템을 모은 Virtual Atelier입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:25537",
+    "original": "Eve Jeans. 30 Items. FemV. Vanilla, Hyst bodies Incl. EVE & Solo 2.0. Automatic Refit Selection. 2k/4k Textures.",
+    "korean": "Eve 청바지 30종입니다. 여성 V용으로 바닐라와 EVE·Solo 2.0을 포함한 Hyst 체형을 지원합니다. 체형에 맞는 구성을 자동 선택하며 2k·4k 텍스처를 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:12705",
+    "original": "Lamborghini Revuelto",
+    "korean": "람보르기니 레부엘토입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:9768",
+    "original": "BOTH V，8 colors",
+    "korean": "남성·여성 V 모두 사용 가능하며 8가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:10115",
+    "original": "Combat outfit: top, vest, pants, boots. Fem V. VANILLA / EBB / EBBRB / EBBP / EBBPRB / RB / LUSH / SMALL / SOLO 2.0. Automatic Refit Selection.",
+    "korean": "상의·조끼·바지·부츠로 구성한 여성 V용 전투복입니다. VANILLA / EBB / EBBRB / EBBP / EBBPRB / RB / LUSH / SMALL / SOLO 2.0 체형을 지원하며 맞춤 구성을 자동 선택합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8260",
+    "original": "2058 Quadra Turbo K.S Edition add-on vehicle, no replacement required",
+    "korean": "2058 Quadra Turbo K.S Edition 추가 차량입니다. 기존 차량을 대체하지 않습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:10445",
+    "original": "Stock Livrery",
+    "korean": "기본 도색입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:20388",
+    "original": "Collection hairstyle vol. 3. Contains 2 hairstyles \"Eve\"",
+    "korean": "헤어스타일 모음 3편입니다. ‘Eve’ 헤어스타일 2종을 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:7472",
+    "original": "Nola Dreamer's Loose Top & Plaid Mini Skirt. Fem V. VANILLA / EBB / EBBRB / EBBP / EBBPRB / RB / LUSH / SMALL. Automatic Refit Selection.",
+    "korean": "Nola Dreamer의 헐렁한 상의와 체크 미니스커트입니다. 여성 V용으로 VANILLA / EBB / EBBRB / EBBP / EBBPRB / RB / LUSH / SMALL 체형을 지원하며 맞춤 구성을 자동 선택합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:9016",
+    "original": "8 colors, both V",
+    "korean": "남성·여성 V 모두 사용 가능하며 8가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:2030",
+    "original": "Complete overhaul for Claire.  Alternate face & nude body options.  Separate models for default & bartender outfits.",
+    "korean": "클레어의 외형을 전면적으로 바꿉니다. 다른 얼굴과 누드 체형 옵션을 제공하며, 기본 의상과 바텐더 의상에는 별도 모델을 사용합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:13508",
+    "original": "Add \"Lamborghini Miura P400 SV\" vehicle “Livery” Support,Pop-up headlight support,\"Crystal Coat\" support,\"Garage\" support",
+    "korean": "Lamborghini Miura P400 SV 차량을 추가합니다. 도색·팝업 헤드라이트·Crystal Coat·Garage를 지원합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:9650",
+    "original": "FEM V ONLY，7colors",
+    "korean": "여성 V 전용이며 7가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:18112",
+    "original": "11 poses using Revolver (F/M)",
+    "korean": "남성·여성용 리볼버 포즈 11종입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:9238",
+    "original": "FEM V ONLY!4 colors",
+    "korean": "여성 V 전용이며 4가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:11926",
+    "original": "Ferrari 812 Competizione come whit different colors",
+    "korean": "여러 색상의 Ferrari 812 Competizione를 추가합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8248",
+    "original": "New top, archive xl, hyst ebb & vanilla.",
+    "korean": "Archive XL을 사용하는 새로운 상의입니다. Hyst EBB와 바닐라 체형을 지원합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:16550",
+    "original": "Vanilla - VTK Small - Angel - Angel Natural - EBB - EBBP - RB - EBBN - PkD Flat",
+    "korean": "지원 체형: Vanilla / VTK Small / Angel / Angel Natural / EBB / EBBP / RB / EBBN / PkD Flat."
+  },
+  {
+    "key": "nexus:cyberpunk2077:6185",
+    "original": "Virtual Atelier for my ARCHIVE XL mods.",
+    "korean": "제작자의 ARCHIVE XL 모드를 모은 Virtual Atelier입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:16324",
+    "original": "Heavy smg/carbine hybrid",
+    "korean": "중형 기관단총과 카빈을 결합한 무기입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:10682",
+    "original": "New top AXL, Vanilla, Hyst EBB, Hyst PUSHUP & CYBERARMS compatible!!",
+    "korean": "새로운 AXL 상의입니다. 바닐라·Hyst EBB·Hyst PUSHUP·CYBERARMS와 호환됩니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:12015",
+    "original": "Aston Martin Valkyrie",
+    "korean": "애스턴 마틴 발키리입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:11272",
+    "original": "Long stiletto nails",
+    "korean": "길고 뾰족한 스틸레토 네일입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:9709",
+    "original": "FEM V ONLY，6 colors",
+    "korean": "여성 V 전용이며 6가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:10071",
+    "original": "FEM V ONLY!!!7 colors",
+    "korean": "여성 V 전용이며 7가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:19438",
+    "original": "Collection hairstyle vol. 2. Contains 10 hairstyles: A-J. Physics enabled - CCXL",
+    "korean": "헤어스타일 모음 2편입니다. A부터 J까지 10종을 담았으며, CCXL을 사용하고 물리 효과를 지원합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:16561",
+    "original": "Urban Edge Outfit",
+    "korean": "Urban Edge 의상입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:15318",
+    "original": "Nipples & clit piercings for Fem V - Part 1.",
+    "korean": "여성 V용 유두·음핵 피어싱 1편입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:9852",
+    "original": "FEM V ONLY，2 colors",
+    "korean": "여성 V 전용이며 2가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:23657",
+    "original": "short barrel shotgun",
+    "korean": "총열이 짧은 산탄총입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:10519",
+    "original": "FEM V ONLY,13colors",
+    "korean": "여성 V 전용이며 13가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:19448",
+    "original": "Read description.",
+    "korean": "상세 설명을 읽어 주세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8521",
+    "original": "Mercedes-Benz 190E add-on vehicle, no replacement required",
+    "korean": "Mercedes-Benz 190E 추가 차량입니다. 기존 차량을 대체하지 않습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:24323",
+    "original": "10 new pistols",
+    "korean": "새로운 권총 10종입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8187",
+    "original": "100+ Loading Screens",
+    "korean": "로딩 화면 100종 이상을 추가합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:8788",
+    "original": "10 colors suit,7 colors helmet",
+    "korean": "슈트 10가지 색상과 헬멧 7가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:14109",
+    "original": "Koenigsegg Jesko Absolut",
+    "korean": "코닉세그 제스코 앱솔루트입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:22018",
+    "original": "Death blossom outfit - Archive XL for femV",
+    "korean": "여성 V용 Archive XL 의상 Death Blossom입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:15238",
+    "original": "Add \"Jaguar E Type\" vehicle \"Crystal Coat\" support \"Live Tuning\" support,\"Garage\" support",
+    "korean": "Jaguar E Type 차량을 추가합니다. Crystal Coat·Live Tuning·Garage를 지원합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:20057",
+    "original": "Lingerie for Fem V",
+    "korean": "여성 V용 란제리입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:13731",
+    "original": "FEM V ONLY!!!!Hoodie 22 colors,shoes 10 colors",
+    "korean": "여성 V 전용입니다. 후드티 22가지 색상과 신발 10가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:13401",
+    "original": "FEM V ONLY!!!4 outfit,10 colors per pair",
+    "korean": "여성 V 전용 의상 4종이며, 각 구성에 10가지 색상을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-3p6jix",
+    "original": "Immersive First Person, JB - FPP Nude Patch, Underwear removal",
+    "korean": "Immersive First Person, JB - FPP 누드 패치, 속옷 제거 모드를 모았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-rjd1ur",
+    "original": "💪Mega Clothes Pack Featuring VeegeeAlvarez💥for (M) & (F) EBB+EBBP+RB+Angel+Vanilla Bodys🧖‍♀️",
+    "korean": "VeegeeAlvarez의 의상을 담은 대규모 의상 팩입니다. 남성·여성과 EBB+EBBP+RB+Angel+Vanilla 체형을 지원합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-j6cz3w",
+    "original": "Cyberpunk mods for Angel body + Image improvement",
+    "korean": "Angel 체형용 사이버펑크 모드와 화면 개선 기능을 모았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-gdgjdu",
+    "original": "Permettent de mettre des bras cybernétiques Les 2 modes Vont ensemble Vous installez Cette collection le mode fonctionne",
+    "korean": "사이버네틱 팔을 사용할 수 있도록 해 주는 두 모드를 함께 구성했습니다. 이 컬렉션을 설치하면 함께 작동합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-qskolg",
+    "original": "FemV · vanilla body (FPP arms fix) · Steam Deck · 380 mods · patch 2.50",
+    "korean": "여성 V · 바닐라 체형과 1인칭 팔 수정 · Steam Deck · 모드 380개 · 패치 2.50용 구성입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-kvpmpp",
+    "original": "date panam",
+    "korean": "파남과 데이트합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-87a7hy",
+    "original": "🚀 My first self-made Modpack! Featuring Enhanced Weather v6.1🌦️✨ Huge thanks to all the amazing modders here on Nexus! 🙌 What’s inside: 🎨Visuals & Weather⚡,⚙️Quality of Life improvements,🍑Angel Body Selene,🚗Cars & Vehicles,🛠️Fixes & Tweaks",
+    "korean": "제작자의 첫 자체 구성 모드팩입니다. Enhanced Weather v6.1과 그래픽·날씨, 편의 기능, Angel Body Selene, 차량, 수정·조정 기능을 담았습니다. Nexus의 여러 모드 제작자에게 감사를 전합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-4s19l0",
+    "original": "2025 ! +335 mods ! NeoRealism transforme ton jeu avec des graphismes ultra réalistes, un gameplay plus exigeant et un HUD épuré. Découvre plus de +100 véhicules, plus de +200 armes et plus de +1000 pièces de tenues pour une immersion ultime et authentique",
+    "korean": "2025년 구성으로 모드 335개 이상을 담았습니다. NeoRealism은 매우 사실적인 그래픽, 더 까다로운 플레이, 간결한 HUD를 제공합니다. 차량 100종 이상, 무기 200종 이상, 의상 부품 1000종 이상으로 몰입감을 높입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ze3xro",
+    "original": "Overhaul for Visual & Graphic",
+    "korean": "화면과 그래픽을 전면적으로 개선합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-k2wlpf",
+    "original": "Graphisme / Gameplay / Raytracing / Optimiser AMD mais compatible NVIDIA",
+    "korean": "그래픽·게임플레이·레이 트레이싱을 개선합니다. AMD에 최적화했으며 NVIDIA와도 호환됩니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-4h79ab",
+    "original": "🚘 Coches exclusivos y totalmente mejorados 🦾 Personajes con nuevos detalles y aspecto renovado 🎮 Configuración rápida y sencilla 🌆 Ambientación cyberpunk más viva, oscura y futurista ⚡ Optimización para disfrutar al máximo incluso en equipos modestos",
+    "korean": "독특하고 개선된 차량, 새로운 디테일과 외형의 캐릭터, 빠르고 간편한 설정을 제공합니다. 더 생생하고 어두우며 미래적인 사이버펑크 분위기를 담았으며, 사양이 낮은 컴퓨터에서도 즐기도록 최적화를 추구합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-1bkq7m",
+    "original": "Collection of my new favorites mods in 1 collection overhaull. ✅2.31 /2.31a 🗺️Graphics 2K 🌌 Immersive & 1k+ Mods 👙VTK Body 🧢Cool Outfits 🛑ALL full custom +140 Customs Cars +More Gangs-Hardcore (AI-NCPD-GANG-NPC-BOSS)-More Gore- Adult Only",
+    "korean": "제작자가 새로 선호하는 모드를 모아 전면 개편한 구성입니다. 2.31/2.31a, 2K 그래픽, 몰입형 모드 1k+개, VTK Body와 의상을 제공합니다. 맞춤 차량 140종 이상과 갱단 확장, AI·NCPD·갱단·NPC·보스의 하드코어 구성, 강화된 고어 표현을 담은 성인 전용 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ulwnvg",
+    "original": "Chegou a hora de transformar Cyberpunk 2077 em uma Versão Definitiva, Cyberpunk 3.0 com quase 300 mods!! O mais próximo que você vai ter de Cyberpunk 2 (Orion).",
+    "korean": "거의 300개 모드로 사이버펑크 2077을 ‘Cyberpunk 3.0’이라는 결정판 구성으로 바꿉니다. Cyberpunk 2(Orion)에 가장 가까운 경험을 내세웁니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ftbmhg",
+    "original": "Fix & Overhaul for Audio",
+    "korean": "오디오를 수정하고 전면적으로 개선합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-uwl3uu",
+    "original": "✅ 1000+ Curated Mods | 🌆 Ultimate Immersion | 🎨 Enhanced Visuals | 👗 Fem V & EBBRB Fashion | ⚔️ Gameplay Overhaul | 🚗 Vehicles & Weapons | 🏠 Expanded Night City | 🌐 Extensive Simplified Chinese Support | ⚡ Vortex Install",
+    "korean": "선별한 모드 1000개 이상, 몰입감과 그래픽 개선, 여성 V·EBBRB 의상, 게임플레이 개편, 차량·무기, 확장된 나이트 시티를 제공합니다. 폭넓은 중국어 간체 지원과 Vortex 설치를 포함합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-igrifd",
+    "original": "Collection of my favorites mods in 1 collection overhaull. ✅2.31 /2.31a 🗺️Graphics 2K/4K 🌌 Immersive & 900+ Mods 👙Angel Body 🧢Cool Outfits 🛑ALL full custom +90 Customs Cars +More Gangs-Hardcore (AI-NCPD-GANG-NPC-BOSS)-More Gore- Adult Only",
+    "korean": "제작자가 선호하는 모드를 모아 전면 개편한 구성입니다. 2.31/2.31a, 2K/4K 그래픽, 몰입형 모드 900개 이상, Angel Body와 의상을 제공합니다. 맞춤 차량 90종 이상과 갱단 확장, AI·NCPD·갱단·NPC·보스의 하드코어 구성, 강화된 고어 표현을 담은 성인 전용 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ddqlwc",
+    "original": "Collection of my favorites mods in 1 collection overhaull. ✅2.31 /2.31a 🗺️Graphics 2K/4K 🌌 Immersive & 900+ Mods 👙Angel Body 🧢Cool Outfits 🛑ALL full custom +90 Customs Cars +More Gangs-Hardcore (AI-NCPD-GANG-NPC-BOSS)-More Gore- Adult Only",
+    "korean": "제작자가 선호하는 모드를 모아 전면 개편한 구성입니다. 2.31/2.31a, 2K/4K 그래픽, 몰입형 모드 900개 이상, Angel Body와 의상을 제공합니다. 맞춤 차량 90종 이상과 갱단 확장, AI·NCPD·갱단·NPC·보스의 하드코어 구성, 강화된 고어 표현을 담은 성인 전용 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-o3z7r8",
+    "original": "Angel photoshoot",
+    "korean": "Angel 체형으로 사진을 촬영합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-xl9n50",
+    "original": "✨ My first collection! 2.31 Compatible, super easy & quick install 🧭, only 9GB! 📦 300+ mods⚡",
+    "korean": "제작자의 첫 컬렉션입니다. 2.31과 호환되며 설치가 쉽고 빠릅니다. 용량 9GB에 모드 300개 이상을 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-utm0di",
+    "original": "mods i use",
+    "korean": "제작자가 사용하는 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-pmbgff",
+    "original": "nonik",
+    "korean": "노닉"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-kicmbu",
+    "original": "🚀 My second self-made Modpack! Featuring Enhanced Weather v6.1🌦️✨ Huge thanks to all the amazing modders here on Nexus! 🙌 What’s inside: 🎨Visuals & Weather⚡,⚙️Quality of Life improvements,🍑SongBird Body 2.0,🚗Cars & Vehicles,🛠️Fixes & Tweaks",
+    "korean": "제작자의 두 번째 자체 구성 모드팩입니다. Enhanced Weather v6.1과 그래픽·날씨, 편의 기능, SongBird Body 2.0, 차량, 수정·조정 기능을 담았습니다. Nexus의 여러 모드 제작자에게 감사를 전합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-cjm25o",
+    "original": "A Quick made 2.5 working collection",
+    "korean": "빠르게 구성했으며 2.5에서 작동하는 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ckut8h",
+    "original": "Aout 2026 - Collection propre et stable (440+ mods). VTK Body + Preem Skin, Body EBB, immersion complète (NCI, romances, vendors), visuals modernes (LUT Switcher + Nova/ETO 4K), Virtual Ateliers, Nitrous. Idéale pour une expérience fluide et immersive.",
+    "korean": "2026년 8월의 깔끔하고 안정적인 구성으로 모드 440개 이상을 담았습니다. VTK Body·Preem Skin·EBB 체형, NCI·로맨스·상인을 통한 몰입 요소, LUT Switcher·Nova/ETO 4K 그래픽, Virtual Ateliers, Nitrous를 제공합니다. 부드럽고 몰입감 있는 플레이를 지향합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-30cpig",
+    "original": "Go se venger d'Arasaka comme un vrai Edgerunner de NightCity en compagnie de Johnny le Goat",
+    "korean": "최고의 동료 조니와 함께 나이트 시티의 진정한 엣지러너가 되어 아라사카에 복수해 보세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-k5lopy",
+    "original": "Cette collection est un ajout de contenue et de modification a la collection Perfect City 2.31 . Liste des ajout: Boutique Virtual atelier + une boutique déjà disponible |400/600 vêtment]-- Preset Lilith BBE/BB -- 4 radio ajouter.",
+    "korean": "Perfect City 2.31 컬렉션에 콘텐츠와 변경 사항을 더한 구성입니다. Virtual Atelier 상점과 기존 상점, 의상 400/600개, Lilith BBE/BB 프리셋, 라디오 4개를 추가합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ndw4vg",
+    "original": "Cette collection regroupe les principaux mods et outils indispensables pour commencer à modifier Cyberpunk 2077 sur PC.",
+    "korean": "PC에서 사이버펑크 2077 모딩을 시작하는 데 필요한 주요 모드와 필수 도구를 모았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-0hvtep",
+    "original": "Pack contenant les mods de textures HD et UHD.",
+    "korean": "HD·UHD 텍스처 모드를 담은 팩입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-mac3qr",
+    "original": "Une collection améliorant l'immersion sans briser le Lore ou la cohérence du jeu.",
+    "korean": "세계관 설정이나 게임의 일관성을 해치지 않으면서 몰입감을 높이는 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-qvunqu",
+    "original": "Traduções em PT-BR",
+    "korean": "브라질 포르투갈어 번역 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ez3nf0",
+    "original": "Collection installer for Dangerous Doll Sheriff build.",
+    "korean": "Dangerous Doll Sheriff 빌드용 컬렉션 설치 구성입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ehikec",
+    "original": "Some niche handpicked mods",
+    "korean": "특정 취향에 맞춰 고른 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-xs1pdb",
+    "original": "Collection of my favorites mods in 1 collection overhaull. ✅2.31 /2.31a 🗺️Graphics 4K 🌌 Immersive & 500+ Mods 👙Angel Body 🧢Cool Outfits 🛑ALL full custom",
+    "korean": "제작자가 선호하는 모드를 모아 전면 개편한 구성입니다. 2.31/2.31a, 4K 그래픽, 몰입형 모드 500개 이상, Angel Body와 멋진 의상을 담았으며 모두 맞춤 구성했습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-9xnfnz",
+    "original": "Pack contenant les mods de boutique virtuel Atelier.",
+    "korean": "Virtual Atelier 가상 상점 모드를 담은 팩입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-6896jm",
+    "original": "Super Cyberpunk 2077 AI is an ultra realistic total overhaul collection. Every mod selected, tested, and balanced with Anthropic Claude Fable 5.1 💖🌌 / Opus 5.5 💖🗿 , OpenAI ChatGPT 6 💖🤖, and Google Gemini 4 💖💎.",
+    "korean": "매우 사실적인 전면 개편을 지향하는 Super Cyberpunk 2077 AI 컬렉션입니다. 제작자는 Anthropic Claude Fable 5.1 / Opus 5.5, OpenAI ChatGPT 6, Google Gemini 4를 사용해 모든 모드를 선정·검증하고 균형을 조정했다고 설명합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-7kdqi0",
+    "original": "Cyberpunk Chrome & Velvet transforma Night City con 595 mods de inmersión, combate, cyberware, vehículos, personalización, gráficos e interacciones. Una experiencia ampliada y cuidadosamente configurada.",
+    "korean": "Cyberpunk Chrome & Velvet는 몰입감·전투·사이버웨어·차량·꾸미기·그래픽·상호작용을 위한 모드 595개로 나이트 시티를 바꿉니다. 신중하게 구성해 확장된 플레이 경험을 제공합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-zhpwu3",
+    "original": "Femme Fetale Collection",
+    "korean": "팜 파탈 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-cyqjdb",
+    "original": "Optional mods for my Street Slugger build.",
+    "korean": "제작자의 Street Slugger 빌드용 선택 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-agzrwb",
+    "original": "Ma collection de Mods",
+    "korean": "제작자의 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-haks2h",
+    "original": "Cyberpunk 2077 – Complete Overhaul Mod List Summary",
+    "korean": "사이버펑크 2077 전면 개편 모드 목록의 요약입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-tpzhoj",
+    "original": "Pacote de cabelos e olhos , customização avançada de personagem , rosto pré-derfinido asiatico , Panam e judy renovadas , visuais aprimorados , adição de roupas e armas novas , gameplay em 1 e 3 pessoa , clima dinamico e mais real , cybernetica imersiva.",
+    "korean": "머리·눈 꾸미기, 고급 캐릭터 설정, 아시아계 얼굴 프리셋, 파남·주디 외형 개선, 그래픽 개선, 새로운 의상·무기, 1·3인칭 플레이, 역동적이고 사실적인 날씨, 몰입감 있는 사이버네틱 요소를 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-gjx6sg",
+    "original": "Beste von allem für mich Persönlich, wird noch weiter aktualisiert.Best for me, get updates.",
+    "korean": "제작자의 취향에 맞는 최고의 구성을 모았으며 앞으로도 업데이트합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-eganeo",
+    "original": "Nhìn hình là hiểu rồi nhe, khỏi giải thích :D",
+    "korean": "사진을 보면 알 수 있으니 설명은 생략할게요 :D"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-zio8nn",
+    "original": "HORA DE MOSTRAR PORQUE A SAMURAI VOLTOU DO PASSADO E O ORION SERÁ O NOVO FUTURO.",
+    "korean": "과거에서 돌아온 SAMURAI와 새로운 미래가 될 ORION을 보여 줄 시간입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-1ahiuo",
+    "original": "FrameFlow Performance Suite regroupe les modules d’optimisation FrameFlow pour Cyberpunk 2077. CPU, GPU, VRAM et stabilité — chaque module cible un domaine spécifique des performances afin d’offrir une expérience plus fluide et plus constante, sans inutil",
+    "korean": "FrameFlow Performance Suite는 사이버펑크 2077용 FrameFlow 최적화 모듈을 모았습니다. CPU·GPU·VRAM·안정성 등 각 모듈이 특정 성능 영역을 개선해 더 부드럽고 일정한 플레이를 목표로 합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-x0hozs",
+    "original": "Overhauled Survival Experience",
+    "korean": "생존 경험을 전면적으로 개편합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-xahjjk",
+    "original": "Cyberlife Realisim Preset",
+    "korean": "Cyberlife Realism 프리셋입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-tfm2y9",
+    "original": "LET IT RIDE",
+    "korean": "그대로 달려 보세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-9ynmja",
+    "original": "Traduction FR de ma collection de \"Another Life\"",
+    "korean": "제작자의 ‘Another Life’ 컬렉션 프랑스어 번역입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-w4l5ck",
+    "original": "✨ La collection de mon aventure en live ! ~450+ Mods d'immersion & overhaul. Plus sombre et réaliste. Fait pour le mode difficile ou plus. ⬆️ https://twitch.tv/MiraiKinko ⬆️",
+    "korean": "제작자의 라이브 방송 모험에 사용하는 컬렉션입니다. 몰입감과 전면 개편을 위한 모드 약 450개 이상으로 더 어둡고 사실적인 플레이를 제공합니다. 어려움 이상 난이도용입니다. https://twitch.tv/MiraiKinko"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-vvigc2",
+    "original": "Coleção com todos os meu mods.",
+    "korean": "제작자의 모드를 모두 모은 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-098wm0",
+    "original": "Toutes les collections EphisPack réunit en une seule collection pour ne plus avoir à réfléchir !",
+    "korean": "따로 고민할 필요 없이 모든 EphisPack 컬렉션을 하나로 모았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-zpuszn",
+    "original": "Pack contenant les mods d'amélioration de la qualité de vie (Quality Of Life).",
+    "korean": "편의 기능을 개선하는 모드를 담은 팩입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-5ut2yz",
+    "original": "Nur QOL und Grafik Verbesserungen sowie fixes",
+    "korean": "편의 기능과 그래픽 개선, 오류 수정만 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-nl268f",
+    "original": "Various mods, kinda vanilla plus",
+    "korean": "바닐라에 여러 요소를 더하는 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-d4kt69",
+    "original": "Tem só algumas se pá",
+    "korean": "아마 몇 개만 들어 있을 거예요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-cltmrj",
+    "original": "BUGS FIXS DE QUESTS. Alguns mods de npcs xx funcionando para V masculino e feminino Mods de gangs, carros, quests, judy namoravel com V masculino e outros mods d relacionamentos. Alguns mods de tradução para a maioria das quest e outros mods de interface.",
+    "korean": "퀘스트 버그 수정과 남성·여성 V용 NPC xx 모드 일부, 갱단·차량·퀘스트 모드를 담았습니다. 남성 V와 주디의 연애 등 관계 관련 모드, 대부분의 퀘스트 번역 모드와 인터페이스 모드도 포함합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-pdqgzd",
+    "original": "# Lisez la description ! J'essaie de faire le meilleur modpack possible, toute en ayant pas de chose trop hors context ^^",
+    "korean": "설명을 읽어 주세요. 세계관에 너무 어긋나는 요소를 넣지 않으면서 최대한 좋은 모드팩을 만들고자 합니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-mvssrv",
+    "original": "Esta coleção NÃO é uma mudança total. O objetivo é apenas aprimorar o Cyberpunk vanilla, não mudá-lo por completo!",
+    "korean": "전면 개편용 컬렉션이 아닙니다. 바닐라 사이버펑크를 완전히 바꾸기보다는 개선하는 데 목적이 있습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-jvtuax",
+    "original": "Total overhaul, read description.",
+    "korean": "전면 개편 모음입니다. 상세 설명을 읽어 주세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-5zo8j2",
+    "original": "un compilado de mods no tan pesado. solo disponible para la 2.5",
+    "korean": "부담이 크지 않은 모드 모음이며 2.5에서만 사용할 수 있습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-61mft6",
+    "original": "Pack contenant les mods de contenu additionnel.",
+    "korean": "추가 콘텐츠 모드를 담은 팩입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-yzwxv4",
+    "original": "si si.... descargalo",
+    "korean": "그래요, 다운로드하세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-ijf73d",
+    "original": "Pacote de cabelos e olhos , customização avançada de personagem , rosto pré-derfinido asiatico , Panam e judy renovadas , visuais aprimorados , adição de roupas e armas novas , gameplay em 1 e 3 pessoa , clima dinamico e mais real , cybernetica imersiva.",
+    "korean": "머리·눈 꾸미기, 고급 캐릭터 설정, 아시아계 얼굴 프리셋, 파남·주디 외형 개선, 그래픽 개선, 새로운 의상·무기, 1·3인칭 플레이, 역동적이고 사실적인 날씨, 몰입감 있는 사이버네틱 요소를 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-a0wuxf",
+    "original": "vot tak vot",
+    "korean": "뭐, 그렇다는 거죠."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-pmlk9x",
+    "original": "mods basicos pro Neo",
+    "korean": "Neo를 위한 기본 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-brdfpx",
+    "original": "mods 2.5 para jugar con mis amigos",
+    "korean": "친구들과 함께 플레이하기 위한 2.5용 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-lusnnj",
+    "original": "Same Night City. More possibilities.",
+    "korean": "같은 나이트 시티에서 더 많은 가능성을 경험해 보세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-zv7nzw",
+    "original": "No NSFW, non lore breaking",
+    "korean": "성인용 요소가 없으며 세계관 설정을 해치지 않습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-7dll5v",
+    "original": "Solo para mi gang si no eres pin pin pata pin... uwu~",
+    "korean": "내 무리만을 위한 팩. ‘pin pin pata pin’이 아니라면… uwu~"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-sji30j",
+    "original": "Texture avancé et retravailler Pack graphique uniquement !",
+    "korean": "고급 텍스처와 재작업한 그래픽만 담은 팩입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-st2tym",
+    "original": "jij",
+    "korean": "너"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-gkjolm",
+    "original": "fixes etc",
+    "korean": "오류 수정 등을 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-lbpgjl",
+    "original": "Buff bebop",
+    "korean": "버프 비밥"
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-au0p2z",
+    "original": "minha coleção",
+    "korean": "제작자의 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-lfyzhz",
+    "original": "teeks collection",
+    "korean": "teeks의 컬렉션입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-effx6n",
+    "original": "sah jsp",
+    "korean": "솔직히 잘 모르겠어요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-saso19",
+    "original": "overhaul",
+    "korean": "전면 개편입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-pejvwf",
+    "original": "Polska paczka modów ulepszających rozgrywkę oraz grafikę z dodatkiem motywu Survivalowego. Znajdziesz tu również masę nowych pojazdów oraz mieszkań.",
+    "korean": "생존 요소를 더하면서 게임플레이와 그래픽을 개선하는 폴란드 모드팩입니다. 다양한 새 차량과 아파트도 담았습니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-gsih7t",
+    "original": "Minha coleçao pessoal de mods que uso no dia a dia, divirtam-se.",
+    "korean": "제작자가 평소 사용하는 개인 모드 모음입니다. 즐겁게 플레이하세요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-btvo3f",
+    "original": "Pour FAVE",
+    "korean": "FAVE를 위한 구성입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-fiygjk",
+    "original": "ze you a b i t c h",
+    "korean": "넌 개자식이야."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-eivqcg",
+    "original": "Mods insanos para amigos aproveitarem e sei lá e sei lá o que",
+    "korean": "친구들과 즐기기 위한 정신없는 모드 모음입니다. 그 밖에는 저도 잘 모르겠네요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-t0v3im",
+    "original": "sah le modpack est zinzin",
+    "korean": "진짜 정신 나간 모드팩이에요."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-kcvlh7",
+    "original": "cyberpunk mods",
+    "korean": "사이버펑크 모드 모음입니다."
+  },
+  {
+    "key": "nexus:cyberpunk2077:collection-jisz7i",
+    "original": "Une collection Lore-Friendly, avec des visuals et des améliorations.",
+    "korean": "세계관 설정을 유지하면서 그래픽과 여러 개선 기능을 더한 컬렉션입니다."
+  },
+  {
+    "key": "nexus:fallout4:79920",
+    "original": "A customizable mobile player home",
+    "korean": "맞춤 설정이 가능한 이동식 플레이어 주거지입니다."
+  },
+  {
+    "key": "nexus:fallout4:63191",
+    "original": "Adds 3d Trees LOD models for Far Harbor.",
+    "korean": "Far Harbor에 나무의 3D LOD 모델을 추가합니다."
+  },
+  {
+    "key": "nexus:fallout4:71732",
+    "original": "Previsbines patches",
+    "korean": "Previsbines 패치입니다."
+  },
+  {
+    "key": "nexus:fallout4:43059",
+    "original": "Simple capsule glass retexture.",
+    "korean": "캡슐 유리의 텍스처를 간단히 바꿉니다."
+  },
+  {
+    "key": "nexus:fallout4:31363",
+    "original": "A Male addon for \"TERA Rogue (CBBE - CBBE Physics - BodySlide)\" By Derpsdale",
+    "korean": "Derpsdale의 ‘TERA Rogue (CBBE - CBBE Physics - BodySlide)’용 남성 애드온입니다."
+  },
+  {
+    "key": "nexus:fallout4:35403",
+    "original": "Animates most chems",
+    "korean": "대부분의 약물 사용에 애니메이션을 추가합니다."
+  },
+  {
+    "key": "nexus:fallout4:58586",
+    "original": "per aspera ad astra",
+    "korean": "역경을 넘어 별을 향하여."
+  },
+  {
+    "key": "nexus:fallout4:4528",
+    "original": "*Unique LED Backlit style Gauges* *Unique Fonts* *Cleaner Screen* *Gunmetal Black Finish* *Factory-fresh condition*",
+    "korean": "독특한 LED 백라이트 계기판과 글꼴, 깔끔한 화면, 건메탈 블랙 마감으로 출고 직후처럼 새것 같은 외형을 제공합니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-pcjux2",
+    "original": "✅Ma vision de Fallout 4🎮Basé sur mes vidéos et lives🇫🇷Collection en francais💯DLC requis❌Non compatible avec le dernier patch❌Ne pas installer le texture pack",
+    "korean": "제작자의 영상과 라이브 방송을 바탕으로 구성한 프랑스어 폴아웃 4 컬렉션입니다. DLC가 필요하며 최신 패치와 호환되지 않습니다. 텍스처 팩은 설치하지 마세요."
+  },
+  {
+    "key": "nexus:fallout4:collection-scyqzs",
+    "original": "Lore-friendly WWII era weapons!",
+    "korean": "세계관 설정을 해치지 않는 2차 세계 대전 시대 무기 모음입니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-pqigwd",
+    "original": "A complete Synth overhaul in 2k",
+    "korean": "신스를 전면적으로 개편하는 2k 구성입니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-mvlmed",
+    "original": "Corrección de mi anterior colección (My not so correctly)",
+    "korean": "이전 컬렉션 ‘My not so correctly’를 수정한 구성입니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-dtbcig",
+    "original": "Vault Girl - Sim 3 - Upgradable Arm & Armor - NO F4SE",
+    "korean": "Vault Girl · Sim 3 · 업그레이드 가능한 무장·방어구를 담았으며 F4SE가 필요하지 않습니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-p6h31l",
+    "original": "NSFW Perks",
+    "korean": "성인용 특전 모음입니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-pw24vw",
+    "original": "Vanilla + 4k remaster + SS2 + patches/fixes/stability",
+    "korean": "바닐라 개선 · 4k 리마스터 · SS2 · 패치·오류 수정·안정화 구성입니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-eiupui",
+    "original": "Total overhaul lore friendly",
+    "korean": "세계관 설정을 유지하는 전면 개편입니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-8ks5nm",
+    "original": "Weapon retextures.",
+    "korean": "무기 텍스처를 교체합니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-mdrdo6",
+    "original": "Pour rendre Fallout 4 plus beau sans le dénaturer 👀",
+    "korean": "폴아웃 4의 본래 모습을 해치지 않으면서 더 아름답게 만듭니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-lxtxcv",
+    "original": "Es mi versión de FO4 mejorado con los mods justos y necesarios. Todos los mods están con su respectiva traducción al español. Espero lo disfruten.... MUCHAS GRACIAS A LA COMUNIDAD, por los mods tan fantásticos que nos entregan.",
+    "korean": "꼭 필요한 모드로 폴아웃 4를 개선한 제작자만의 구성입니다. 모든 모드에 스페인어 번역을 적용했습니다. 즐겁게 플레이하시길 바라며, 멋진 모드를 제공한 커뮤니티에 감사를 전합니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-xyonh3",
+    "original": "Vanilla + Power Armor!",
+    "korean": "바닐라와 파워 아머를 개선합니다."
+  },
+  {
+    "key": "nexus:fallout4:collection-wzus9o",
+    "original": "Collection pour une partie vanilla, avec des correctifs et l'HUD améliorée (FallUI) en français",
+    "korean": "바닐라 플레이를 위한 프랑스어 컬렉션입니다. 오류 수정과 개선된 HUD인 FallUI를 포함합니다."
+  },
+  {
+    "key": "nexus:skyrimspecialedition:65676",
+    "original": "An enhanced College overhaul.",
+    "korean": "대학을 더욱 개선하는 개편 모드입니다."
+  }
+]

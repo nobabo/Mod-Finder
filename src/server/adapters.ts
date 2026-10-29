@@ -7,6 +7,7 @@ import { listingKey, SOURCES, type Capability, type Filters, type Game, type Lis
 import type { Config } from './config';
 import { UpstreamClient, UpstreamError } from './http';
 import { searchNexusPage } from './nexus';
+import { getNexusCollection } from './nexus-collections';
 
 const knownLoaders = ['fabric', 'forge', 'neoforge', 'quilt', 'liteloader', 'rift'];
 const text = (v: unknown): string => typeof v === 'string' ? v : '';
@@ -126,6 +127,7 @@ export class Adapter implements SourceAdapter {
     if (!game.sources[this.source]) return { ...caps, status: 'unsupported', message: '이 게임을 지원하지 않는 출처예요' };
     if (this.config.disabledSources.has(this.source)) return { ...caps, status: 'disabled', message: '이 출처의 검색이 잠시 쉬고 있어요' };
     if (this.source === 'modrinth' || this.source === 'curseforge') caps.filters = ['version', 'loader', 'kind'];
+    if (this.source === 'nexus') caps.filters = ['kind'];
     if (categoriesForGame(game.id).some(category => category.source === this.source)) caps.filters.push('category');
     if (this.source === 'curseforge' && !this.config.CURSEFORGE_API_KEY) return { ...caps, status: 'external', message: '검색 연동 준비 중 · 원본 사이트에서 볼 수 있어요' };
     if (this.source === 'steam' && !this.config.STEAM_API_KEY) return { ...caps, status: 'external', message: '검색 연동 준비 중 · 창작마당에서 볼 수 있어요' };
@@ -173,6 +175,10 @@ export class Adapter implements SourceAdapter {
         result.items = data.data.map((hit, i) => mapCurseforge(hit, game, offset + i + 1)); result.total = data.pagination.totalCount;
         result.nextCursor = data.data.length && offset + data.data.length < Math.min(data.pagination.totalCount, 10000) ? cursorFor(req, offset + data.data.length) : null;
       } else if (this.source === 'nexus') {
+        if (req.filters.kind && !['mod', 'modpack'].includes(req.filters.kind)) {
+          delete result.appliedFilters.kind;
+          result.unsupportedFilters.push('kind');
+        }
         const data = await searchNexusPage(game, req, offset, this.http);
         result.items = data.items; result.total = data.total;
         const next = offset + data.items.length;
@@ -210,6 +216,7 @@ export class Adapter implements SourceAdapter {
   }
   async getDetails(game: Game, id: string): Promise<Listing | null> {
     if (this.getCapabilities(game).status !== 'ready') return null;
+    if (this.source === 'nexus' && id.startsWith('collection-')) return getNexusCollection(game, id, this.http);
     if (this.source === 'thunderstore') {
       const parts = id.match(/^([A-Za-z0-9_-]{1,128})-([A-Za-z0-9_]{1,128})$/);
       if (!parts) return null;

@@ -28,18 +28,21 @@ export const GAME_CATEGORIES: Record<string, ModCategory[]> = {
     ['Body, Face, and Hair','외형'], ['User Interface','인터페이스'], ['Visuals and Graphics','그래픽'], ['Bug Fixes','버그 수정'],
   ]),
   'lethal-company': define('thunderstore', [
+    ['659','모드팩','Modpacks'],
     ['690','위성','Moons'], ['767','실내','Interiors'], ['689','괴물','Monsters'], ['688','아이템','Items'],
     ['686','슈트','Suits'], ['692','외형','Cosmetics'], ['713','감정 표현','Emotes'], ['687','장비','Equipment'],
     ['691','가구','Furniture'], ['720','붐박스 음악','Boombox Music'], ['868','날씨','Weather'],
     ['869','위험 요소','Hazards'], ['871','성능','Performance'], ['872','편의 기능','Tweaks & Quality Of Life'],
   ]),
   'valheim': define('thunderstore', [
+    ['18','모드팩','Modpacks'],
     ['457','건축','Building'], ['26','제작','Crafting'], ['21','장비','Gear'], ['20','적','Enemies'],
     ['613','NPC','NPCs'], ['644','월드 생성','World Generation'], ['455','탈것','Vehicles'],
     ['456','이동 수단','Transportation'], ['454','PvP','PvP'], ['25','스킨','Skins'], ['42','편의 기능','Utility'],
     ['19','게임 조정','Tweaks'], ['28','오디오','Audio'], ['27','언어','Language'],
   ]),
   'risk-of-rain-2': define('thunderstore', [
+    ['4','모드팩','Modpacks'],
     ['7','생존자','Player Characters'], ['132','스킬','Skills'], ['9','아이템','Items'], ['14','유물','Artifacts'],
     ['12','적','Enemies'], ['91','게임 모드','Gamemodes'], ['6','맵','Maps'], ['5','스킨','Skins'],
     ['235','감정 표현','Emotes'], ['8','게임 조정','Tweaks'], ['11','오디오','Audio'], ['10','언어','Language'],
@@ -88,5 +91,9 @@ export const GAME_CATEGORIES: Record<string, ModCategory[]> = {
     ['Weapons','무기'], ['Weapons and Armour','무기·방어구'], ['Weather and Lighting','날씨·조명'],
   ]),
 };
+// Collections are a separate Nexus content type, routed to collectionsV2.
+for (const gameId of ['stardew-valley', 'skyrim-se', 'cyberpunk-2077', 'baldurs-gate-3', 'fallout-4', 'lethal-company', 'rimworld']) {
+  GAME_CATEGORIES[gameId].push(...define('nexus', [['collections', '모드팩', 'Modpacks']]));
+}
 export const categoriesForGame = (gameId: string): ModCategory[] => GAME_CATEGORIES[gameId] ?? [];
 export const getCategory = (gameId: string, id?: string) => categoriesForGame(gameId).find(category => category.id === id);

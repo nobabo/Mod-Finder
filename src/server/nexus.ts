@@ -3,6 +3,7 @@ import { z } from 'zod';
 import { getCategory } from '../shared/categories';
 import { listingKey, type Game, type Listing, type SearchRequest } from '../shared/types';
 import { UpstreamClient, UpstreamError } from './http';
+import { searchNexusCollections } from './nexus-collections';
 const query = `query ModFinderSearch($filter: ModsFilter, $sort: [ModsSort!], $offset: Int, $count: Int) {
   mods(filter: $filter, sort: $sort, offset: $offset, count: $count) {
     totalCount nodes { modId name author summary description thumbnailUrl updatedAt downloads category game { domainName } }
@@ -25,6 +26,7 @@ const httpsImage = (value: string | null) => {
 export async function searchNexusPage(game: Game, req: SearchRequest, offset: number, http: UpstreamClient) {
   const scope = game.sources.nexus!.scope;
   const category = getCategory(game.id, req.filters.category);
+  if (req.filters.kind === 'modpack' || category?.value === 'collections') return searchNexusCollections(game, req, offset, http);
   const raw = await http.json('https://api.nexusmods.com/v2/graphql', {
     method: 'POST', credentials: 'omit', headers: { 'Content-Type': 'application/json', 'Application-Name': 'ModFinder', 'Application-Version': APP_VERSION },
     body: JSON.stringify({ query, variables: {

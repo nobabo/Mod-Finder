@@ -1,9 +1,17 @@
 import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
+import { createHash } from 'node:crypto';
 import { GAMES } from '../../src/shared/games';
 import { registerModSummaries, translatedModSummary, withReviewedSummaries, type SummaryTranslation } from '../../src/shared/mod-summaries';
 import { listingText } from '../../src/shared/content';
 import { mapModrinth, mapCurseforge } from '../../src/server/adapters';
+
+interface ExpansionReport {
+  total: number;
+  games: { gameId: string; baseline: number; baselineSha256: string; added: number; total: number }[];
+  buckets: { gameId: string; source: string; kind: string; target: number; count: number; complete: boolean; metadata: { exhausted?: boolean }; listingKeys: string[] }[];
+}
+const expansionReport = () => JSON.parse(readFileSync('tooling/data/translation-expansion.manifest.json', 'utf8')) as ExpansionReport;
 
 describe('imported Korean summaries', () => {
   it('only applies matching game, title and original description without changing provider data', () => {
@@ -41,7 +49,7 @@ describe('imported Korean summaries', () => {
       }
       count += rows.length;
     }
-    expect(count).toBe(15972);
+    expect(count).toBe(expansionReport().total);
   });
   it('shows reviewed descriptions only for their matching game and original text', () => {
     const reviewed = JSON.parse(readFileSync('src/shared/locales/reviewed-mod-summaries.ko.json', 'utf8')) as Record<string, SummaryTranslation[]>;
@@ -77,13 +85,43 @@ describe('imported Korean summaries', () => {
     const rows = JSON.parse(readFileSync('src/shared/locales/mod-summaries/minecraft-java.json', 'utf8')) as SummaryTranslation[];
     registerModSummaries('minecraft-java', rows);
     const curseforge = rows.filter(row => row[3]?.startsWith('curseforge:432:'));
-    expect(curseforge).toHaveLength(2000);
-    expect(new Set(curseforge.map(row => row[3])).size).toBe(2000);
+    expect(curseforge).toHaveLength(4000);
+    expect(new Set(curseforge.map(row => row[3])).size).toBe(4000);
     for (const [title, summary, korean, key] of curseforge) {
       const item = mapCurseforge({ id: Number(key!.split(':')[2]), name: title, summary, links: { websiteUrl: 'https://www.curseforge.com/minecraft/mc-mods/example' } }, GAMES[0], 1);
       expect(translatedModSummary(item)).toBe(korean);
     }
     expect(curseforge.some(row => row[3] === 'curseforge:432:60089')).toBe(true);
     expect(curseforge.some(row => row[3] === 'curseforge:432:285109')).toBe(true);
+  });
+  it('preserves every original catalog row and ships distinct new IDs for each game and content type', () => {
+    const report = expansionReport();
+    expect(report.games).toHaveLength(GAMES.length);
+    expect(report.games.reduce((sum, game) => sum + game.baseline, 0)).toBe(15972);
+    const allNewKeys = new Set<string>();
+    for (const game of GAMES) {
+      const entry = report.games.find(entry => entry.gameId === game.id)!;
+      const rows = JSON.parse(readFileSync(`src/shared/locales/mod-summaries/${game.id}.json`, 'utf8')) as SummaryTranslation[];
+      expect(createHash('sha256').update(JSON.stringify(rows.slice(0, entry.baseline))).digest('hex')).toBe(entry.baselineSha256);
+      expect(rows).toHaveLength(entry.total); expect(entry.total - entry.baseline).toBe(entry.added);
+      const additions = new Map(rows.slice(entry.baseline).map(row => [row[3], row]));
+      expect(additions.size).toBe(entry.added);
+      expect(entry.added).toBeGreaterThanOrEqual(1000);
+      const buckets = report.buckets.filter(bucket => bucket.gameId === game.id);
+      expect(buckets.some(bucket => bucket.kind === 'mod' && bucket.count === 1000)).toBe(true);
+      expect(buckets.reduce((sum, bucket) => sum + bucket.count, 0)).toBe(entry.added);
+      for (const bucket of buckets) {
+        expect(bucket.count).toBeLessThanOrEqual(bucket.target);
+        expect(bucket.count === bucket.target || bucket.metadata.exhausted).toBe(true);
+        expect(bucket.listingKeys).toHaveLength(bucket.count);
+        for (const key of bucket.listingKeys) {
+          expect(typeof key).toBe('string'); expect(allNewKeys.has(key)).toBe(false); allNewKeys.add(key);
+          expect(key.startsWith(`${bucket.source}:${game.sources[bucket.source as keyof typeof game.sources]!.scope}:`)).toBe(true);
+          expect(additions.has(key)).toBe(true);
+          expect(additions.get(key)![2]).not.toMatch(/<unk>|<pad>|<<<#\d+#>>>/);
+        }
+      }
+    }
+    expect(allNewKeys.size + 15972).toBe(report.total);
   });
 });
