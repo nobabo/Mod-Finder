@@ -1,0 +1,15 @@
+.history-row { display:flex;align-items:center;min-width:0; }
+.history-row + .history-row { border-top:1px solid var(--line); }
+.history-search { display:flex;align-items:center;gap:18px;flex:1;min-width:0;padding:22px;text-align:left;color:var(--muted); }
+.history-search:hover { background:rgba(var(--tint-rgb),.1); }
+.history-search strong { overflow-wrap:anywhere; }
+.history-search>span:not(.history-number) { font-family:var(--display);font-size:10.5px; }
+.history-search>svg { flex-shrink:0; }
+.history-delete { flex-shrink:0;min-width:44px;min-height:44px;margin-right:10px; }
+@media(max-width:1050px) {
+  .history-search { gap:12px;padding:18px 14px; }
+}
+@media(max-width:650px) {
+  .history-search { gap:10px;flex-wrap:wrap; }
+  .history-search>span:not(.history-number) { font-size:9px; }
+}
