@@ -13,7 +13,7 @@ async (page) => {
       const tab = await context.newPage();
       const errors = [];
       tab.on('pageerror', error => errors.push(error.message));
-      for (const [game, color] of [['minecraft-java', '#186452b3'], ['stardew-valley', '#503515e6']]) {
+      for (const [game, color] of [['minecraft-java', '#18645266'], ['stardew-valley', '#50351566']]) {
         await tab.goto(`${base}/?game=${game}`);
         await tab.locator('.atmosphere.is-ready').waitFor();
         await tab.locator('.game-character img').evaluateAll(images => Promise.all(images.map(image => image.decode())));
