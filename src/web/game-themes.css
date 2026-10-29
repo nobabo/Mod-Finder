@@ -198,8 +198,7 @@ body:has(.hero-brand) .app-brand-header { visibility:hidden; }
 @media(max-width:1400px) { :where(html:not([data-native])) { .hero-brand .brand-logo { width:64px;height:64px; } }}
 .app-brand-header .brand-logo { width:76px;height:76px; }
 .app-brand-header.is-results-scrolled { display:none; }
-.results-scrolled :is(.mobile-header,.settings-fab-wrap>.settings-fab,.search-row>.filter-orb) { display:none; }
-.results-scrolled .results-section { animation:none; }
+.results-scrolled :is(.mobile-header,.search-row>.filter-orb) { display:none; }
 .results-scrolled .search-dock { min-height:var(--search-dock-height,74px); }
 .results-scrolled .search-row { position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;width:var(--search-dock-width);transform:translateX(-50%); }
 .results-scrolled .search-row .search-box { min-height:60px;padding:4px 6px;gap:8px; }
