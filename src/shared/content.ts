@@ -4,7 +4,8 @@ import searchKo from './locales/search.ko.json';
 import gameSearchKo from './locales/search.games.ko.json';
 import type { Locale } from './locale';
 import type { Listing } from './types';
-import { translatedModSummary } from './mod-summaries';
+import { translatedModSummary, translatedModTitle } from './mod-summaries';
+import { titleSearchEntries } from './mod-titles';
 import { communityMods } from './community-ranking';
 import packNamesKo from './data/community-pack-names.ko.json';
 export interface ModTranslation { title?: string; summary?: string; searchTerm: string; aliases: string[]; sourceUrl: string; reviewedAt: string }
@@ -25,14 +26,16 @@ export function tagText(tag: string, locale: Locale) {
 // Presentation overlay only: raw provider data remains unchanged in saved listings.
 export function listingText(item: Listing, locale: Locale) {
   const entry = locale === 'ko' ? modTranslations[item.key] : undefined;
+  const title = entry?.title || (locale === 'ko' ? translatedModTitle(item) : undefined);
   const summary = entry?.summary || (locale === 'ko' ? translatedModSummary(item) : undefined);
-  return { title: entry?.title || item.title, summary: summary || item.summary, translated: !!entry || !!summary };
+  return { title: title || item.title, summary: summary || item.summary, translated: !!entry || !!title || !!summary };
 }
 export function providerQuery(query: string, prefixes: string[], gameId: string) {
   const q = normalizedQuery(query);
   const localized = Object.entries(modTranslations).filter(([key]) => prefixes.some(prefix => key.startsWith(prefix)));
   const gameTerms = Object.entries(gameSearchTranslations[gameId] ?? {});
   const community = communityMods(gameId);
+  const titles = /[가-힣]/.test(q) && !Object.prototype.hasOwnProperty.call(searchTranslations, q) ? titleSearchEntries(gameId, prefixes) : [];
   // Exact matches win. Only Korean aliases tolerate spacing changes; English
   // queries and longer phrases remain literal. Never run title-counting regexes
   // against search input: those intentionally also match partial mentions.
@@ -43,6 +46,7 @@ export function providerQuery(query: string, prefixes: string[], gameId: string)
       localized.filter(([, entry]) => [entry.title, ...entry.aliases].some(matches)).map(([, entry]) => entry.searchTerm),
       gameTerms.filter(([alias]) => matches(alias)).map(([, term]) => term),
       community.filter(entry => matches(entry.koreanName ?? (gameId === 'minecraft-java' ? packNames[entry.id] : undefined))).map(entry => entry.name),
+      titles.filter(([, , title]) => matches(title)).map(([, original]) => original),
     ];
     for (const candidates of tiers) {
       const terms = new Set(candidates);

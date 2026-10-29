@@ -52,7 +52,9 @@ for (const [gameId, rows] of catalogs) {
   try { previous = await readJson(path); } catch (error) { if (error.code !== 'ENOENT') throw error; }
   const identity = row => JSON.stringify([row[0], row[1], row[3]]);
   const incoming = new Set(rows.map(identity));
-  const merged = [...rows, ...previous.filter(row => row[3] && !incoming.has(identity(row)))];
+  const previousTitles = new Map(previous.filter(row => row[4]).map(row => [identity(row), row[4]]));
+  const titled = rows.map(row => previousTitles.has(identity(row)) ? [...row, previousTitles.get(identity(row))] : row);
+  const merged = [...titled, ...previous.filter(row => row[3] && !incoming.has(identity(row)))];
   planned.push({ path, merged });
 }
 for (const { path, merged } of planned) {

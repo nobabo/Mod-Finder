@@ -10,7 +10,7 @@ const filenames = (await readdir(directory)).filter(name => /^[a-z0-9-]+\.(mod|m
 const artifacts = await Promise.all(filenames.map(async filename => validateArtifactFile(filename, JSON.parse(await readFile(join(directory, filename), 'utf8')), new Set(games.map(game => game.id)))));
 const correctionDirectory = join(root, 'tooling/data');
 const manifestPath = join(correctionDirectory, 'translation-expansion.manifest.json');
-const correctionFiles = (await readdir(correctionDirectory)).filter(name => /corrections\.ko\.json$/.test(name)).sort();
+const correctionFiles = (await readdir(correctionDirectory)).filter(name => /corrections\.ko\.json$/.test(name) && !/-title-corrections\.ko\.json$/.test(name)).sort();
 const corrections = correctionIndex((await Promise.all(correctionFiles.map(async name => JSON.parse(await readFile(join(correctionDirectory, name), 'utf8'))))).flat());
 for (const artifact of artifacts) {
   const prepared = prepareTranslationRows(artifact.gameId, artifact.rows, corrections);
@@ -39,7 +39,7 @@ for (const game of games) {
     const scope = game.sources[artifact.source]?.scope;
     if (!scope || artifact.rows.some(row => !row[3]?.startsWith(`${artifact.source}:${scope}:`))) throw new Error(`${game.id}: incorrect provider scope`);
   }
-  planned.push({ path, gameId: game.id, baseline: baseline.length, baselineSha256: createHash('sha256').update(JSON.stringify(baseline)).digest('hex'), ...mergeTranslationExpansion(baseline, selected, game.id) });
+  planned.push({ path, gameId: game.id, baseline: baseline.length, baselineSha256: createHash('sha256').update(JSON.stringify(baseline.map(row => row.slice(0, 4)))).digest('hex'), ...mergeTranslationExpansion(baseline, selected, game.id) });
 }
 const report = {
   batchId,

@@ -7,6 +7,33 @@ import org.junit.Test
 import java.io.File
 
 class ModelsTest {
+    @Test fun catalogTitlesUseProviderIdentityAndPreserveOriginals() {
+        val data = JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()).put("titles", JSONObject())
+        val rows = JSONArray("""[["Example","Sample","번역 설명","modrinth:minecraft:123","예시 이름"],["Example","Sample","번역 설명","curseforge:minecraft:123","다른 이름"],["Legacy","Sample","기존 설명",null,"기존 이름"],["Old format","Sample","이전 설명",null]]""")
+        val catalog = Catalog(data) { rows.toString() }
+        catalog.loadSummaries("minecraft-java")
+        val item = listing(id = "123", title = "Example")
+        assertEquals("예시 이름" to "번역 설명", catalog.listingText(item, "ko"))
+        assertEquals("예시 이름" to "Changed", catalog.listingText(item.copy(summary = "Changed"), "ko"))
+        assertEquals("다른 이름", catalog.listingText(listing("curseforge", "123", title = "Example"), "ko").first)
+        assertEquals("Example", catalog.listingText(listing(id = "456", title = "Example"), "ko").first)
+        assertEquals("Renamed", catalog.listingText(item.copy(title = "Renamed"), "ko").first)
+        assertEquals("기존 이름", catalog.listingText(item.copy(title = "Legacy"), "ko").first)
+        assertEquals("Legacy", catalog.listingText(item.copy(title = "Legacy", summary = "Changed"), "ko").first)
+        assertEquals("Old format" to "이전 설명", catalog.listingText(item.copy(title = "Old format"), "ko"))
+        assertEquals("Example" to "Sample", catalog.listingText(item, "en"))
+        assertEquals("Example", item.title)
+    }
+    @Test fun indexedKoreanTitlesSearchWithoutLoadingDescriptions() {
+        val data = JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText())
+        data.put("titles", JSONObject().put("minecraft-java", JSONArray("""[["modrinth:minecraft:123","Example","예시 모드"]]""")))
+        val catalog = Catalog(data)
+        val game = catalog.game("minecraft-java")!!
+        assertEquals("Example", catalog.providerQuery("예시 모드", game, "modrinth"))
+        assertTrue(catalog.providerQueries("예시", game, "modrinth").contains("Example"))
+        assertEquals("예시 모드", catalog.providerQuery("예시 모드", game, "curseforge"))
+        assertEquals("예시 모드", catalog.listingText(listing(id = "123", title = "Example"), "ko").first)
+    }
     @Test fun relevanceUsesProviderRanksAndLocalizedTerms() {
         val early = listing(id = "zzz", title = "Magic tools").copy(rank = 1)
         val late = listing(id = "aaa", title = "Magic items").copy(rank = 40)

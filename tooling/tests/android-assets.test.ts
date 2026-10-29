@@ -23,6 +23,7 @@ describe('Android artwork packaging', () => {
         expect(revision).toBe(createHash('sha256').update(path.endsWith('.svg') ? bytes.toString('utf8').replace(/\r\n/g, '\n') : bytes).digest('hex'));
       }
       expect(catalog.rankings).toEqual(JSON.parse(readFileSync('src/shared/data/community-rankings.json', 'utf8')));
+      expect(catalog.titles).toEqual(JSON.parse(readFileSync('src/shared/locales/mod-titles.ko.json', 'utf8')));
       expect(readdirSync(resolve(target, 'summaries'))).toHaveLength(prepared.games);
       expect(readdirSync(target, { recursive: true }).filter(file => /\.(?:png|jpe?g|webp|svg)$/i.test(String(file)))).toEqual([]);
     } finally {

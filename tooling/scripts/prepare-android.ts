@@ -39,7 +39,7 @@ export function prepareAndroidAssets(output = resolve(root, 'output/android/asse
     numberVariants: Object.fromEntries(SEARCH_NOUNS.flatMap(noun => numberQueries(noun)).map(word => [word, numberQueries(word)])),
     backgrounds: BACKGROUNDS, logos, assetRevisions, dictionaries, verifiedLinks: read('src/shared/data/verified-projects.json'),
     rankings: read('src/shared/data/community-rankings.json'), packNames: read('src/shared/data/community-pack-names.ko.json'),
-    mods: read('src/shared/locales/mods.ko.json'), search: read('src/shared/locales/search.ko.json'),
+    mods: read('src/shared/locales/mods.ko.json'), titles: read('src/shared/locales/mod-titles.ko.json'), search: read('src/shared/locales/search.ko.json'),
     gameSearch: read('src/shared/locales/search.games.ko.json'), corrections: read('src/shared/data/search-corrections.json'),
   });
   const reviewed = read('src/shared/locales/reviewed-mod-summaries.ko.json') as Record<string, SummaryTranslation[]>;

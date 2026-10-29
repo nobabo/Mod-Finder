@@ -29,7 +29,7 @@ export function mergeTranslationExpansion(baseline, artifacts, gameId) {
       sourceKinds.set(row[3], artifact.kind);
       const identity = rowIdentity(row), previous = existing.get(identity);
       const sameId = sourceIds.get(row[3]);
-      if (sameId && !sameId.some(value => JSON.stringify(value) === JSON.stringify(row))) throw new Error('Expansion would overwrite an existing source identity');
+      if (sameId && !sameId.some(value => JSON.stringify(value.slice(0, 4)) === JSON.stringify(row))) throw new Error('Expansion would overwrite an existing source identity');
       if (previous) {
         if (previous[2] !== row[2]) throw new Error('Expansion would overwrite an existing translation');
       } else { result.push(row); existing.set(identity, row); sourceIds.set(row[3], [row]); added++; }

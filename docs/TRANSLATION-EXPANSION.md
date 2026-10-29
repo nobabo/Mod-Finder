@@ -36,3 +36,11 @@ python -B tooling/lib/local-translation-server.py --device cuda --engine ct2 --e
 Nexus 모드팩은 게임의 검색 필터에서 **컨텐츠 → 모드팩**을 선택해 조회한다. `collectionsV2`의 실제 응답만 표시하며 ID는 `nexus:<게임 범위>:collection-<slug>`로 일반 모드와 구분한다. 한 글자 검색은 정확히 일치하는 결과를, 두 글자 이상은 API의 부분 검색을 요청한다. 게임 버전·로더 정보가 제공되지 않으면 `null`을 유지한다. 원문 설명이 바뀌면 예전 번역을 적용하지 않는다.
 
 타입 검사·단위 테스트·빌드와 Worker 검증을 수행한다. 브라우저 확인은 Playwright CLI에서 `tooling/scripts/verify-translation-expansion.js`를 실행하고 결과 화면은 `output/playwright/`에 저장한다. 이는 목록·설명 표시의 변경이며 모드 파일이나 게임 내부 언어 파일을 수정하지 않는다.
+
+## 제목 번역
+
+설명 번역만 추가했던 누락을 보완해 기존·추가 카탈로그 40,084행 모두에 별도의 제목 열을 넣었다. 4개 원본 열(제목·원문 설명·한국어 설명·출처 ID)은 그대로 보존한다. 총기 모델명, 버전, 숫자뿐인 이름 등은 뜻을 지어내지 않고 유지한다. 목록·추천·상세 화면은 기존 검수 제목을 우선하며, 그 외에는 출처 ID와 원문 제목이 일치하는 번역을 표시한다. ID가 없는 이전 항목은 게임·제목·설명 원문까지 일치해야 한다. 원어는 상세의 원문 보기에서 확인할 수 있다.
+
+개발용 `tooling/scripts/translate-catalog-titles.py`는 앞서 준비한 로컬 모델로 제목 후보를 만들어 `output/title-translation/checkpoint.json`에 재개 가능하게 저장한다. `--prepare-tokenizers`는 작은 토크나이저 파일만 내려받는다. `node tooling/scripts/import-catalog-titles.mjs`는 기존 검수 이름, 게임별 제목 교정, 원문 단어를 확인하는 용어 교정 순서로 제목을 준비한다. `tooling/data/*-title-corrections.ko.json`에는 인기 항목과 숫자·반복·무관한 사이트 문구 등 오류 후보의 직접 교정을 기록한다. 자동 번역 전체를 사람이 검수한 것은 아니다.
+
+게임별 행 수와 원본 4열 SHA-256은 `tooling/data/title-translation.manifest.json`에 보존한다. 출처 ID가 있는 26,151행은 `src/shared/locales/mod-titles.ko.json`에도 넣어 첫 한국어 검색과 서버의 검색 계획에 사용한다. 이 색인은 검색어를 실제 제공자의 원문 제목으로 확장할 뿐 결과를 만들거나 동일 프로젝트로 합치지 않는다. 기존 검수 검색어와 일반 키워드가 새 자동 제목에 밀리지 않도록 우선순위를 유지한다. 예전 설명 가져오기는 새 제목 열을 보존하며, 제목 가져오기를 다시 실행해도 결과가 동일하다.

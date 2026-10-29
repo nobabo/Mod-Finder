@@ -8,9 +8,21 @@ import { bucketKey, searchPlan, type SearchSpec } from '../../src/shared/search-
 import { runSearchWithCorrections } from '../../src/shared/search-corrections';
 import { cursorFor, readCursor, mapCurseforge } from '../../src/server/adapters';
 import { appendStable, groupResults } from '../../src/shared/ranking';
+import { titleSearchEntries } from '../../src/shared/mod-titles';
+import { translatedModTitle } from '../../src/shared/mod-summaries';
 
 const spec: SearchSpec = { gameId: 'minecraft-java', selectedSource: 'curseforge', query: '디시즈', filters: {}, sort: 'relevance' };
 describe('localized ranking search', () => {
+  it('searches shipped source-scoped Korean titles before any description catalog has loaded', () => {
+    const rows = titleSearchEntries('minecraft-java', ['curseforge:432:']);
+    const [key, original, korean] = rows.find(([key]) => key === 'curseforge:432:238222')!;
+    expect(korean).toMatch(/[가-힣]/);
+    expect(localizedQueries(korean, ['curseforge:432:'], 'minecraft-java')).toContain(original);
+    expect(localizedQueries(korean.replace(/\s/g, ''), ['curseforge:432:'], 'minecraft-java')).toContain(original);
+    expect(titleSearchEntries('minecraft-java', ['steam:432:'])).toEqual([]);
+    expect(translatedModTitle({ gameId: 'minecraft-java', key, title: original, summary: 'A newly updated description' })).toBe(korean);
+    expect(translatedModTitle({ gameId: 'minecraft-java', key, title: original + ' renamed', summary: '' })).toBeUndefined();
+  });
   it('covers every translated download title and every displayed community ranking title across all games', () => {
     for (const game of GAMES) {
       for (const [source, mapping] of Object.entries(game.sources)) {

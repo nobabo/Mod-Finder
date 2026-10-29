@@ -2,7 +2,7 @@ import { describe, expect, it } from 'vitest';
 import { readFileSync } from 'node:fs';
 import { createHash } from 'node:crypto';
 import { GAMES } from '../../src/shared/games';
-import { registerModSummaries, translatedModSummary, withReviewedSummaries, type SummaryTranslation } from '../../src/shared/mod-summaries';
+import { registerModSummaries, translatedModSummary, translatedModTitle, withReviewedSummaries, type SummaryTranslation } from '../../src/shared/mod-summaries';
 import { listingText } from '../../src/shared/content';
 import { mapModrinth, mapCurseforge } from '../../src/server/adapters';
 
@@ -36,6 +36,47 @@ describe('imported Korean summaries', () => {
     expect(translatedModSummary(item)).toBe('첫 번역');
     expect(translatedModSummary({ ...item, key: 'steam:1:789' })).toBeUndefined();
     expect(translatedModSummary({ ...item, title: 'Ambiguous' })).toBeUndefined();
+  });
+  it('translates titles by source identity independently of description updates', () => {
+    registerModSummaries('title-test', [
+      ['Same name', 'Old summary', '설명', 'steam:1:123', '첫 번째 이름'],
+      ['Same name', 'Old summary', '설명', 'steam:1:456', '다른 이름'],
+      ['Conflicting', 'One', '설명', 'steam:1:789', '첫 이름'],
+      ['Conflicting', 'Two', '설명', 'steam:1:789', '둘째 이름'],
+    ]);
+    const item = { gameId: 'title-test', title: 'Same name', summary: 'New summary', key: 'steam:1:123' };
+    expect(translatedModTitle(item)).toBe('첫 번째 이름');
+    expect(translatedModSummary(item)).toBeUndefined();
+    const listing = { ...mapModrinth({ project_id: 'example', title: 'Same name', description: 'New summary' }, GAMES[0], 1), ...item };
+    expect(listingText(listing, 'ko')).toEqual({ title: '첫 번째 이름', summary: 'New summary', translated: true });
+    expect(listingText(listing, 'en')).toEqual({ title: 'Same name', summary: 'New summary', translated: false });
+    expect(translatedModTitle({ ...item, key: 'steam:1:456' })).toBe('다른 이름');
+    expect(translatedModTitle({ ...item, key: 'steam:1:missing' })).toBeUndefined();
+    expect(translatedModTitle({ ...item, title: 'Renamed' })).toBeUndefined();
+    expect(translatedModTitle({ ...item, gameId: 'different-game' })).toBeUndefined();
+    expect(translatedModTitle({ ...item, key: 'steam:1:789', title: 'Conflicting' })).toBeUndefined();
+  });
+  it('requires the original description for legacy titles without a provider identity', () => {
+    registerModSummaries('legacy-title-test', [
+      ['Legacy', 'Original', '설명', null, '기존 이름'],
+      ['Ambiguous', 'Original', '설명', null, '첫 이름'],
+      ['Ambiguous', 'Original', '설명', null, '둘째 이름'],
+    ]);
+    const item = { gameId: 'legacy-title-test', title: 'Legacy', summary: 'Original', key: 'steam:1:123' };
+    expect(translatedModTitle(item)).toBe('기존 이름');
+    expect(translatedModTitle({ ...item, summary: 'Changed' })).toBeUndefined();
+    expect(translatedModTitle({ ...item, title: 'Ambiguous' })).toBeUndefined();
+  });
+  it('keeps reviewed names authoritative and preserves titles when correcting only descriptions', () => {
+    const rows: SummaryTranslation[] = [['Example', 'Original', '설명', 'steam:1:123', '예시 이름']];
+    const corrected = withReviewedSummaries(rows, [['Example', 'Original', '수정된 설명', 'steam:1:123']]);
+    expect(corrected).toEqual([['Example', 'Original', '수정된 설명', 'steam:1:123', '예시 이름']]);
+    expect(rows[0][2]).toBe('설명');
+    registerModSummaries('minecraft-java', [['Sodium', 'Summary', '설명', 'modrinth:minecraft:AANobbMI', '잘못된 이름']]);
+    const item = mapModrinth({ project_id: 'AANobbMI', title: 'Sodium', description: 'Summary' }, GAMES[0], 1);
+    expect(listingText(item, 'ko').title).toBe('소듐 (Sodium)');
+    expect(listingText(item, 'en').title).toBe('Sodium');
+    expect(item.title).toBe('Sodium');
   });
   it('ships valid nonempty translation catalogs for all games', () => {
     let count = 0;
@@ -102,7 +143,7 @@ describe('imported Korean summaries', () => {
     for (const game of GAMES) {
       const entry = report.games.find(entry => entry.gameId === game.id)!;
       const rows = JSON.parse(readFileSync(`src/shared/locales/mod-summaries/${game.id}.json`, 'utf8')) as SummaryTranslation[];
-      expect(createHash('sha256').update(JSON.stringify(rows.slice(0, entry.baseline))).digest('hex')).toBe(entry.baselineSha256);
+      expect(createHash('sha256').update(JSON.stringify(rows.slice(0, entry.baseline).map(row => row.slice(0, 4)))).digest('hex')).toBe(entry.baselineSha256);
       expect(rows).toHaveLength(entry.total); expect(entry.total - entry.baseline).toBe(entry.added);
       const additions = new Map(rows.slice(entry.baseline).map(row => [row[3], row]));
       expect(additions.size).toBe(entry.added);

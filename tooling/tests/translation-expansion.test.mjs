@@ -11,6 +11,8 @@ describe('translation expansion import', () => {
     expect(merged.added).toBe(1); expect(merged.rows[0]).toEqual(baseline[0]);
     expect(baseline).toHaveLength(1);
     expect(mergeTranslationExpansion(merged.rows, [artifact()], 'game')).toEqual({ rows: merged.rows, added: 0 });
+    const titled = [[...row, '예시 제목']];
+    expect(mergeTranslationExpansion(titled, [artifact()], 'game')).toEqual({ rows: titled, added: 0 });
     expect(() => mergeTranslationExpansion([row], [artifact([[...row.slice(0, 2), '다른 번역', row[3]]])], 'game')).toThrow('overwrite');
   });
   it('keeps equal titles with separate source IDs and rejects cross-category duplication', () => {

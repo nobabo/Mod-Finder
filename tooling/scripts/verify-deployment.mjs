@@ -42,6 +42,9 @@ for (const [platform, signature] of [['windows', 'MZ'], ['android', 'PK']]) {
 const plan = await request('/v1/search-plan?gameId=minecraft-java&query=소듕&loader=fabric');
 assert.equal(plan.status, 200);
 assert.ok((await plan.json()).fuzzy.some(request => request.source === 'modrinth' && request.query === 'Sodium' && request.filters.loader === 'fabric'));
+const titlePlan = await request('/v1/search-plan?' + new URLSearchParams({ gameId: 'minecraft-java', query: '마우스 트윅', kind: 'mod' }));
+assert.equal(titlePlan.status, 200);
+assert.ok((await titlePlan.json()).original.some(request => request.source === 'curseforge' && request.query === 'Mouse Tweaks' && request.filters.kind === 'mod'), 'Korean CurseForge title reaches the real provider');
 const regional = await request('/v1/games', { headers: { 'Accept-Language': 'ko-KR,ko;q=0.9,en;q=0.8' } });
 assert.equal(regional.headers.get('content-language'), 'ko'); await regional.text();
 const thunderstore = await request('/v1/listings/thunderstore/lethal-company/notnotnotswipez-MoreCompany');

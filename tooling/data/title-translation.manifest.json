@@ -1,0 +1,127 @@
+{
+  "version": 1,
+  "method": "Offline OPUS-MT/M2M100 candidate titles with source-bound existing reviewed names and explicit title corrections; automatic titles are not fully human reviewed",
+  "correctionFiles": [
+    "game-title-corrections.ko.json",
+    "minecraft-title-corrections.ko.json",
+    "numeric-title-corrections.ko.json",
+    "root-title-corrections.ko.json",
+    "title-quality-title-corrections.ko.json"
+  ],
+  "correctionCount": 2600,
+  "games": [
+    {
+      "gameId": "baldurs-gate-3",
+      "count": 2128,
+      "sourceBound": 1128,
+      "originalFourColumnsSha256": "9f304f09ba60ce79ada554f2e57f76e0b3c7cb99a514e5f3da5a9f1fd747a92b",
+      "korean": 2128,
+      "unchangedNames": 0
+    },
+    {
+      "gameId": "cities-skylines",
+      "count": 1999,
+      "sourceBound": 1003,
+      "originalFourColumnsSha256": "5a0539f806986ff3d91b0c9d8ef5974cf53ee5d31ea6d77e3f5f20f343e03cd6",
+      "korean": 1999,
+      "unchangedNames": 1
+    },
+    {
+      "gameId": "cyberpunk-2077",
+      "count": 2970,
+      "sourceBound": 1970,
+      "originalFourColumnsSha256": "4a74219f6cfc6103ab6036d81ca0fb678e403afa7a8dd6956365e07026b2a274",
+      "korean": 2968,
+      "unchangedNames": 2
+    },
+    {
+      "gameId": "dont-starve-together",
+      "count": 1989,
+      "sourceBound": 1012,
+      "originalFourColumnsSha256": "69b5e00ff48b2647a1d722048e3355c32c57a5479dd9379656e9237ec2037ef7",
+      "korean": 1986,
+      "unchangedNames": 7
+    },
+    {
+      "gameId": "fallout-4",
+      "count": 2994,
+      "sourceBound": 2000,
+      "originalFourColumnsSha256": "f27936fcbf77ba6c732bf0420958db84b301de4e363857aa0003699902c50ca6",
+      "korean": 2991,
+      "unchangedNames": 2
+    },
+    {
+      "gameId": "lethal-company",
+      "count": 3013,
+      "sourceBound": 2014,
+      "originalFourColumnsSha256": "35627c8235084dedd070a174aacce8cb26f88c528727e85c2eb1cd517c8b5bfe",
+      "korean": 3013,
+      "unchangedNames": 0
+    },
+    {
+      "gameId": "minecraft-java",
+      "count": 6999,
+      "sourceBound": 6000,
+      "originalFourColumnsSha256": "9dd14075b4b7bf9492e8cb4ff0399080336781e75da9ef0613ec1e33039fe9be",
+      "korean": 6998,
+      "unchangedNames": 1
+    },
+    {
+      "gameId": "project-zomboid",
+      "count": 2000,
+      "sourceBound": 1002,
+      "originalFourColumnsSha256": "0ba4b3ff6eb8513faca1b48d02e95599513299c1398b6028e36b992c2049734f",
+      "korean": 1999,
+      "unchangedNames": 3
+    },
+    {
+      "gameId": "rimworld",
+      "count": 2001,
+      "sourceBound": 1005,
+      "originalFourColumnsSha256": "857db9975b6ffdb7d68b047a4249ed41f83b3e10b1b4cd2a19dcb929395e0e08",
+      "korean": 2001,
+      "unchangedNames": 0
+    },
+    {
+      "gameId": "risk-of-rain-2",
+      "count": 2994,
+      "sourceBound": 2001,
+      "originalFourColumnsSha256": "dad0c2e3fa6737f2fae41cebcfba74e32bb4be499d3eb18cdc7cd3a312464f7c",
+      "korean": 2993,
+      "unchangedNames": 1
+    },
+    {
+      "gameId": "skyrim-se",
+      "count": 3000,
+      "sourceBound": 2000,
+      "originalFourColumnsSha256": "8892e5a552cdcd382cacc717a213bc2c47d10fa03a5a8bf2bed1cfd64a91457c",
+      "korean": 2997,
+      "unchangedNames": 3
+    },
+    {
+      "gameId": "stardew-valley",
+      "count": 2999,
+      "sourceBound": 2000,
+      "originalFourColumnsSha256": "def1505533df7c247386dc579ed55ab799a4915950276d8a8dac70920738a841",
+      "korean": 2997,
+      "unchangedNames": 2
+    },
+    {
+      "gameId": "terraria",
+      "count": 2000,
+      "sourceBound": 1001,
+      "originalFourColumnsSha256": "b5024b4667f1398ba564f4ceb32b1659d1b4e582b1ab2aea22ec3255a6e7eb19",
+      "korean": 2000,
+      "unchangedNames": 3
+    },
+    {
+      "gameId": "valheim",
+      "count": 2998,
+      "sourceBound": 2015,
+      "originalFourColumnsSha256": "2a99b6032e732693f55c29ec13a64795b6f3fb5e44ed03c46c2e6925f040a1be",
+      "korean": 2997,
+      "unchangedNames": 1
+    }
+  ],
+  "total": 40084
+}

@@ -1,14 +1,19 @@
 import type { Listing, ResultGroup, Sort, SortDirection, VerifiedProjectLink } from './types';
 import { numberQueries } from './search-number-variants';
-import { modTranslations } from './content';
+import { listingText } from './content';
 import { localizedQueries } from './localized-search';
 const normalized = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
 const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
 const representativeOrder = (a: Listing, b: Listing) => downloads(b) - downloads(a) || a.key.localeCompare(b.key);
 export function matchPriority(item: Listing, query: string): number {
-  const translated = modTranslations[item.key];
-  const terms = [...new Set([query, ...localizedQueries(query, [`${item.source}:${item.scope}:`], item.gameId)].flatMap(numberQueries).map(normalized))].filter(Boolean);
+  return priorityWithTerms(item, matchingTerms(item, query));
+}
+function matchingTerms(item: Pick<Listing, 'source' | 'scope' | 'gameId'>, query: string): string[] {
+  return [...new Set([query, ...localizedQueries(query, [`${item.source}:${item.scope}:`], item.gameId)].flatMap(numberQueries).map(normalized))].filter(Boolean);
+}
+function priorityWithTerms(item: Listing, terms: string[]): number {
   if (!terms.length) return 3;
+  const translated = listingText(item, 'ko');
   const title = [item.title, translated?.title ?? ''].map(normalized);
   const summary = [item.summary, translated?.summary ?? ''].map(normalized);
   const inTitle = terms.some(term => title.some(text => text.includes(term)));
@@ -45,8 +50,16 @@ export function groupResults(items: Listing[], query: string, links: VerifiedPro
   }
   const q = normalized(query);
   for (const group of groups.values()) group.listings.sort(representativeOrder);
-  // Resolve localized hints once per listing, not on every sort comparison.
-  const priorities = new Map([...groups.values()].map(group => [group.id, Math.min(...group.listings.map(item => matchPriority(item, query)))]));
+  // Resolve large title alias catalogs once per game/provider in this result
+  // set. The cache is local so later dictionary updates cannot become stale.
+  const terms = new Map<string, string[]>();
+  const priority = (item: Listing) => {
+    const key = JSON.stringify([item.gameId, item.source, item.scope]);
+    let candidates = terms.get(key);
+    if (!candidates) { candidates = matchingTerms(item, query); terms.set(key, candidates); }
+    return priorityWithTerms(item, candidates);
+  };
+  const priorities = new Map([...groups.values()].map(group => [group.id, Math.min(...group.listings.map(priority))]));
   const score = (group: ResultGroup) => group.listings.reduce((sum, item) => sum + 1 / (60 + item.rank), 0) + (q && group.listings.some(i => i.title.toLocaleLowerCase() === q) ? 10 : 0);
   return [...groups.values()].sort((a, b) => priorities.get(a.id)! - priorities.get(b.id)! || score(b) - score(a) || a.id.localeCompare(b.id));
 }
