@@ -285,7 +285,8 @@ html[data-glass="webgl"] .filter-dropdown.is-liquid-glass { background:transpare
 .search-results-panel { min-width:0; }
 @media(max-width:650px) { :where(html:not([data-native])) { .search-results-panel { padding:16px 12px; } .search-results-panel > .search-dock { margin-bottom:20px; } }}
 
-.search-results-panel,html[data-glass="webgl"] .search-results-panel { position:relative;isolation:isolate;background:none;border:0;box-shadow:none; }
+.search-results-panel,html[data-glass="webgl"] .search-results-panel { position:relative;isolation:isolate;background:none;border:0;box-shadow:none;animation-fill-mode:backwards; }
+.result-panel-backdrop { position:absolute;inset:0;z-index:-1;pointer-events:none;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px); }
 .result-panel-outline { position:absolute;inset:0;width:100%;height:100%;z-index:-1;pointer-events:none;overflow:visible;filter:drop-shadow(0 0 8px rgba(var(--tint-rgb),.16)); }
 .search-results-panel > .search-dock { margin-bottom:40px; }
 .mod-card .mod-logo-link { border-radius:22px; }
@@ -373,9 +374,11 @@ html[data-glass="webgl"] .filter-dropdown.is-liquid-glass { background:transpare
 /* Compact navigation uses a separate search row and a rectangular results panel. */
 @media(max-width:1400px) { :where(html:not([data-native])) {
  .search-results-panel { padding:0; }
- .search-results-panel > .result-panel-outline { display:none; }
+ .search-results-panel > :is(.result-panel-outline,.result-panel-backdrop) { display:none; }
  .search-results-panel > .search-dock { width:100%;max-width:600px;margin:0 auto 20px; }
  .search-results-panel > .results-content { min-width:0;padding:20px 10px;border:1px solid rgba(var(--tint-rgb),.5);border-radius:22px;background:linear-gradient(140deg,rgba(var(--tint-rgb),.06),rgba(var(--secondary-rgb),.025)); }
+ .search-results-panel > .results-content { position:relative;isolation:isolate; }
+ .search-results-panel > .results-content::before { content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;border-radius:inherit;backdrop-filter:blur(18px);-webkit-backdrop-filter:blur(18px); }
 }}
 
 /* Search controls share the same refractive surface without an opaque fill. */

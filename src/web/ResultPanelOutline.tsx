@@ -3,6 +3,7 @@ import { useEffect, useId, useRef, useState } from 'react';
 export function ResultPanelOutline() {
   const ref = useRef<SVGSVGElement>(null);
   const gradient = useId();
+  const clip = useId();
   const [path, setPath] = useState('');
   useEffect(() => {
     const panel = ref.current?.parentElement;
@@ -21,6 +22,9 @@ export function ResultPanelOutline() {
     observer.observe(panel); observer.observe(search); update();
     return () => observer.disconnect();
   }, []);
-  return <svg ref={ref} className="result-panel-outline" aria-hidden="true"><defs><linearGradient id={gradient} x2="1" y2="1"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs><path transform="translate(0 20)" d={path} fill="rgba(8,12,24,.24)" stroke={`url(#${gradient})`} strokeWidth="1.5"/></svg>;
+  return <>
+    <div className="result-panel-backdrop" aria-hidden="true" style={{ clipPath:`url(#${clip})` }}/>
+    <svg ref={ref} className="result-panel-outline" aria-hidden="true"><defs><clipPath id={clip}><path transform="translate(0 20)" d={path}/></clipPath><linearGradient id={gradient} x2="1" y2="1"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs><path transform="translate(0 20)" d={path} fill="rgba(8,12,24,.24)" stroke={`url(#${gradient})`} strokeWidth="1.5"/></svg>
+  </>;
 }
 

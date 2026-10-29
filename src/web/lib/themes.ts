@@ -3,42 +3,37 @@ import { gameThemeFor } from './game-themes';
 import gameColors from '../../shared/data/game-theme-colors.json';
 import { backgroundPalette, compositeBackgroundColor, normalizeBackgroundColor, parseBackgroundColor } from './background-color';
 
-const palette = [['crimson','크림슨','Crimson','#ef3e55','#ff8145']] as const;
 const rgb = (hex: string) => [1,3,5].map(offset => parseInt(hex.slice(offset,offset + 2),16));
 type ThemeEffect = 'none' | 'petals' | 'rain' | 'fire' | 'bamboo';
-const colorThemes = palette.map(([id,ko,en,primary,secondary]) => ({id,ko,en,primary,secondary,effect:'fire' as ThemeEffect,rgb:rgb(primary),secondaryRgb:rgb(secondary),grad:`linear-gradient(135deg,${primary},${secondary})`}));
 // Keep the persisted ID so existing preferences become automatic without losing artwork.
-export const THEMES = [{...colorThemes[0],id:'game',ko:'자동 색상',en:'Automatic',grad:'linear-gradient(135deg,#788894,#c4cbd0)'},...colorThemes];
-export const themeById = (id: string) => colorThemes.find(theme => theme.id === id) ?? colorThemes[0];
+export const THEMES = [{id:'game',ko:'기본 색상',en:'Default color',primary:'#788894',secondary:'#c4cbd0',effect:'none' as ThemeEffect,rgb:rgb('#788894'),secondaryRgb:rgb('#c4cbd0'),grad:'linear-gradient(135deg,#788894,#c4cbd0)'}];
+export const themeById = (_id: string) => THEMES[0];
 export const AUTO_BACKGROUND = '#1b1e22';
-export function defaultBackground(id: string, gameId = ''): string {
-  return id === 'game' ? Object.hasOwn(gameColors,gameId) ? gameColors[gameId as keyof typeof gameColors] : AUTO_BACKGROUND : '#130507';
+export function defaultBackground(_id: string, gameId = ''): string {
+  return Object.hasOwn(gameColors,gameId) ? gameColors[gameId as keyof typeof gameColors] : AUTO_BACKGROUND;
 }
 function backgroundAppearance(id: string, gameId: string, backgroundColor?: string, photoColor?: string) {
   const custom = normalizeBackgroundColor(backgroundColor);
   const color = custom ?? defaultBackground(id,gameId), rgba = parseBackgroundColor(color);
-  const canvas = color.slice(0,7), under = photoColor ?? (id === 'game' ? AUTO_BACKGROUND : '#130507');
+  const canvas = color.slice(0,7), under = photoColor ?? AUTO_BACKGROUND;
   const visible = compositeBackgroundColor(color,under);
   const colors = backgroundPalette(visible,rgba.a === 0 ? under : canvas);
   return {custom,rgba,canvas,visible,colors};
 }
 export function sceneAppearance(id: string, gameId: string, backgroundColor?: string, photoColor?: string) {
-  const {custom,rgba,canvas,colors} = backgroundAppearance(id,gameId,backgroundColor,photoColor);
-  if (id !== 'game' && !custom) return undefined;
+  const {rgba,canvas,colors} = backgroundAppearance(id,gameId,backgroundColor,photoColor);
   return {canvas,alpha:rgba.a,primary:colors.primary,secondary:colors.secondary,photoOpacity:.18,light:colors.light};
 }
 export function readThemePreference(storage: Pick<Storage, 'getItem'>): string {
   try {
     const saved = storage.getItem('modfinder-theme');
     if (THEMES.some(theme => theme.id === saved)) return saved!;
-    const legacy = storage.getItem('modfinder-accent');
-    if (colorThemes.some(theme => theme.id === legacy)) return legacy!;
   } catch { /* Use the game default when optional storage is unavailable. */ }
   return 'game';
 }
 export function applyTheme(id: string, gameId = '', backgroundColor?: string, photoColor?: string) {
   const root = document.documentElement, style = root.style;
-  const game = id === 'game' ? gameThemeFor(gameId) : undefined;
+  const game = gameThemeFor(gameId);
   const {visible:canvas,rgba,colors} = backgroundAppearance(id,gameId,backgroundColor,photoColor);
   const reveal = 1-rgba.a;
   const shadow = reveal > 0 ? `0 1px 3px rgba(${colors.light ? '255,255,255' : '0,0,0'},${.8*reveal})` : 'none';

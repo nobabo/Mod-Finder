@@ -6,7 +6,7 @@ import gameColors from '../../src/shared/data/game-theme-colors.json';
 
 describe('automatic background palette', () => {
   it('uses distinct RGBA defaults for every game while explicit colors override them', () => {
-    expect(THEMES[0].ko).toBe('자동 색상');
+    expect(THEMES[0].ko).toBe('기본 색상');
     expect(Object.keys(gameColors).sort()).toEqual(GAMES.map(game => game.id).sort());
     expect(defaultBackground('game','minecraft-java')).toBe('#18645242');
     expect(new Set(Object.values(gameColors)).size).toBe(GAMES.length);

@@ -252,6 +252,8 @@
   "채도와 명도": "Saturation et luminosité",
   "색조": "Teinte",
   "불투명도": "Opacité",
+  "기본 색상": "Couleur par défaut",
+  "커스텀 색상": "Couleur personnalisée",
   "자동 색상": "Couleurs automatiques",
   "이미지 이동: {name}": "Déplacer l’image : {name}",
   "방향키로 이동, Home 키로 원위치": "Déplacez avec les flèches ; Origine rétablit la position"

@@ -252,6 +252,8 @@
   "채도와 명도": "Saturation and brightness",
   "색조": "Hue",
   "불투명도": "Opacity",
+  "기본 색상": "Default color",
+  "커스텀 색상": "Custom color",
   "자동 색상": "Automatic colors",
   "이미지 이동: {name}": "Move image: {name}",
   "방향키로 이동, Home 키로 원위치": "Move with arrow keys; Home resets the position"

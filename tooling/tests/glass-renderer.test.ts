@@ -46,7 +46,7 @@ function setup() {
 }
 
 describe('glass scroll stability', () => {
-  it('uses the pastel photograph inside the same refraction renderer and restores color themes', () => {
+  it('uses the pastel photograph inside the same refraction renderer and falls back to the default palette', () => {
     const s = setup();
     s.renderer.setAppearance({ canvas: '#c6ddcf', primary: '#397455', secondary: '#7a6546', photoOpacity: .18 });
     s.frame(100);
@@ -59,7 +59,7 @@ describe('glass scroll stability', () => {
     s.frame(140);
     expect(s.uniform('uniform1f', 'uLightScene')).toEqual([0]);
     expect(s.uniform('uniform1f', 'uCanvasScene')).toEqual([0]);
-    expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[239 / 255, 62 / 255, 85 / 255]]);
+    expect(s.uniform('uniform3fv', 'uColorA')).toEqual([[120 / 255, 136 / 255, 148 / 255]]);
   });
 
   it('uses the chosen dark canvas without applying the original aurora or light glass treatment', () => {

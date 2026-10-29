@@ -164,7 +164,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let frontSize = [1,1]; let backSize = [1,1];
   let hasPhoto = false; let blendElapsed = 0; let blending = false; let invalidated = false;
   let pendingPhoto: HTMLImageElement | null = null;
-  let theme = themeById('crimson'); let disposed = false; let raf = 0;
+  let theme = themeById('game'); let disposed = false; let raf = 0;
   let appearance: GlassAppearance | undefined;
   let lastSceneFrame = 0; let elapsed = 0;
   let paused = false;

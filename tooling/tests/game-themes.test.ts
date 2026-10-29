@@ -11,14 +11,14 @@ afterEach(() => vi.unstubAllGlobals());
 describe('game default themes', () => {
   const preference = (values: Record<string, string>) => readThemePreference({ getItem: key => values[key] ?? null });
 
-  it('keeps only Crimson and migrates removed color choices to the game default', () => {
-    expect(THEMES.map(theme => theme.id)).toEqual(['game', 'crimson']);
+  it('migrates removed color choices including Crimson to the game default', () => {
+    expect(THEMES.map(theme => theme.id)).toEqual(['game']);
     expect(preference({})).toBe('game');
     expect(preference({ 'modfinder-accent': 'magenta' })).toBe('game');
     expect(preference({ 'modfinder-accent': 'cyan' })).toBe('game');
     expect(preference({ 'modfinder-theme': 'magenta', 'modfinder-accent': 'cyan' })).toBe('game');
-    expect(preference({ 'modfinder-accent': 'crimson' })).toBe('crimson');
-    expect(preference({ 'modfinder-theme': 'crimson' })).toBe('crimson');
+    expect(preference({ 'modfinder-accent': 'crimson' })).toBe('game');
+    expect(preference({ 'modfinder-theme': 'crimson' })).toBe('game');
     expect(preference({ 'modfinder-theme': 'game', 'modfinder-accent': 'cyan' })).toBe('game');
     expect(preference({ 'modfinder-theme': 'unknown' })).toBe('game');
     expect(readThemePreference({ getItem: () => { throw new Error('blocked storage'); } })).toBe('game');
@@ -41,14 +41,14 @@ describe('game default themes', () => {
     expect(values.get('--canvas')).toBe(compositeBackgroundColor(defaultBackground('game','stardew-valley'),AUTO_BACKGROUND));
     expect(sceneAppearance('game', 'stardew-valley')?.light).toBe(false);
     applyTheme('crimson', 'stardew-valley');
-    expect(root.dataset.gameTheme).toBeUndefined();
+    expect(root.dataset.gameTheme).toBe('stardew');
     expect(values.get('color-scheme')).toBe('dark');
-    expect(values.get('--text')).toBe(backgroundPalette('#130507').text);
-    expect(values.get('--accent')).toBe(backgroundPalette('#130507').primary);
-    expect(values.get('--brand-start')).toBe(backgroundPalette('#130507').primary);
+    expect(values.get('--text')).toBe(backgroundPalette(values.get('--canvas')!).text);
+    expect(values.get('--accent')).toBe(sceneAppearance('game','stardew-valley')?.primary);
+    expect(values.get('--brand-start')).toBe(sceneAppearance('game','stardew-valley')?.primary);
     applyTheme('game', 'all');
     expect(root.dataset.gameTheme).toBeUndefined();
-    expect(root.dataset.accent).toBe('crimson');
+    expect(root.dataset.accent).toBe('game');
     expect(gameThemeFor('valheim')).toBeUndefined();
     expect(gameThemeFor('__proto__')).toBeUndefined();
   });
@@ -68,7 +68,7 @@ describe('game default themes', () => {
     vi.stubGlobal('document', { documentElement: root, querySelector: () => null });
     applyTheme('crimson', 'minecraft-java', '#e5d0b0');
     expect(root.dataset.lightTheme).toBe('true');
-    expect(root.dataset.gameTheme).toBeUndefined();
+    expect(root.dataset.gameTheme).toBe('minecraft');
     expect(values.get('--canvas')).toBe('#e5d0b0');
     expect(values.get('color-scheme')).toBe('light');
     expect(values.get('--text')).toBe(backgroundPalette('#e5d0b0').text);
@@ -85,8 +85,8 @@ describe('game default themes', () => {
     expect(values.get('--canvas')).toBe(compositeBackgroundColor(defaultBackground('game','minecraft-java'),AUTO_BACKGROUND));
     applyTheme('crimson', 'minecraft-java');
     expect(root.dataset.lightTheme).toBeUndefined();
-    expect(sceneAppearance('crimson', 'minecraft-java')).toBeUndefined();
-    expect(defaultBackground('crimson', 'minecraft-java')).toBe('#130507');
+    expect(sceneAppearance('crimson', 'minecraft-java')).toEqual(sceneAppearance('game', 'minecraft-java'));
+    expect(defaultBackground('crimson', 'minecraft-java')).toBe(defaultBackground('game', 'minecraft-java'));
     expect(isLightBackground('#ffffff')).toBe(true);
     expect(isLightBackground('#000000')).toBe(false);
   });

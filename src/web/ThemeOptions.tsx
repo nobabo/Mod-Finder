@@ -1,6 +1,6 @@
-import { Check, RotateCcw } from 'lucide-react';
-import { THEMES, defaultBackground } from './lib/themes';
-import { locale, t } from './lib/i18n';
+import { Check } from 'lucide-react';
+import { defaultBackground } from './lib/themes';
+import { t } from './lib/i18n';
 import { CardPages } from './CardPages';
 import { useState } from 'react';
 import { ColorPicker } from './ColorPicker';
@@ -10,14 +10,14 @@ export function ThemeOptions({ themeId, gameId, backgroundColor, changeTheme, ch
   const [pickerOpen,setPickerOpen] = useState(false);
   const color = backgroundColor ?? defaultBackground(themeId,gameId);
   return <div className="theme-settings">
-    <div className="theme-options"><CardPages columns={2}>{THEMES.map(theme => <button type="button" key={theme.id} aria-pressed={themeId === theme.id} onClick={() => changeTheme(theme.id)}>
-      <i style={{ background: theme.id === 'game' ? 'var(--grad)' : theme.grad }} />{theme.id === 'game' ? t('자동 색상') : locale === 'ko' ? theme.ko : theme.en}{themeId === theme.id && <Check size={14} />}
-    </button>)}</CardPages></div>
-    <div className="background-color-control">
-      <span className="background-color-label">{t('배경색')}</span>
-      <button id="background-color" type="button" className="color-swatch color-checker" aria-label={t('색상 선택')} aria-haspopup="dialog" aria-expanded={pickerOpen} onClick={() => setPickerOpen(true)}><span style={{ background:colorCss(parseBackgroundColor(color)) }}/></button>
-      <button type="button" className="text-button" onClick={() => changeBackground(undefined)} disabled={!backgroundColor}><RotateCcw size={16}/>{t('기본 색상으로')}</button>
-    </div>
-    {pickerOpen && <ColorPicker value={color} change={changeBackground} close={() => setPickerOpen(false)}/>}
+    <div className="theme-options"><CardPages columns={2}>
+      <button type="button" aria-pressed={!backgroundColor} onClick={() => { changeTheme('game'); changeBackground(undefined); setPickerOpen(false); }}>
+        <i style={{ background:'var(--grad)' }}/>{t('기본 색상')}{!backgroundColor && <Check size={14}/>}
+      </button>
+      <button type="button" aria-pressed={!!backgroundColor} aria-haspopup="dialog" aria-expanded={pickerOpen} onClick={() => setPickerOpen(true)}>
+        <i className="theme-custom-swatch color-checker"><span style={{ background:colorCss(parseBackgroundColor(color)) }}/></i>{t('커스텀 색상')}{backgroundColor && <Check size={14}/>}
+      </button>
+    </CardPages></div>
+    {pickerOpen && <ColorPicker value={color} change={value => { changeTheme('game'); changeBackground(value); }} close={() => setPickerOpen(false)}/>}
   </div>;
 }
