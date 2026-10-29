@@ -194,6 +194,16 @@ html:is([data-light-theme],[data-auto-theme])[data-glass="fallback"] :is(.search
 .app-brand-header { position:fixed;top:calc(56px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:90;line-height:0; }
 body:has(.search-dock.hero):not(:has(.app-shell.is-choosing,.app-shell.is-menu-open)) .app-brand-header { top:calc(600px + env(safe-area-inset-top)); }
 .app-brand-header .brand-logo { width:76px;height:76px; }
+.app-brand-header.is-results-scrolled { display:none; }
+.results-scrolled :is(.mobile-header,.settings-fab-wrap>.settings-fab,.search-row>.filter-orb) { display:none; }
+.results-scrolled .results-section { animation:none; }
+.results-scrolled .search-dock { min-height:var(--search-dock-height,74px); }
+.results-scrolled .search-row { position:fixed;top:calc(12px + env(safe-area-inset-top));left:50%;width:var(--search-dock-width);transform:translateX(-50%); }
+.results-scrolled .search-row .search-box { min-height:60px;padding:4px 6px;gap:8px; }
+.results-scrolled .search-box input { padding:8px 4px; }
+.results-scrolled .search-row .game-orb { width:40px;height:40px; }
+.results-scrolled .search-row .search-submit { width:44px;height:44px;padding:10px; }
+.results-scrolled .search-dock::before { content:'';position:fixed;inset:0 0 auto;z-index:-1;height:calc(var(--search-row-height,60px) + 30px + env(safe-area-inset-top));pointer-events:none;border-bottom:1px solid var(--line-strong);border-radius:0 0 50% 50% / 0 0 32px 32px;background:color-mix(in srgb,var(--surface-deep) 88%,transparent);backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px); }
 html[data-photo-reveal] :is(.search-box input,.ranking-panel button,.ranking-panel strong,.rank-number) { text-shadow:var(--photo-text-shadow); }
 .app-shell { --page-brand-space:96px; }
 .app-shell>.main { padding-top:calc(var(--page-brand-space) + env(safe-area-inset-top)); }

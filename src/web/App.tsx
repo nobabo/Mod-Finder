@@ -43,12 +43,11 @@ export default function App() {
   const mobileLayout = useMobileLayout();
   const [headerScrolled, setHeaderScrolled] = useState(() => window.scrollY > 24);
   useEffect(() => {
-    if (!mobileLayout) return;
     const sync = () => setHeaderScrolled(window.scrollY > 24);
     sync();
     window.addEventListener('scroll', sync, { passive: true });
     return () => window.removeEventListener('scroll', sync);
-  }, [mobileLayout]);
+  }, []);
   const { state: navigation, navigate, restoration, detailKey, openDetail, closeDetail, discardDetail } = useNavigation();
   const { page, gameId, genre, query, submitted, filters, categories: selectedCategories, sort, direction, folder: selectedFolder } = navigation;
   const [input, setInput] = useState(query);
@@ -99,6 +98,12 @@ export default function App() {
     const sync = () => {
       const rect = row.getBoundingClientRect();
       document.documentElement.style.setProperty('--search-center-y', (rect.top + rect.height / 2) + 'px');
+      document.documentElement.style.setProperty('--search-row-height', rect.height + 'px');
+      const dock = row.parentElement;
+      if (dock) {
+        dock.style.setProperty('--search-dock-width', dock.getBoundingClientRect().width + 'px');
+        if (getComputedStyle(row).position !== 'fixed') dock.style.setProperty('--search-dock-height', rect.height + 'px');
+      }
     };
     const observer = new ResizeObserver(sync);
     observer.observe(row); observer.observe(document.body);
@@ -149,6 +154,7 @@ export default function App() {
   const changeFilter = (key: MultiFilterKey, value: string) => navigate(prev => ({ ...prev, filters: toggleFilter(prev.filters, key, value) }));
   const go = (target: Page) => { navigate({ page: target }); setMenuOpen(false); };
   const heroSearch = page === 'discover' && !hasSearch;
+  const resultsScrolled = page === 'discover' && hasSearch && headerScrolled;
   const favoriteFolder = local.folders.find(folder => folder.id === selectedFolder);
   const visible = favoriteFolder ? local.favorites.filter(item => favoriteFolder.keys.includes(item.key)) : local.favorites;
   const shortcuts = shortcutFavorites(local);
@@ -175,8 +181,8 @@ export default function App() {
   };
   const settingsControl = <button type="button" className="settings-fab" aria-label={t("설정 메뉴")} aria-expanded={menuOpen} title={t("설정 메뉴")} onClick={() => setMenuOpen(value => !value)}><Settings2 size={25} /></button>;
   const filterControl = <button type="button" className={`filter-orb ${filterOpen || activeFilters ? 'active' : ''}`} aria-label={t("검색 필터")} aria-expanded={filterOpen} onClick={() => setFilterOpen(value => !value)}><SlidersHorizontal size={18}/></button>;
-  return <div className={`app-shell ${page === 'discover' && hasSearch ? 'has-results' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg>{gameTheme ? <GameBackdrop key={gameId} gameId={gameId} backgroundColor={backgroundColor} photoColor={photoColor} onPhotoColor={setPhotoColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} /> : <Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} appearance={appearance} onPhotoColor={setPhotoColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} />}
-    {createPortal(<header className="app-brand-header"><button type="button" className="home-logo" aria-label={t("메인 화면으로 이동")} onClick={returnHome}><BrandLogo size={76}/></button></header>,document.body)}
+  return <div className={`app-shell ${page === 'discover' && hasSearch ? 'has-results' : ''} ${resultsScrolled ? 'results-scrolled' : ''} ${gamePicker || filterOpen ? 'is-choosing' : ''} ${menuOpen ? 'is-menu-open' : ''}`}><svg width="0" height="0" aria-hidden="true" style={{ position:'absolute',pointerEvents:'none' }}><defs><linearGradient id="theme-icon-gradient" gradientUnits="userSpaceOnUse" x1="0" y1="0" x2="24" y2="24"><stop stopColor="var(--accent)"/><stop offset="1" stopColor="var(--cyan)"/></linearGradient></defs></svg>{gameTheme ? <GameBackdrop key={gameId} gameId={gameId} backgroundColor={backgroundColor} photoColor={photoColor} onPhotoColor={setPhotoColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} /> : <Atmosphere gameIds={scopeGames.map(g => g.id)} theme={accent} appearance={appearance} onPhotoColor={setPhotoColor} motionEnabled={page === 'discover'} scrollParallax={page === 'discover' && hasSearch} />}
+    {createPortal(<header className={`app-brand-header ${resultsScrolled ? 'is-results-scrolled' : ''}`}><button type="button" className="home-logo" aria-label={t("메인 화면으로 이동")} onClick={returnHome}><BrandLogo size={76}/></button></header>,document.body)}
     <div className="settings-fab-wrap">
       {!mobileLayout && settingsControl}
       {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages columns={3}><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
