@@ -139,6 +139,10 @@ export default function App() {
     if (next && hydrated) setLocal(prev => ({ ...prev, interests: prev.recommendationsEnabled ? recordInterest(prev.interests, id, next) : prev.interests, history: [{ gameId: id, genre: selectedGenre, query: next, ...(categories.length ? { categories } : {}) }, ...prev.history.filter(item => item.query !== next || item.gameId !== id || (item.genre ?? 'all') !== selectedGenre || JSON.stringify(item.categories ?? (item.category ? [item.category] : [])) !== JSON.stringify(categories))].slice(0, 20) }));
     if (next === query && id === gameId && selectedGenre === genre) search.retry();
   };
+  const searchRecommendation = (item: Listing) => {
+    submit(item.title, item.gameId, 'all', [], item.gameId === 'minecraft-java' && item.kind === 'modpack' ? 'modpack' : undefined, true);
+    requestAnimationFrame(() => inputRef.current?.focus());
+  };
   const visit = async (url: string, item?: Listing) => { const generation = interestGeneration.current; try { await openExternal(url); if (item && hydrated && generation === interestGeneration.current) setLocal(prev => prev.recommendationsEnabled ? { ...prev, interests: recordInterest(prev.interests, item.gameId, "", item) } : prev); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
   const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => ({ ...toggleFavorite(prev, item), interests: !prev.recommendationsEnabled || prev.favorites.some(favorite => favorite.key === item.key) ? prev.interests : recordInterest(prev.interests, item.gameId, '', item) })); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
   const changeFilter = (key: MultiFilterKey, value: string) => navigate(prev => ({ ...prev, filters: toggleFilter(prev.filters, key, value) }));
@@ -196,7 +200,7 @@ export default function App() {
       </div>}
       </div>}
       {page === 'discover' && hasSearch && <section className="results-content" key={`${gameId}:${query}`} aria-label={t("검색 결과")}>
-        {hydrated && local.recommendationsEnabled && <Recommendations gameId={gameId} interests={local.interests ?? []} select={showDetail}/>}
+        {hydrated && local.recommendationsEnabled && <Recommendations gameId={gameId} interests={local.interests ?? []} searchMod={searchRecommendation}/>}
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}
         {search.loading && !search.items.length && <div className="results-loading" role="status" aria-label={t("검색 중")}><span className="results-spinner" aria-hidden="true" /></div>}

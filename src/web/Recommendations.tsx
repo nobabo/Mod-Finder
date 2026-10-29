@@ -10,7 +10,7 @@ import { locale, t } from './lib/i18n';
 import { listingText } from '../shared/content';
 import { ModIcon } from './components';
 
-export function Recommendations({ gameId, interests, select }: { gameId: string; interests: Interest[]; select: (item: Listing, alternatives: Listing[]) => void }) {
+export function Recommendations({ gameId, interests, searchMod }: { gameId: string; interests: Interest[]; searchMod: (item: Listing) => void }) {
   const selected = gameId === 'all' ? preferredGame(interests) : gameId;
   const queries = JSON.stringify(selected ? ['', ...recommendationQueries(interests, selected)] : []);
   const [items, setItems] = useState<Listing[]>([]);
@@ -43,7 +43,7 @@ export function Recommendations({ gameId, interests, select }: { gameId: string;
       : <ul className="recommendations-list">{groups.map(group => {
         const item = group.listings[0];
         const title = listingText(item, locale).title;
-        return <li key={group.id}><button type="button" title={title} onClick={() => select(item, group.listings)}><ModIcon item={item}/><span>{title}</span></button></li>;
+        return <li key={group.id}><button type="button" title={title} onClick={() => searchMod(item)}><ModIcon item={item}/><span>{title}</span></button></li>;
       })}</ul>}
   </section>;
 }
