@@ -1,4 +1,5 @@
 import { themeById } from './themes';
+import { packGlassAtlas } from './glass-atlas';
 export interface GlassAppearance { canvas: string; primary: string; secondary: string; photoOpacity: number; light?: boolean; alpha?: number }
 const colorRgb = (hex: string) => [1, 3, 5].map(offset => parseInt(hex.slice(offset, offset + 2), 16) / 255);
 // A shared scene is sampled again through rounded glass lenses. Unlike backdrop
@@ -174,7 +175,10 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   const rects = new Float32Array(32); const radii = new Float32Array(8);
   const lensRect = new Float32Array(4); const lensRadius = new Float32Array(1);
   const controlLenses = new Map<HTMLElement, { canvas: HTMLCanvasElement; context: CanvasRenderingContext2D; signature?: string }>();
+  let atlasCanvas: HTMLCanvasElement | undefined;
+  let atlasContext: CanvasRenderingContext2D | null | undefined;
   let sceneRevision = 0;
+  let lastLensFrame = 0; let lensPending = false;
   let backgroundSignature = '';
   let pointer = [0,0];
   let backgroundOffset = [0,0];
@@ -207,6 +211,13 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   // Present geometry at display cadence independently of the 30 Hz scene clock.
   const scroll = () => { geometryDirty = true; schedule(); };
   const sizes = new ResizeObserver(resize);
+  const intersecting = new WeakMap<Element, boolean>();
+  // CSS page/entry transforms can reveal a card without a scroll event. Observe
+  // intersections as well, including clipping by a horizontal rail's ancestors.
+  const intersections = typeof IntersectionObserver === 'undefined' ? undefined : new IntersectionObserver(entries => {
+    for (const entry of entries) intersecting.set(entry.target, entry.isIntersecting);
+    geometryDirty = true; schedule();
+  });
   sizes.observe(canvas);
   document.addEventListener('transitionend', resize, true);
   document.addEventListener('animationend', resize, true);
@@ -225,8 +236,9 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     raf = 0;
     if (disposed || document.hidden || gl!.isContextLost()) return;
     const sceneDue = !paused && !reduced && (!lastSceneFrame || now - lastSceneFrame >= 1000 / 30);
-    if (!panelDirty && !geometryDirty && !sceneDirty && !sceneDue) {
-      if (!paused && !reduced) schedule();
+    const lensDue = !lastLensFrame || now - lastLensFrame >= 1000 / 30;
+    if (!panelDirty && !geometryDirty && !sceneDirty && !sceneDue && !(lensPending && lensDue)) {
+      if ((!paused && !reduced) || lensPending) schedule();
       return;
     }
     // CSS fixes the touch backdrop to the large viewport. innerHeight changes
@@ -236,6 +248,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     const ratio = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2200000 / (viewWidth * viewHeight)));
     const width = Math.round(viewWidth * ratio); const height = Math.round(viewHeight * ratio);
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; sceneDirty = true; geometryDirty = true; }
+    const forceLenses = sceneDirty;
     const updateScene = sceneDirty || sceneDue;
     if (updateScene) {
       sceneRevision++;
@@ -249,10 +262,10 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (panelDirty) {
       const deck = document.querySelector('.game-deck');
       panelElements = [...(deck ?? document).querySelectorAll<HTMLElement>(deck ? controlSelector : selector)].filter(el => getComputedStyle(el).visibility !== 'hidden');
-      for (const element of observed) if (!panelElements.includes(element)) { sizes.unobserve(element); observed.delete(element); }
+      for (const element of observed) if (!panelElements.includes(element)) { sizes.unobserve(element); intersections?.unobserve(element); intersecting.delete(element); observed.delete(element); }
       geometry.clear();
       for (const element of panelElements) {
-        if (!observed.has(element)) { sizes.observe(element); observed.add(element); }
+        if (!observed.has(element)) { sizes.observe(element); intersections?.observe(element); observed.add(element); }
         geometry.set(element, { rect: element.getBoundingClientRect(), radius: parseFloat(getComputedStyle(element).borderTopLeftRadius) || 0 });
       }
       panelDirty = false;
@@ -261,12 +274,22 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       for (const element of panelElements) geometry.get(element)!.rect = element.getBoundingClientRect();
       geometryDirty = false;
     }
+    const inView = (element: HTMLElement) => {
+      const rect = geometry.get(element)!.rect;
+      return intersecting.get(element) !== false && rect.width > 0 && rect.height > 0
+        && rect.left + rect.width > 0 && rect.left < viewWidth && rect.bottom > 0 && rect.top < innerHeight;
+    };
     let drewLens = false;
     for (const [element, lens] of controlLenses) {
       if (!panelElements.includes(element)) { lens.canvas.remove(); controlLenses.delete(element); }
+      else if (!inView(element) && lens.canvas.width) {
+        // Retain the DOM surface but release backing pixels for cards scrolled away.
+        lens.canvas.width = 0; lens.canvas.height = 0; lens.signature = undefined;
+      }
     }
     for (const element of panelElements.filter(element => element.matches(controlSelector))) {
-      if (controlLenses.has(element)) continue;
+      // Long horizontal decks must not allocate or render off-screen cards.
+      if (controlLenses.has(element) || !inView(element)) continue;
       const surface = document.createElement('canvas');
       const context = surface.getContext('2d');
       if (!context) continue;
@@ -277,7 +300,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     }
     rects.fill(0); radii.fill(0); let count = 0;
     // Dialogs are listed last in DOM order and therefore cover underlying lenses.
-    const visible = panelElements.filter(el => { if (!el.isConnected || controlLenses.has(el) || el.matches('.search-results-panel')) return false; const r = geometry.get(el)!.rect; return r.width && r.height && r.bottom > 0 && r.top < innerHeight; }).slice(-8);
+    const visible = panelElements.filter(el => !controlLenses.has(el) && !el.matches('.search-results-panel') && el.isConnected && inView(el)).slice(-8);
     for (const element of visible) {
       const { rect, radius } = geometry.get(element)!;
       rects.set([rect.left,rect.top,rect.width,rect.height], count * 4);
@@ -333,29 +356,60 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     }
     gl!.bindTexture(gl!.TEXTURE_2D,sceneCache ? sceneTexture : front);
     gl!.uniform1i(uniforms.uUseScene,sceneCache ? 1 : 0);
-    // Copy each lens onto its own DOM surface. The browser then scrolls its
-    // pixels and the control's border together, even between WebGL frames.
+    // Draw visible lenses into an atlas before crossing from WebGL to 2D.
+    // Interleaving a draw and a GPU snapshot for every card serializes the work.
+    const tiles = [];
+    lensPending = false;
     for (const [element, lens] of controlLenses) {
       const { rect, radius } = geometry.get(element)!;
-      if (!rect.width || !rect.height || rect.bottom <= 0 || rect.top >= innerHeight) continue;
+      if (!inView(element)) continue;
       const lensWidth = Math.min(width, Math.max(1, Math.round(rect.width * ratio)));
       const lensHeight = Math.min(height, Math.max(1, Math.round(rect.height * ratio)));
       const signature = [sceneRevision, width, height, rect.left, rect.top, rect.width, rect.height, radius].join(':');
       if (lens.signature === signature) continue;
+      // The DOM moves cached glass with the card; only its refraction needs a
+      // 30 Hz refresh. Paint newly visible controls and appearance changes now.
+      if (lens.signature && !lensDue && !forceLenses) { lensPending = true; continue; }
       if (lens.canvas.width !== lensWidth || lens.canvas.height !== lensHeight) {
         lens.canvas.width = lensWidth; lens.canvas.height = lensHeight;
       }
-      gl!.viewport(0,0,lensWidth,lensHeight);
-      gl!.uniform4f(uniforms.uView,rect.left,rect.top,rect.width,rect.height);
-      lensRect.set([rect.left,rect.top,rect.width,rect.height]); lensRadius[0] = radius;
-      gl!.uniform4fv(uniforms.uPanels,lensRect);
-      gl!.uniform1fv(uniforms.uRadii,lensRadius);
-      gl!.uniform1i(uniforms.uCount,1);
-      gl!.drawArrays(gl!.TRIANGLES,0,6);
-      lens.context.drawImage(canvas,0,height - lensHeight,lensWidth,lensHeight,0,0,lensWidth,lensHeight);
-      lens.signature = signature;
+      tiles.push({ width: lensWidth, height: lensHeight, rect, radius, lens, signature });
+    }
+    if (tiles.length > 1 && atlasContext === undefined) {
+      atlasCanvas = document.createElement('canvas');
+      atlasCanvas.width = 0; atlasCanvas.height = 0;
+      atlasContext = atlasCanvas.getContext('2d', { alpha: false });
+    }
+    const batches = atlasContext ? packGlassAtlas(tiles, width, height)
+      : tiles.map(tile => ({ width: tile.width, height: tile.height, tiles: [{ ...tile, x: 0, y: 0 }] }));
+    for (const batch of batches) {
+      for (const tile of batch.tiles) {
+        const { rect, radius } = tile;
+        gl!.viewport(tile.x,height - tile.y - tile.height,tile.width,tile.height);
+        gl!.uniform4f(uniforms.uView,rect.left,rect.top,rect.width,rect.height);
+        lensRect.set([rect.left,rect.top,rect.width,rect.height]); lensRadius[0] = radius;
+        gl!.uniform4fv(uniforms.uPanels,lensRect);
+        gl!.uniform1fv(uniforms.uRadii,lensRadius);
+        gl!.uniform1i(uniforms.uCount,1);
+        gl!.drawArrays(gl!.TRIANGLES,0,6);
+      }
+      let source = canvas;
+      if (atlasContext && batch.tiles.length > 1) {
+        // Reuse capacity across card rotations instead of reallocating a bitmap
+        // whenever transformed bounds change by a pixel. Stay within the viewport.
+        if (atlasCanvas!.width < batch.width || atlasCanvas!.width > width) atlasCanvas!.width = Math.min(width, Math.ceil(batch.width / 128) * 128);
+        if (atlasCanvas!.height < batch.height || atlasCanvas!.height > height) atlasCanvas!.height = Math.min(height, Math.ceil(batch.height / 128) * 128);
+        atlasContext.drawImage(canvas,0,0,batch.width,batch.height,0,0,batch.width,batch.height);
+        source = atlasCanvas!;
+      }
+      // DOM surfaces still move with their controls at the browser's scroll cadence.
+      for (const { x, y, width: w, height: h, lens, signature } of batch.tiles) {
+        lens.context.drawImage(source,x,y,w,h,0,0,w,h);
+        lens.signature = signature;
+      }
       drewLens = true;
     }
+    if (drewLens) lastLensFrame = now;
     // Replace the temporary lens renders with the full background scene.
     gl!.viewport(0,0,width,height);
     gl!.uniform4f(uniforms.uView,0,0,viewWidth,viewHeight);
@@ -366,7 +420,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (backgroundSignature !== nextBackgroundSignature || drewLens) gl!.drawArrays(gl!.TRIANGLES,0,6);
     backgroundSignature = nextBackgroundSignature;
 
-    if (!paused && !reduced) schedule();
+    if ((!paused && !reduced) || lensPending) schedule();
   }
   schedule();
   return {
@@ -383,10 +437,11 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       return true;
     },
     dispose() {
-      disposed = true; cancelAnimationFrame(raf); observer.disconnect(); sizes.disconnect();
+      disposed = true; cancelAnimationFrame(raf); observer.disconnect(); sizes.disconnect(); intersections?.disconnect();
       document.removeEventListener('transitionend',resize,true); document.removeEventListener('animationend',resize,true);
       for (const lens of controlLenses.values()) lens.canvas.remove();
       controlLenses.clear();
+      if (atlasCanvas) { atlasCanvas.width = 0; atlasCanvas.height = 0; }
       window.removeEventListener('resize',resize); window.removeEventListener('scroll',scroll,true); window.removeEventListener('pointermove',move);
       window.visualViewport?.removeEventListener('resize',scroll); window.visualViewport?.removeEventListener('scroll',scroll);
       document.removeEventListener('visibilitychange',visibility); media.removeEventListener('change',motion); canvas.removeEventListener('webglcontextlost',lost);

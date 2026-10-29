@@ -6,6 +6,7 @@ afterEach(() => { dispose?.(); dispose = undefined; vi.unstubAllGlobals(); });
 
 function setup() {
   let mutation: MutationCallback | undefined;
+  let intersection: IntersectionObserverCallback | undefined;
   const frames = new Map<number, FrameRequestCallback>();
   let frameId = 0;
   const gl = new Proxy<Record<string, any>>({
@@ -33,6 +34,7 @@ function setup() {
   vi.stubGlobal('matchMedia', () => Object.assign(new EventTarget(), { matches: false }));
   vi.stubGlobal('MutationObserver', class { constructor(callback: MutationCallback) { mutation = callback; } observe() {} disconnect() {} });
   vi.stubGlobal('ResizeObserver', class { observe() {} unobserve() {} disconnect() {} });
+  vi.stubGlobal('IntersectionObserver', class { constructor(callback: IntersectionObserverCallback) { intersection = callback; } observe() {} unobserve() {} disconnect() {} });
   vi.stubGlobal('requestAnimationFrame', (callback: FrameRequestCallback) => { frames.set(++frameId, callback); return frameId; });
   vi.stubGlobal('cancelAnimationFrame', (id: number) => frames.delete(id));
   const renderer = createGlassRenderer(canvas as unknown as HTMLCanvasElement, vi.fn())!;
@@ -42,7 +44,8 @@ function setup() {
     for (const callback of pending) callback(time);
   };
   const uniform = (method: string, name: string) => gl[method].mock.calls.findLast((call: unknown[]) => call[0] === name)?.slice(1);
-  return { renderer, gl, canvas, doc, win, viewport, frames, frame, uniform, setTop: (value: number) => { top = value; }, mutate: (added: Element[], removed: Element[]) => mutation?.([{ addedNodes: added, removedNodes: removed } as unknown as MutationRecord], {} as MutationObserver) };
+  const intersect = (target: unknown, isIntersecting: boolean) => intersection?.([{ target, isIntersecting } as IntersectionObserverEntry], {} as IntersectionObserver);
+  return { renderer, gl, canvas, doc, win, viewport, frames, frame, uniform, intersect, setTop: (value: number) => { top = value; }, mutate: (added: Element[], removed: Element[]) => mutation?.([{ addedNodes: added, removedNodes: removed } as unknown as MutationRecord], {} as MutationObserver) };
 }
 
 describe('glass scroll stability', () => {
@@ -158,6 +161,115 @@ describe('glass scroll stability', () => {
     expect(s.frames.size).toBe(1);
     s.renderer.dispose(); dispose = undefined;
     s.win.dispatchEvent(new Event('scroll')); s.viewport.dispatchEvent(new Event('resize'));
+    expect(s.frames.size).toBe(0);
+  });
+});
+
+function controlsSetup(positions: number[], failAtlas = false) {
+  const s = setup();
+  const visibleCount = positions.filter(left => left + 100 > 0 && left < 390).length;
+  const controls = positions.map(left => ({
+    isConnected: true, firstChild: null,
+    rect: { left, top: 100, width: 100, height: 80, bottom: 180 },
+    matches: (selector: string) => selector.includes('.deck-card'),
+    insertBefore: vi.fn(),
+    getBoundingClientRect() { return { ...this.rect }; },
+  }));
+  const surfaces: { width: number; height: number; className: string; context: { drawImage: ReturnType<typeof vi.fn> }; remove: ReturnType<typeof vi.fn> }[] = [];
+  Object.assign(s.doc, {
+    querySelectorAll: vi.fn(() => controls),
+    createElement: () => {
+      const context = { drawImage: vi.fn() };
+      const unavailable = failAtlas && surfaces.length === visibleCount;
+      const surface = { width: 300, height: 150, className: '', context, remove: vi.fn(), setAttribute: vi.fn(),
+        getContext: () => unavailable ? null : context,
+      };
+      surfaces.push(surface);
+      return surface;
+    },
+  });
+  const gpuCopies = () => surfaces.flatMap(surface => surface.context.drawImage.mock.calls).filter(call => call[0] === s.canvas);
+  return { ...s, controls, surfaces, gpuCopies };
+}
+
+describe('glass card rendering budget', () => {
+  it('renders only visible cards and takes one GPU snapshot for the whole batch', () => {
+    const s = controlsSetup([-120, 10, 130, 250, ...Array.from({ length: 60 }, (_, i) => 450 + i * 120)]);
+    s.frame(100);
+    const lenses = s.surfaces.filter(surface => surface.className === 'glass-control-surface');
+    expect(lenses).toHaveLength(3);
+    expect(s.gl.drawArrays).toHaveBeenCalledTimes(5); // Scene, three lenses, background.
+    expect(s.gpuCopies()).toHaveLength(1);
+    const atlas = s.surfaces.find(surface => !surface.className)!;
+    expect([atlas.width, atlas.height]).toEqual([512, 128]);
+    expect(s.gpuCopies()[0].slice(1)).toEqual([0, 0, 450, 120, 0, 0, 450, 120]);
+    expect(lenses.map(lens => lens.context.drawImage.mock.calls[0].slice(1, 5))).toEqual([[0, 0, 150, 120], [150, 0, 150, 120], [300, 0, 150, 120]]);
+    expect(lenses.every(lens => lens.context.drawImage.mock.calls[0][0] === atlas)).toBe(true);
+    for (const control of s.controls.slice(1, 4)) control.rect.width++;
+    s.win.dispatchEvent(new Event('scroll')); s.frame(140);
+    expect([atlas.width, atlas.height]).toEqual([512, 128]);
+    expect(s.surfaces.filter(surface => !surface.className)).toHaveLength(1);
+  });
+
+  it('releases scrolled-away pixels, redraws re-entering cards, and skips unchanged paused geometry', () => {
+    const s = controlsSetup([10, 130, 250]);
+    s.renderer.setPaused(true); s.frame(100);
+    const lens = s.surfaces[0];
+    const before = s.gpuCopies().length;
+    s.win.dispatchEvent(new Event('scroll')); s.frame(108);
+    expect(s.gpuCopies()).toHaveLength(before);
+    s.controls[0].rect.left = -120;
+    s.win.dispatchEvent(new Event('scroll')); s.frame(116);
+    expect([lens.width, lens.height]).toEqual([0, 0]);
+    expect(s.gpuCopies()).toHaveLength(before);
+    s.controls[0].rect.left = 10;
+    s.win.dispatchEvent(new Event('scroll')); s.frame(124);
+    expect([lens.width, lens.height]).toEqual([150, 120]);
+    expect(s.gpuCopies()).toHaveLength(before + 1);
+    expect(lens.context.drawImage).toHaveBeenCalledTimes(2);
+    expect(s.frames.size).toBe(0);
+    s.renderer.dispose(); dispose = undefined;
+    expect(s.surfaces.find(surface => !surface.className)!.width).toBe(0);
+    expect(lens.remove).toHaveBeenCalledOnce();
+  });
+
+  it('continues drawing individual lenses if the shared 2D atlas is unavailable', () => {
+    const s = controlsSetup([10, 130, 250], true);
+    s.frame(100);
+    expect(s.gpuCopies()).toHaveLength(3);
+    expect(s.surfaces.filter(surface => surface.className).every(surface => surface.context.drawImage.mock.calls[0][0] === s.canvas)).toBe(true);
+  });
+
+  it('caps scrolling material refreshes at 30 Hz and flushes the final geometry before sleeping', () => {
+    const s = controlsSetup([10, 130, 250]);
+    s.renderer.setPaused(true); s.frame(100);
+    for (const time of [108, 116, 124]) {
+      s.controls[0].rect.left++;
+      s.win.dispatchEvent(new Event('scroll')); s.frame(time);
+      expect(s.gpuCopies()).toHaveLength(1);
+      expect(s.frames.size).toBe(1);
+    }
+    s.frame(140);
+    expect(s.gpuCopies()).toHaveLength(2);
+    expect(s.gl.uniform4f.mock.calls).toContainEqual(['uView', 13, 100, 100, 80]);
+    expect(s.frames.size).toBe(0);
+    // Color changes must not wait for the material throttle.
+    s.renderer.setAppearance({ canvas: '#101820', primary: '#ef3e55', secondary: '#ff8145', photoOpacity: .18 });
+    s.frame(148);
+    expect(s.gpuCopies()).toHaveLength(3);
+  });
+
+  it('paints cards entering through CSS transforms and releases cards clipped by an ancestor', () => {
+    const s = controlsSetup([10, 450]);
+    s.renderer.setPaused(true); s.frame(100);
+    expect(s.surfaces).toHaveLength(1);
+    s.controls[1].rect.left = 250;
+    s.intersect(s.controls[1], true); s.frame(108);
+    expect(s.surfaces).toHaveLength(2);
+    expect(s.surfaces[1].context.drawImage).toHaveBeenCalledOnce();
+    // Its bounding box still intersects the viewport, but a rail clips it out.
+    s.intersect(s.controls[1], false); s.frame(116);
+    expect([s.surfaces[1].width, s.surfaces[1].height]).toEqual([0, 0]);
     expect(s.frames.size).toBe(0);
   });
 });
