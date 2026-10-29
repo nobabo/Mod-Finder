@@ -147,6 +147,21 @@ async (page) => {
     await button('닫기').click();
   }
   await page.setViewportSize({width:1600,height:1000});
+  // Restored versions can be missing from the fetched catalog. Deselecting one
+  // must retain the card long enough to animate and leave the catalog in place.
+  await page.goto(new URL('/?version=1.12.2&version=1.8.9',page.url()).href);
+  await button('검색 필터').click(); await button('게임 버전').click();
+  await page.waitForFunction(() => document.querySelectorAll('.deck-card[data-filter-id]').length === 4);
+  const restoredOrder=await page.locator('.deck-card').evaluateAll(cards => cards.map(card => card.getAttribute('data-filter-id')));
+  for (const value of ['1.8.9','1.12.2']) {
+    const restored=page.locator(`[data-filter-id="version:${value}"]`);
+    await restored.dispatchEvent('click');
+    assert(await restored.count() === 1 && await restored.getAttribute('aria-pressed') === 'false', 'Restored version disappeared on deselection');
+    assert(await animation(restored) === 'running', 'Restored version deselection effect missing');
+    await finish();
+    assert(JSON.stringify(await page.locator('.deck-card').evaluateAll(cards => cards.map(card => card.getAttribute('data-filter-id')))) === JSON.stringify(restoredOrder), 'Restored versions reordered on deselection');
+  }
+  await button('닫기').click();
   await button('게임 바꾸기').click();
   await page.getByRole('textbox', { name: '게임 찾기', exact: true }).fill('스타듀 밸리');
   await button('스타듀 밸리').dispatchEvent('click');
@@ -165,5 +180,5 @@ async (page) => {
   await page.getByRole('dialog',{name:'장르',exact:true}).waitFor({state:'hidden'});
   assert(new URL(page.url()).searchParams.get('genre') === 'survival', 'Global genre selection changed');
   assert(errors.length === 0, errors.join('\n'));
-  return { checked: ['category draw and return', 'rapid multi-select and repeat', 'selection without checks', 'all reset', 'sort draw', 'reduced motion', 'mobile', 'original game selection', 'no default cards', 'compatibility selection and deselection', 'opacity throughout toggles', 'stable version order', 'global genre reset'], errors };
+  return { checked: ['category draw and return', 'rapid multi-select and repeat', 'selection without checks', 'all reset', 'sort draw', 'reduced motion', 'mobile', 'original game selection', 'no default cards', 'compatibility selection and deselection', 'opacity throughout toggles', 'stable version order', 'restored version deselection', 'global genre reset'], errors };
 }
