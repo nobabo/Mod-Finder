@@ -1,7 +1,8 @@
 import { useEffect, useRef, useState } from 'react';
 import { useOverlay } from './lib/overlay';
 import { ArrowLeft, ArrowRight, Search, X, Boxes, Swords, Trees, Building2, Flag, Zap, Dices, Ghost, Layers, Check, Download, TrendingUp, ArrowDownWideNarrow, Package, Hash, Cpu, Clock } from 'lucide-react';
-import type { Filters, Sort } from '../shared/types';
+import type { FilterSelections, Sort } from '../shared/types';
+import { filterValues, type MultiFilterKey } from '../shared/filter-selections';
 import { categoryIcon } from './category-icons';
 import { BrandLogo } from './BrandLogo';
 import { findGames, GENRES } from '../shared/games';
@@ -15,7 +16,7 @@ import { useRailDrag } from './lib/use-rail-drag';
 import { minecraftVersions } from './lib/api';
 
 const logoCatalog: Record<string, { src: string }> = logos;
-export function GameDeck({ gameId, select, close, genreMode = false, sort = 'downloads', setSort, filters = {}, changeFilter, showMinecraftFilters = false, categories, selectedCategories, steamSort = 'none' }: { selectedCategories?: string[]; categories?: { id: string; ko: string; en: string }[]; sort?:Sort; setSort?:(sort:Sort) => void; filters?: Filters; changeFilter?: (key: keyof Filters, value: string) => void; showMinecraftFilters?: boolean; steamSort?: 'none' | 'only' | 'mixed'; genreMode?:boolean; gameId: string; select: (id: string, genre: string) => void; close: () => void }) {
+export function GameDeck({ gameId, select, close, genreMode = false, sort = 'downloads', setSort, filters = {}, changeFilter, showMinecraftFilters = false, categories, selectedCategories, steamSort = 'none' }: { selectedCategories?: string[]; categories?: { id: string; ko: string; en: string }[]; sort?:Sort; setSort?:(sort:Sort) => void; filters?: FilterSelections; changeFilter?: (key: MultiFilterKey, value: string) => void; showMinecraftFilters?: boolean; steamSort?: 'none' | 'only' | 'mixed'; genreMode?:boolean; gameId: string; select: (id: string, genre: string) => void; close: () => void }) {
   const [openFilter, setOpenFilter] = useState<'version' | 'loader' | 'kind' | null>(null);
   const [dropdownStyle, setDropdownStyle] = useState<React.CSSProperties>({});
   const [dropdownQuery, setDropdownQuery] = useState('');
@@ -138,9 +139,10 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   };
   const selected = (id: string) => selectedCategories ? id === 'all' ? !selectedCategories.length : selectedCategories.includes(id) : gameId === id;
   const versionQuery = dropdownQuery.trim();
-  const versionOptions = [...new Set([...( /^\d+\.[\w. +\-]{1,38}$/.test(versionQuery) ? [versionQuery] : []), ...(filters.version ? [filters.version] : []), ...versions])]
+  const selectedFilters = { version:filterValues(filters.version), loader:filterValues(filters.loader), kind:filterValues(filters.kind) };
+  const versionOptions = [...new Set([...( /^\d+\.[\w. +\-]{1,38}$/.test(versionQuery) ? [versionQuery] : []), ...selectedFilters.version, ...versions])]
     .filter(version => version.toLowerCase().includes(versionQuery.toLowerCase()));
-  const option = (id: string, label: string, selected: boolean, onClick: () => void) => <button type="button" key={id || 'all'} className={selected ? 'filter-option is-current' : 'filter-option'} aria-pressed={selected} onClick={() => { onClick(); setOpenFilter(null); }}><span>{label}</span>{selected && <Check size={18} />}</button>;
+  const option = (id: string, label: string, selected: boolean, onClick: () => void) => <button type="button" key={id || 'all'} className={selected ? 'filter-option is-current' : 'filter-option'} aria-pressed={selected} onClick={onClick}><span>{label}</span>{selected && <Check size={18} />}</button>;
   const keyboard = (event: React.KeyboardEvent) => {
     if (event.key === 'Escape') { event.preventDefault(); event.stopPropagation(); openFilter ? setOpenFilter(null) : genreMode && view !== 'menu' ? (setQuery(''), setView('menu')) : close(); }
     if (event.key === 'Tab') {
@@ -161,7 +163,7 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
           {[{ id:'genre' as const, label:'장르', Icon:Layers }, { id:'sort' as const, label:'정렬 방법', Icon:ArrowDownWideNarrow }].map(({ id,label,Icon }) => <button key={id} className="deck-card" style={{ '--game-color':'var(--accent)' } as React.CSSProperties} onClick={() => setView(id)}><Icon size={100}/><span>{t(label)}</span></button>)}
         </>}
         {view === 'sort' && [{ id:'relevance' as const, label:'관련도순', Icon:Search }, { id:'updated' as const, label:'최근 업데이트순', Icon:Clock }, { id:'downloads' as const, label:countSortLabel, Icon:Download }, { id:'popular' as const, label:'인기도순', Icon:TrendingUp }].map(({ id,label,Icon }) => <button key={id} className={sort === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={sort === id} onClick={event => { animateFilterPick(event.currentTarget); setSort?.(id); }}>{sort === id && <Check className="sort-selection" size={24}/>}<Icon size={100}/><span>{t(label)}</span></button>)}
-        {view === 'genre' && <>{!query && <button type="button" className={`deck-card ${selected('all') ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selected('all')} disabled={!!picking} onClick={() => choose('all')}>{genreMode ? <Layers size={100}/> : <BrandLogo size={100}/>}<span>{t(genreMode ? '전체 장르' : '전체 게임')}</span></button>}{genreMode && showMinecraftFilters && [{ id:'version' as const, label:'게임 버전', Icon:Hash }, { id:'loader' as const, label:'모드 로더', Icon:Cpu }, { id:'kind' as const, label:'프로젝트 종류', Icon:Package }].map(({ id,label,Icon }) => <button key={id} className={openFilter === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-expanded={openFilter === id} onClick={event => openDropdown(id, event.currentTarget)}><Icon size={100}/><span>{t(label)}</span></button>)}
+        {view === 'genre' && <>{!query && <button type="button" className={`deck-card ${selected('all') ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selected('all')} disabled={!!picking} onClick={() => choose('all')}>{genreMode ? <Layers size={100}/> : <BrandLogo size={100}/>}<span>{t(genreMode ? '전체 장르' : '전체 게임')}</span></button>}{genreMode && showMinecraftFilters && [{ id:'version' as const, label:'게임 버전', Icon:Hash }, { id:'loader' as const, label:'모드 로더', Icon:Cpu }, { id:'kind' as const, label:'프로젝트 종류', Icon:Package }].map(({ id,label,Icon }) => <button key={id} data-filter-id={id} className={selectedFilters[id].length || openFilter === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selectedFilters[id].length > 0} aria-expanded={openFilter === id} onClick={event => openDropdown(id, event.currentTarget)}><Icon size={100}/><span>{t(label)}</span></button>)}
         {games.map(game => <button type="button" key={game.id} data-genre-id={genreMode ? game.id : undefined} className={`deck-card ${selected(game.id) ? 'is-current' : ''} ${picking === game.id ? 'is-picking' : ''}`} style={{ '--game-color': game.color } as React.CSSProperties} aria-label={locale === 'ko' ? game.koreanName : game.name} aria-pressed={selected(game.id)} disabled={!!picking} onClick={() => choose(game.id)} onFocus={event => { if (!mobile && !busy.current && !drag.gesture.current) event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced.current ? 'instant' : 'smooth' }); }}>
           {genreMode ? (() => { const Icon = categories ? categoryIcon(game.name) : genreIcons[GENRES.findIndex(g => g.id === game.id)] ?? Layers; return <Icon size={100}/>; })() : <img className={`logo-${game.id}`} src={logoCatalog[game.id]?.src} alt="" draggable={false} />}<span>{locale === 'ko' ? game.koreanName : game.name}</span>
         </button>)}</>}
@@ -173,9 +175,9 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     {genreMode && openFilter && <div className="filter-dropdown is-liquid-glass" style={dropdownStyle} role="group" aria-label={t(({ version:'게임 버전', loader:'모드 로더', kind:'프로젝트 종류' } as const)[openFilter])}>
       {openFilter === 'version' && <label className="filter-dropdown-search"><Search size={17}/><input aria-label={t('게임 버전')} placeholder={t('예: 1.21.1')} value={dropdownQuery} maxLength={40} onChange={event => setDropdownQuery(event.target.value)} /></label>}
       <div className="filter-dropdown-options">
-        {openFilter === 'version' && <>{!versionQuery && option('all', t('전체 버전'), !filters.version, () => changeFilter?.('version', ''))}{versionOptions.map(version => option(version, version, filters.version === version, () => changeFilter?.('version', version)))}</>}
-        {openFilter === 'loader' && <>{option('all', t('전체 로더'), !filters.loader, () => changeFilter?.('loader', ''))}{[['fabric', 'Fabric'], ['forge', 'Forge'], ['neoforge', 'NeoForge'], ['quilt', 'Quilt']].map(([id,label]) => option(id, label, filters.loader === id, () => changeFilter?.('loader', id)))}</>}
-        {openFilter === 'kind' && <>{option('all', t('전체 종류'), !filters.kind, () => changeFilter?.('kind', ''))}{[['mod', '모드'], ['modpack', '모드팩'], ['resourcepack', '리소스팩'], ['shader', '셰이더']].map(([id,label]) => option(id, t(label), filters.kind === id, () => changeFilter?.('kind', id)))}</>}
+        {openFilter === 'version' && <>{!versionQuery && option('all', t('전체 버전'), !selectedFilters.version.length, () => changeFilter?.('version', ''))}{versionOptions.map(version => option(version, version, selectedFilters.version.includes(version), () => changeFilter?.('version', version)))}</>}
+        {openFilter === 'loader' && <>{option('all', t('전체 로더'), !selectedFilters.loader.length, () => changeFilter?.('loader', ''))}{[['fabric', 'Fabric'], ['forge', 'Forge'], ['neoforge', 'NeoForge'], ['quilt', 'Quilt']].map(([id,label]) => option(id, label, selectedFilters.loader.includes(id), () => changeFilter?.('loader', id)))}</>}
+        {openFilter === 'kind' && <>{option('all', t('전체 종류'), !selectedFilters.kind.length, () => changeFilter?.('kind', ''))}{[['mod', '모드'], ['modpack', '모드팩'], ['resourcepack', '리소스팩'], ['shader', '셰이더']].map(([id,label]) => option(id, t(label), selectedFilters.kind.includes(id), () => changeFilter?.('kind', id)))}</>}
       </div>
     </div>}
   </section>;

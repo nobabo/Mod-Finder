@@ -5,7 +5,8 @@ import { useEffect, useMemo, useRef, useState } from 'react';
 import { ArrowRight, ArrowUpRight, Bookmark, Check, ChevronDown, GitCompareArrows, History, LoaderCircle, RefreshCw, Search, Settings2, SlidersHorizontal, Sparkles, X } from 'lucide-react';
 import { categoriesForGame, getCategory } from '../shared/categories';
 import { GENRES, gamesInScope, getGame } from '../shared/games';
-import { SOURCE_NAMES, type Filters, type Listing, type Sort } from '../shared/types';
+import { SOURCE_NAMES, type Listing, type Sort } from '../shared/types';
+import { toggleFilter, type MultiFilterKey } from '../shared/filter-selections';
 import { dateLabel, GameLogo, ModCard, ModIcon, Modal, Sheet, SourceMark } from './components';
 import { useSearch } from './lib/search';
 import { canPersistListing, emptyLocalData, loadLocalData, saveLocalData, shortcutFavorites, toggleFavorite, refreshFavoriteReferences, mergeFavoriteReferences, validListing, type LocalData } from './lib/storage';
@@ -140,7 +141,7 @@ export default function App() {
   };
   const visit = async (url: string, item?: Listing) => { const generation = interestGeneration.current; try { await openExternal(url); if (item && hydrated && generation === interestGeneration.current) setLocal(prev => prev.recommendationsEnabled ? { ...prev, interests: recordInterest(prev.interests, item.gameId, "", item) } : prev); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
   const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => ({ ...toggleFavorite(prev, item), interests: !prev.recommendationsEnabled || prev.favorites.some(favorite => favorite.key === item.key) ? prev.interests : recordInterest(prev.interests, item.gameId, '', item) })); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
-  const changeFilter = (key: keyof Filters, value: string) => navigate(prev => { const next = { ...prev.filters }; if (value) next[key] = value; else delete next[key]; return { ...prev, filters: next }; });
+  const changeFilter = (key: MultiFilterKey, value: string) => navigate(prev => ({ ...prev, filters: toggleFilter(prev.filters, key, value) }));
   const resetFilters = () => navigate({ filters: {}, categories: [] });
   const go = (target: Page) => { navigate({ page: target }); setMenuOpen(false); };
   const heroSearch = page === 'discover' && !hasSearch;

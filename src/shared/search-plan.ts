@@ -2,9 +2,14 @@ import { gamesInScope } from './games';
 import { getCategory } from './categories';
 import { numberQueries } from './search-number-variants';
 import { localizedQueries } from './localized-search';
-import { SOURCES, type Filters, type SearchRequest, type Sort, type Source } from './types';
-export interface SearchSpec { gameId: string; genre?: string; query: string; filters: Filters; categories?: string[]; sort: Sort; selectedSource: Source | 'all' }
-export const sourceBucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
+import { filterCombinations, MULTI_FILTER_KEYS } from './filter-selections';
+import { SOURCES, type Filters, type FilterSelections, type SearchRequest, type Sort, type Source } from './types';
+export interface SearchSpec { gameId: string; genre?: string; query: string; filters: FilterSelections; categories?: string[]; sort: Sort; selectedSource: Source | 'all' }
+export const sourceBucketKey = (request: Pick<SearchRequest, 'gameId' | 'source'> & { filters?: Filters }) => {
+  const base = `${request.gameId}:${request.source}${request.filters?.category ? `:${request.filters.category}` : ''}`;
+  const selections = MULTI_FILTER_KEYS.map(key => request.filters?.[key] ?? null);
+  return selections.some(Boolean) ? `${base}:${JSON.stringify(selections)}` : base;
+};
 export const bucketKey = (request: Pick<SearchRequest, 'gameId' | 'source' | 'query'> & { filters?: Filters }) => JSON.stringify([sourceBucketKey(request), request.query]);
 export function searchPlan(spec: SearchSpec): SearchRequest[] {
   // Categories belong to a single game's provider taxonomy.
@@ -14,13 +19,14 @@ export function searchPlan(spec: SearchSpec): SearchRequest[] {
   }
   const category = getCategory(spec.gameId, spec.filters.category);
   if (spec.gameId !== 'all' && spec.filters.category && !category) return [];
+  const combinations = filterCombinations(spec.gameId === 'all' ? {} : spec.filters);
   return gamesInScope(spec.gameId, spec.genre).flatMap(game => SOURCES
     .filter(source => game.sources[source] && (spec.selectedSource === 'all' || source === spec.selectedSource))
     .filter(source => !category || category.source === source)
-    .flatMap(source => [...new Set(localizedQueries(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id).flatMap(numberQueries))].map(query => ({ gameId: game.id, source,
+    .flatMap(source => [...new Set(localizedQueries(spec.query, [`${source}:${game.sources[source]!.scope}:`], game.id).flatMap(numberQueries))].flatMap(query => combinations.map(filters => ({ gameId: game.id, source,
       query,
-      filters: spec.gameId === 'all' ? {} : spec.filters,
-      sort: source === 'thunderstore' && spec.sort === 'relevance' ? 'updated' as const : spec.sort }))));
+      filters,
+      sort: source === 'thunderstore' && spec.sort === 'relevance' ? 'updated' as const : spec.sort })))));
 }
 // A bounded queue keeps global searches from flooding provider or application limits.
 export async function runSearchQueue<T>(requests: T[], run: (request: T) => Promise<void>, signal: AbortSignal, concurrency = 4) {

@@ -1,6 +1,7 @@
 import { getCategory } from '../../shared/categories';
 import { GENRES, getGame } from '../../shared/games';
-import type { Filters, Sort } from '../../shared/types';
+import type { FilterSelections, Sort } from '../../shared/types';
+import { filterValues, MULTI_FILTER_KEYS } from '../../shared/filter-selections';
 
 export type Page = 'discover' | 'favorites' | 'recent';
 export interface NavigationState {
@@ -9,7 +10,7 @@ export interface NavigationState {
   genre: string;
   query: string;
   submitted: boolean;
-  filters: Filters;
+  filters: FilterSelections;
   categories: string[];
   sort: Sort;
   folder: string;
@@ -28,14 +29,17 @@ export function readNavigation(url: URL): NavigationState {
   const page = requestedPage === 'favorites' || requestedPage === 'recent' ? requestedPage : 'discover';
   const requestedSort = params.get('sort');
   const sort = sorts.find(item => item === requestedSort) ?? 'downloads';
-  const filters: Filters = {};
+  const filters: FilterSelections = {};
   if (gameId === 'minecraft-java') {
-    const version = params.get('version');
-    const loader = params.get('loader');
-    const kind = params.get('kind');
-    if (version && /^\d+\.[\w. +\-]{1,38}$/.test(version)) filters.version = version;
-    if (loader && ['fabric', 'forge', 'neoforge', 'quilt'].includes(loader)) filters.loader = loader;
-    if (kind && ['mod', 'modpack', 'resourcepack', 'shader'].includes(kind)) filters.kind = kind;
+    const valid = {
+      version: (value: string) => /^\d+\.[\w. +\-]{1,38}$/.test(value),
+      loader: (value: string) => ['fabric', 'forge', 'neoforge', 'quilt'].includes(value),
+      kind: (value: string) => ['mod', 'modpack', 'resourcepack', 'shader'].includes(value),
+    };
+    for (const key of MULTI_FILTER_KEYS) {
+      const values = filterValues(params.getAll(key)).filter(valid[key]);
+      if (values.length) filters[key] = values.length === 1 ? values[0] : values;
+    }
   }
   return {
     page, gameId, genre, sort, filters,
@@ -54,8 +58,8 @@ export function navigationUrl(state: NavigationState, current: URL): string {
   if (state.gameId === 'all' && state.genre !== 'all') url.searchParams.set('genre', state.genre);
   // The presence of q distinguishes browsing all results from the home screen.
   if (state.submitted || state.query) url.searchParams.set('q', state.query);
-  for (const key of ['version', 'loader', 'kind'] as const) {
-    if (state.filters[key]) url.searchParams.set(key, state.filters[key]!);
+  for (const key of MULTI_FILTER_KEYS) {
+    for (const value of filterValues(state.filters[key])) url.searchParams.append(key, value);
   }
   for (const category of state.categories) url.searchParams.append('category', category);
   if (state.sort !== 'downloads') url.searchParams.set('sort', state.sort);

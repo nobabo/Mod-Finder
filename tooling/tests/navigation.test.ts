@@ -9,6 +9,14 @@ const roundTrip = (path: string) => {
 };
 
 describe('shareable navigation state', () => {
+  it('restores multiple Minecraft selections, removing duplicate and invalid values', () => {
+    const state = roundTrip('/?version=1.21.1&version=1.20.1&version=1.21.1&version=bad&loader=fabric&loader=forge&loader=bad&kind=mod&kind=modpack');
+    expect(state.filters).toEqual({ version:['1.21.1','1.20.1'], loader:['fabric','forge'], kind:['mod','modpack'] });
+    const serialized = navigationUrl(state, new URL(origin));
+    expect(read(serialized)).toEqual(state);
+    expect(read('/?loader=fabric').filters).toEqual({ loader:'fabric' });
+  });
+
   it('distinguishes the home screen from a submitted empty search', () => {
     expect(read('/').submitted).toBe(false);
     expect(roundTrip('/?q=')).toMatchObject({ submitted: true, query: '', page: 'discover' });

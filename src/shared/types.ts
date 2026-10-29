@@ -5,6 +5,7 @@ export const SOURCE_NAMES: Record<Source, string> = {
 };
 export type SourceStatus = 'ready' | 'success' | 'empty' | 'external' | 'auth_required' | 'unsupported' | 'error' | 'rate_limited' | 'disabled';
 export type Filters = { version?: string; loader?: string; kind?: string; category?: string };
+export type FilterSelections = { version?: string | string[]; loader?: string | string[]; kind?: string | string[]; category?: string };
 export type Sort = 'relevance' | 'downloads' | 'popular' | 'updated';
 export interface Game {
   id: string; name: string; koreanName: string; aliases: string[]; edition: string;
