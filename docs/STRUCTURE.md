@@ -11,7 +11,7 @@ src/
   shared/        공통 타입·검색 로직·카탈로그·번역
   worker/        Cloudflare Worker와 생성된 런타임 타입
   pages/         Pages 주소를 Worker에 연결하는 진입 코드
-  native/        Windows Tauri·Rust 프로젝트와 이전 Android 생성 파일
+  native/        Windows Tauri·Rust 프로젝트
   android/       독립 Kotlin·Jetpack Compose Android 앱
 tooling/
   android/       Android Gradle 프로젝트와 Wrapper
@@ -28,6 +28,8 @@ output/          생성 결과 (Git 제외)
   android/       Kotlin 빌드·공통 에셋·Android 검사 보고서
   worker/        Worker 검증용 번들
   playwright/    브라우저 검증 캡처
+  releases/      버전별 배포 설치파일·체크섬
+  archive/       정리한 빌드의 설치파일·검사 보고서·SHA-256 기록
 ```
 
 ## 실행과 배포
@@ -42,6 +44,14 @@ output/          생성 결과 (Git 제외)
 - `npm run release -- "변경 내용"`: 검사·커밋·Worker 배포·운영 검증·푸시를 수행합니다.
 
 Windows Tauri 실행기는 앱 경로를 `src/native/`, 프런트엔드 작업 경로를 저장소 루트로 지정합니다. 기본 Rust 빌드 결과는 `output/native/`이며, 명시적으로 지정한 `CARGO_TARGET_DIR`는 우선 적용합니다. Android는 `tooling/android/`의 독립 Gradle 프로젝트에서 빌드하며, 생성물은 `output/android/`에 둡니다. 자세한 내용은 [Kotlin Android 앱](ANDROID.md)을 참고하세요.
+
+## 이전 빌드 정리
+
+PowerShell 7에서 `pwsh -NoProfile -File tooling/scripts/clean-native.ps1`로 대상과 용량을 미리 확인하고, `-Apply`를 붙여 정리합니다. 빌드·Gradle 데몬·에뮬레이터·Windows 앱을 종료한 상태에서 실행하세요.
+
+이전 구조의 Android·Rust 빌드 백업, 현재 Gradle·Cargo 빌드 캐시, 사용하지 않는 Tauri Android 생성 폴더와 스키마, Android 프로젝트 캐시, 로컬 에뮬레이터 두 개의 부팅 스냅샷만 대상으로 합니다. 설치파일과 빌드 출력 보고서는 `output/archive/build-artifacts-실행시각/`에 기존 상대 경로로 복사하고 SHA-256이 일치한 뒤 원래 생성 폴더를 지웁니다. `manifest.json`에 보관 파일의 해시와 정리 결과를 기록합니다.
+
+`src/android/`, Windows 소스·아이콘, `output/releases/`, 캡처 이미지, 에뮬레이터 설정·사용자 데이터와 개인 서명키는 유지합니다. 다음 네이티브 빌드에서는 캐시를 다시 생성하므로 첫 빌드가 오래 걸릴 수 있습니다. 이후 생성한 빌드를 보관할 때도 캐시 전체 대신 설치파일·보고서만 남깁니다.
 
 ## 파일을 추가할 때
 
