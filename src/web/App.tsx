@@ -154,7 +154,6 @@ export default function App() {
   const shortcuts = shortcutFavorites(local);
   const groups = page === 'favorites' ? local.favorites.map(item => ({ id: item.key, listings: [item] })) : search.groups;
 
-  const completed = Object.values(search.buckets).filter(b => b?.result && ['success', 'empty'].includes(b.result.status)).length;
   const unavailable = Object.values(search.buckets).filter(b => b?.result && !['success', 'empty'].includes(b.result.status));
   const sourceErrors = unavailable.some(b => ['error', 'rate_limited'].includes(b!.result!.status));
   const recoveryLinks = searchRecoveryLinks(Object.values(search.buckets));
@@ -204,9 +203,9 @@ export default function App() {
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}
         {search.loading && !search.items.length && <div className="results-loading" role="status" aria-label={t("검색 중")}><span className="results-spinner" aria-hidden="true" /></div>}
-        {!search.loading && !search.items.length && <div className="empty-state"><Search size={30} /><h3>{sourceErrors ? t("잠시 검색에 연결하지 못했어요") : unavailable.length && !completed ? t("원본 사이트에서 탐색을 이어가세요") : t("검색 결과가 없어요")}</h3>{(sourceErrors || (unavailable.length > 0 && !completed)) && <p>{sourceErrors ? t("다시 검색하거나 아래 원본 사이트에서 탐색을 이어갈 수 있어요.") : t("이 게임의 검색 연동을 준비하고 있어요. 아래 출처에서 모드를 찾아보세요.")}</p>}</div>}
+        {!search.loading && !search.items.length && <div className="empty-state"><Search size={30} /><h3>{t("검색 결과가 없어요")}</h3></div>}
 
-        {!search.loading && unavailable.length > 0 && <div className="search-recovery" role="group" aria-label={t('다시 검색')}>
+        {!search.loading && search.items.length > 0 && unavailable.length > 0 && <div className="search-recovery" role="group" aria-label={t('다시 검색')}>
           {sourceErrors && <button type="button" className="secondary-button" onClick={search.retry}><RefreshCw size={16}/>{t('다시 시도')}</button>}
           {recoveryLinks.map(link => <a key={link.url} className="secondary-button" href={link.url} target="_blank" rel="noopener noreferrer" onClick={event => { event.preventDefault(); void visit(link.url); }}>{SOURCE_NAMES[link.source]}{scopeGames.length > 1 && ` · ${gameName(link.gameId)}`}<ArrowUpRight size={16}/></a>)}
         </div>}
