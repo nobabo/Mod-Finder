@@ -7,6 +7,7 @@ export type SourceStatus = 'ready' | 'success' | 'empty' | 'external' | 'auth_re
 export type Filters = { version?: string; loader?: string; kind?: string; category?: string };
 export type FilterSelections = { version?: string | string[]; loader?: string | string[]; kind?: string | string[]; category?: string };
 export type Sort = 'relevance' | 'downloads' | 'popular' | 'updated';
+export type SortDirection = 'asc' | 'desc';
 export interface Game {
   id: string; name: string; koreanName: string; aliases: string[]; edition: string;
   short: string; color: string; genres: string[]; image?: string;

@@ -111,6 +111,7 @@ html:is([data-light-theme],[data-auto-theme]) .settings-menu nav .recommendation
 html:is([data-light-theme],[data-auto-theme]) .genre-deck .deck-card:not([aria-pressed="true"]) { filter:grayscale(1);color:var(--muted);border-color:rgba(var(--tint-rgb),.25); }
 html:is([data-light-theme],[data-auto-theme]) .settings-menu nav .recommendations-card[aria-checked="false"],
 html:is([data-light-theme],[data-auto-theme]) .genre-deck .deck-card:not([aria-pressed="true"]) { background:transparent; }
+html:is([data-light-theme],[data-auto-theme]) .genre-deck .deck-card[aria-pressed="true"] { color:var(--accent); }
 html:is([data-light-theme],[data-auto-theme]) :is(.picker-pagination>button,.deck-navigation button,.deck-close) { background:transparent;color:var(--accent); }
 html:is([data-light-theme],[data-auto-theme]) .mobile-nav-glass { background:transparent;box-shadow:0 4px 20px rgba(var(--tint-rgb),.08);backdrop-filter:blur(16px); }
 html:is([data-light-theme],[data-auto-theme]) .folder-modal { background:none;border:0;box-shadow:none; }

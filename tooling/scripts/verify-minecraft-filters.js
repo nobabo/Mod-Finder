@@ -27,7 +27,14 @@ async (page) => {
       });
       await tab.goto(new URL('/',page.url()).href);
       const button = name => tab.getByRole('button',{ name, exact:true });
-      const open = async () => { await button('검색 필터').click(); await button('장르').click(); };
+      const reveal = async name => {
+        for (let i = 0; i < 6 && !await button(name).isVisible(); i++) await button('다음 페이지').click();
+      };
+      const open = async () => {
+        await button('검색 필터').click();
+        check(await tab.getByRole('dialog', {name:'장르',exact:true}).count() === 1, 'Filters did not open directly to genres');
+        check(await tab.getByRole('textbox', {name:'장르',exact:true}).count() === 0, 'Genre search is still visible');
+      };
       const active = async (key, expected) => {
         const card = tab.locator(`[data-filter-id="${key}"]`);
         check(await card.getAttribute('aria-pressed') === String(expected), `${key}: incorrect selection state`);
@@ -43,31 +50,44 @@ async (page) => {
       for (const item of cases) {
         await active(item.key,false);
         await button(item.label).click();
-        const group = tab.getByRole('group',{ name:item.label, exact:true });
+        const group = tab.getByRole('dialog',{ name:item.label, exact:true });
+        check(await group.locator('.filter-dropdown').count() === 0, 'Filter still uses a dropdown');
         const option = name => group.getByRole('button',{ name, exact:true });
-        await option(item.first).click();
+        const pick = async name => { await reveal(name); await option(name).click(); };
+        await pick(item.first);
         check(await group.isVisible(), `${item.key}: menu closed after first selection`);
-        await option(item.second).click();
+        await pick(item.second);
         check(await option(item.first).getAttribute('aria-pressed') === 'true', `${item.key}: first choice was lost`);
         check(await option(item.second).getAttribute('aria-pressed') === 'true', `${item.key}: second choice missing`);
-        await active(item.key,true);
-        await option(item.first).click();
+        await pick(item.first);
         check(await option(item.first).getAttribute('aria-pressed') === 'false', `${item.key}: toggle did not deselect`);
-        await active(item.key,true);
-        await option(item.all).click();
+        await pick(item.all);
+        await button('뒤로').click();
         await active(item.key,false);
-        await option(item.first).click();
-        await option(item.second).click();
         await button(item.label).click();
+        await pick(item.first);
+        await pick(item.second);
+        await button('뒤로').click();
+        await active(item.key,true);
       }
       // Wait for the bounded search queue to send every selected combination.
       await tab.waitForFunction(() => !document.querySelector('.results-loading'));
       await tab.screenshot({ path:`output/playwright/minecraft-multi-${mobile ? 'mobile' : 'desktop'}.png` });
+      await button('내림차순').click();
+      check(new URL(tab.url()).searchParams.get('direction') === 'asc', 'Direction did not update the URL');
+      check(await button('오름차순').isVisible(), 'Ascending state missing');
+      await button('정렬 방법').click();
+      await button('최근 업데이트순').click();
+      check(new URL(tab.url()).searchParams.get('sort') === 'updated', 'Sort criterion lost');
+      await button('뒤로').click();
       const saved = tab.url();
       for (const item of cases) check(new URL(saved).searchParams.getAll(item.key).length === 2, `${item.key}: URL lost selections`);
       await tab.reload();
       await open();
       for (const item of cases) await active(item.key,true);
+      check(await button('오름차순').isVisible(), 'Direction was not restored');
+      await button('정렬 방법').click();
+      check(await button('최근 업데이트순').getAttribute('aria-pressed') === 'true', 'Sort was not restored');
       check(errors.length === 0, errors.join('\n'));
       const combinations = requests.filter(request => request.source === 'modrinth' && request.version && request.loader && request.kind);
       check(new Set(combinations.map(request => JSON.stringify([request.version,request.loader,request.kind]))).size === 8, 'API requests lost selected combinations');

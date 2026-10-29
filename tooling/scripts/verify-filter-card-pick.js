@@ -10,7 +10,7 @@ async (page) => {
   await page.reload();
   const button = name => page.getByRole('button', { name, exact: true });
   await button('검색 필터').click();
-  await button('장르').click();
+  await button('컨텐츠').click();
   const cards = page.locator('.deck-card[aria-pressed][aria-label]');
   const first = cards.nth(0);
   const second = cards.nth(1);
@@ -43,10 +43,12 @@ async (page) => {
   assert(await first.evaluate(element => new DOMMatrix(getComputedStyle(element).transform).m42 < -25), 'Card did not rise out of the deck');
   await page.screenshot({ path: 'output/playwright/filter-card-pick-desktop.png' });
   await finish();
-  assert(await page.getByRole('dialog', { name: '장르', exact: true }).count() === 1, 'Filter closed after multi-select');
+  assert(await page.getByRole('dialog', { name: '컨텐츠', exact: true }).count() === 1, 'Filter closed after multi-select');
   assert(await first.locator('.sort-selection').count() === 0 && await second.locator('.sort-selection').count() === 0, 'Genre selection still uses check marks');
   assert(await first.evaluate(element => getComputedStyle(element).opacity) === '1', 'Selected card disappeared');
+  await button('뒤로').click();
   await button('전체 장르').dispatchEvent('click');
+  await button('컨텐츠').click();
   assert(await first.getAttribute('aria-pressed') === 'false' && await second.getAttribute('aria-pressed') === 'false', 'All categories did not reset multi-select');
   await finish();
   await button('뒤로').click();
@@ -59,7 +61,7 @@ async (page) => {
   await button('관련도순').dispatchEvent('click');
   assert(await button('관련도순').getAttribute('aria-pressed') === 'true' && !await animation(button('관련도순')), 'Reduced motion did not preserve selection without animation');
   await button('뒤로').click();
-  await button('장르').click();
+  await button('컨텐츠').click();
   await first.dispatchEvent('click');
   assert(await first.getAttribute('aria-pressed') === 'true' && !await animation(first), 'Reduced motion category selection failed');
   await page.emulateMedia({ reducedMotion: 'no-preference' });

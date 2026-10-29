@@ -7,11 +7,11 @@ import { getCategory } from '../../shared/categories';
 import { bucketKey, searchPlan, runSearchQueue, type SearchSpec } from '../../shared/search-plan';
 import { runSearchWithCorrections } from '../../shared/search-corrections';
 import verifiedProjects from '../../shared/data/verified-projects.json';
-import type { Listing, SearchRequest, SearchResult, VerifiedProjectLink } from '../../shared/types';
+import type { Listing, SearchRequest, SearchResult, SortDirection, VerifiedProjectLink } from '../../shared/types';
 import { searchSource } from './api';
 export type { SearchSpec } from '../../shared/search-plan';
 export type Bucket = { request: SearchRequest; loading: boolean; result?: SearchResult };
-export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = true) {
+export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = true, direction: SortDirection = 'desc') {
   const [items, setItems] = useState<Listing[]>([]);
   const [links, setLinks] = useState<VerifiedProjectLink[]>(verifiedProjects);
   const [buckets, setBuckets] = useState<Record<string, Bucket>>({});
@@ -98,7 +98,7 @@ export function useSearch(spec: SearchSpec, modpacksFirst = false, enabled = tru
       .finally(() => { if (generation.current === gen) busy.current = false; });
   };
   const groups = useMemo(() => {
-    return prioritizeCategories(sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst), spec.categories);
-  }, [items, spec.query, spec.selectedSource, spec.sort, spec.categories, modpacksFirst, links]);
+    return prioritizeCategories(sortResultGroups(groupResults(items, spec.query, links), spec.sort, modpacksFirst, direction), spec.categories);
+  }, [items, spec.query, spec.selectedSource, spec.sort, spec.categories, modpacksFirst, direction, links]);
   return { items, groups, buckets, loading: searching || Object.values(buckets).some(b => b.loading), hasMore: Object.values(buckets).some(b => b.result?.nextCursor), loadMore, retry: () => { forceFresh.current = true; setRefresh(n => n + 1); } };
 }

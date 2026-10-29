@@ -1,6 +1,6 @@
 import { getCategory } from '../../shared/categories';
 import { GENRES, getGame } from '../../shared/games';
-import type { FilterSelections, Sort } from '../../shared/types';
+import type { FilterSelections, Sort, SortDirection } from '../../shared/types';
 import { filterValues, MULTI_FILTER_KEYS } from '../../shared/filter-selections';
 
 export type Page = 'discover' | 'favorites' | 'recent';
@@ -13,11 +13,12 @@ export interface NavigationState {
   filters: FilterSelections;
   categories: string[];
   sort: Sort;
+  direction: SortDirection;
   folder: string;
 }
 
 const sorts: Sort[] = ['downloads', 'relevance', 'updated', 'popular'];
-const routeKeys = ['page', 'game', 'genre', 'q', 'version', 'loader', 'kind', 'category', 'sort', 'folder'];
+const routeKeys = ['page', 'game', 'genre', 'q', 'version', 'loader', 'kind', 'category', 'sort', 'direction', 'folder'];
 
 export function readNavigation(url: URL): NavigationState {
   const params = url.searchParams;
@@ -42,7 +43,7 @@ export function readNavigation(url: URL): NavigationState {
     }
   }
   return {
-    page, gameId, genre, sort, filters,
+    page, gameId, genre, sort, filters, direction: params.get('direction') === 'asc' ? 'asc' : 'desc',
     query: (params.get('q') ?? '').trim().slice(0, 200),
     submitted: params.has('q'),
     categories: [...new Set(params.getAll('category'))].filter(id => !!getCategory(gameId, id)),
@@ -63,6 +64,7 @@ export function navigationUrl(state: NavigationState, current: URL): string {
   }
   for (const category of state.categories) url.searchParams.append('category', category);
   if (state.sort !== 'downloads') url.searchParams.set('sort', state.sort);
+  if (state.direction === 'asc') url.searchParams.set('direction', state.direction);
   if (state.folder !== 'all') url.searchParams.set('folder', state.folder);
   return url.pathname + url.search + url.hash;
 }

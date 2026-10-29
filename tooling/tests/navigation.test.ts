@@ -9,6 +9,11 @@ const roundTrip = (path: string) => {
 };
 
 describe('shareable navigation state', () => {
+  it('restores the result direction and defaults invalid directions to descending', () => {
+    expect(roundTrip('/?q=sodium&sort=updated&direction=asc')).toMatchObject({ sort:'updated', direction:'asc' });
+    expect(read('/?direction=unsafe').direction).toBe('desc');
+    expect(navigationUrl(read('/?direction=desc'), new URL(origin))).toBe('/');
+  });
   it('restores multiple Minecraft selections, removing duplicate and invalid values', () => {
     const state = roundTrip('/?version=1.21.1&version=1.20.1&version=1.21.1&version=bad&loader=fabric&loader=forge&loader=bad&kind=mod&kind=modpack');
     expect(state.filters).toEqual({ version:['1.21.1','1.20.1'], loader:['fabric','forge'], kind:['mod','modpack'] });

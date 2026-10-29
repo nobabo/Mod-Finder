@@ -1,4 +1,4 @@
-import type { Listing, ResultGroup, Sort, VerifiedProjectLink } from './types';
+import type { Listing, ResultGroup, Sort, SortDirection, VerifiedProjectLink } from './types';
 import { numberQueries } from './search-number-variants';
 import { modTranslations } from './content';
 import { localizedQueries } from './localized-search';
@@ -66,14 +66,19 @@ export function prioritizeCategories(groups: ResultGroup[], categories: string[]
   return [...groups].sort((a, b) => score(b) - score(a));
 }
 
-export function sortResultGroups(groups: ResultGroup[], sort: Sort, modpacksFirst = false): ResultGroup[] {
-  const compare = (a: Listing, b: Listing) => sort === 'downloads'
-    ? downloads(b) - downloads(a)
-    : sort === 'popular' ? a.rank - b.rank
-    : (Date.parse(b.updatedAt ?? '') || 0) - (Date.parse(a.updatedAt ?? '') || 0);
+export function sortResultGroups(groups: ResultGroup[], sort: Sort, modpacksFirst = false, direction: SortDirection = 'desc'): ResultGroup[] {
+  const value = (item: Listing) => sort === 'downloads' ? downloads(item) : sort === 'popular' ? -item.rank : Date.parse(item.updatedAt ?? '');
+  const compare = (a: Listing, b: Listing) => {
+    const av = value(a), bv = value(b);
+    const missingA = !Number.isFinite(av) || (sort === 'downloads' && av < 0);
+    const missingB = !Number.isFinite(bv) || (sort === 'downloads' && bv < 0);
+    // Missing metrics stay last in either direction; null never becomes zero.
+    return missingA || missingB ? Number(missingA) - Number(missingB) : (av - bv) * (direction === 'asc' ? 1 : -1);
+  };
   const packPriority = (item: Listing) => modpacksFirst && item.kind === 'modpack' ? 0 : 1;
   // Pick a source independently of the user's ordering of distinct projects.
-  return groups.map(group => ({ ...group, listings: [...group.listings].sort(representativeOrder) }))
+  const ordered = sort === 'relevance' && direction === 'asc' ? [...groups].reverse() : groups;
+  return ordered.map(group => ({ ...group, listings: [...group.listings].sort(representativeOrder) }))
     .sort((a, b) => packPriority(a.listings[0]) - packPriority(b.listings[0]) ||
       (sort === 'relevance' ? 0 : compare(a.listings[0], b.listings[0]) || a.id.localeCompare(b.id)));
 }

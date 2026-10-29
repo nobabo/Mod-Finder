@@ -7,6 +7,21 @@ import type { SearchRequest } from '../../src/shared/types';
 const request: SearchRequest = { gameId: 'minecraft-java', source: 'modrinth', query: 'Sodium', filters: {}, sort: 'relevance' };
 const mod = (id: string, rank = 1) => mapModrinth({ project_id: id, title: 'Sodium', description: 'Renderer', categories: ['fabric'], versions: ['1.21.1'] }, GAMES[0], rank);
 describe('identity and relevance', () => {
+  it('reverses result direction while preserving representatives and missing metrics', () => {
+    const items = [
+      { ...mod('high', 1), metrics:[{ label:'다운로드', value:100 }], updatedAt:'2026-10-29' },
+      { ...mod('zero', 2), metrics:[{ label:'다운로드', value:0 }], updatedAt:'2020-01-01' },
+      { ...mod('unknown', 3), metrics:[], updatedAt:null },
+    ];
+    const groups = groupResults(items, '');
+    for (const sort of ['downloads', 'updated'] as const) {
+      expect(sortResultGroups(groups, sort, false, 'asc').map(group => group.listings[0].id)).toEqual(['zero', 'high', 'unknown']);
+      expect(sortResultGroups(groups, sort).map(group => group.listings[0].id)).toEqual(['high', 'zero', 'unknown']);
+    }
+    expect(sortResultGroups(groups, 'popular', false, 'asc').map(group => group.listings[0].id)).toEqual(['unknown', 'zero', 'high']);
+    expect(sortResultGroups(groups, 'relevance', false, 'asc').map(group => group.id)).toEqual(groups.map(group => group.id).reverse());
+    expect(groups[0].listings[0]).toBe(items[0]);
+  });
   it.each(['relevance', 'downloads', 'popular', 'updated'] as const)('shows the higher-download source for verified duplicates under %s sorting', sort => {
     const a = { ...mod('a', 1), updatedAt: '2026-09-29', metrics: [{ label: '다운로드', value: 10 }] };
     const b = { ...a, source: 'curseforge' as const, scope: '432', id: '123', key: 'curseforge:432:123', rank: 100, updatedAt: '2020-01-01', metrics: [{ label: '다운로드', value: 20 }] };

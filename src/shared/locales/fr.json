@@ -256,5 +256,7 @@
   "커스텀 색상": "Couleur personnalisée",
   "자동 색상": "Couleurs automatiques",
   "이미지 이동: {name}": "Déplacer l’image : {name}",
-  "방향키로 이동, Home 키로 원위치": "Déplacez avec les flèches ; Origine rétablit la position"
+  "방향키로 이동, Home 키로 원위치": "Déplacez avec les flèches ; Origine rétablit la position",
+  "오름차순": "Croissant",
+  "내림차순": "Décroissant"
 }
