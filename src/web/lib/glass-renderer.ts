@@ -40,10 +40,10 @@ vec2 cover(vec2 uv, vec2 image) {
   float screenRatio = uSize.x / uSize.y;
   float imageRatio = image.x / image.y;
   vec2 scale = screenRatio > imageRatio ? vec2(1.0, imageRatio / screenRatio) : vec2(screenRatio / imageRatio, 1.0);
-  // Slow, sub-pixel camera drift, independent of the glass geometry.
-  float zoom = 1.10 + 0.015 * sin(uTime * 0.055) * uMotion;
+  // Only explicit pointer/scroll offsets move the photograph.
+  float zoom = 1.10;
   vec2 camera = vec2(-uBackgroundOffset.x, uBackgroundOffset.y) / uSize * uMotion;
-  return (uv - 0.5 + camera) * scale / zoom + 0.5 + vec2(sin(uTime * 0.024), cos(uTime * 0.02)) * 0.006 * uMotion;
+  return (uv - 0.5 + camera) * scale / zoom + 0.5;
 }
 vec3 scene(vec2 uv) {
   if (uUseScene == 1) return texture2D(uScene, uv).rgb;
@@ -167,7 +167,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let pendingPhoto: HTMLImageElement | null = null;
   let theme = themeById('game'); let disposed = false; let raf = 0;
   let appearance: GlassAppearance | undefined;
-  let lastSceneFrame = 0; let elapsed = 0;
+  let lastSceneFrame = 0;
   let paused = false;
   let panelElements: HTMLElement[] = []; let panelDirty = true; let geometryDirty = true;
   const geometry = new Map<HTMLElement, { rect: DOMRect; radius: number }>();
@@ -207,7 +207,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   observer.observe(document.body, { childList: true, subtree: true, attributes: true, attributeFilter: ['style', 'class'] });
   const resize = () => { panelDirty = true; schedule(); };
   // Scrolling changes positions, not the set of panels or their corner styles.
-  // Present geometry at display cadence independently of the 30 Hz scene clock.
+  // Present geometry at display cadence; unchanged scenes do not run a clock.
   const scroll = () => { geometryDirty = true; schedule(); };
   const sizes = new ResizeObserver(resize);
   const intersecting = new WeakMap<Element, boolean>();
@@ -220,7 +220,12 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   sizes.observe(canvas);
   document.addEventListener('transitionend', resize, true);
   document.addEventListener('animationend', resize, true);
-  const move = (event: PointerEvent) => { if (paused || event.pointerType !== 'mouse') return; pointer = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1];  };
+  const move = (event: PointerEvent) => {
+    if (paused || reduced || event.pointerType !== 'mouse') return;
+    const next = [event.clientX / innerWidth * 2 - 1, event.clientY / innerHeight * 2 - 1];
+    if (pointer[0] === next[0] && pointer[1] === next[1]) return;
+    pointer = next; sceneDirty = true; schedule();
+  };
   const motion = () => { reduced = media.matches; sceneDirty = true; lastSceneFrame = 0; schedule(); };
   const visibility = () => { lastSceneFrame = 0; if (document.hidden) { cancelAnimationFrame(raf); raf = 0; } else { geometryDirty = true; schedule(); } };
   const lost = (event: Event) => { event.preventDefault(); invalidated = true; cancelAnimationFrame(raf); raf = 0; onFailure(); };
@@ -234,9 +239,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   function draw(now: number) {
     raf = 0;
     if (disposed || document.hidden || gl!.isContextLost()) return;
-    const sceneDue = !paused && !reduced && (!lastSceneFrame || now - lastSceneFrame >= 1000 / 30);
+    const sceneDue = blending && !paused && !reduced;
     if (!panelDirty && !geometryDirty && !sceneDirty && !sceneDue) {
-      if (!paused && !reduced) schedule();
       return;
     }
     // CSS fixes the touch backdrop to the large viewport. innerHeight changes
@@ -250,7 +254,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (updateScene) {
       sceneRevision++;
       const delta = !paused && !reduced && lastSceneFrame ? Math.min(now - lastSceneFrame, 100) : 0;
-      elapsed += delta;
       if (blending) blendElapsed += delta;
       lastSceneFrame = now;
       sceneDirty = false;
@@ -315,7 +318,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     gl!.uniform2f(uniforms.uSize,viewWidth,viewHeight);
     gl!.uniform2fv(uniforms.uImageA,frontSize); gl!.uniform2fv(uniforms.uImageB,backSize);
     gl!.uniform1f(uniforms.uMix,mix * mix * (3 - 2 * mix));
-    gl!.uniform1f(uniforms.uTime,elapsed / 1000); gl!.uniform1f(uniforms.uMotion,reduced ? 0 : 1);
+    gl!.uniform1f(uniforms.uTime,0); gl!.uniform1f(uniforms.uMotion,reduced ? 0 : 1);
     gl!.uniform3fv(uniforms.uColorA,appearance ? colorRgb(appearance.primary) : theme.rgb.map(value => value / 255));
     gl!.uniform3fv(uniforms.uColorB,appearance ? colorRgb(appearance.secondary) : theme.secondaryRgb.map(value => value / 255));
     gl!.uniform1f(uniforms.uLightScene,appearance && appearance.light !== false ? 1 : 0);
@@ -412,7 +415,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (backgroundSignature !== nextBackgroundSignature || drewLens) gl!.drawArrays(gl!.TRIANGLES,0,6);
     backgroundSignature = nextBackgroundSignature;
 
-    if (!paused && !reduced) schedule();
+    if (blending && !paused && !reduced) schedule();
   }
   schedule();
   return {
@@ -424,7 +427,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       if (disposed || gl.isContextLost()) return false;
       if (!hasPhoto || reduced || immediate) { upload(front,image); frontSize = [image.naturalWidth,image.naturalHeight]; hasPhoto = true; blending = false; pendingPhoto = null; }
       else if (blending) pendingPhoto = image;
-      else { upload(back,image); backSize = [image.naturalWidth,image.naturalHeight]; blendElapsed = 0; blending = true; }
+      else { upload(back,image); backSize = [image.naturalWidth,image.naturalHeight]; blendElapsed = 0; lastSceneFrame = 0; blending = true; }
       sceneDirty = true; schedule();
       return true;
     },

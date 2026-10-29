@@ -106,7 +106,7 @@ describe('glass scroll stability', () => {
     s.setTop(75);
     for (let i = 0; i < 5; i++) s.win.dispatchEvent(new Event('scroll'));
     expect(s.frames.size).toBe(1);
-    s.frame(108); // 120 Hz scroll, well before the next 30 Hz background frame.
+    s.frame(108); // Scroll responds at 120 Hz without starting a background clock.
     expect(s.uniform('uniform4fv', 'uPanels[0]')[0][1]).toBe(75);
     expect(s.gl.drawArrays.mock.calls.length).toBe(draws + 1);
     expect(s.gl.bindFramebuffer.mock.calls.length).toBe(scenePasses);
@@ -115,7 +115,8 @@ describe('glass scroll stability', () => {
     expect(s.uniform('uniform4fv', 'uPanels[0]')[0][1]).toBe(40);
     expect(s.gl.bindFramebuffer.mock.calls.length).toBe(scenePasses);
     s.frame(140);
-    expect(s.gl.bindFramebuffer.mock.calls.length).toBeGreaterThan(scenePasses);
+    expect(s.gl.bindFramebuffer.mock.calls.length).toBe(scenePasses);
+    expect(s.frames.size).toBe(0);
   });
 
   it('keeps the texture size/crop stable when browser chrome changes innerHeight, and resizes on rotation', () => {
@@ -158,7 +159,7 @@ describe('glass scroll stability', () => {
     expect(s.frames.size).toBe(0);
     s.doc.hidden = false; s.doc.dispatchEvent(new Event('visibilitychange')); s.frame(5000);
     expect(s.uniform('uniform1f', 'uTime')).toEqual(time);
-    expect(s.frames.size).toBe(1);
+    expect(s.frames.size).toBe(0);
     s.renderer.dispose(); dispose = undefined;
     s.win.dispatchEvent(new Event('scroll')); s.viewport.dispatchEvent(new Event('resize'));
     expect(s.frames.size).toBe(0);
@@ -193,6 +194,28 @@ function controlsSetup(positions: number[], failAtlas = false) {
 }
 
 describe('glass card rendering budget', () => {
+  it('sleeps while idle, animates photo transitions, and sleeps again after the final photo', () => {
+    const s = controlsSetup([10, 130, 250]);
+    const photo = { naturalWidth: 800, naturalHeight: 600 } as HTMLImageElement;
+    s.renderer.setPhoto(photo); s.frame(100);
+    const draws = s.gl.drawArrays.mock.calls.length;
+    expect(s.frames.size).toBe(0);
+    s.frame(1000);
+    expect(s.gl.drawArrays).toHaveBeenCalledTimes(draws);
+    s.renderer.setPhoto(photo); s.frame(2000);
+    expect(s.frames.size).toBe(1);
+    s.frame(2008);
+    expect(s.uniform('uniform1f', 'uMix')![0]).toBeGreaterThan(0);
+    for (let time = 2100; time <= 4700; time += 100) s.frame(time);
+    expect(s.frames.size).toBe(0);
+    const finished = s.gl.drawArrays.mock.calls.length;
+    s.frame(10000);
+    expect(s.gl.drawArrays).toHaveBeenCalledTimes(finished);
+    s.renderer.setBackgroundOffset(3, 2); s.frame(10008);
+    expect(s.gl.drawArrays.mock.calls.length).toBeGreaterThan(finished);
+    expect(s.frames.size).toBe(0);
+  });
+
   it('renders only visible cards and takes one GPU snapshot for the whole batch', () => {
     const s = controlsSetup([-120, 10, 130, 250, ...Array.from({ length: 60 }, (_, i) => 450 + i * 120)]);
     s.frame(100);
