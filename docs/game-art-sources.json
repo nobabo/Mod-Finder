@@ -28,14 +28,14 @@
   {
     "game": "lethal-company",
     "name": "employee",
-    "local": "src/web/public/theme-art/lethal-company-employee.png",
-    "sourceUrl": "https://lethal.miraheze.org/wiki/File:Waving_Employee.png",
-    "imageUrl": "https://static.wikitide.net/lethalwiki/a/a4/Waving_Employee.png",
+    "local": "src/web/public/theme-art/lethal-company-employee.webp",
+    "sourceUrl": "https://lethal-company.fandom.com/wiki/File:Employee2_Cel.png",
+    "imageUrl": "https://static.wikia.nocookie.net/lethalcompanyzeekerss/images/e/e5/Employee2_Cel.png/revision/latest?cb=20240120012202",
     "crop": [
-      416,
-      0,
-      1427,
-      1080
+      320,
+      62,
+      1242,
+      1886
     ]
   },
   {
@@ -48,7 +48,7 @@
       119,
       107,
       865,
-      1000
+      836
     ]
   },
   {

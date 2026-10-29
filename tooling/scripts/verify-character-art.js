@@ -12,10 +12,10 @@ async (page) => {
       tab.on('pageerror',error=>errors.push(error.message));
       const inspect = () => tab.evaluate(()=>{
         const search = document.querySelector('.search-box').getBoundingClientRect();
-        const filter = document.querySelector('.filter-orb').getBoundingClientRect();
-        const overlap = (a,b)=>a.left<b.right && a.right>b.left && a.top<b.bottom && a.bottom>b.top;
         const buttons = [...document.querySelectorAll('.movable-artwork')];
-        return {count:buttons.length,clear:buttons.every(button=>!overlap(button.getBoundingClientRect(),search)&&!overlap(button.getBoundingClientRect(),filter)),visible:buttons.every(button=>{const box=button.getBoundingClientRect();return box.width>0 && box.height>0 && box.left>=0 && box.right<=innerWidth && box.top>=0 && box.bottom<=innerHeight;}),sources:buttons.map(button=>button.querySelector('img').getAttribute('src')),ids:[...document.querySelectorAll('[data-artwork-id]')].map(el=>el.dataset.artworkId),overflow:document.documentElement.scrollWidth>innerWidth};
+        const left = buttons[0].getBoundingClientRect(), right = buttons[1].getBoundingClientRect();
+        const above = selector => {const el=document.querySelector(selector),box=el.getBoundingClientRect();return el.contains(document.elementFromPoint(box.x+box.width/2,box.y+box.height/2));};
+        return {count:buttons.length,controlsAbove:above('#mod-query')&&above('.filter-orb')&&above('.ranking-tabs button'),corners:left.left<search.left && left.right<search.left+search.width*.5 && Math.abs(left.bottom-search.top)<5 && right.left>search.left+search.width*.6 && Math.abs(right.top-search.bottom)<8,brandTop:document.querySelector('.app-brand-header').getBoundingClientRect().top,visible:buttons.every(button=>{const box=button.getBoundingClientRect();return box.width>0 && box.height>0 && box.left>=0 && box.right<=innerWidth && box.top>=0 && box.bottom<=innerHeight;}),sources:buttons.map(button=>button.querySelector('img').getAttribute('src')),ids:[...document.querySelectorAll('[data-artwork-id]')].map(el=>el.dataset.artworkId),overflow:document.documentElement.scrollWidth>innerWidth};
       });
       for(const game of games) {
         await tab.goto(`${base}/?game=${game}`);
@@ -25,10 +25,10 @@ async (page) => {
         const report = await inspect();
         check(report.count===2,`${game}/${width}: exactly two elements`);
         check(report.sources.every(src=>src.startsWith('/theme-art/')),`${game}: character/mob/item images replace title wordmarks`);
-        check(report.clear && report.visible && !report.overflow,`${game}/${width}: search stays clear and both elements remain in view ${JSON.stringify(report)}`);
+        check(report.controlsAbove && report.corners && report.brandTop===56 && report.visible && !report.overflow,`${game}/${width}: reference corners, lowered MF and usable controls ${JSON.stringify(report)}`);
         if(game==='minecraft-java') check(report.ids.join('|')==='minecraft-java:steve|minecraft-java:diamond','Minecraft keeps only Steve and diamond');
         if(width===1536 || game==='minecraft-java') await tab.screenshot({path:`output/playwright/${game}-${width}-two-elements.png`});
-        reports.push({game,width,count:2,searchClear:true});
+        reports.push({game,width,count:2,referenceCorners:true,controlsAbove:true,brandTop:56});
       }
       for (const game of ['minecraft-java','skyrim-se']) {
         await tab.goto(`${base}/?game=${game}`);

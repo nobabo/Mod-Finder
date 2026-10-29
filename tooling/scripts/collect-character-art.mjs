@@ -23,7 +23,7 @@ const sources = [
 const selected = [
   ['skyrim-se','iron-helmet',sources[0][1],'File:SR-icon-armor-IronHelmet.png'],
   ['skyrim-se','sweetroll',sources[0][1],'File:SR-icon-food-SweetRoll.png'],
-  ['lethal-company','employee',sources[1][1],'File:Waving Employee.png'],
+  ['lethal-company','employee','https://lethal-company.fandom.com/api.php','File:Employee2 Cel.png'],
   ['lethal-company','hoarding-bug',sources[1][1],'File:Hoardingbugrender.png'],
   ['rimworld','thrumbo',sources[2][1],'File:Thrumbo.png'],
   ['rimworld','muffalo',sources[2][1],'File:Muffalo south.png'],

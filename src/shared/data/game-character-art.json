@@ -40,16 +40,16 @@
   "lethal-company": [
     {
       "name": "employee",
-      "src": "/theme-art/lethal-company-employee.png",
-      "width": 1011,
-      "height": 1080,
-      "imageWidth": 1920,
-      "imageHeight": 1080,
+      "src": "/theme-art/lethal-company-employee.webp",
+      "width": 922,
+      "height": 1824,
+      "imageWidth": 1440,
+      "imageHeight": 1920,
       "crop": [
-        416,
-        0,
-        1427,
-        1080
+        320,
+        62,
+        1242,
+        1886
       ],
       "ko": "직원",
       "en": "Employee",
@@ -60,14 +60,14 @@
       "name": "hoarding-bug",
       "src": "/theme-art/lethal-company-hoarding-bug.png",
       "width": 746,
-      "height": 893,
+      "height": 729,
       "imageWidth": 930,
       "imageHeight": 2070,
       "crop": [
         119,
         107,
         865,
-        1000
+        836
       ],
       "ko": "비축벌레",
       "en": "Hoarding Bug",

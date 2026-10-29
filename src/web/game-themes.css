@@ -43,9 +43,9 @@ html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { backgr
 .character-cutout img { position:absolute;max-width:none; }
 .game-character.is-pixel-art img { image-rendering:pixelated; }
 .game-character .artwork-ripple { overflow:hidden; }
-/* Exactly two game elements rest entirely above the search field. */
-.game-characters-search .artwork-search-left { left:16px;bottom:calc(100% + 18px);transform:rotate(-3deg); }
-.game-characters-search .artwork-search-right { right:16px;bottom:calc(100% + 18px);transform:rotate(3deg); }
+/* Rest on opposite search corners, matching the reference composition. */
+.game-characters-search .artwork-search-left { left:-6px;bottom:100%;transform:rotate(-3deg); }
+.game-characters-search .artwork-search-right { right:-18px;top:calc(100% - 4px);transform:rotate(3deg); }
 
 html:is([data-light-theme],[data-auto-theme]) .search-box {
   z-index:2;
@@ -125,6 +125,7 @@ html:is([data-light-theme],[data-auto-theme]) .folder-modal::before { display:no
 }}
 @media(max-width:650px) { :where(html:not([data-native])) {
   .game-characters-search .game-character { width:calc(var(--artwork-width) * .8); }
+  .game-characters-search .artwork-search-right { right:2px; }
 }}
 @media(max-height:500px) { html[data-game-theme] {
   .game-characters,.game-artwork-layer { display:none; }
@@ -180,13 +181,13 @@ html:is([data-light-theme],[data-auto-theme])[data-glass="fallback"] :is(.search
   .background-color-control { gap:10px;padding:10px 12px; }
 }
 
-.app-brand-header { position:fixed;top:calc(24px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:90;line-height:0; }
+.app-brand-header { position:fixed;top:calc(56px + env(safe-area-inset-top));left:50%;transform:translateX(-50%);z-index:90;line-height:0; }
 .app-brand-header .brand-logo { width:76px;height:76px; }
 html[data-photo-reveal] :is(.search-box input,.ranking-panel button,.ranking-panel strong,.rank-number) { text-shadow:var(--photo-text-shadow); }
 .app-shell { --page-brand-space:96px; }
 .app-shell>.main { padding-top:calc(var(--page-brand-space) + env(safe-area-inset-top)); }
 .app-shell .content { min-height:calc(100dvh - var(--page-brand-space) - env(safe-area-inset-top)); }
-html .settings-menu,html .settings-menu:has(.preference-panel),html .game-deck { padding-top:calc(96px + env(safe-area-inset-top)); }
+html .settings-menu,html .settings-menu:has(.preference-panel),html .game-deck { padding-top:calc(128px + env(safe-area-inset-top)); }
 body:has(.entry-content[inert]) .app-brand-header { visibility:hidden; }
 @media(max-width:1400px) { :where(html:not([data-native])) {
   .app-shell { --page-brand-space:80px;--mobile-header-height:80px; }

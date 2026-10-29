@@ -24,7 +24,8 @@ for record in json.loads(Path('output/artwork/downloads.json').read_text()):
     assert not record.get('error'), record
     image = Image.open(record['local']).convert('RGBA')
     assert image.getchannel('A').getextrema()[0] == 0, record['name']
-    bounds = image.crop((0,0,image.width,1000)).getbbox() if record['name'] == 'hoarding-bug' else image.getbbox()
+    # The first pose ends at row 835; the next pose begins at row 916.
+    bounds = image.crop((0,0,image.width,900)).getbbox() if record['name'] == 'hoarding-bug' else image.getbbox()
     left, top, right, bottom = bounds
     game, name = record['game'], record['name']
     ko, en, kind = labels[name]

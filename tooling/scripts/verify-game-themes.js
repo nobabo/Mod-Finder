@@ -42,7 +42,7 @@ async (page) => {
             const range = document.createRange(); range.selectNodeContents(walker.currentNode);
             text.push(...range.getClientRects());
           }
-          const upperRight = art.querySelector('.artwork-search-right').getBoundingClientRect();
+          const lowerRight = art.querySelector('.artwork-search-right').getBoundingClientRect();
           const filter = document.querySelector('.filter-orb').getBoundingClientRect();
           const overlaps = (a, b) => a.left < b.right && a.right > b.left && a.top < b.bottom && a.bottom > b.top;
           const transparent = el => getComputedStyle(el).backgroundColor === 'rgba(0, 0, 0, 0)' && getComputedStyle(el).backgroundImage === 'none';
@@ -53,10 +53,9 @@ async (page) => {
             photo: scene.dataset.background,
             photos: Number(scene.dataset.backgroundCount),
             representatives: art.querySelectorAll('.is-representative').length,
-            searchCorners: representative.left >= box.left && representative.right < box.left + box.width * .45 && representative.bottom < box.top && upperRight.right <= box.right && upperRight.left > box.left + box.width * .6 && upperRight.bottom < box.top,
-            foreground: Number(getComputedStyle(art).zIndex) > Number(getComputedStyle(form).zIndex),
+            searchCorners: representative.left < box.left && representative.right < box.left + box.width * .45 && Math.abs(representative.bottom-box.top)<5 && lowerRight.left > box.left + box.width * .6 && Math.abs(lowerRight.top-box.bottom)<8,
+            controlsAbove: Number(getComputedStyle(art).zIndex) < Number(getComputedStyle(form).zIndex),
             companions: companions.length,
-            searchClear: [representative,upperRight].every(rect=>!overlaps(rect,box)),
             textClear: decorations.every(rect => text.every(label => !overlaps(rect, label))),
             filterClear: decorations.every(rect => !overlaps(rect, filter)),
             artworkInView: decorations.every(rect => rect.left >= 0 && rect.right <= innerWidth),
@@ -73,9 +72,9 @@ async (page) => {
         check(report.game === (game === 'minecraft-java' ? 'minecraft' : 'stardew'), 'Game palette follows selection');
         check(report.photo.includes(game) && report.photos === 5, 'Five matching photographs');
         check(report.representatives === 1 && report.searchCorners, 'Artwork follows the reference search corners');
-        check(report.foreground && report.border.includes('gradient'), 'Full artwork remains visible over the search outline');
-        check(report.companions === 0 && report.searchClear && report.textClear && report.filterClear, 'Two elements keep the entire search field and ranking clear');
-        check(report.artworkInView && report.brandTop === 24, 'Artwork stays in view and MF is lowered by 16px');
+        check(report.controlsAbove && report.border.includes('gradient'), 'Search controls stay above artwork');
+        check(report.companions === 0 && report.textClear && report.filterClear, 'Two elements frame the search field and ranking');
+        check(report.artworkInView && report.brandTop === 56, 'Artwork stays in view and MF is lowered by another 32px');
         check(report.transparentSurfaces, 'Search and ranking have no white fill');
         check(!report.overflow && report.webgl && report.refractedPixels, 'Actual WebGL refraction without overflow');
         await tab.screenshot({ path: `output/playwright/${game}-${mobile ? 'mobile' : 'desktop'}-final.png` });

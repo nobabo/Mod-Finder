@@ -10,7 +10,7 @@ for index, record in enumerate(records):
         continue
     image = Image.open(record['local']).convert('RGBA')
     if record['name'] == 'hoarding-bug':
-        bounds = image.crop((0,0,image.width,1000)).getbbox()
+        bounds = image.crop((0,0,image.width,900)).getbbox()
     else:
         bounds = image.getbbox()
     record['actualWidth'], record['actualHeight'] = image.size

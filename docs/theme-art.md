@@ -23,13 +23,13 @@ Every supported game displays exactly two representative characters, creatures o
 | Cities: Skylines | Wind Turbine | Chirper |
 | Don't Starve Together | Wilson | Chester |
 
-Both elements rest above the search field with a clear gap. Only their image bounds accept pointer events. Dragging, keyboard movement and saved positions can overlap the search field or other controls freely; artwork stays below the search, rankings, shortcuts and navigation in the stacking order, even during a drag. Controls retain pointer priority, while empty layout gaps let exposed artwork remain draggable. Viewport bounds keep images reachable after resizing. Escape cancels a drag; Home or double-click resets an individual image. Removed characters are not restored from old saved positions. MF stays fixed at the top center with a 24px inset, without motion.
+The representative element rests on the search field's upper-left edge, and its companion sits just below the lower-right edge. Small screens inset the companion to keep it in view. Only their image bounds accept pointer events. Dragging, keyboard movement and saved positions can overlap the search field or other controls freely; artwork stays below the search, rankings, shortcuts and navigation in the stacking order, even during a drag. Controls retain pointer priority, while empty layout gaps let exposed artwork remain draggable. Viewport bounds keep images reachable after resizing. Escape cancels a drag; Home or double-click resets an individual image. Existing custom positions are preserved. Removed characters are not restored from old saved positions. MF stays fixed at the top center with a 56px inset, without motion.
 
 ## Original image sources
 
-Retrieved 2026-10-28. The 24 newly bundled original files, source pages, image URLs and CSS view bounds are recorded in [game-art-sources.json](game-art-sources.json). Images are supplied by the publishers or game wikis and remain owned by the respective rights holders. No AI-generated substitutes or wordmark substitutes are used.
+Retrieved 2026-10-28; the employee render was replaced on 2026-10-29. The 24 bundled original files, source pages, image URLs and CSS view bounds are recorded in [game-art-sources.json](game-art-sources.json). Images are supplied by the publishers or game wikis and remain owned by the respective rights holders. No AI-generated substitutes or wordmark substitutes are used.
 
-The original pixels are preserved. Transparent padding and the second Hoarding Bug reference pose are excluded by CSS view bounds recorded in `src/shared/data/game-character-art.json`. Pixel-art assets use nearest-neighbor display.
+The original pixels are preserved. Transparent padding and the second Hoarding Bug reference pose are excluded by CSS view bounds recorded in `src/shared/data/game-character-art.json`. The Hoarding Bug view ends at the first pose's row 835, before the second pose starts at row 916. Lethal Company's employee uses the default-suit [Employee2 Cel render](https://lethal-company.fandom.com/wiki/File:Employee2_Cel.png), replacing the dark red waving render. Pixel-art assets use nearest-neighbor display.
 
 Existing Minecraft and Stardew Valley sources:
 

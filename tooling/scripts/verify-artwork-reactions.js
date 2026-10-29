@@ -21,7 +21,7 @@ async (page) => {
         const art = tab.locator('.game-character .artwork-reaction');
         check(await art.count() === 2, 'Both game elements have reactions');
         const brand = tab.locator('.app-brand-header .brand-logo');
-        check(await brand.evaluate(el=>el.closest('.app-brand-header').getBoundingClientRect().top===24 && !el.closest('.artwork-reaction') && getComputedStyle(el).animationName==='none'),'MF stays static at its lower position');
+        check(await brand.evaluate(el=>el.closest('.app-brand-header').getBoundingClientRect().top===56 && !el.closest('.artwork-reaction') && getComputedStyle(el).animationName==='none'),'MF stays static at its lower position');
         const targets = [tab.locator('.game-logo.artwork-reaction'), ...await art.all()];
         const react = async target => { const hit=await target.evaluate(el=>{const box=el.getBoundingClientRect();return {x:box.x+box.width/2,y:box.y+box.height/2};}); if(mobile)await tab.touchscreen.tap(hit.x,hit.y);else await tab.mouse.move(hit.x,hit.y); };
         for (let index = 0; index < targets.length; index++) {
