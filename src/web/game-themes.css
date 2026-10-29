@@ -1,4 +1,6 @@
-/* The field and its artwork share a coordinate system, but not a paint layer. */
+/* Controls stay above artwork; empty layout space still accepts artwork drags. */
+.search-dock,.mobile-header { pointer-events:none; }
+.search-box,.filter-orb,.settings-fab,.ranking-panel,.home-shortcuts a { pointer-events:auto; }
 .search-field { position:relative;flex:1;min-width:0;isolation:isolate; }
 .search-field>.search-box { z-index:2; }
 html[data-auto-theme] { color:var(--text); }
@@ -24,16 +26,16 @@ html:is([data-light-theme],[data-auto-theme]) * { scrollbar-color:rgba(var(--tin
 html:is([data-light-theme],[data-auto-theme]) ::-webkit-scrollbar-thumb { background:rgba(var(--tint-rgb),.4);background-clip:padding-box; }
 
 .game-characters { position:absolute;inset:0;z-index:1;pointer-events:none;user-select:none; }
-.game-characters-search { z-index:3;overflow:visible; }
+.game-characters-search { overflow:visible; }
 .game-character { position:absolute;display:block;width:var(--artwork-width);pointer-events:auto;filter:drop-shadow(0 3px 1px rgba(50,67,40,.08)); }
 .game-character img { display:block;width:100%;height:auto; }
 .game-character.is-artwork-anchor { pointer-events:none; }
 .movable-artwork { display:block;width:100%;height:100%;padding:0;border:0;background:none;cursor:grab;touch-action:none;user-select:none;-webkit-user-select:none; }
 .movable-artwork:focus-visible { outline:2px solid var(--accent);outline-offset:5px;border-radius:6px; }
 .movable-artwork:disabled { cursor:default; }
-.game-artwork-layer { position:fixed;inset:0;z-index:30;pointer-events:none; }
+.game-artwork-layer { position:fixed;inset:0;z-index:20;pointer-events:none; }
 .game-artwork-position { position:absolute;pointer-events:none; }
-.game-artwork-layer.is-dragging { z-index:31; }
+.game-artwork-layer.is-dragging { z-index:21; }
 .game-artwork-layer.is-dragging .movable-artwork { cursor:grabbing; }
 .game-artwork-layer .movable-artwork { height:auto;pointer-events:auto; }
 .character-art { display:block; }

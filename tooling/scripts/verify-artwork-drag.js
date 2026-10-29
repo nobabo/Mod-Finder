@@ -74,12 +74,12 @@ async (page) => {
     }), 'The original location leaves no invisible drag target');
     await dragTo('minecraft-java:diamond', 1040, 230);
     check(await placed(steve).count() === 1 && await placed('minecraft-java:diamond').count() === 1, 'Companions move independently');
-    await dragTo(steve, 650, 380);
+    await dragTo(steve, 120, 380);
     const hit = await art(steve).evaluate(el => {
       const box = el.getBoundingClientRect();
       return el.contains(document.elementFromPoint(box.x + box.width / 2, box.y + 20));
     });
-    check(hit, 'Placed artwork remains draggable above the search and ranking panels');
+    check(hit, 'Placed artwork remains draggable wherever it is exposed');
     await tab.screenshot({ path: 'output/playwright/minecraft-artwork-dragged.png' });
     await dragTo(steve, -1000, -1000);
     await inside(steve);

@@ -23,7 +23,7 @@ Every supported game displays exactly two representative characters, creatures o
 | Cities: Skylines | Wind Turbine | Chirper |
 | Don't Starve Together | Wilson | Chester |
 
-Both elements rest above the search field with a clear gap. Only their image bounds accept pointer events. Dragging, keyboard movement, restored positions, scrolling and resizing keep the search field and filter button clear. Escape cancels a drag; Home or double-click resets an individual image. Removed characters are not restored from old saved positions. MF stays fixed at the top center with a 24px inset, without motion.
+Both elements rest above the search field with a clear gap. Only their image bounds accept pointer events. Dragging, keyboard movement and saved positions can overlap the search field or other controls freely; artwork stays below the search, rankings, shortcuts and navigation in the stacking order, even during a drag. Controls retain pointer priority, while empty layout gaps let exposed artwork remain draggable. Viewport bounds keep images reachable after resizing. Escape cancels a drag; Home or double-click resets an individual image. Removed characters are not restored from old saved positions. MF stays fixed at the top center with a 24px inset, without motion.
 
 ## Original image sources
 

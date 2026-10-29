@@ -30,32 +30,85 @@ async (page) => {
         if(width===1536 || game==='minecraft-java') await tab.screenshot({path:`output/playwright/${game}-${width}-two-elements.png`});
         reports.push({game,width,count:2,searchClear:true});
       }
-      if(width===1536) {
-        await tab.goto(`${base}/?game=minecraft-java`);
-        const steve = tab.getByRole('button',{name:'이미지 이동: 마인크래프트 스티브',exact:true});
-        await steve.waitFor();
-        const from = await steve.boundingBox(), target = await tab.locator('.search-box').boundingBox();
-        await tab.mouse.move(from.x+from.width/2,from.y+from.height/2); await tab.mouse.down();
-        await tab.mouse.move(target.x+target.width/2,target.y+target.height/2,{steps:16});
-        check((await inspect()).clear,'Dragging over the search field is constrained immediately');
+      for (const game of ['minecraft-java','skyrim-se']) {
+        await tab.goto(`${base}/?game=${game}`);
+        await tab.locator('.game-characters-search').waitFor();
+        await tab.locator('.character-cutout img').evaluateAll(images=>Promise.all(images.map(image=>image.decode())));
+        const id = await tab.locator('.game-characters-search .is-representative').getAttribute('data-artwork-id');
+        const art = tab.locator(`[data-artwork-position="${id}"] button,[data-artwork-id="${id}"]>button`);
+        const reset = async () => {await art.focus();await tab.keyboard.press('Home');};
+        const dragTo = async (left,top,release=true) => {
+          const from = await art.boundingBox();
+          const point = await art.evaluate(el=>{
+            const box=el.getBoundingClientRect();
+            for(const y of [.1,.3,.5,.7,.9]) for(const x of [.1,.3,.5,.7,.9]) {
+              const point={x:box.x+box.width*x,y:box.y+box.height*y};
+              if(el.contains(document.elementFromPoint(point.x,point.y))) return point;
+            }
+          });
+          check(point,`${game}/${width}: exposed artwork can be picked up`);
+          await tab.mouse.move(point.x,point.y);await tab.mouse.down();
+          await tab.mouse.move(point.x+left-from.x,point.y+top-from.y,{steps:12});
+          const box=await art.boundingBox();
+          const viewport=tab.viewportSize();
+          check(Math.abs(box.x-Math.max(8,Math.min(viewport.width-from.width-8,left)))<2 && Math.abs(box.y-Math.max(8,Math.min(viewport.height-from.height-8,top)))<2,`${game}/${width}: follows the pointer through controls without snapping ${JSON.stringify({box,left,top})}`);
+          if(release) await tab.mouse.up();
+        };
+        const controlAbove = async selector => tab.locator(selector).first().evaluate((control,id)=>{
+          const art=document.querySelector(`[data-artwork-position="${id}"] button`);
+          const a=art.getBoundingClientRect(), b=control.getBoundingClientRect();
+          const left=Math.max(a.left,b.left),right=Math.min(a.right,b.right),top=Math.max(a.top,b.top),bottom=Math.min(a.bottom,b.bottom);
+          return right>left && bottom>top && control.contains(document.elementFromPoint((left+right)/2,(top+bottom)/2));
+        },id);
+        const search=await tab.locator('.search-box').boundingBox(), input=await tab.locator('#mod-query').boundingBox(), size=await art.boundingBox();
+        await dragTo(input.x+input.width/2-size.width/2,search.y-32,false);
+        check(await controlAbove('#mod-query'),`${game}/${width}: input stays above artwork during a drag`);
         await tab.mouse.up();
-        await tab.reload(); await steve.waitFor();
-        check((await inspect()).clear,'Saved drags remain clear after reload');
-        await tab.setViewportSize({width:320,height:740});
-        await tab.waitForFunction(()=>document.querySelector('.search-box').getBoundingClientRect().width<320);
-        check((await inspect()).clear,'Resize keeps saved artwork clear');
-        await tab.evaluate(()=>{
-          localStorage.setItem('modfinder-artwork:minecraft-java:steve',JSON.stringify({x:.5,y:.4}));
-          localStorage.setItem('modfinder-artwork:minecraft-java:alex',JSON.stringify({x:.5,y:.5}));
-        });
-        await tab.reload(); await steve.waitFor();
-        const legacy = await inspect();
-        check(legacy.clear && legacy.count===2 && legacy.ids.every(id=>!id.endsWith(':alex')),'Old saved positions are corrected and removed characters stay absent');
+        const saved=await art.boundingBox();
+        await tab.screenshot({path:`output/playwright/${game}-${width}-artwork-behind-search.png`});
         await tab.locator('#mod-query').click();
-        check(await tab.locator('#mod-query').evaluate(el=>el===document.activeElement),'Search remains directly clickable');
+        check(await tab.locator('#mod-query').evaluate(el=>el===document.activeElement),'Overlapping artwork does not block input');
+        await tab.reload();await art.waitFor();
+        const restored=await art.boundingBox();
+        check(Math.abs(restored.x-saved.x)<2 && Math.abs(restored.y-saved.y)<2,'Reload preserves the chosen overlap');
+        await art.focus();await tab.keyboard.press('ArrowRight');
+        const keyboard=await art.boundingBox();
+        check(Math.abs(keyboard.x-restored.x-8)<2 && Math.abs(keyboard.y-restored.y)<2,'Keyboard movement does not snap around the search field');
+        check(await controlAbove('#mod-query'),'Input keeps priority after keyboard movement');
+
+        for(const selector of ['.game-orb','.search-submit','.ranking-tabs button:last-child','.filter-orb','.settings-fab','.app-brand-header .home-logo']) {
+          await reset();
+          const target=await tab.locator(selector).first().boundingBox();
+          await dragTo(target.x+target.width/2-size.width/2,target.y+target.height/2-size.height/2,false);
+          check(await controlAbove(selector),`${game}/${width}: ${selector} stays above dragging artwork`);
+          await tab.mouse.up();
+          check(await controlAbove(selector),`${game}/${width}: ${selector} stays above saved artwork`);
+          if(selector==='.ranking-tabs button:last-child') {
+            await tab.locator(selector).click();
+            check(await tab.locator(selector).getAttribute('aria-pressed')==='true','Ranking tab remains clickable');
+          }
+          if(selector==='.filter-orb' || selector==='.settings-fab' || selector==='.game-orb') {
+            await tab.locator(selector).click();
+            await tab.getByRole('dialog').waitFor();
+            check(await art.isDisabled(),'Dialog pauses background artwork');
+            await tab.getByRole('button',{name:'닫기',exact:true}).click();
+          }
+        }
+        await reset();
+        const ranking=await tab.locator('.ranking-panel').boundingBox();
+        await dragTo(ranking.x+20,search.y+search.height+2);
+        const gap=await art.evaluate(el=>{const box=el.getBoundingClientRect();return el.contains(document.elementFromPoint(box.x+box.width/2,box.y+4));});
+        check(gap,'Empty space near controls lets exposed artwork remain draggable');
+        await dragTo(ranking.x+32,search.y+search.height+3);
+        if(width<1401) {
+          await reset();
+          await dragTo(width*.25-size.width/2,8);
+          await dragTo(width*.25-size.width/2+12,16);
+        }
+        reports.push({game,width,freeOverlap:true,controlsAbove:true,gapsDraggable:true});
       }
     } finally {await context.close();}
   }
   check(errors.length===0,errors.join(', '));
-  return {passed:true,reports,dragClearance:true,restoredClearance:true,legacyPositions:true,errors};
+  return {passed:true,reports,freeOverlap:true,restoredOverlap:true,controlsAbove:true,errors};
 }
