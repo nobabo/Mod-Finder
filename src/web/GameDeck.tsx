@@ -42,7 +42,12 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
   useEffect(() => {
     root.current?.querySelector<HTMLElement>(mobile ? 'button' : 'input,button')?.focus({ preventScroll: true });
     const media = matchMedia('(prefers-reduced-motion: reduce)');
-    const motion = () => { reduced.current = media.matches; };
+    const motion = () => {
+      reduced.current = media.matches;
+      if (media.matches) for (const animation of root.current?.getAnimations({ subtree:true }) ?? []) {
+        if (animation.id === 'filter-card-pick') animation.cancel();
+      }
+    };
     media.addEventListener('change', motion);
     return () => { clearTimeout(timer.current); media.removeEventListener('change', motion); };
   }, []);
@@ -86,11 +91,24 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     schedule();
     return () => { cancelAnimationFrame(frame); observer.disconnect(); el.removeEventListener('scroll', schedule); media.removeEventListener('change', schedule); };
   }, [mobile, view, query, locale]);
-  const animateFilterPick = (card: HTMLButtonElement) => {
+  const animateFilterPick = (card: HTMLButtonElement, nextSelected?: boolean) => {
+    const style = getComputedStyle(card);
+    const start = style.transform;
     for (const animation of card.getAnimations()) {
       if (animation.id === 'filter-card-pick') animation.cancel();
     }
-    if (mobile || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+    if (nextSelected !== undefined) {
+      // Play on both toggle directions, ending at the new state's resting pose.
+      // Opacity stays fixed so an option never inherits the game exit fade.
+      card.animate([
+        { transform:start, opacity:1, easing:'cubic-bezier(.2,.75,.22,1)' },
+        { transform:style.getPropertyValue('--genre-card-draw'), opacity:1, offset:.45, easing:'cubic-bezier(.2,.75,.22,1)' },
+        { transform:style.getPropertyValue(nextSelected ? '--genre-card-raised' : '--genre-card-rest'), opacity:1 },
+      ], { id:'filter-card-pick', duration:420 });
+      return;
+    }
+    if (mobile) return;
     const resting = 'translateY(var(--card-drop,0px)) rotateY(var(--card-turn,0deg))';
     const lift = Math.min(55, card.offsetHeight * .18);
     const shadow = getComputedStyle(card).boxShadow;
@@ -104,14 +122,15 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
     if (selectedCategories) { select(id, genre); return; }
     if (busy.current) return;
     busy.current = true; setPicking(id);
-    timer.current = setTimeout(() => select(id, genre), genreMode ? id !== 'all' && !reduced.current ? 420 : 0 : mobile || reduced.current ? 0 : 560);
+    const next = genreMode && gameId === id ? 'all' : id;
+    timer.current = setTimeout(() => select(next, genre), genreMode ? !reduced.current ? 420 : 0 : mobile || reduced.current ? 0 : 560);
   };
   const step = (direction: number) => rail.current?.scrollBy({ left: direction * 300, behavior: reduced.current ? 'instant' : 'smooth' });
   const back = () => { setQuery(''); setView('genre'); };
   const selected = (id: string) => selectedCategories ? id === 'all' ? !selectedCategories.length : selectedCategories.includes(id) : gameId === id;
   const versionQuery = query.trim();
   const selectedFilters = { version:filterValues(filters.version), loader:filterValues(filters.loader), kind:filterValues(filters.kind) };
-  const versionOptions = [...new Set([...( /^\d+\.[\w. +\-]{1,38}$/.test(versionQuery) ? [versionQuery] : []), ...selectedFilters.version, ...versions])]
+  const versionOptions = [...new Set([...( /^\d+\.[\w. +\-]{1,38}$/.test(versionQuery) ? [versionQuery] : []), ...versions, ...selectedFilters.version])]
     .filter(version => version.toLowerCase().includes(versionQuery.toLowerCase()));
   const filterOptions = filterView === 'version' ? versionOptions.map(version => [version, version]) : filterView === 'loader' ? [['fabric', 'Fabric'], ['forge', 'Forge'], ['neoforge', 'NeoForge'], ['quilt', 'Quilt']] : [['mod', t('모드')], ['modpack', t('모드팩')], ['resourcepack', t('리소스팩')], ['shader', t('셰이더')]];
   const FilterIcon = filterView === 'version' ? Hash : filterView === 'loader' ? Cpu : Package;
@@ -136,16 +155,13 @@ export function GameDeck({ gameId, select, close, genreMode = false, sort = 'dow
       <div ref={rail} className={`deck-rail ${genreMode ? 'filter-menu-rail' : ''} ${drag.dragging ? 'is-dragging' : ''}`} {...(mobile ? {} : drag.handlers)} onWheel={event => { if (!mobile && Math.abs(event.deltaY) > Math.abs(event.deltaX)) rail.current!.scrollLeft += event.deltaY; }}>
         <CardPages key={`${view}:${query}`} swipe>
         {view === 'sort' && [{ id:'relevance' as const, label:'관련도순', Icon:Search }, { id:'updated' as const, label:'최근 업데이트순', Icon:Clock }, { id:'downloads' as const, label:countSortLabel, Icon:Download }, { id:'popular' as const, label:'인기도순', Icon:TrendingUp }].map(({ id,label,Icon }) => <button key={id} data-filter-id={`sort:${id}`} className={sort === id ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={sort === id} onClick={event => { animateFilterPick(event.currentTarget); setSort?.(id); }}>{sort === id && <Check className="sort-selection" size={24}/>}<Icon size={100}/><span>{t(label)}</span></button>)}
-        {filterView && <>
-          <button type="button" data-filter-id={`${filterView}:all`} className={`deck-card ${!selectedFilters[filterView].length ? 'is-current' : ''}`} aria-pressed={!selectedFilters[filterView].length} onClick={() => changeFilter?.(filterView, '')}><Layers size={100}/><span>{t(({ version:'전체 버전', loader:'전체 로더', kind:'전체 종류' })[filterView])}</span></button>
-          {filterOptions.map(([id,label]) => <button type="button" key={id} data-filter-id={`${filterView}:${id}`} className={`deck-card ${selectedFilters[filterView].includes(id) ? 'is-current' : ''}`} aria-pressed={selectedFilters[filterView].includes(id)} onClick={() => changeFilter?.(filterView, id)}><FilterIcon size={100}/><span>{label}</span></button>)}
-        </>}
+        {filterView && filterOptions.map(([id,label]) => <button type="button" key={id} data-filter-id={`${filterView}:${id}`} className={`deck-card ${selectedFilters[filterView].includes(id) ? 'is-current' : ''}`} aria-pressed={selectedFilters[filterView].includes(id)} onClick={event => { animateFilterPick(event.currentTarget, !selectedFilters[filterView].includes(id)); changeFilter?.(filterView, id); }}><FilterIcon size={100}/><span>{label}</span></button>)}
         {view === 'genre' && <>
-          {!query && <button type="button" className={`deck-card ${selected('all') ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selected('all')} disabled={!!picking} onClick={() => choose('all')}>{genreMode ? <Layers size={100}/> : <BrandLogo size={100}/>}<span>{t(genreMode ? '전체 장르' : '전체 게임')}</span></button>}
+          {!genreMode && !query && <button type="button" className={`deck-card ${selected('all') ? 'is-current' : ''} ${picking === 'all' ? 'is-picking' : ''}`} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selected('all')} disabled={!!picking} onClick={() => choose('all')}><BrandLogo size={100}/><span>{t('전체 게임')}</span></button>}
           {genreMode && showMinecraftFilters && [{ id:'version' as const, label:'게임 버전', Icon:Hash }, { id:'loader' as const, label:'모드 로더', Icon:Cpu }, { id:'kind' as const, label:'프로젝트 종류', Icon:Package }].map(({ id,label,Icon }) => <button key={id} data-filter-id={id} className={selectedFilters[id].length ? 'deck-card is-current' : 'deck-card'} style={{ '--game-color':'var(--accent)' } as React.CSSProperties} aria-pressed={selectedFilters[id].length > 0} aria-haspopup="dialog" onClick={() => { setQuery(''); setView(id); }}><Icon size={100}/><span>{t(label)}</span></button>)}
           {genreMode && categoryGroups.map(group => { const Icon = groupIcons[group.id as keyof typeof groupIcons]; const active = group.categories.some(category => selectedCategories?.includes(category.id)); return <button type="button" key={group.id} data-filter-id={`group:${group.id}`} className={`deck-card ${active ? 'is-current' : ''}`} aria-pressed={active} aria-haspopup="dialog" onClick={() => setView(`group:${group.id}`)}><Icon size={100}/><span>{locale === 'ko' ? group.ko : group.en}</span></button>; })}
         </>}
-        {(view === 'genre' || currentGroup) && games.map(game => <button type="button" key={game.id} data-genre-id={genreMode ? game.id : undefined} className={`deck-card ${selected(game.id) ? 'is-current' : ''} ${picking === game.id ? 'is-picking' : ''}`} style={{ '--game-color': game.color } as React.CSSProperties} aria-label={locale === 'ko' ? game.koreanName : game.name} aria-pressed={selected(game.id)} disabled={!!picking} onClick={() => choose(game.id)} onFocus={event => { if (!mobile && !busy.current && !drag.gesture.current) event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced.current ? 'instant' : 'smooth' }); }}>
+        {(view === 'genre' || currentGroup) && games.map(game => <button type="button" key={game.id} data-genre-id={genreMode ? game.id : undefined} className={`deck-card ${selected(game.id) ? 'is-current' : ''} ${picking === game.id ? 'is-picking' : ''}`} style={{ '--game-color': game.color } as React.CSSProperties} aria-label={locale === 'ko' ? game.koreanName : game.name} aria-pressed={selected(game.id)} disabled={!!picking} onClick={event => { if (genreMode) animateFilterPick(event.currentTarget, !selected(game.id)); choose(game.id); }} onFocus={event => { if (!mobile && !busy.current && !drag.gesture.current) event.currentTarget.scrollIntoView({ block: 'nearest', inline: 'center', behavior: reduced.current ? 'instant' : 'smooth' }); }}>
           {genreMode ? (() => { const Icon = categories ? categoryIcon(game.name) : genreIcons[GENRES.findIndex(g => g.id === game.id)] ?? Layers; return <Icon size={100}/>; })() : <img className={`logo-${game.id}`} src={logoCatalog[game.id]?.src} alt="" draggable={false} />}<span>{locale === 'ko' ? game.koreanName : game.name}</span>
         </button>)}
         </CardPages>

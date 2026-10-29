@@ -52,6 +52,8 @@ async (page) => {
         await button(item.label).click();
         const group = tab.getByRole('dialog',{ name:item.label, exact:true });
         check(await group.locator('.filter-dropdown').count() === 0, 'Filter still uses a dropdown');
+        check(await group.getByRole('button',{name:item.all,exact:true}).count() === 0, 'Default filter card remains');
+        check(await group.locator('.deck-card[aria-pressed="true"]').count() === 0, 'A filter was selected by default');
         const option = name => group.getByRole('button',{ name, exact:true });
         const pick = async name => { await reveal(name); await option(name).click(); };
         await pick(item.first);
@@ -61,7 +63,7 @@ async (page) => {
         check(await option(item.second).getAttribute('aria-pressed') === 'true', `${item.key}: second choice missing`);
         await pick(item.first);
         check(await option(item.first).getAttribute('aria-pressed') === 'false', `${item.key}: toggle did not deselect`);
-        await pick(item.all);
+        await pick(item.second);
         await button('뒤로').click();
         await active(item.key,false);
         await button(item.label).click();

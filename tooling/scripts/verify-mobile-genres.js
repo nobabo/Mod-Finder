@@ -29,6 +29,7 @@ async (page) => {
       check(await tab.getByRole('dialog',{name:'장르',exact:true}).count() === 1, 'Extra filter menu remains');
       check(await tab.getByRole('textbox').count() === 0, 'Genre search remains');
       check(await button('뒤로').count() === 0, 'Root has a redundant back button');
+      check(await button('전체 장르').count() === 0, 'Default genre card remains');
       for (const orb of ['정렬 방법','내림차순']) check(await button(orb).evaluate(el => { const r=el.getBoundingClientRect(); return r.width === r.height && getComputedStyle(el).borderRadius === '50%'; }), 'Sort control is not circular');
       await open('컨텐츠');
       const first = tab.locator('[data-genre-id="modrinth:adventure"]');
@@ -49,9 +50,12 @@ async (page) => {
       check(await first.getAttribute('aria-pressed') === 'true' && await second.getAttribute('aria-pressed') === 'true', 'Cross-group selection was lost');
       await first.click();
       check(await first.getAttribute('aria-pressed') === 'false' && await second.getAttribute('aria-pressed') === 'true', 'Independent deselection failed');
+      await second.click();
       await tab.keyboard.press('Escape');
-      await button('전체 장르').click();
-      check(new URL(tab.url()).searchParams.getAll('category').length === 0, 'All genres did not clear every group');
+      await open('시스템·최적화');
+      await button('라이브러리').click();
+      await tab.keyboard.press('Escape');
+      check(new URL(tab.url()).searchParams.getAll('category').length === 0, 'Deselecting did not clear every group');
       await tab.keyboard.press('Escape');
       check(await tab.getByRole('dialog').count() === 0, 'Escape did not close root');
       check(await tab.evaluate(() => document.documentElement.scrollWidth <= innerWidth), 'Horizontal overflow');
