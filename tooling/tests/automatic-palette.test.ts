@@ -13,7 +13,7 @@ describe('automatic background palette', () => {
     for (const game of GAMES) {
       const color = defaultBackground('game',game.id);
       expect(normalizeBackgroundColor(color)).toBe(color);
-      expect(parseBackgroundColor(color).a).toBe(77 / 255);
+      expect(parseBackgroundColor(color).a).toBe((game.id === 'stardew-valley' ? 140 : 77) / 255);
       expect(parseBackgroundColor(color).a).toBeLessThan(1);
       expect(sceneAppearance('game',game.id)?.alpha).toBe(parseBackgroundColor(color).a);
       expect(sceneAppearance('game',game.id,'#a5c5e5')).toEqual(sceneAppearance('game','minecraft-java','#a5c5e5'));

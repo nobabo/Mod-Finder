@@ -3,7 +3,7 @@ async (page) => {
   const base = new URL(page.url()).origin;
   const check = (condition, message) => { if (!condition) throw Error(message); };
   const defaults = [
-    ['minecraft-java', '#1864524d'], ['stardew-valley', '#5035154d'], ['skyrim-se', '#27465f4d'],
+    ['minecraft-java', '#1864524d'], ['stardew-valley', '#2b19048c'], ['skyrim-se', '#27465f4d'],
     ['lethal-company', '#722d244d'], ['rimworld', '#4437624d'], ['valheim', '#2852484d'],
     ['terraria', '#356f294d'], ['project-zomboid', '#4c54284d'], ['cyberpunk-2077', '#8a741a4d'],
     ['baldurs-gate-3', '#6542224d'], ['fallout-4', '#214d764d'], ['risk-of-rain-2', '#1f64764d'],
