@@ -139,9 +139,16 @@ html:is([data-light-theme],[data-auto-theme]) .folder-modal::before { display:no
 }}
 /* Both pastel and color themes use real refractive surfaces on option cards. */
 .deck-card,.settings-menu nav :is(button,a),.preference-panel .theme-options button,.language-options button { position:relative;isolation:isolate; }
-/* Desaturate off-state icons, never the photograph sampled by their glass. */
+/* Style icons and outlines independently from the sampled glass image. */
 html[data-glass="webgl"] :is(.genre-deck .deck-card,.settings-menu nav .recommendations-card[aria-checked="false"]) { filter:none; }
 html[data-glass="webgl"] :is(.genre-deck .deck-card:not([aria-pressed="true"]),.settings-menu nav .recommendations-card[aria-checked="false"])>svg { filter:grayscale(1); }
+/* Unselected search options also desaturate the scene inside their own card. */
+.game-deck .deck-card:is([data-genre-id],[data-filter-id])>.glass-control-surface { filter:none;transition:filter .2s; }
+.game-deck .deck-card:is([data-genre-id],[data-filter-id])[aria-pressed="false"]>.glass-control-surface { filter:grayscale(1); }
+html:not([data-glass="webgl"]) .game-deck .deck-card:is([data-genre-id],[data-filter-id])[aria-pressed="false"] { filter:none;backdrop-filter:blur(12px) saturate(1.2) grayscale(1);-webkit-backdrop-filter:blur(12px) saturate(1.2) grayscale(1); }
+@media(prefers-reduced-motion:reduce) {
+  .game-deck .deck-card:is([data-genre-id],[data-filter-id])>.glass-control-surface { transition:none; }
+}
 html[data-glass="webgl"] :is(.deck-card.is-current,.deck-card[aria-pressed="true"],.preference-panel button[aria-pressed="true"],.settings-menu nav .recommendations-card[aria-checked="true"])::before {
   content:'';position:absolute;inset:1px;z-index:0;border-radius:inherit;pointer-events:none;
   background:linear-gradient(135deg,rgba(var(--tint-rgb),.1),rgba(var(--secondary-rgb),.05));

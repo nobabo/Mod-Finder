@@ -147,7 +147,6 @@ export default function App() {
   const visit = async (url: string, item?: Listing) => { const generation = interestGeneration.current; try { await openExternal(url); if (item && hydrated && generation === interestGeneration.current) setLocal(prev => prev.recommendationsEnabled ? { ...prev, interests: recordInterest(prev.interests, item.gameId, "", item) } : prev); } catch { setToast(t("링크를 열지 못했어요. 주소를 확인해 주세요.")); } };
   const save = (item: Listing) => { if (!hydrated) return; setLocal(prev => ({ ...toggleFavorite(prev, item), interests: !prev.recommendationsEnabled || prev.favorites.some(favorite => favorite.key === item.key) ? prev.interests : recordInterest(prev.interests, item.gameId, '', item) })); setToast(local.favorites.some(favorite => favorite.key === item.key) ? t('즐겨찾기를 해제했어요.') : t('즐겨찾기에 저장했어요.')); };
   const changeFilter = (key: MultiFilterKey, value: string) => navigate(prev => ({ ...prev, filters: toggleFilter(prev.filters, key, value) }));
-  const resetFilters = () => navigate({ filters: {}, categories: [] });
   const go = (target: Page) => { navigate({ page: target }); setMenuOpen(false); };
   const heroSearch = page === 'discover' && !hasSearch;
   const favoriteFolder = local.folders.find(folder => folder.id === selectedFolder);
@@ -205,7 +204,7 @@ export default function App() {
         {Object.values(search.buckets).some(b => b?.result?.unsupportedFilters.length) && <p className="filter-warning">{t('일부 출처에는 {filters} 필터가 적용되지 않았어요.', { filters: Array.from(new Set(Object.values(search.buckets).flatMap(b => b?.result?.unsupportedFilters ?? []))).map(f => FILTER_NAMES[f]).join(', ') })}</p>}
         {groups.length > 0 && <div className="mod-grid">{groups.map(renderGroup)}</div>}
         {search.loading && !search.items.length && <div className="results-loading" role="status" aria-label={t("검색 중")}><span className="results-spinner" aria-hidden="true" /></div>}
-        {!search.loading && !search.items.length && <div className="empty-state"><Search size={30} /><h3>{sourceErrors ? t("잠시 검색에 연결하지 못했어요") : unavailable.length && !completed ? t("원본 사이트에서 탐색을 이어가세요") : t("검색 결과가 없어요")}</h3><p>{sourceErrors ? t("다시 검색하거나 아래 원본 사이트에서 탐색을 이어갈 수 있어요.") : unavailable.length && !completed ? t("이 게임의 검색 연동을 준비하고 있어요. 아래 출처에서 모드를 찾아보세요.") : t("모드의 원래 이름으로 검색하거나 필터를 조금 줄여 보세요.")}</p>{completed > 0 && activeFilters > 0 && <button className="secondary-button" onClick={resetFilters}>{t("필터 초기화")}</button>}</div>}
+        {!search.loading && !search.items.length && <div className="empty-state"><Search size={30} /><h3>{sourceErrors ? t("잠시 검색에 연결하지 못했어요") : unavailable.length && !completed ? t("원본 사이트에서 탐색을 이어가세요") : t("검색 결과가 없어요")}</h3>{(sourceErrors || (unavailable.length > 0 && !completed)) && <p>{sourceErrors ? t("다시 검색하거나 아래 원본 사이트에서 탐색을 이어갈 수 있어요.") : t("이 게임의 검색 연동을 준비하고 있어요. 아래 출처에서 모드를 찾아보세요.")}</p>}</div>}
 
         {!search.loading && unavailable.length > 0 && <div className="search-recovery" role="group" aria-label={t('다시 검색')}>
           {sourceErrors && <button type="button" className="secondary-button" onClick={search.retry}><RefreshCw size={16}/>{t('다시 시도')}</button>}
