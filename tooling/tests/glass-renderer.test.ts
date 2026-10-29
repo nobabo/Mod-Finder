@@ -240,23 +240,23 @@ describe('glass card rendering budget', () => {
     expect(s.surfaces.filter(surface => surface.className).every(surface => surface.context.drawImage.mock.calls[0][0] === s.canvas)).toBe(true);
   });
 
-  it('caps scrolling material refreshes at 30 Hz and flushes the final geometry before sleeping', () => {
+  it('refreshes scrolling glass at display cadence and sleeps when geometry stops changing', () => {
     const s = controlsSetup([10, 130, 250]);
     s.renderer.setPaused(true); s.frame(100);
     for (const time of [108, 116, 124]) {
       s.controls[0].rect.left++;
       s.win.dispatchEvent(new Event('scroll')); s.frame(time);
-      expect(s.gpuCopies()).toHaveLength(1);
-      expect(s.frames.size).toBe(1);
+      expect(s.gpuCopies()).toHaveLength(1 + (time - 100) / 8);
+      expect(s.frames.size).toBe(0);
     }
     s.frame(140);
-    expect(s.gpuCopies()).toHaveLength(2);
+    expect(s.gpuCopies()).toHaveLength(4);
     expect(s.gl.uniform4f.mock.calls).toContainEqual(['uView', 13, 100, 100, 80]);
     expect(s.frames.size).toBe(0);
-    // Color changes must not wait for the material throttle.
+    // Appearance updates also render on the next display frame.
     s.renderer.setAppearance({ canvas: '#101820', primary: '#ef3e55', secondary: '#ff8145', photoOpacity: .18 });
     s.frame(148);
-    expect(s.gpuCopies()).toHaveLength(3);
+    expect(s.gpuCopies()).toHaveLength(5);
   });
 
   it('paints cards entering through CSS transforms and releases cards clipped by an ancestor', () => {

@@ -178,7 +178,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
   let atlasCanvas: HTMLCanvasElement | undefined;
   let atlasContext: CanvasRenderingContext2D | null | undefined;
   let sceneRevision = 0;
-  let lastLensFrame = 0; let lensPending = false;
   let backgroundSignature = '';
   let pointer = [0,0];
   let backgroundOffset = [0,0];
@@ -236,9 +235,8 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     raf = 0;
     if (disposed || document.hidden || gl!.isContextLost()) return;
     const sceneDue = !paused && !reduced && (!lastSceneFrame || now - lastSceneFrame >= 1000 / 30);
-    const lensDue = !lastLensFrame || now - lastLensFrame >= 1000 / 30;
-    if (!panelDirty && !geometryDirty && !sceneDirty && !sceneDue && !(lensPending && lensDue)) {
-      if ((!paused && !reduced) || lensPending) schedule();
+    if (!panelDirty && !geometryDirty && !sceneDirty && !sceneDue) {
+      if (!paused && !reduced) schedule();
       return;
     }
     // CSS fixes the touch backdrop to the large viewport. innerHeight changes
@@ -248,7 +246,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     const ratio = Math.min(devicePixelRatio || 1, 1.5, Math.sqrt(2200000 / (viewWidth * viewHeight)));
     const width = Math.round(viewWidth * ratio); const height = Math.round(viewHeight * ratio);
     if (canvas.width !== width || canvas.height !== height) { canvas.width = width; canvas.height = height; sceneDirty = true; geometryDirty = true; }
-    const forceLenses = sceneDirty;
     const updateScene = sceneDirty || sceneDue;
     if (updateScene) {
       sceneRevision++;
@@ -359,7 +356,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     // Draw visible lenses into an atlas before crossing from WebGL to 2D.
     // Interleaving a draw and a GPU snapshot for every card serializes the work.
     const tiles = [];
-    lensPending = false;
     for (const [element, lens] of controlLenses) {
       const { rect, radius } = geometry.get(element)!;
       if (!inView(element)) continue;
@@ -367,9 +363,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       const lensHeight = Math.min(height, Math.max(1, Math.round(rect.height * ratio)));
       const signature = [sceneRevision, width, height, rect.left, rect.top, rect.width, rect.height, radius].join(':');
       if (lens.signature === signature) continue;
-      // The DOM moves cached glass with the card; only its refraction needs a
-      // 30 Hz refresh. Paint newly visible controls and appearance changes now.
-      if (lens.signature && !lensDue && !forceLenses) { lensPending = true; continue; }
       if (lens.canvas.width !== lensWidth || lens.canvas.height !== lensHeight) {
         lens.canvas.width = lensWidth; lens.canvas.height = lensHeight;
       }
@@ -409,7 +402,6 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
       }
       drewLens = true;
     }
-    if (drewLens) lastLensFrame = now;
     // Replace the temporary lens renders with the full background scene.
     gl!.viewport(0,0,width,height);
     gl!.uniform4f(uniforms.uView,0,0,viewWidth,viewHeight);
@@ -420,7 +412,7 @@ export function createGlassRenderer(canvas: HTMLCanvasElement, onFailure: () => 
     if (backgroundSignature !== nextBackgroundSignature || drewLens) gl!.drawArrays(gl!.TRIANGLES,0,6);
     backgroundSignature = nextBackgroundSignature;
 
-    if ((!paused && !reduced) || lensPending) schedule();
+    if (!paused && !reduced) schedule();
   }
   schedule();
   return {
