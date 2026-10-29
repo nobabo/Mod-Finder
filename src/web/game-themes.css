@@ -145,6 +145,10 @@ html[data-glass="webgl"] :is(.genre-deck .deck-card:not([aria-pressed="true"]),.
 .game-deck .deck-card:is([data-genre-id],[data-filter-id])>.glass-control-surface { filter:none;transition:filter .2s; }
 .game-deck .deck-card:is([data-genre-id],[data-filter-id])[aria-pressed="false"]>.glass-control-surface { filter:grayscale(1); }
 html:not([data-glass="webgl"]) .game-deck .deck-card:is([data-genre-id],[data-filter-id])[aria-pressed="false"] { filter:none;backdrop-filter:blur(12px) saturate(1.2) grayscale(1);-webkit-backdrop-filter:blur(12px) saturate(1.2) grayscale(1); }
+/* Keep fallback blur on a sibling layer so cards can filter the scene behind it. */
+html:not([data-glass="webgl"]) .game-deck:has(.deck-card:is([data-genre-id],[data-filter-id])) { backdrop-filter:none;-webkit-backdrop-filter:none;animation-fill-mode:backwards; }
+html:not([data-glass="webgl"]) .game-deck:has(.deck-card:is([data-genre-id],[data-filter-id]))::before { content:'';position:absolute;inset:0;z-index:-1;pointer-events:none;backdrop-filter:blur(20px);-webkit-backdrop-filter:blur(20px); }
+.game-deck .deck-card:is([data-genre-id],[data-filter-id])[aria-pressed="false"]>svg { filter:grayscale(1); }
 @media(prefers-reduced-motion:reduce) {
   .game-deck .deck-card:is([data-genre-id],[data-filter-id])>.glass-control-surface { transition:none; }
 }

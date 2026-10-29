@@ -4,11 +4,12 @@ async (page) => {
   const reports = [];
   for (const mobile of [false,true]) {
     const label = mobile ? 'mobile' : 'desktop';
-    const context = await page.context().browser().newContext({viewport:{width:mobile ? 390 : 1600,height:1000},isMobile:mobile,hasTouch:mobile,reducedMotion:'reduce'});
+    const context = await page.context().browser().newContext({viewport:{width:mobile ? 390 : 1600,height:1000},isMobile:mobile,hasTouch:mobile,reducedMotion:'no-preference'});
     try {
       await context.addInitScript(() => {
         document.cookie = 'mf-language=ko; Path=/';
         localStorage.setItem('modfinder-intro-seen','1');
+        localStorage.setItem('modfinder-background-color','#8254caff');
       });
       const tab = await context.newPage();
       const errors = [];
@@ -30,6 +31,19 @@ async (page) => {
         check(await tab.locator(selector).getAttribute('aria-pressed') === String(selected),'Background is out of sync with selection');
         check(await tab.locator('.atmosphere-canvas').evaluate(el => getComputedStyle(el).filter) === 'none','Whole scene was desaturated');
       };
+      const picture=async (card,name,selected) => {
+        const bytes=await card.screenshot({path:`output/playwright/filter-background-${label}-${name}-card.png`});
+        const pixels=await tab.evaluate(async encoded => {
+          const img=new Image();img.src='data:image/png;base64,'+encoded;await img.decode();
+          const canvas=document.createElement('canvas');canvas.width=img.width;canvas.height=img.height;
+          const context=canvas.getContext('2d');context.drawImage(img,0,0);
+          const data=context.getImageData(Math.floor(img.width*.15),Math.floor(img.height*.18),Math.max(1,Math.floor(img.width*.15)),Math.max(1,Math.floor(img.height*.07))).data;
+          let max=0,total=0;
+          for (let i=0;i<data.length;i+=4) { const spread=Math.max(data[i],data[i+1],data[i+2])-Math.min(data[i],data[i+1],data[i+2]);max=Math.max(max,spread);total+=spread; }
+          return {max,mean:total/(data.length/4)};
+        },bytes.toString('base64'));
+        check(selected ? pixels.mean > 5 : pixels.max <= 2,`${name}: rendered background pixels do not match selection (${JSON.stringify(pixels)})`);
+      };
       await button('검색 필터').click();
       for (const [name,selector] of [
         ['게임 버전','[data-filter-id="version:1.21.1"]'],
@@ -41,31 +55,32 @@ async (page) => {
         await open(name);
         await background(selector,false);
         const card = tab.locator(selector);
-        if (name === '모드 로더') await card.screenshot({path:`output/playwright/filter-background-${label}-off-card.png`});
+        if (name === '모드 로더') await picture(card,'off',false);
         await card.click(); await background(selector,true);
         if (name === '모드 로더') {
           check(await card.evaluate(el => {
             const probe=document.createElement('span');probe.style.color='var(--accent)';el.append(probe);
             const accent=getComputedStyle(probe).color;probe.remove();return getComputedStyle(el).borderTopColor === accent;
           }),'Selected outline lost its theme color');
-          await card.screenshot({path:`output/playwright/filter-background-${label}-on-card.png`});
+          await picture(card,'on',true);
           await tab.screenshot({path:`output/playwright/filter-background-${label}-mixed.png`});
         }
         if (name === '정렬 방법') await button('다운로드순').click(); else await card.click();
         await background(selector,false);
-        if (name === '모드 로더') await card.screenshot({path:`output/playwright/filter-background-${label}-off-again-card.png`});
+        if (name === '모드 로더') await picture(card,'off-again',false);
         await button('뒤로').click();
       }
       await open('모드 로더');
       const fabric=tab.locator('[data-filter-id="loader:fabric"]');
       await tab.evaluate(() => { document.documentElement.dataset.glass='fallback'; });
+      check(await tab.locator('.game-deck').evaluate(el => getComputedStyle(el).backdropFilter) === 'none', 'Fallback overlay still blocks card filters');
       check(await fabric.evaluate(el => getComputedStyle(el).backdropFilter.includes('grayscale(1)')),'Fallback background is not grayscale');
       await fabric.click();
       await tab.waitForFunction(() => document.querySelector('[data-filter-id="loader:fabric"]').getAttribute('aria-pressed') === 'true');
       check(await fabric.evaluate(el => !getComputedStyle(el).backdropFilter.includes('grayscale')), 'Fallback selected background stayed grayscale');
       await tab.screenshot({path:`output/playwright/filter-background-${label}-fallback.png`});
-      await fabric.screenshot({path:`output/playwright/filter-background-${label}-fallback-on-card.png`});
-      await tab.locator('[data-filter-id="loader:forge"]').screenshot({path:`output/playwright/filter-background-${label}-fallback-off-card.png`});
+      await picture(fabric,'fallback-on',true);
+      await picture(tab.locator('[data-filter-id="loader:forge"]'),'fallback-off',false);
       await tab.evaluate(() => { document.documentElement.dataset.glass='webgl'; });
       await button('닫기').click();
       await button('게임 바꾸기').click();
@@ -74,7 +89,7 @@ async (page) => {
       await game.locator(':scope > .glass-control-surface').waitFor({state:'attached'});
       check(await game.locator(':scope > .glass-control-surface').evaluate(el => getComputedStyle(el).filter) === 'none','Game picker background was changed');
       check(errors.length === 0,errors.join('\n'));
-      reports.push({mobile,grayscaleOff:true,colorOn:true,colorOutline:true,fallback:true,gamePickerPreserved:true,errors});
+      reports.push({mobile,grayscaleOff:true,colorOn:true,colorOutline:true,fallback:true,pixelsVerified:true,gamePickerPreserved:true,errors});
     } finally { await context.close(); }
   }
   return reports;
