@@ -214,6 +214,7 @@ html .settings-menu,html .settings-menu:has(.preference-panel),html .game-deck {
 body:has(.entry-content[inert]) .app-brand-header { visibility:hidden; }
 @media(max-width:1400px) { :where(html:not([data-native])) {
   .app-shell { --page-brand-space:80px;--mobile-header-height:80px; }
+  .app-brand-header { top:calc(8px + env(safe-area-inset-top)); }
   .app-brand-header .brand-logo { width:64px;height:64px; }
   .mobile-header { padding-top:calc(16px + env(safe-area-inset-top));padding-bottom:16px; }
   .mobile-nav .filter-orb { grid-column:3; }
