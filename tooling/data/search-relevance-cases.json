@@ -1,0 +1,40 @@
+[
+  {
+    "query": "소 돼지",
+    "items": [
+      { "id": "cow", "title": "Cow pasture", "summary": "Adds cows", "tags": [], "rank": 1 },
+      { "id": "both", "title": "Cows and pigs", "summary": "Farm animals", "tags": [], "rank": 50 },
+      { "id": "description", "title": "Farm Animals", "summary": "Adds cows and pigs", "tags": [], "rank": 2 },
+      { "id": "unrelated", "title": "Piglin", "summary": "Piglin trading", "tags": [], "rank": 1 }
+    ],
+    "expected": ["both", "description", "cow", "unrelated"]
+  },
+  {
+    "query": "닭 chicken chickens 오리 ducks",
+    "items": [
+      { "id": "repeat", "title": "Chicken Habitat", "summary": "Chickens chickens chickens chickens", "tags": ["chicken", "chickens"], "rank": 1 },
+      { "id": "both", "title": "Duck and Chicken", "summary": "Farm birds", "tags": [], "rank": 50 },
+      { "id": "duck", "title": "Mallard", "summary": "Adds ducks", "tags": [], "rank": 2 }
+    ],
+    "expected": ["both", "repeat", "duck"]
+  },
+  {
+    "query": "cow pig",
+    "items": [
+      { "id": "title", "title": "Cow", "summary": "", "tags": [], "rank": 1 },
+      { "id": "tags", "title": "Barnyard", "summary": "", "tags": ["cows", "pigs", "pigs"], "rank": 50 },
+      { "id": "split", "title": "Farm", "summary": "Adds cows", "tags": ["pigs"], "rank": 2 }
+    ],
+    "expected": ["tags", "split", "title"]
+  },
+  {
+    "query": "소",
+    "items": [
+      { "id": "unrelated", "title": "Sodium", "summary": "소듐 렌더링 최적화", "tags": [], "rank": 1 },
+      { "id": "both", "title": "Cow", "summary": "Adds cows", "tags": [], "rank": 50 },
+      { "id": "title", "title": "Cow Tools", "summary": "", "tags": [], "rank": 2 },
+      { "id": "substring", "title": "Coward", "summary": "Scow boat", "tags": [], "rank": 2 }
+    ],
+    "expected": ["both", "title", "unrelated", "substring"]
+  }
+]

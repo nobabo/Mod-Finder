@@ -12,6 +12,7 @@ import { withReviewedSummaries, type SummaryTranslation } from '../../src/shared
 import { communityMods } from '../../src/shared/community-ranking';
 import { communityRanking } from '../../src/shared/community-snapshots';
 import { numberQueries, SEARCH_NOUNS } from '../../src/shared/search-number-variants';
+import { searchKeywordEntries } from '../../src/shared/search-keywords';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const read = (path: string) => JSON.parse(readFileSync(resolve(root, path), 'utf8'));
 export function prepareAndroidAssets(output = resolve(root, 'output/android/assets')) {
@@ -37,6 +38,7 @@ export function prepareAndroidAssets(output = resolve(root, 'output/android/asse
       return [game.id, [...entries.values()].map(entry => ({ id: entry.id, name: entry.name, koreanName: entry.koreanName ?? (game.id === 'minecraft-java' ? read('src/shared/data/community-pack-names.ko.json')[entry.id] : undefined) }))];
     })),
     numberVariants: Object.fromEntries(SEARCH_NOUNS.flatMap(noun => numberQueries(noun)).map(word => [word, numberQueries(word)])),
+    keywordConcepts: Object.fromEntries(GAMES.map(game => [game.id, searchKeywordEntries(game.id)])),
     backgrounds: BACKGROUNDS, logos, assetRevisions, dictionaries, verifiedLinks: read('src/shared/data/verified-projects.json'),
     rankings: read('src/shared/data/community-rankings.json'), packNames: read('src/shared/data/community-pack-names.ko.json'),
     mods: read('src/shared/locales/mods.ko.json'), titles: read('src/shared/locales/mod-titles.ko.json'), search: read('src/shared/locales/search.ko.json'),

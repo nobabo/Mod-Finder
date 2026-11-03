@@ -14,6 +14,10 @@ export const SEARCH_NOUNS = `
   battery factory machine engine robot turret wall fence door window bridge tower
   dragon fox horse dog cat bird fish sheep deer mouse goose tooth foot shelf berry
   chicken duck chick mallard cow pig goat donkey llama rabbit bee frog parrot
+  calf piglet squid octopus dolphin shark whale turtle axolotl panda bear squirrel
+  penguin camel armadillo bat butterfly snake crocodile lion tiger elephant monkey
+  kangaroo spider creeper skeleton enderman wither slime ghast warden piglin hoglin
+  illager pillager golem pipe ruin cave ocean forest desert zoo
   accessory resource modpack
 `.trim().split(/\s+/);
 const nouns = new Set(SEARCH_NOUNS);

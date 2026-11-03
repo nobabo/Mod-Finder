@@ -67,7 +67,10 @@ android {
     buildFeatures { compose = true; buildConfig = true }
     packaging { resources.excludes += setOf("META-INF/AL2.0", "META-INF/LGPL2.1") }
     lint { abortOnError = true; checkReleaseBuilds = true }
-    testOptions { unitTests.all { it.systemProperty("modfinder.catalog", workspace.resolve("output/android/assets/catalog.json").path) } }
+    testOptions { unitTests.all {
+        it.systemProperty("modfinder.catalog", workspace.resolve("output/android/assets/catalog.json").path)
+        it.systemProperty("modfinder.relevanceCases", workspace.resolve("tooling/data/search-relevance-cases.json").path)
+    } }
 }
 
 val prepareAssets by tasks.registering(Exec::class) {

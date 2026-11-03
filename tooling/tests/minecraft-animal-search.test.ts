@@ -34,6 +34,8 @@ describe('Minecraft Korean animal searches', () => {
   });
 
   it('does not expand unknown single syllables or invent cross-provider aliases', () => {
+    expect(localizedQueries('소', ['modrinth:minecraft:'], spec.gameId)).toEqual(['cow']);
+    expect(localizedQueries('돼지', ['modrinth:minecraft:'], spec.gameId)).toEqual(['pig']);
     expect(localizedQueries('쀍', ['curseforge:432:'], spec.gameId)).toEqual(['쀍']);
     expect(localizedQueries('루스트', ['curseforge:432:'], spec.gameId)).toEqual(['Roost']);
     expect(localizedQueries('루스트', ['steam:1281930:'], 'terraria')).toEqual(['루스트']);

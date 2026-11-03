@@ -5,6 +5,7 @@ import packNames from './data/community-pack-names.ko.json';
 import { titleSearchEntries } from './mod-titles';
 import searchTerms from './locales/search.ko.json';
 import gameSearchTerms from './locales/search.games.ko.json';
+import { containsSearchTerm, searchKeywords } from './search-keywords';
 
 const normalized = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, '').trim();
 const termKey = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
@@ -13,6 +14,10 @@ export const MAX_LOCALIZED_QUERIES = 8;
 // These are search hints, never synthetic results or title-based identity mappings.
 export function localizedQueries(query: string, prefixes: string[], gameId: string): string[] {
   const base = providerQuery(query, prefixes, gameId);
+  const concepts = searchKeywords(query, gameId);
+  if (concepts.length && termKey(base) === termKey(query)) {
+    return [...new Set([concepts.map(concept => concept.term).join(' '), ...concepts.map(concept => concept.term)])].slice(0, MAX_LOCALIZED_QUERIES);
+  }
   const q = normalized(query);
   const keywords = { ...searchTerms, ...(gameSearchTerms as Record<string, Record<string, string>>)[gameId] };
   const knownKeyword = Object.keys(keywords).some(word => normalized(word) === q);
@@ -34,8 +39,9 @@ export function localizedQueries(query: string, prefixes: string[], gameId: stri
     .map(([, original, korean]) => ({ term: original, names: [korean], summary: '' }));
   const curatedExact = entries.filter(entry => entry.names.some(name => normalized(name) === q));
   const exact = curatedExact.length ? curatedExact : imported.filter(entry => entry.names.some(name => normalized(name) === q));
-  const partial = entries.filter(entry => entry.names.some(name => normalized(name).includes(q)));
-  const descriptions = entries.filter(entry => normalized(entry.summary).includes(q));
+  const includes = (text: string) => q.length === 1 ? containsSearchTerm(termKey(text), q) : normalized(text).includes(q);
+  const partial = entries.filter(entry => entry.names.some(includes));
+  const descriptions = entries.filter(entry => includes(entry.summary));
   const importedPartial = imported.filter(entry => entry.names.some(name => normalized(name).includes(q)));
   const matches = exact.length ? exact : [...partial, ...descriptions, ...importedPartial];
   const terms = [...new Map(matches.map(entry => [termKey(entry.term), entry.term])).values()];

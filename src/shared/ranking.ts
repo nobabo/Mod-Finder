@@ -1,7 +1,8 @@
 import type { Listing, ResultGroup, Sort, SortDirection, VerifiedProjectLink } from './types';
 import { numberQueries } from './search-number-variants';
-import { listingText } from './content';
+import { listingText, providerQuery } from './content';
 import { localizedQueries } from './localized-search';
+import { containsSearchTerm, searchKeywords } from './search-keywords';
 const normalized = (value: string) => value.normalize('NFKC').toLowerCase().replace(/\s+/g, ' ').trim();
 const downloads = (item: Listing) => item.metrics.find(metric => metric.label === (item.source === 'steam' ? '누적 구독자' : '다운로드'))?.value ?? -1;
 const representativeOrder = (a: Listing, b: Listing) => downloads(b) - downloads(a) || a.key.localeCompare(b.key);
@@ -20,6 +21,39 @@ function priorityWithTerms(item: Listing, terms: string[]): number {
   const fullDescriptionMatch = item.searchMatch?.description === true && typeof item.searchMatch.query === 'string' && terms.includes(normalized(item.searchMatch.query));
   const inSummary = fullDescriptionMatch || terms.some(term => summary.some(text => text.includes(term)));
   return inTitle && inSummary ? 0 : inTitle ? 1 : inSummary ? 2 : 3;
+}
+
+interface RelevanceTerms { groups: string[][]; phrases: string[] }
+export interface KeywordRelevance { coverage: number; exact: number; strength: number }
+function relevanceTerms(item: Listing, query: string): RelevanceTerms {
+  const concepts = searchKeywords(query, item.gameId);
+  const groups = concepts.length ? concepts.map(concept => [...new Set([...concept.aliases, ...matchingTerms(item, concept.term)])]) : [matchingTerms(item, query)];
+  return { groups: groups.filter(group => group.length), phrases: [query, providerQuery(query, [`${item.source}:${item.scope}:`], item.gameId), ...(concepts.length ? [concepts.map(concept => concept.term).join(' ')] : [])].map(normalized).filter(Boolean) };
+}
+function relevanceWithTerms(item: Listing, terms: RelevanceTerms): KeywordRelevance {
+  if (!terms.groups.length) return { coverage: 0, exact: 0, strength: 0 };
+  const translation = listingText(item, 'ko');
+  const titles = [item.title, translation.title].map(normalized);
+  const summaries = [item.summary, translation.summary].map(normalized);
+  const tags = item.tags.map(normalized);
+  let matched = 0, strength = 0;
+  for (const aliases of terms.groups) {
+    const inTitle = aliases.some(alias => titles.some(text => containsSearchTerm(text, alias)));
+    const inTags = aliases.some(alias => tags.some(text => containsSearchTerm(text, alias)));
+    const inSummary = aliases.some(alias => summaries.some(text => containsSearchTerm(text, alias))) ||
+      (item.searchMatch?.description === true && aliases.includes(normalized(item.searchMatch.query)));
+    if (inTitle || inTags || inSummary) matched++;
+    // Count a concept at most once in each field. Alias count, repeated words
+    // and long descriptions cannot manufacture additional keyword coverage.
+    strength += Number(inTitle) * 4 + Number(inTags) * 2 + Number(inSummary);
+  }
+  return { coverage: matched / terms.groups.length, exact: Number(terms.phrases.some(phrase => titles.includes(phrase))), strength: strength / terms.groups.length };
+}
+export function keywordRelevance(item: Listing, query: string): KeywordRelevance {
+  return relevanceWithTerms(item, relevanceTerms(item, query));
+}
+function compareRelevance(a: KeywordRelevance, b: KeywordRelevance) {
+  return b.coverage - a.coverage || b.strength - a.strength || b.exact - a.exact;
 }
 export function orderSearchPage(items: Listing[], query: string, sort: Sort): Listing[] {
   return sort === 'relevance' ? groupResults(items, query).flatMap(group => group.listings) : items;
@@ -52,16 +86,16 @@ export function groupResults(items: Listing[], query: string, links: VerifiedPro
   for (const group of groups.values()) group.listings.sort(representativeOrder);
   // Resolve large title alias catalogs once per game/provider in this result
   // set. The cache is local so later dictionary updates cannot become stale.
-  const terms = new Map<string, string[]>();
+  const terms = new Map<string, RelevanceTerms>();
   const priority = (item: Listing) => {
     const key = JSON.stringify([item.gameId, item.source, item.scope]);
     let candidates = terms.get(key);
-    if (!candidates) { candidates = matchingTerms(item, query); terms.set(key, candidates); }
-    return priorityWithTerms(item, candidates);
+    if (!candidates) { candidates = relevanceTerms(item, query); terms.set(key, candidates); }
+    return relevanceWithTerms(item, candidates);
   };
-  const priorities = new Map([...groups.values()].map(group => [group.id, Math.min(...group.listings.map(priority))]));
+  const priorities = new Map([...groups.values()].map(group => [group.id, group.listings.map(priority).sort(compareRelevance)[0]]));
   const score = (group: ResultGroup) => group.listings.reduce((sum, item) => sum + 1 / (60 + item.rank), 0) + (q && group.listings.some(i => i.title.toLocaleLowerCase() === q) ? 10 : 0);
-  return [...groups.values()].sort((a, b) => priorities.get(a.id)! - priorities.get(b.id)! || score(b) - score(a) || a.id.localeCompare(b.id));
+  return [...groups.values()].sort((a, b) => compareRelevance(priorities.get(a.id)!, priorities.get(b.id)!) || score(b) - score(a) || a.id.localeCompare(b.id));
 }
 export function appendStable(current: Listing[], incoming: Listing[]): Listing[] {
   const incomingByKey = new Map(incoming.map(item => [item.key, item]));

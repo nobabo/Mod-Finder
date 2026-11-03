@@ -83,7 +83,39 @@ fun shortcutFavorites(local: LocalState): List<Listing> {
     val keys = local.folders.find { it.id == local.shortcutFolderId }?.keys.orEmpty().toSet()
     return local.favorites.filter { it.key in keys }
 }
-data class RankingHints(val terms: List<String>, val title: String = "", val summary: String = "")
+data class RankingHints(val terms: List<String>, val title: String = "", val summary: String = "", val keywordGroups: List<List<String>> = emptyList(), val phrases: List<String> = emptyList())
+data class SearchKeyword(val term: String, val aliases: List<String>)
+data class KeywordRelevance(val coverage: Double, val strength: Double, val exact: Int)
+
+fun containsSearchTerm(text: String, term: String): Boolean {
+    if (text.isEmpty() || term.isEmpty()) return false
+    val ending = if (term.matches(Regex("[가-힣]"))) "(?:[은는이가을를와과의도])?" else ""
+    return Regex("(^|[^\\p{L}\\p{N}])${Regex.escape(term)}$ending($|[^\\p{L}\\p{N}])").containsMatchIn(text)
+}
+
+fun keywordRelevance(item: Listing, query: String, hints: RankingHints): KeywordRelevance {
+    val terms = (listOf(query) + hints.terms).map(::normalized).filter { it.isNotEmpty() }.distinct()
+    val groups = hints.keywordGroups.ifEmpty { listOf(terms) }.filter { it.isNotEmpty() }
+    if (groups.isEmpty()) return KeywordRelevance(0.0, 0.0, 0)
+    val titles = listOf(item.title, hints.title).map(::normalized)
+    val summaries = listOf(item.summary, hints.summary).map(::normalized)
+    val tags = item.tags.map(::normalized)
+    val description = JSONObject(item.raw).optJSONObject("searchMatch")
+    var matched = 0
+    var strength = 0
+    for (aliases in groups) {
+        val title = aliases.any { term -> titles.any { containsSearchTerm(it, term) } }
+        val tag = aliases.any { term -> tags.any { containsSearchTerm(it, term) } }
+        val summary = aliases.any { term -> summaries.any { containsSearchTerm(it, term) } } ||
+            (description?.optBoolean("description") == true && normalized(description.optString("query")) in aliases)
+        if (title || tag || summary) matched++
+        strength += (if (title) 4 else 0) + (if (tag) 2 else 0) + (if (summary) 1 else 0)
+    }
+    val phrases = (hints.phrases + query).map(::normalized).filter { it.isNotEmpty() }
+    return KeywordRelevance(matched.toDouble() / groups.size, strength.toDouble() / groups.size, if (phrases.any { it in titles }) 1 else 0)
+}
+private fun compareRelevance(a: KeywordRelevance, b: KeywordRelevance) = b.coverage.compareTo(a.coverage).takeIf { it != 0 }
+    ?: b.strength.compareTo(a.strength).takeIf { it != 0 } ?: b.exact.compareTo(a.exact)
 
 fun mergeListings(current: List<Listing>, incoming: List<Listing>): List<Listing> {
     val map = LinkedHashMap<String, Listing>()
@@ -98,21 +130,10 @@ fun groupListings(items: List<Listing>, links: List<VerifiedLink>, spec: SearchS
         link.keys.drop(1).forEach { val a = root(link.keys[0]); val b = root(it); if (a != b) parents[b] = a }
     }
     val query = normalized(spec.query)
-    fun match(item: Listing): Int {
-        val localized = hints(item)
-        val terms = (listOf(spec.query) + localized.terms).map(::normalized).filter { it.isNotEmpty() }.distinct()
-        if (terms.isEmpty()) return 3
-        val titles = listOf(item.title, localized.title).map(::normalized)
-        val summaries = listOf(item.summary, localized.summary).map(::normalized)
-        val description = JSONObject(item.raw).optJSONObject("searchMatch")
-        val title = terms.any { term -> titles.any { term in it } }
-        val summary = terms.any { term -> summaries.any { term in it } } || (description?.optBoolean("description") == true && normalized(description.optString("query")) in terms)
-        return if (title && summary) 0 else if (title) 1 else if (summary) 2 else 3
-    }
     val groups = items.distinctBy { it.key }.groupBy { "${it.gameId}:${root(it.key)}" }.map { (key, values) ->
         ResultGroup(key, values.sortedWith(compareByDescending<Listing> { it.downloads ?: -1.0 }.thenBy { it.key }))
     }
-    val priorities = groups.associate { group -> group.id to group.listings.minOf(::match) }
+    val priorities = groups.associate { group -> group.id to group.listings.map { keywordRelevance(it, spec.query, hints(it)) }.sortedWith(::compareRelevance).first() }
     val scores = groups.associate { group -> group.id to (group.listings.sumOf { 1.0 / (60 + it.rank) } + if (query.isNotEmpty() && group.listings.any { normalized(it.title) == query }) 10 else 0) }
     return groups.sortedWith { a, b ->
         val category = b.listings.maxOf { it.categories.intersect(spec.categories).size }.compareTo(a.listings.maxOf { it.categories.intersect(spec.categories).size })
@@ -120,7 +141,7 @@ fun groupListings(items: List<Listing>, links: List<VerifiedLink>, spec: SearchS
             "downloads" -> (b.item.downloads ?: -1.0).compareTo(a.item.downloads ?: -1.0)
             "updated" -> b.item.updatedAt.orEmpty().compareTo(a.item.updatedAt.orEmpty())
             "popular" -> a.item.rank.compareTo(b.item.rank)
-            else -> priorities.getValue(a.id).compareTo(priorities.getValue(b.id)).takeIf { it != 0 } ?: scores.getValue(b.id).compareTo(scores.getValue(a.id))
+            else -> compareRelevance(priorities.getValue(a.id), priorities.getValue(b.id)).takeIf { it != 0 } ?: scores.getValue(b.id).compareTo(scores.getValue(a.id))
         }.takeIf { it != 0 } ?: a.id.compareTo(b.id)
     }
 }

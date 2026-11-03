@@ -7,6 +7,34 @@ import org.junit.Test
 import java.io.File
 
 class ModelsTest {
+    @Test fun keywordCoverageMatchesSharedWebFixtures() {
+        val catalog = Catalog(JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()))
+        val cases = JSONArray(File(requireNotNull(System.getProperty("modfinder.relevanceCases"))).readText())
+        for (case in cases.objects()) {
+            val query = case.getString("query")
+            val items = case.getJSONArray("items").objects().map { row ->
+                listing(id = row.getString("id"), title = row.getString("title")).copy(summary = row.getString("summary"), tags = row.stringList("tags").orEmpty(), rank = row.getInt("rank"))
+            }
+            val ranked = groupListings(items, emptyList(), SearchSpec(query = query, sort = "relevance")) { catalog.rankingHints(it, query) }
+            assertEquals(query, case.stringList("expected"), ranked.map { it.item.id })
+        }
+    }
+    @Test fun animalKeywordsAndCompoundQueriesPreserveScopesAndDeduplicateAliases() {
+        val catalog = Catalog(JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()))
+        val game = catalog.game("minecraft-java")!!
+        val chicken = catalog.providerQueries("닭", game, "modrinth")
+        assertTrue(chicken.containsAll(listOf("chicken", "chickens", "Modern Chickens", "Roost Ultimate")))
+        assertTrue(catalog.providerQueries("오리", game, "modrinth").containsAll(listOf("duck", "ducks", "Duckling", "Untitled Duck Mod")))
+        assertFalse(catalog.providerQueries("소", game, "modrinth").contains("Sodium"))
+        assertEquals(listOf("cow pig", "cow", "cows", "pig", "pigs"), catalog.providerQueries("소 돼지", game, "modrinth"))
+        val item = listing(title = "Cow").copy(summary = "Pigs", tags = listOf("cow"))
+        val ordinary = keywordRelevance(item, "소 돼지", catalog.rankingHints(item, "소 돼지"))
+        assertEquals(ordinary, keywordRelevance(item, "소 cow cows 돼지 pig pigs", catalog.rankingHints(item, "소 cow cows 돼지 pig pigs")))
+        assertFalse(containsSearchTerm("piglin coward 소듐", "소"))
+        assertTrue(containsSearchTerm("소를 추가합니다", "소"))
+        val requests = catalog.searchPlan(SearchSpec(query = "소 돼지", filters = mapOf("loader" to "fabric", "kind" to "mod")))
+        assertTrue(requests.all { it.filters["loader"] == "fabric" && it.filters["kind"] == "mod" })
+    }
     @Test fun catalogTitlesUseProviderIdentityAndPreserveOriginals() {
         val data = JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()).put("titles", JSONObject())
         val rows = JSONArray("""[["Example","Sample","번역 설명","modrinth:minecraft:123","예시 이름"],["Example","Sample","번역 설명","curseforge:minecraft:123","다른 이름"],["Legacy","Sample","기존 설명",null,"기존 이름"],["Old format","Sample","이전 설명",null]]""")

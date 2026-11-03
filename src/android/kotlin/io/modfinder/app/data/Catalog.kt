@@ -62,18 +62,39 @@ class Catalog(private val data: JSONObject, private val summaryReader: (String) 
         return mods.keys().asSequence().filter { it.startsWith(prefix) }.map { mods.getJSONObject(it) }.toList()
     }
     private fun community(gameId: String) = data.optJSONObject("communityMods")?.optJSONArray(gameId)?.objects().orEmpty()
+    private val keywordIndexes = mutableMapOf<String, Map<String, SearchKeyword>>()
+    private fun keywordIndex(game: Game) = keywordIndexes.getOrPut(game.id) {
+        data.optJSONObject("keywordConcepts")?.optJSONArray(game.id)?.objects().orEmpty()
+            .map { SearchKeyword(it.getString("term"), it.stringList("aliases").orEmpty()) }
+            .flatMap { concept -> concept.aliases.map { normalized(it) to concept } }.toMap()
+    }
+    fun searchKeywords(query: String, game: Game): List<SearchKeyword> {
+        val index = keywordIndex(game)
+        val q = normalized(query)
+        if (q in index) return emptyList()
+        val words = q.split(Regex("[\\s,+]+")).filter { it.isNotEmpty() }
+        if (words.size !in 2..8) return emptyList()
+        val concepts = words.map { index[it] }
+        if (concepts.any { it == null }) return emptyList()
+        return concepts.filterNotNull().distinct()
+    }
     fun providerQueries(query: String, game: Game, source: String): List<String> {
         val base = providerQuery(query, game, source)
+        val concepts = searchKeywords(query, game)
         fun compact(value: String) = normalized(value).replace(" ", "")
         val q = compact(query)
-        val matches = if (q.length >= 2 && Regex("[가-힣]").containsMatchIn(q)) {
+        val keywords = data.getJSONObject("search").keys().asSequence().toList() + data.getJSONObject("gameSearch").optJSONObject(game.id)?.keys()?.asSequence()?.toList().orEmpty()
+        val knownKeyword = keywords.any { compact(it) == q }
+        val matches = if (concepts.isNotEmpty() && normalized(base) == normalized(query)) {
+            listOf(concepts.joinToString(" ") { it.term }) + concepts.map { it.term }
+        } else if ((q.length >= 2 || knownKeyword) && Regex("[가-힣]").containsMatchIn(q)) {
             val entries = reviewed(game, source).map { Triple(it.getString("searchTerm"), listOfNotNull(it.text("title")) + it.stringList("aliases").orEmpty(), it.text("summary").orEmpty()) } +
                 community(game.id).map { Triple(it.getString("name"), listOf(it.text("koreanName").orEmpty()), "") }
-            val keywords = data.getJSONObject("search").keys().asSequence().toList() + data.getJSONObject("gameSearch").optJSONObject(game.id)?.keys()?.asSequence()?.toList().orEmpty()
-            val imported = if (keywords.any { compact(it) == q }) emptyList() else catalogTitles(game.id).filter { it.getString(0).startsWith("$source:${game.providers[source]}:") }.map { Triple(it.getString(1), listOf(it.getString(2)), "") }
+            val imported = if (knownKeyword) emptyList() else catalogTitles(game.id).filter { it.getString(0).startsWith("$source:${game.providers[source]}:") }.map { Triple(it.getString(1), listOf(it.getString(2)), "") }
             val curatedExact = entries.filter { entry -> entry.second.any { compact(it) == q } }
             val exact = curatedExact.ifEmpty { imported.filter { entry -> entry.second.any { compact(it) == q } } }
-            if (exact.isNotEmpty()) exact.map { it.first } else (entries.filter { entry -> entry.second.any { q in compact(it) } } + entries.filter { q in compact(it.third) } + imported.filter { entry -> entry.second.any { q in compact(it) } }).map { it.first }.distinctBy(::normalized).take(7) + base
+            fun includes(value: String) = if (q.length == 1) containsSearchTerm(normalized(value), q) else q in compact(value)
+            if (exact.isNotEmpty()) exact.map { it.first } else (entries.filter { entry -> entry.second.any(::includes) } + entries.filter { includes(it.third) } + imported.filter { entry -> entry.second.any { q in compact(it) } }).map { it.first }.distinctBy(::normalized).take(7) + base
         } else listOf(base)
         return matches.distinctBy(::normalized).take(8).flatMap { term ->
             val variants = data.optJSONObject("numberVariants")?.optJSONArray(term.trim().lowercase())?.strings().orEmpty()
@@ -83,7 +104,10 @@ class Catalog(private val data: JSONObject, private val summaryReader: (String) 
     fun rankingHints(item: Listing, query: String): RankingHints {
         val game = game(item.gameId) ?: return RankingHints(listOf(query))
         val translation = listingText(item, "ko")
-        return RankingHints(providerQueries(query, game, item.source), translation.first, translation.second)
+        val concepts = searchKeywords(query, game)
+        val groups = concepts.map { concept -> (concept.aliases + providerQueries(concept.term, game, item.source)).map(::normalized).distinct() }
+        val phrases = listOf(query, providerQuery(query, game, item.source)) + if (concepts.isNotEmpty()) listOf(concepts.joinToString(" ") { it.term }) else emptyList()
+        return RankingHints(providerQueries(query, game, item.source), translation.first, translation.second, groups, phrases)
     }
     fun searchPlan(spec: SearchSpec): List<SearchRequest> {
         val scope = games.filter { if (spec.gameId == "all") spec.genre == "all" || spec.genre in it.genres else it.id == spec.gameId }
