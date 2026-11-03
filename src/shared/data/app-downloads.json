@@ -1,9 +1,9 @@
 {
   "windows": {
-    "release": "v0.2.4",
-    "fileName": "ModFinder-0.2.4-Windows-x64-setup.exe",
+    "release": "v0.2.5",
+    "fileName": "ModFinder-0.2.5-Windows-x64-setup.exe",
     "contentType": "application/octet-stream",
-    "sha256": "efa9ab2f8d6d0a0e88a3737c12a38b4d5cf92ccd39188413e1d969b4495ba520"
+    "sha256": "b54e023a571ffb77420a6c5969961153909c00e7f17937a1b3cfc085238f5b0f"
   },
   "android": {
     "release": "v0.2.3",
