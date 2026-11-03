@@ -31,9 +31,15 @@ for (const expected of expectations) {
     const queries = requests.map(request => request.query);
     const items = new Map<string, Listing>();
     const statuses: string[] = [];
+    const providerRetries: { query: string; status: string }[] = [];
     await runSearchQueue(requests, async request => {
       const params = new URLSearchParams({ gameId: request.gameId, source, query: request.query, sort: request.sort, kind: 'mod' });
-      const result = await json('/v1/search?' + params) as SearchResult;
+      let result = await json('/v1/search?' + params) as SearchResult;
+      for (let retry = 0; retry < 2 && ['error', 'rate_limited'].includes(result.status); retry++) {
+        providerRetries.push({ query: request.query, status: result.status });
+        await new Promise(resolve => setTimeout(resolve, 1000 * (retry + 1)));
+        result = await json('/v1/search?' + params) as SearchResult;
+      }
       statuses.push(result.status);
       for (const item of result.items) items.set(item.key, item);
     }, new AbortController().signal);
@@ -47,7 +53,7 @@ for (const expected of expectations) {
     const scoped = !queries.some(query => /Oritech|Origins|Day Counter|Biolith/.test(query));
     const passed = translated && scoped && found.length === expectedIds.length && topCoverage === 1 && statuses.every(status => status === 'success' || status === 'empty');
     // Evidence contains plans and pass/fail/counts, never persisted provider responses.
-    checks.push({ query: expected.query, source, queries, resultCount: items.size, relevantCount: relevant.length, completeMatches, topCoverage, curatedMatches: found.length, expectedCuratedMatches: expectedIds.length, translated, scoped, passed });
+    checks.push({ query: expected.query, source, queries, providerRetries, resultCount: items.size, relevantCount: relevant.length, completeMatches, topCoverage, curatedMatches: found.length, expectedCuratedMatches: expectedIds.length, translated, scoped, passed });
   }
 }
 const report = { base, verifiedAt: new Date().toISOString(), baseline, localPlan, passed: checks.every(check => check.passed), checks };

@@ -19,7 +19,7 @@ for (const entry of review.entries.filter(entry => all || 'live' in entry && ent
   for (const source of [...new Set(entry.projects.map(project => project.source as Source))]) {
     const filters: Record<string,string> = entry.gameId === 'minecraft-java' ? { kind:'mod' } : {};
     const plan = localPlan ? { original:searchPlan({ gameId:entry.gameId, selectedSource:source, query, filters, sort:'relevance' }) }
-      : await json('/v1/search-plan?' + new URLSearchParams({gameId:entry.gameId,query,source,...filters})) as { original:SearchRequest[] };
+      : await json('/v1/search-plan?' + new URLSearchParams({gameId:entry.gameId,query,...filters})) as { original:SearchRequest[] };
     const requests = plan.original.filter(request => request.source === source);
     const items = new Map<string,Listing>();
     const statuses:{query:string; status:string}[] = [];

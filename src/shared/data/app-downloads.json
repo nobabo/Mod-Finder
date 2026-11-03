@@ -1,14 +1,14 @@
 {
   "windows": {
-    "release": "v0.2.5",
-    "fileName": "ModFinder-0.2.5-Windows-x64-setup.exe",
+    "release": "v0.2.6",
+    "fileName": "ModFinder-0.2.6-Windows-x64-setup.exe",
     "contentType": "application/octet-stream",
-    "sha256": "b54e023a571ffb77420a6c5969961153909c00e7f17937a1b3cfc085238f5b0f"
+    "sha256": "59b861bebe3e25f64387edcf9df8e0627f5b43379fbda67b7435d3618fbc69a2"
   },
   "android": {
-    "release": "v0.2.5",
-    "fileName": "ModFinder-0.2.5-Android.apk",
+    "release": "v0.2.6",
+    "fileName": "ModFinder-0.2.6-Android.apk",
     "contentType": "application/vnd.android.package-archive",
-    "sha256": "50bf5c57978437713830ab26064db51e91f2003692c30b16cba650bff98a4a66"
+    "sha256": "534484b3e9b50c88860050f94afb4b544efad4fe21d8e76ac7f5efae3da816f5"
   }
 }
