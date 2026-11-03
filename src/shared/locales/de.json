@@ -258,5 +258,8 @@
   "이미지 이동: {name}": "Bild verschieben: {name}",
   "방향키로 이동, Home 키로 원위치": "Mit Pfeiltasten bewegen; Pos1 setzt die Position zurück",
   "오름차순": "Aufsteigend",
-  "내림차순": "Absteigend"
+  "내림차순": "Absteigend",
+  "전체화면": "Vollbild",
+  "창 모드": "Fenstermodus",
+  "전체화면 전환에 실패했어요. 다시 시도해 주세요.": "Der Vollbildmodus konnte nicht geändert werden. Bitte versuche es erneut."
 }

@@ -2,6 +2,7 @@ import { useLayoutEffect, type RefObject } from 'react';
 
 const overlays: { root: HTMLElement; previous: HTMLElement | null }[] = [];
 let originalOverflow = '';
+export const hasOpenOverlay = () => overlays.length > 0;
 const controls = (root: HTMLElement) => [...root.querySelectorAll<HTMLElement>('button:not(:disabled),a[href],input:not(:disabled),select:not(:disabled),[tabindex="0"]')]
   .filter(element => !element.closest('[inert]') && element.getClientRects().length > 0);
 

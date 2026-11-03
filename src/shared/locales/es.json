@@ -258,5 +258,8 @@
   "이미지 이동: {name}": "Mover imagen: {name}",
   "방향키로 이동, Home 키로 원위치": "Usa las flechas para mover; Inicio restablece la posición",
   "오름차순": "Ascendente",
-  "내림차순": "Descendente"
+  "내림차순": "Descendente",
+  "전체화면": "Pantalla completa",
+  "창 모드": "Modo ventana",
+  "전체화면 전환에 실패했어요. 다시 시도해 주세요.": "No se pudo cambiar el modo de pantalla completa. Inténtalo de nuevo."
 }

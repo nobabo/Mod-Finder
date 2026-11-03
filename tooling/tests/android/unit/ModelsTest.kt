@@ -7,6 +7,24 @@ import org.junit.Test
 import java.io.File
 
 class ModelsTest {
+    @Test fun reviewedTrendAliasesUseThePackagedGameAndProviderDictionaries() {
+        val catalog = Catalog(JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()))
+        val review = JSONObject(File(requireNotNull(System.getProperty("modfinder.trends"))).readText())
+        for (entry in review.getJSONArray("entries").objects()) {
+            val game = catalog.game(entry.getString("gameId"))!!
+            val term = entry.getString("term")
+            for (source in entry.getJSONArray("projects").objects().map { it.getString("source") }.distinct()) {
+                assertTrue(source in game.providers)
+                for (alias in entry.stringList("aliases").orEmpty()) {
+                    assertEquals("${game.id}: $alias", term, catalog.providerQuery(alias, game, source))
+                    val queries = catalog.providerQueries(alias, game, source)
+                    assertTrue("${game.id}: $alias", term in queries)
+                    assertTrue(queries.size <= 8)
+                }
+            }
+        }
+        assertEquals("치이카와", catalog.providerQuery("치이카와", catalog.game("skyrim-se")!!, "nexus"))
+    }
     @Test fun keywordCoverageMatchesSharedWebFixtures() {
         val catalog = Catalog(JSONObject(File(requireNotNull(System.getProperty("modfinder.catalog"))).readText()))
         val cases = JSONArray(File(requireNotNull(System.getProperty("modfinder.relevanceCases"))).readText())

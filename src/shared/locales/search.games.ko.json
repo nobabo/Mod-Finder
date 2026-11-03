@@ -182,7 +182,23 @@
     "미트볼크래프트": "MeatballCraft",
     "테라퍼마 엔지니어링": "TerraFirma Engineering",
     "베터 마인크래프트 1 패브릭": "Better MC [FABRIC] BMC1",
-    "베터 마인크래프트 1 포지": "Better MC [FORGE] BMC1"
+    "베터 마인크래프트 1 포지": "Better MC [FORGE] BMC1",
+    "치이카와": "Chiikawa",
+    "치카와": "Chiikawa",
+    "먼작귀": "Chiikawa",
+    "라부부": "Labubu",
+    "프리렌": "Frieren",
+    "장송의 프리렌": "Frieren",
+    "장송의프리렌": "Frieren",
+    "단다단": "Dandadan",
+    "주술회전": "Jujutsu Kaisen",
+    "주술 회전": "Jujutsu Kaisen",
+    "체인소맨": "Chainsaw Man",
+    "체인소 맨": "Chainsaw Man",
+    "나 혼자만 레벨업": "Solo Leveling",
+    "나혼자만레벨업": "Solo Leveling",
+    "솔로 레벨링": "Solo Leveling",
+    "솔로레벨링": "Solo Leveling"
   },
   "stardew-valley": {
     "스마피": "SMAPI",
@@ -220,7 +236,19 @@
     "팜 타입 매니저": "Farm Type Manager",
     "유아이 인포 스위트": "UI Info Suite 2",
     "얼터너티브 텍스처": "Alternative Textures",
-    "포케한": "Pokehaan Dew"
+    "포케한": "Pokehaan Dew",
+    "치이카와": "Chiikawa",
+    "치카와": "Chiikawa",
+    "먼작귀": "Chiikawa",
+    "라부부": "Labubu",
+    "산리오": "Sanrio",
+    "시나모롤": "Cinnamoroll",
+    "시나몬롤": "Cinnamoroll",
+    "헬로키티": "Hello Kitty",
+    "헬로 키티": "Hello Kitty",
+    "하츠네 미쿠": "Hatsune Miku",
+    "하츠네미쿠": "Hatsune Miku",
+    "미쿠": "Hatsune Miku"
   },
   "skyrim-se": {
     "동료": "follower",
@@ -291,7 +319,13 @@
     "레이트게임 업그레이드": "Lategame Upgrades",
     "엘라드 허드": "EladsHUD",
     "가면 오버홀": "MaskedEnemyOverhaul",
-    "리썰 이스케이프": "LethalEscape"
+    "리썰 이스케이프": "LethalEscape",
+    "치이카와": "Chiikawa",
+    "치카와": "Chiikawa",
+    "먼작귀": "Chiikawa",
+    "하츠네 미쿠": "Hatsune Miku",
+    "하츠네미쿠": "Hatsune Miku",
+    "미쿠": "Hatsune Miku"
   },
   "rimworld": {
     "폰": "pawn",
@@ -326,7 +360,11 @@
     "커먼 센스": "Common Sense",
     "바닐라 익스팬디드 프레임워크": "Vanilla Expanded Framework",
     "림팰러": "Rimefeller",
-    "위생 모드": "Dubs Bad Hygiene"
+    "위생 모드": "Dubs Bad Hygiene",
+    "블루 아카이브": "Blue Archive",
+    "블루아카이브": "Blue Archive",
+    "명일방주": "Arknights",
+    "아크나이츠": "Arknights"
   },
   "valheim": {
     "바이옴": "biome",
@@ -490,7 +528,10 @@
     "드레드": "Dread Overlord",
     "파이브이 스펠": "5e Spells",
     "파이브이 주문": "5e Spells",
-    "어피어런스 에딧": "Appearance Edit Enhanced"
+    "어피어런스 에딧": "Appearance Edit Enhanced",
+    "프리렌": "Frieren",
+    "장송의 프리렌": "Frieren",
+    "장송의프리렌": "Frieren"
   },
   "fallout-4": {
     "정착지": "settlement",
@@ -552,7 +593,10 @@
     "미스틱스 아이템": "MysticsItems",
     "드롭인": "DropinMultiplayer",
     "스캐너 플러스": "ScannerPlusOne",
-    "디버그 툴킷": "DebugToolkit"
+    "디버그 툴킷": "DebugToolkit",
+    "하츠네 미쿠": "Hatsune Miku",
+    "하츠네미쿠": "Hatsune Miku",
+    "미쿠": "Hatsune Miku"
   },
   "cities-skylines": {
     "교통": "traffic",

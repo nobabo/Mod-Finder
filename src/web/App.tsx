@@ -36,6 +36,7 @@ import { useMobileLayout } from './lib/mobile-layout';
 import { useNavigation } from './lib/use-navigation';
 import type { Page } from './lib/navigation';
 import { searchRecoveryLinks } from './lib/search-recovery';
+import { useDesktopFullscreen } from './lib/use-desktop-fullscreen';
 
 export default function App() {
   useLocale();
@@ -89,6 +90,7 @@ export default function App() {
   const appearance = useMemo(() => sceneAppearance(accent, gameId, backgroundColor, photoColor), [accent, gameId, backgroundColor, photoColor]);
   const gameTheme = accent === 'game' ? gameThemeFor(gameId) : undefined;
   const [toast, setToast] = useState('');
+  const desktopFullscreen = useDesktopFullscreen(() => setToast(t('전체화면 전환에 실패했어요. 다시 시도해 주세요.')));
   const returnHome = () => { navigate({ page: 'discover', query: '', submitted: false, filters: {}, categories: [] }); setInput(''); setMenuOpen(false); setFilterOpen(false); setGamePicker(false); };
   const searchButtonRef = useRef<HTMLButtonElement>(null);
   const searchRowRef = useRef<HTMLDivElement>(null);
@@ -184,7 +186,7 @@ export default function App() {
     {createPortal(<header className={`app-brand-header ${resultsScrolled ? 'is-results-scrolled' : ''}`}><button type="button" className="home-logo" aria-label={t("메인 화면으로 이동")} onClick={returnHome}><BrandLogo size={76}/></button></header>,document.body)}
     <div className="settings-fab-wrap">
       {!mobileLayout && settingsControl}
-      {menuOpen && <SettingsMenu close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages columns={3}><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
+      {menuOpen && <SettingsMenu desktopFullscreen={desktopFullscreen} close={() => setMenuOpen(false)} themeOptions={themeControls} languageOptions={<div className="language-options"><CardPages columns={3}><button type="button" aria-pressed={languagePreference === 'auto'} onClick={() => changeLanguage('auto')}>{t('자동 선택')}{languagePreference === 'auto' && <Check size={18}/>}</button>{LANGUAGES.map(language => <button type="button" key={language.id} lang={language.id} aria-pressed={languagePreference === language.id} onClick={() => changeLanguage(language.id)}>{language.name}{languagePreference === language.id && <Check size={18}/>}</button>)}</CardPages></div>}>
         <button type="button" onClick={() => go('favorites')}><Bookmark size={34} /><span>{t("즐겨찾기")}</span></button>
         <button type="button" onClick={() => go('recent')}><History size={34} /><span>{t("최근 기록")}</span></button>
         <button type="button" className="recommendations-card" role="switch" aria-checked={!!local.recommendationsEnabled} aria-label={t("맞춤 추천")} disabled={!hydrated} onClick={() => setLocal(prev => ({ ...prev, recommendationsEnabled: !prev.recommendationsEnabled }))}><Sparkles size={34}/><span>{t("맞춤 추천")}</span></button>

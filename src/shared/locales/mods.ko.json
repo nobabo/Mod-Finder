@@ -3953,5 +3953,132 @@
     ],
     "sourceUrl": "https://thunderstore.io/c/valheim/p/shudnal/ConditionalConfigSync/",
     "reviewedAt": "2026-10-20"
+  },
+  "modrinth:minecraft:pT971QUb": {
+    "title": "치이카와 (Chiikawa)",
+    "searchTerm": "Chiikawa",
+    "aliases": [
+      "치이카와 모드"
+    ],
+    "sourceUrl": "https://modrinth.com/mod/chiikawa",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:1106419": {
+    "title": "치이카와 (Chiikawa)",
+    "searchTerm": "Chiikawa",
+    "aliases": [
+      "치이카와 모드"
+    ],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/chiikawa",
+    "reviewedAt": "2026-11-03"
+  },
+  "modrinth:minecraft:ATMYPfkR": {
+    "title": "라부부 엔티티 모드",
+    "searchTerm": "Labubu Entity Mod",
+    "aliases": [
+      "라부부 엔티티"
+    ],
+    "sourceUrl": "https://modrinth.com/mod/labubu-entity-mod",
+    "reviewedAt": "2026-11-03"
+  },
+  "modrinth:minecraft:LY0uXKF6": {
+    "title": "프리렌의 세계",
+    "searchTerm": "Frieren's world",
+    "aliases": [
+      "프리렌 월드"
+    ],
+    "sourceUrl": "https://modrinth.com/mod/frieren_world",
+    "reviewedAt": "2026-11-03"
+  },
+  "modrinth:minecraft:F1DelhsT": {
+    "title": "프로젝트 JJK (주술회전)",
+    "searchTerm": "ProjectJJK",
+    "aliases": [
+      "프로젝트 주술회전",
+      "프로젝트JJK"
+    ],
+    "sourceUrl": "https://modrinth.com/mod/projectjjk",
+    "reviewedAt": "2026-11-03"
+  },
+  "nexus:stardewvalley:47008": {
+    "title": "치이카와 동료",
+    "searchTerm": "Chiikawa Companions",
+    "aliases": [
+      "치이카와 컴패니언"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/47008",
+    "reviewedAt": "2026-11-03"
+  },
+  "nexus:stardewvalley:35850": {
+    "title": "조자팝 - 라부부 가구",
+    "searchTerm": "JojaPop - Labubu Furniture",
+    "aliases": [
+      "조자팝 라부부"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/35850",
+    "reviewedAt": "2026-11-03"
+  },
+  "nexus:stardewvalley:29397": {
+    "title": "산리오 동료",
+    "searchTerm": "Sanrio Companions",
+    "aliases": [
+      "산리오 컴패니언"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/stardewvalley/mods/29397",
+    "reviewedAt": "2026-11-03"
+  },
+  "thunderstore:lethal-company:Elias2205-ChiikawaCompany": {
+    "title": "치이카와 컴퍼니",
+    "searchTerm": "ChiikawaCompany",
+    "aliases": [
+      "치이카와컴퍼니"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Elias2205/ChiikawaCompany/",
+    "reviewedAt": "2026-11-03"
+  },
+  "thunderstore:lethal-company:Sheepipi-chiikawa_suit": {
+    "title": "치이카와 수트",
+    "searchTerm": "chiikawa_suit",
+    "aliases": [
+      "치이카와 슈트"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/lethal-company/p/Sheepipi/chiikawa_suit/",
+    "reviewedAt": "2026-11-03"
+  },
+  "thunderstore:riskofrain2:Dannyduartemgs-Hatsune_Miku": {
+    "title": "하츠네 미쿠 (Hatsune Miku)",
+    "searchTerm": "Hatsune Miku",
+    "aliases": [
+      "아티피서 미쿠"
+    ],
+    "sourceUrl": "https://thunderstore.io/c/riskofrain2/p/Dannyduartemgs/Hatsune_Miku/",
+    "reviewedAt": "2026-11-03"
+  },
+  "steam:294100:3541617529": {
+    "title": "블루 아카이브 가구 2",
+    "searchTerm": "Blue Archive Furniture 2",
+    "aliases": [
+      "블루아카이브 가구 2"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=3541617529",
+    "reviewedAt": "2026-11-03"
+  },
+  "steam:294100:2823560032": {
+    "title": "명일방주 음악",
+    "searchTerm": "Arknights Music",
+    "aliases": [
+      "아크나이츠 음악"
+    ],
+    "sourceUrl": "https://steamcommunity.com/sharedfiles/filedetails/?id=2823560032",
+    "reviewedAt": "2026-11-03"
+  },
+  "nexus:baldursgate3:15527": {
+    "title": "리디아의 프리렌풍 얼굴",
+    "searchTerm": "Lydia's Heads - We Have Frieren At Home",
+    "aliases": [
+      "프리렌 얼굴"
+    ],
+    "sourceUrl": "https://www.nexusmods.com/baldursgate3/mods/15527",
+    "reviewedAt": "2026-11-03"
   }
 }

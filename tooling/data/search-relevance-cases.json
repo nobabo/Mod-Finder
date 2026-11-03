@@ -36,5 +36,39 @@
       { "id": "substring", "title": "Coward", "summary": "Scow boat", "tags": [], "rank": 2 }
     ],
     "expected": ["both", "title", "unrelated", "substring"]
+  },
+  {
+    "query": "치이카와 가구",
+    "items": [
+      {
+        "id": "character",
+        "title": "Chiikawa",
+        "summary": "Chiikawa Chiikawa Chiikawa",
+        "tags": [
+          "Chiikawa",
+          "Chiikawa"
+        ],
+        "rank": 1
+      },
+      {
+        "id": "both",
+        "title": "Chiikawa Furniture",
+        "summary": "Cozy collection",
+        "tags": [],
+        "rank": 50
+      },
+      {
+        "id": "furniture",
+        "title": "Furniture",
+        "summary": "A furniture pack",
+        "tags": [],
+        "rank": 2
+      }
+    ],
+    "expected": [
+      "both",
+      "character",
+      "furniture"
+    ]
   }
 ]

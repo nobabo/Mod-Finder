@@ -1,6 +1,6 @@
 import { useEffect, useLayoutEffect, useRef, useState, type ReactNode } from 'react';
 import { createPortal } from 'react-dom';
-import { ArrowLeft, Download, Globe2, Monitor, Palette, Smartphone, X } from 'lucide-react';
+import { ArrowLeft, Download, Globe2, Maximize, Minimize, Monitor, Palette, Smartphone, X } from 'lucide-react';
 import { CardPages } from './CardPages';
 import { useMobileLayout } from './lib/use-mobile-layout';
 import { useRailDrag } from './lib/use-rail-drag';
@@ -12,7 +12,7 @@ import { useOverlay } from './lib/overlay';
 
 type SettingsView = 'menu' | 'theme' | 'language' | 'downloads';
 
-export function SettingsMenu({ children,themeOptions,languageOptions,close }: { children:ReactNode; themeOptions:ReactNode; languageOptions:ReactNode; close:() => void }) {
+export function SettingsMenu({ children,themeOptions,languageOptions,close,desktopFullscreen }: { children:ReactNode; themeOptions:ReactNode; languageOptions:ReactNode; close:() => void; desktopFullscreen?: { fullscreen:boolean; busy:boolean; ready:boolean; toggle:() => Promise<boolean> } }) {
   const root = useRef<HTMLDivElement>(null);
   const mobile = useMobileLayout();
   const drag = useRailDrag();
@@ -75,6 +75,7 @@ export function SettingsMenu({ children,themeOptions,languageOptions,close }: { 
         <a href={DOWNLOADS.windows}><Monitor/><span>Windows</span></a>
         <a href={DOWNLOADS.android}><Smartphone/><span>Android</span></a>
       </> : <>{children}<button type="button" data-preference="theme" onClick={() => open('theme')}><Palette/><span>{t('테마')}</span></button><button type="button" data-preference="language" onClick={() => open('language')}><Globe2/><span>{t('언어')}</span></button>{!isNative() && <button type="button" data-preference="downloads" aria-label={t('웹 / 앱 다운로드')} onClick={() => open('downloads')}><Download/><span>{t(mobile ? '다운로드' : '웹 / 앱 다운로드')}</span></button>}</>}
+        {view === 'menu' && desktopFullscreen && <button type="button" disabled={!desktopFullscreen.ready || desktopFullscreen.busy} title={`${t(desktopFullscreen.fullscreen ? '창 모드' : '전체화면')} (F11)`} onClick={() => { void desktopFullscreen.toggle().then(changed => { if (changed) close(); }); }}>{desktopFullscreen.fullscreen ? <Minimize/> : <Maximize/>}<span>{t(desktopFullscreen.fullscreen ? '창 모드' : '전체화면')}</span></button>}
       </CardPages>
     </nav></div>
       : <div className={`preference-panel preference-${view}`}>{view === 'theme' ? themeOptions : languageOptions}</div>}

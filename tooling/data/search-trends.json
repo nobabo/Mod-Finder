@@ -1,0 +1,24 @@
+{
+  "reviewedAt": "2026-11-03",
+  "entries": [
+    { "gameId":"minecraft-java", "term":"Chiikawa", "aliases":["치이카와","치카와","먼작귀"], "live":true, "projects":[{"source":"modrinth","id":"pT971QUb","url":"https://modrinth.com/mod/chiikawa"},{"source":"curseforge","id":"1106419","url":"https://www.curseforge.com/minecraft/mc-mods/chiikawa"}] },
+    { "gameId":"minecraft-java", "term":"Labubu", "aliases":["라부부"], "live":true, "projects":[{"source":"modrinth","id":"ATMYPfkR","url":"https://modrinth.com/mod/labubu-entity-mod"}] },
+    { "gameId":"minecraft-java", "term":"Frieren", "aliases":["프리렌","장송의 프리렌","장송의프리렌"], "live":true, "projects":[{"source":"modrinth","id":"LY0uXKF6","url":"https://modrinth.com/mod/frieren_world"}] },
+    { "gameId":"minecraft-java", "term":"Dandadan", "aliases":["단다단"], "live":true, "projects":[{"source":"curseforge","id":"1346236","url":"https://www.curseforge.com/minecraft/mc-mods/dandadan-path-of-curse"}] },
+    { "gameId":"minecraft-java", "term":"Jujutsu Kaisen", "aliases":["주술회전","주술 회전"], "projects":[{"source":"modrinth","id":"F1DelhsT","url":"https://modrinth.com/mod/projectjjk"}] },
+    { "gameId":"minecraft-java", "term":"Chainsaw Man", "aliases":["체인소맨","체인소 맨"], "projects":[{"source":"curseforge","id":"1725580","url":"https://www.curseforge.com/minecraft/mc-mods/pochitas-chainawman"}] },
+    { "gameId":"minecraft-java", "term":"Solo Leveling", "aliases":["나 혼자만 레벨업","나혼자만레벨업","솔로 레벨링","솔로레벨링"], "projects":[{"source":"curseforge","id":"1705467","url":"https://www.curseforge.com/minecraft/mc-mods/awakening-system"}] },
+    { "gameId":"stardew-valley", "term":"Chiikawa", "aliases":["치이카와","치카와","먼작귀"], "live":true, "projects":[{"source":"nexus","id":"47008","url":"https://www.nexusmods.com/stardewvalley/mods/47008"}] },
+    { "gameId":"stardew-valley", "term":"Labubu", "aliases":["라부부"], "live":true, "projects":[{"source":"nexus","id":"35850","url":"https://www.nexusmods.com/stardewvalley/mods/35850"}] },
+    { "gameId":"stardew-valley", "term":"Sanrio", "aliases":["산리오"], "live":true, "projects":[{"source":"nexus","id":"26906","url":"https://www.nexusmods.com/stardewvalley/mods/26906"}] },
+    { "gameId":"stardew-valley", "term":"Cinnamoroll", "aliases":["시나모롤","시나몬롤"], "projects":[{"source":"nexus","id":"39963","url":"https://www.nexusmods.com/stardewvalley/mods/39963"}] },
+    { "gameId":"stardew-valley", "term":"Hello Kitty", "aliases":["헬로키티","헬로 키티"], "projects":[{"source":"nexus","id":"32478","url":"https://www.nexusmods.com/stardewvalley/mods/32478"}] },
+    { "gameId":"stardew-valley", "term":"Hatsune Miku", "aliases":["하츠네 미쿠","하츠네미쿠","미쿠"], "projects":[{"source":"nexus","id":"43690","url":"https://www.nexusmods.com/stardewvalley/mods/43690"}] },
+    { "gameId":"lethal-company", "term":"Chiikawa", "aliases":["치이카와","치카와","먼작귀"], "live":true, "projects":[{"source":"thunderstore","id":"Elias2205-ChiikawaCompany","url":"https://thunderstore.io/c/lethal-company/p/Elias2205/ChiikawaCompany/"},{"source":"thunderstore","id":"Sheepipi-chiikawa_suit","url":"https://thunderstore.io/c/lethal-company/p/Sheepipi/chiikawa_suit/"}] },
+    { "gameId":"lethal-company", "term":"Hatsune Miku", "aliases":["하츠네 미쿠","하츠네미쿠","미쿠"], "projects":[{"source":"thunderstore","id":"KoolKids-VocaloidCompany","url":"https://thunderstore.io/c/lethal-company/p/KoolKids/VocaloidCompany/"}] },
+    { "gameId":"risk-of-rain-2", "term":"Hatsune Miku", "aliases":["하츠네 미쿠","하츠네미쿠","미쿠"], "live":true, "projects":[{"source":"thunderstore","id":"Dannyduartemgs-Hatsune_Miku","url":"https://thunderstore.io/c/riskofrain2/p/Dannyduartemgs/Hatsune_Miku/"}] },
+    { "gameId":"rimworld", "term":"Blue Archive", "aliases":["블루 아카이브","블루아카이브"], "live":true, "projects":[{"source":"steam","id":"3541617529","url":"https://steamcommunity.com/sharedfiles/filedetails/?id=3541617529"}] },
+    { "gameId":"rimworld", "term":"Arknights", "aliases":["명일방주","아크나이츠"], "projects":[{"source":"steam","id":"2823560032","url":"https://steamcommunity.com/sharedfiles/filedetails/?id=2823560032"}] },
+    { "gameId":"baldurs-gate-3", "term":"Frieren", "aliases":["프리렌","장송의 프리렌","장송의프리렌"], "live":true, "projects":[{"source":"nexus","id":"15527","url":"https://www.nexusmods.com/baldursgate3/mods/15527"}] }
+  ]
+}

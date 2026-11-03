@@ -70,6 +70,7 @@ android {
     testOptions { unitTests.all {
         it.systemProperty("modfinder.catalog", workspace.resolve("output/android/assets/catalog.json").path)
         it.systemProperty("modfinder.relevanceCases", workspace.resolve("tooling/data/search-relevance-cases.json").path)
+        it.systemProperty("modfinder.trends", workspace.resolve("tooling/data/search-trends.json").path)
     } }
 }
 

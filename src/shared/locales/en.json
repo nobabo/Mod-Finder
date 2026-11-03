@@ -258,5 +258,8 @@
   "이미지 이동: {name}": "Move image: {name}",
   "방향키로 이동, Home 키로 원위치": "Move with arrow keys; Home resets the position",
   "오름차순": "Ascending",
-  "내림차순": "Descending"
+  "내림차순": "Descending",
+  "전체화면": "Fullscreen",
+  "창 모드": "Windowed",
+  "전체화면 전환에 실패했어요. 다시 시도해 주세요.": "Could not change fullscreen mode. Please try again."
 }
