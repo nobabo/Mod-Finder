@@ -13,6 +13,7 @@ export const SEARCH_NOUNS = `
   arrow axe shield helmet boot glove ring amulet gem crystal tool torch lantern
   battery factory machine engine robot turret wall fence door window bridge tower
   dragon fox horse dog cat bird fish sheep deer mouse goose tooth foot shelf berry
+  chicken duck chick mallard cow pig goat donkey llama rabbit bee frog parrot
   accessory resource modpack
 `.trim().split(/\s+/);
 const nouns = new Set(SEARCH_NOUNS);

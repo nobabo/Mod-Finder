@@ -1,6 +1,6 @@
 [package]
 name = "mod-finder"
-version = "0.2.4"
+version = "0.2.5"
 description = "Discover mods across your favorite platforms"
 edition = "2021"
 

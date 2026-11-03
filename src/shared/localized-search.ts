@@ -14,7 +14,11 @@ export const MAX_LOCALIZED_QUERIES = 8;
 export function localizedQueries(query: string, prefixes: string[], gameId: string): string[] {
   const base = providerQuery(query, prefixes, gameId);
   const q = normalized(query);
-  if (!/[가-힣]/.test(q) || q.length < 2) return [base];
+  const keywords = { ...searchTerms, ...(gameSearchTerms as Record<string, Record<string, string>>)[gameId] };
+  const knownKeyword = Object.keys(keywords).some(word => normalized(word) === q);
+  // A reviewed noun such as 닭 can use curated hints; unknown single syllables
+  // must not fan out across the translated title catalog.
+  if (!/[가-힣]/.test(q) || (q.length < 2 && !knownKeyword)) return [base];
   const entries = Object.entries(modTranslations)
     .filter(([key]) => prefixes.some(prefix => key.startsWith(prefix)))
     .map(([, entry]) => ({ term: entry.searchTerm, names: [entry.title ?? '', ...entry.aliases], summary: entry.summary ?? '' }));
@@ -26,8 +30,7 @@ export function localizedQueries(query: string, prefixes: string[], gameId: stri
   // Preserve established broad keywords and curated hints before adding the
   // much larger automatic title catalog. A short partial must not crowd those
   // hints out of the bounded provider request list.
-  const keywords = { ...searchTerms, ...(gameSearchTerms as Record<string, Record<string, string>>)[gameId] };
-  const imported = Object.keys(keywords).some(word => normalized(word) === q) ? [] : titleSearchEntries(gameId, prefixes)
+  const imported = knownKeyword ? [] : titleSearchEntries(gameId, prefixes)
     .map(([, original, korean]) => ({ term: original, names: [korean], summary: '' }));
   const curatedExact = entries.filter(entry => entry.names.some(name => normalized(name) === q));
   const exact = curatedExact.length ? curatedExact : imported.filter(entry => entry.names.some(name => normalized(name) === q));

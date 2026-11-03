@@ -3857,6 +3857,94 @@
     "sourceUrl": "https://www.curseforge.com/minecraft/modpacks/zombie-apocalypse-slow-zombies-by-forge-labs",
     "reviewedAt": "2026-10-20"
   },
+  "modrinth:minecraft:jkb861Ih": {
+    "title": "덕클링 (Duckling)",
+    "summary": "강에 흰 오리와 청둥오리를, 늪에 거래할 수 있는 오리 상인을 추가합니다.",
+    "searchTerm": "Duckling",
+    "aliases": ["덕클링", "덕링"],
+    "sourceUrl": "https://modrinth.com/mod/duckling",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:597248": {
+    "title": "덕클링 (Duckling)",
+    "summary": "강에 흰 오리와 청둥오리를, 늪에 거래할 수 있는 오리 상인을 추가합니다.",
+    "searchTerm": "Duckling",
+    "aliases": ["덕클링", "덕링"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/duckling",
+    "reviewedAt": "2026-11-03"
+  },
+  "modrinth:minecraft:ojFjz7JF": {
+    "title": "이름 없는 오리 모드 (Untitled Duck Mod)",
+    "summary": "강과 늪에 사는 오리와 거위를 추가하고, 오리를 담아 옮길 수 있는 주머니를 제공합니다.",
+    "searchTerm": "Untitled Duck Mod",
+    "aliases": ["이름 없는 오리 모드", "언타이틀드 덕 모드"],
+    "sourceUrl": "https://modrinth.com/mod/untitled-duck-mod",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:451766": {
+    "title": "이름 없는 오리 모드 - 패브릭 (Untitled Duck Mod)",
+    "summary": "패브릭용 오리·거위 모드로, 강과 늪에 사는 오리를 추가합니다.",
+    "searchTerm": "Untitled Duck Mod",
+    "aliases": ["이름 없는 오리 모드", "언타이틀드 덕 모드"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/untitled-duck-mod-fabric",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:451789": {
+    "title": "이름 없는 오리 모드 - 포지 (Untitled Duck Mod)",
+    "summary": "포지용 오리·거위 모드로, 강과 늪에 사는 오리를 추가합니다.",
+    "searchTerm": "Untitled Duck Mod",
+    "aliases": ["이름 없는 오리 모드", "언타이틀드 덕 모드"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/untitled-duck-mod-forge",
+    "reviewedAt": "2026-11-03"
+  },
+  "modrinth:minecraft:fQcPH7ab": {
+    "title": "모던 치킨스 (Modern Chickens)",
+    "summary": "닭을 교배해 자원을 생산하는 Chickens와 닭장 모드 Roost를 함께 이식한 모드입니다.",
+    "searchTerm": "Modern Chickens",
+    "aliases": ["모던 치킨스"],
+    "sourceUrl": "https://modrinth.com/mod/modern-chickens",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:1368019": {
+    "title": "모던 치킨스 (Modern Chickens)",
+    "summary": "닭을 교배해 자원을 생산하는 Chickens와 닭장 모드 Roost를 함께 이식한 모드입니다.",
+    "searchTerm": "Modern Chickens",
+    "aliases": ["모던 치킨스"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/modern-chickens",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:241941": {
+    "title": "치킨스 (Chickens)",
+    "summary": "다양한 자원을 생산하는 닭과 닭 교배 기능을 추가합니다.",
+    "searchTerm": "Chickens",
+    "aliases": ["치킨스", "치킨즈"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/chickens",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:277711": {
+    "title": "닭장 (Roost)",
+    "summary": "닭을 닭장에 보관해 생산물을 모으고 교배하는 모드입니다.",
+    "searchTerm": "Roost",
+    "aliases": ["루스트", "닭장"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/roost",
+    "reviewedAt": "2026-11-03"
+  },
+  "modrinth:minecraft:YzR4F72D": {
+    "title": "루스트 얼티밋 (Roost Ultimate)",
+    "summary": "자원을 생산하는 닭을 교배하고 닭장을 자동화하는 모드입니다.",
+    "searchTerm": "Roost Ultimate",
+    "aliases": ["루스트 얼티밋"],
+    "sourceUrl": "https://modrinth.com/mod/roostultimate",
+    "reviewedAt": "2026-11-03"
+  },
+  "curseforge:432:621910": {
+    "title": "루스트 얼티밋 (Roost Ultimate)",
+    "summary": "자원을 생산하는 닭을 교배하고 닭장을 자동화하는 모드입니다.",
+    "searchTerm": "Roost Ultimate",
+    "aliases": ["루스트 얼티밋"],
+    "sourceUrl": "https://www.curseforge.com/minecraft/mc-mods/roost-ultimate",
+    "reviewedAt": "2026-11-03"
+  },
   "thunderstore:valheim:shudnal-ConditionalConfigSync": {
     "title": "조건부 설정 동기화",
     "searchTerm": "ConditionalConfigSync",
