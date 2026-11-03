@@ -6,9 +6,9 @@
     "sha256": "b54e023a571ffb77420a6c5969961153909c00e7f17937a1b3cfc085238f5b0f"
   },
   "android": {
-    "release": "v0.2.3",
-    "fileName": "ModFinder-0.2.3-Android.apk",
+    "release": "v0.2.5",
+    "fileName": "ModFinder-0.2.5-Android.apk",
     "contentType": "application/vnd.android.package-archive",
-    "sha256": "53f45842b4d26365ce6e8496f3519cd75a8017b72273dc99433a0f6ac95b88bb"
+    "sha256": "50bf5c57978437713830ab26064db51e91f2003692c30b16cba650bff98a4a66"
   }
 }
