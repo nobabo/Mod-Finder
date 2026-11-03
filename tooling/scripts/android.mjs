@@ -7,7 +7,9 @@ import { fileURLToPath } from 'node:url';
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 export function androidEnvironment(input = process.env) {
   const env = { ...input };
-  env.ANDROID_HOME ||= env.ANDROID_SDK_ROOT || join(env.LOCALAPPDATA || join(homedir(), 'AppData/Local'), 'Android/Sdk');
+  const defaultSdk = join(env.LOCALAPPDATA || join(homedir(), 'AppData/Local'), 'Android/Sdk');
+  const workspaceSdk = join(root, 'output/toolchains/android/sdk');
+  env.ANDROID_HOME ||= env.ANDROID_SDK_ROOT || (existsSync(defaultSdk) || !existsSync(workspaceSdk) ? defaultSdk : workspaceSdk);
   env.JAVA_HOME ||= join(env.ProgramFiles || 'C:/Program Files', 'Android/Android Studio/jbr');
   env.NODE_BINARY = process.execPath;
   const java = join(env.JAVA_HOME, 'bin', process.platform === 'win32' ? 'java.exe' : 'java');

@@ -16,6 +16,9 @@ src/native/gen/android/**/build/
 src/native/gen/android/local.properties
 *.keystore
 *.jks
+*.p12
+*.pfx
+*.dpapi
 coverage/
 /ModFinder-*.exe
 /ModFinder-*.apk

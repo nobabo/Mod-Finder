@@ -25,6 +25,12 @@ The Kotlin Android Gradle project is in `tooling/android`; its source is in `src
 
 ## Root build launchers
 
+New local signing setups can use `passwordDpapi` in the private `android.json` instead of a plaintext `password`. This names a file encrypted with Windows CurrentUser DPAPI. The launcher delegates decryption and the signed build to `tooling/scripts/with-android-signing.ps1`; no decrypted password is returned over stdout or passed as a command argument. Explicit signing environment variables and legacy private settings remain supported.
+
+Creating a signing identity is a separate, explicitly authorized operation. `tooling/scripts/create-android-signing.ps1 -CreateNew -BackupDirectory <new-private-directory>` refuses to overwrite existing signing files. It creates an RSA-4096 PKCS12 key, protects its random password, restricts access to the current Windows user and SYSTEM, and verifies a separate backup copy. Normal builds never create or rotate keys. See [signing recovery](ANDROID-SIGNING.md).
+
+If the default SDK is absent, the launchers can reuse an existing SDK at `output/toolchains/android/sdk`; explicit `ANDROID_HOME` and `ANDROID_SDK_ROOT` still take precedence.
+
 On Windows x64, double-click `Build-Windows.bat` for an NSIS `setup.exe` or `Build-Android.bat` for a signed universal Kotlin APK (Android 10+). Both default to `https://modfinder.pages.dev`, regardless of the local development `.env`. Android accepts an explicit `MODFINDER_API_URL` HTTPS origin. Results and SHA-256 checksums are copied to `output/releases/v<version>/`. All application versions come from `package.json`; `tooling/config/android.json` holds the increasing Android versionCode. The scripts generate local files; publishing a GitHub release is a separate step.
 
 The Android launcher uses the four signing environment variables above. When all are absent, it reads `%USERPROFILE%\.mod-finder\signing\android.json`, containing `store` (keystore path), `alias`, and `password` (shared keystore/key password). This is the private configuration created for the first public release. Back up this directory securely. Missing keys stop the build; the launcher never silently creates a new signing identity. It verifies the APK signature and alignment before copying the result.

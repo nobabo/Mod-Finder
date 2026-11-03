@@ -1,6 +1,14 @@
 # Galaxy Store 등록 자료
 
-## Android 0.2.1
+## Android 0.2.5
+
+- Package: `io.modfinder.app`, versionCode `2005`.
+- APK: `output/releases/v0.2.5/ModFinder-0.2.5-Android.apk`.
+- Public signing certificate SHA-256: `7eb2f512afeadea8f5f70cac6abb875ea9f16ec4e3642b10273c34723de1551c`.
+- This pre-distribution release uses a new authorized signing identity. Earlier test APKs require reinstallation; uninstalling can delete local data. See [signing recovery](ANDROID-SIGNING.md).
+- Register this certificate for future store/developer-verification submissions. This repository change does not modify any store account or registration.
+
+## Android 0.2.1 (previous package)
 
 - 앱 이름: **Mod Finder**
 - 패키지: `io.modfinder.app`

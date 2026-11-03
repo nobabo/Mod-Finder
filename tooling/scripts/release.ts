@@ -95,7 +95,7 @@ function fingerprint() {
   const files = command('git', ['ls-files', '-z', '--cached', '--others', '--exclude-standard'], true).split('\0').filter(Boolean);
   for (const file of [...new Set(files)].sort()) {
     const name = file.split('/').at(-1)!;
-    if ((/^\.env(?:\.|$)/.test(name) && name !== '.env.example') || /^\.dev\.vars(?:\.|$)/.test(name) || /\.(pem|key|p12|pfx|keystore|jks)$/i.test(name)) {
+    if ((/^\.env(?:\.|$)/.test(name) && name !== '.env.example') || /^\.dev\.vars(?:\.|$)/.test(name) || /\.(pem|key|p12|pfx|keystore|jks|dpapi)$/i.test(name)) {
       throw new Error(`비밀 파일이 커밋 대상에 포함되어 있습니다: ${file}`);
     }
     hash.update(file + '\0');

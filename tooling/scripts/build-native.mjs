@@ -6,6 +6,7 @@ import { dirname, join, resolve } from 'node:path';
 import { fileURLToPath } from 'node:url';
 import { runAndroid } from './android.mjs';
 import { nativeArtifactName } from '../lib/native-artifact.mjs';
+import { secureSigningInvocation } from '../lib/android-signing.mjs';
 
 const root = resolve(dirname(fileURLToPath(import.meta.url)), '../..');
 const [platform, ...options] = process.argv.slice(2);
@@ -40,7 +41,9 @@ function latestInstalled(directory, relativeFile, label) {
 function configureAndroid() {
   // Release builds must not leave a Gradle daemon holding generated DEX files on Windows.
   env.GRADLE_OPTS = `${env.GRADLE_OPTS || ''} -Dorg.gradle.daemon=false`.trim();
-  env.ANDROID_HOME = env.ANDROID_HOME || env.ANDROID_SDK_ROOT || join(env.LOCALAPPDATA || join(homedir(), 'AppData/Local'), 'Android/Sdk');
+  const defaultSdk = join(env.LOCALAPPDATA || join(homedir(), 'AppData/Local'), 'Android/Sdk');
+  const workspaceSdk = join(root, 'output/toolchains/android/sdk');
+  env.ANDROID_HOME = env.ANDROID_HOME || env.ANDROID_SDK_ROOT || (existsSync(defaultSdk) || !existsSync(workspaceSdk) ? defaultSdk : workspaceSdk);
   env.JAVA_HOME = env.JAVA_HOME || join(env.ProgramFiles || 'C:/Program Files', 'Android/Android Studio/jbr');
   const java = requireFile(join(env.JAVA_HOME, 'bin/java.exe'), 'Android Studio를 설치하거나 JAVA_HOME을 지정하세요.');
   const buildTools = latestInstalled(join(env.ANDROID_HOME, 'build-tools'), 'lib/apksigner.jar', 'Build Tools');
@@ -74,6 +77,12 @@ try {
   }
   if (process.platform !== 'win32' || process.arch !== 'x64') throw new Error('이 생성기는 Windows x64에서 실행하세요.');
   requireFile(join(root, 'node_modules/tsx/dist/cli.mjs'), '먼저 프로젝트 루트에서 npm ci를 실행하세요.');
+  const secureSigning = platform === 'android' ? secureSigningInvocation({ root, configPath: join(homedir(), '.mod-finder/signing/android.json'), env, checkOnly }) : null;
+  if (secureSigning) {
+    const child = spawnSync('powershell.exe', secureSigning, { cwd: root, env, stdio: 'inherit', windowsHide: true });
+    if (child.error) throw new Error('Could not start the protected Android signing build.');
+    process.exit(child.status ?? 1);
+  }
   const config = JSON.parse(readFileSync(join(root, 'src/native/tauri.conf.json'), 'utf8'));
   const version = JSON.parse(readFileSync(join(root, 'package.json'), 'utf8')).version;
   const destination = join(root, 'output/releases', `v${version}`);
