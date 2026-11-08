@@ -6,7 +6,7 @@ import { afterEach, describe, expect, it } from 'vitest';
 
 const available = spawnSync('pwsh', ['-NoProfile', '-Command', 'exit 0'], { windowsHide: true }).status === 0;
 const fixtures = [];
-function fixture() {
+function fixture(activeBuild = false) {
   mkdirSync('output', { recursive: true });
   const root = mkdtempSync(resolve('output/native-cleanup-test-'));
   fixtures.push(root);
@@ -14,6 +14,11 @@ function fixture() {
   put('package.json', '{"name":"mod-finder"}');
   put('tooling/scripts/clean-native.ps1', '');
   copyFileSync('tooling/scripts/clean-native.ps1', join(root, 'tooling/scripts/clean-native.ps1'));
+  // Isolate fixture cleanup from the host's unrelated builds and Gradle daemons.
+  put('tooling/scripts/run-cleanup-test.ps1', `param([switch]$Apply)
+function Get-Process { ${activeBuild ? "[pscustomobject]@{ ProcessName = 'cargo'; Id = 4242 }" : '@()'} }
+& (Join-Path $PSScriptRoot 'clean-native.ps1') -Apply:$Apply
+`);
   put('output/native/release/bundle/nsis/old-setup.exe');
   put('output/native/debug/cache.bin', 'generated cache');
   put('output/android/gradle/app/reports/test.html');
@@ -21,7 +26,7 @@ function fixture() {
   put('output/android/avd/userdata-qemu.img');
   put('output/releases/v0.2.4/installer.exe');
   put('src/android/Source.kt');
-  return { root, put, run: (...args) => spawnSync('pwsh', ['-NoProfile', '-File', join(root, 'tooling/scripts/clean-native.ps1'), ...args], { encoding: 'utf8', windowsHide: true }) };
+  return { root, put, run: (...args) => spawnSync('pwsh', ['-NoProfile', '-File', join(root, 'tooling/scripts/run-cleanup-test.ps1'), ...args], { encoding: 'utf8', windowsHide: true }) };
 }
 afterEach(() => { for (const root of fixtures.splice(0)) rmSync(root, { recursive: true, force: true }); });
 
@@ -61,6 +66,14 @@ describe.skipIf(!available)('native generated-file cleanup', () => {
     expect(result.stderr).toContain('Linked directory');
     expect(readFileSync(join(root, 'outside/important.txt'), 'utf8')).toBe('keep me');
     expect(existsSync(join(root, 'output/native/debug/cache.bin'))).toBe(true);
+    expect(existsSync(join(root, 'output/archive'))).toBe(false);
+  });
+  it.skipIf(process.platform !== 'win32')('refuses cleanup during an active build before archiving or removing files', () => {
+    const { root, run } = fixture(true);
+    const result = run('-Apply');
+    expect(result.status).not.toBe(0);
+    expect(result.stderr).toContain('cargo (4242)');
+    expect(readFileSync(join(root, 'output/native/debug/cache.bin'), 'utf8')).toBe('generated cache');
     expect(existsSync(join(root, 'output/archive'))).toBe(false);
   });
 });

@@ -1,5 +1,7 @@
 # Windows 배포·SignPath 검토
 
+2026-11-08 보안 후속 수정: 폰트 도구의 `brotli`와 Cargo의 `tokio` 패치를 적용했다. `glib`의 Linux 의존성 알림은 미해결이며, 근거와 배포 범위는 [배포 전 점검의 후속 기록](PREDEPLOY-AUDIT.md)을 참고한다. 아래 기존 검토는 당시 상태를 기록한 것이다.
+
 0.2.6 follow-up: the user approved publishing the verified fullscreen feature with the reviewed search dictionary updates. This release keeps NSIS and the existing Windows signing state. The 0.2.5 observations below describe the review baseline; they do not imply a SignPath application, MSI migration, or account/security change.
 
 2026-11-03 기준의 준비 검토다. SignPath 신청, 계정·인증서 생성, 라이선스 선택, MSI 전환, 공개 정책 변경은 하지 않았다. 현재 공개 배포는 0.2.5 NSIS EXE이고, 전체화면 변경은 로컬 검증용이다.

@@ -2,6 +2,10 @@
 
 이 문서는 2026-09-25 시점의 감사 기록입니다. 현재 소스의 검증 절차는 [검증 방법](VERIFICATION.md)을 따릅니다. 당시 로컬 산출물은 공개 저장소 정리 과정에서 제거했습니다.
 
+2026-11-08 Dependabot 후속 수정: 폰트 생성 도구의 `brotli`를 1.2.0에서 [수정 버전 1.2.1](https://github.com/advisories/GHSA-9v8h-qqgm-4m35)로 올리고, CI에 Python 요구사항의 `pip-audit --strict` 검사를 추가했다. Cargo 감사에서 추가 확인한 [Tokio의 AsyncFd 메모리 안전성 경고](https://github.com/tokio-rs/tokio/pull/8587)는 1.53.1 → 1.53.3 패치로 해소했다. 기존 설치 파일은 이번 의존성 변경을 반영한 새 릴리스가 아니다.
+
+`glib`의 [Dependabot #2](https://github.com/nobabo/Mod-Finder/security/dependabot/2)는 미해결이다. 현재 Windows 대상의 `cargo tree --locked --target x86_64-pc-windows-msvc --invert glib`에는 활성 경로가 없지만, Linux GTK/WebKit 의존성과 잠금 파일에는 0.18.5가 남는다. [수정 버전은 0.20 이상](https://rustsec.org/advisories/RUSTSEC-2024-0429.html)이고, 확인한 [Tauri 2.12.5도 GTK 0.18을 사용](https://docs.rs/crate/tauri/2.12.5/source/Cargo.toml)하므로 호환 가능한 단순 업데이트가 없다. 알림을 dismiss하거나 감사에서 ignore하지 않았다. Linux 앱을 배포하려면 호환되는 상위 프레임워크 업데이트 또는 별도로 검증한 보안 패치가 필요하다. Cargo 감사의 취약점 분류는 0건이어도 이 `unsound` 경고와 기존 유지보수 중단·yank 경고는 남는다.
+
 2026-10-14 후속 수정에서는 웹뷰의 SQL 플러그인을 제거하고 고정된 저장 명령으로 교체했습니다. 그 과정에서 잠금 파일의 `rsa` 경로도 제거되었습니다. npm 감사는 취약점 0건이며, Cargo 감사는 취약점 0건과 기존 GTK/Unicode 계열의 유지보수·메모리 안전성 경고를 보고합니다. 아래 표는 이전 점검 당시의 기록입니다. Rust 데스크톱 패키지의 배포 대상은 Windows이며 Linux GTK 경로를 추가하려면 경고를 다시 검토해야 합니다.
 
 대상은 Cloudflare Workers의 웹 화면과 검색 API다. 네이티브 의존성도 검사했으나 앱 바이너리를 재빌드하거나 배포하지 않았다. 이번 점검 범위에서 수정 후 웹 배포를 막는 문제는 확인되지 않았다. 알려지지 않은 취약점이나 운영 부하까지 없다는 보장은 아니다.
